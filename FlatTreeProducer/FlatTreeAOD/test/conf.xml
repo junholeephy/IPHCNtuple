@@ -1,0 +1,162 @@
+<var name="ev_run" save="1"></var>
+<var name="ev_id" save="1"></var>
+<var name="ev_lumi" save="1"></var>
+
+<var name="mc_id" save="1"></var>
+<var name="mc_f1" save="1"></var>
+<var name="mc_f2" save="1"></var>
+<var name="mc_x1" save="1"></var>
+<var name="mc_x2" save="1"></var>
+<var name="mc_scale" save="1"></var>
+<var name="mc_ptHat" save="1"></var>
+
+<var name="mc_pu_intime_NumInt" save="1"></var>
+<var name="mc_pu_trueNumInt" save="1"></var>
+<var name="mc_pu_before_npu" save="1"></var>
+<var name="mc_pu_after_npu" save="1"></var>
+<var name="mc_pu_Npvi" save="1"></var>
+<var name="mc_pu_Nzpositions" save="1"></var>
+<var name="mc_pu_BunchCrossing" save="1"></var>
+<var name="mc_pu_zpositions" save="1"></var>
+<var name="mc_pu_sumpT_lowpT" save="1"></var>
+<var name="mc_pu_sumpT_highpT" save="1"></var>
+<var name="mc_pu_ntrks_lowpT" save="1"></var>
+<var name="mc_pu_ntrks_highpT" save="1"></var>
+
+<var name="mc_truth_tth" save="0"></var>
+<var name="mc_truth_tzq" save="0"></var>
+
+<var name="el_n" save="1"></var>
+<var name="el_pt" save="1"></var>
+<var name="el_eta" save="1"></var>
+<var name="el_phi" save="1"></var>
+<var name="el_m" save="1"></var>
+<var name="el_E" save="1"></var>
+<var name="el_id" save="1"></var>
+<var name="el_charge" save="1"></var>
+
+<var name="el_scleta" save="1"></var>
+<var name="el_passConversionVeto" save="1"></var>
+<var name="el_isGsfCtfScPixChargeConsistent" save="1"></var>
+<var name="el_dB3D" save="1"></var>
+<var name="el_edB3D" save="1"></var>
+
+<var name="el_neutralHadronIso" save="1"></var>
+<var name="el_chargedHadronIso" save="1"></var>
+<var name="el_puChargedHadronIso" save="1"></var>
+<var name="el_ecalIso" save="1"></var>
+<var name="el_hcalIso" save="1"></var>
+<var name="el_particleIso" save="1"></var>
+<var name="el_photonIso" save="1"></var>
+<var name="el_trackIso" save="1"></var>
+
+<var name="el_pfIso_sumChargedHadronPt" save="1"></var>
+<var name="el_pfIso_sumNeutralHadronEt" save="1"></var>
+<var name="el_pfIso_sumPhotonEt" save="1"></var>
+<var name="el_pfIso_sumPUPt" save="1"></var>
+
+<var name="el_isLoose" save="1"></var>
+<var name="el_isTight" save="1"></var>
+<var name="el_isRobustLoose" save="1"></var>
+<var name="el_isRobustTight" save="1"></var>
+<var name="el_isRobustHighEnergy" save="1"></var>
+
+<var name="el_vx" save="1"></var>
+<var name="el_vy" save="1"></var>
+<var name="el_vz" save="1"></var>
+   
+<var name="el_isGsf" save="1"></var>
+
+<var name="el_dxy" save="1"></var>
+<var name="el_dz" save="1"></var>
+<var name="el_dxyError" save="1"></var>
+<var name="el_dzError" save="1"></var>
+
+<var name="el_numberOfHits" save="1"></var>
+
+<var name="el_sigmaIetaIeta" save="1"></var>
+<var name="el_hadronicOverEm" save="1"></var>
+<var name="el_dr03TkSumPt" save="1"></var>
+<var name="el_dr03EcalRecHitSumEt" save="1"></var>
+<var name="el_dr03HcalTowerSumEt" save="1"></var>
+<var name="el_numberOfLostHits" save="1"></var>
+
+<var name="mu_n" save="1"></var>
+<var name="mu_pt" save="1"></var>
+<var name="mu_eta" save="1"></var>
+<var name="mu_phi" save="1"></var>
+<var name="mu_m" save="1"></var>
+<var name="mu_E" save="1"></var>
+<var name="mu_id" save="1"></var>
+<var name="mu_charge" save="1"></var>
+
+<var name="mu_dB3D" save="1"></var>
+<var name="mu_edB3D" save="1"></var>
+
+<var name="mu_neutralHadronIso" save="1"></var>
+<var name="mu_chargedHadronIso" save="1"></var>
+<var name="mu_puChargedHadronIso" save="1"></var>
+<var name="mu_ecalIso" save="1"></var>
+<var name="mu_hcalIso" save="1"></var>
+<var name="mu_photonIso" save="1"></var>
+<var name="mu_trackIso" save="1"></var>
+
+<var name="mu_pfIso03_sumChargedHadronPt" save="1"></var>
+<var name="mu_pfIso03_sumNeutralHadronEt" save="1"></var>
+<var name="mu_pfIso03_sumPhotonEt" save="1"></var>
+<var name="mu_pfIso03_sumPUPt" save="1"></var>
+
+<var name="mu_isGlobalMuon" save="1"></var>
+<var name="mu_isTrackerMuon" save="1"></var>
+<var name="mu_isStandAloneMuon" save="1"></var>
+<var name="mu_isCaloMuon" save="1"></var>
+<var name="mu_isPFMuon" save="1"></var>
+
+<var name="mu_vx" save="1"></var>
+<var name="mu_vy" save="1"></var>
+<var name="mu_vz" save="1"></var>
+   
+<var name="mu_globalTrack_dxy" save="1"></var>
+<var name="mu_globalTrack_dz" save="1"></var>
+<var name="mu_globalTrack_dxyError" save="1"></var>
+<var name="mu_globalTrack_dzError" save="1"></var>
+
+<var name="mu_innerTrack_dxy" save="1"></var>
+<var name="mu_innerTrack_dz" save="1"></var>
+<var name="mu_innerTrack_dxyError" save="1"></var>
+<var name="mu_innerTrack_dzError" save="1"></var>
+
+<var name="mu_numberOfMatches" save="1"></var>
+<var name="mu_numberOfValidMuonHits" save="1"></var>
+
+<var name="mu_innerTrack_pt" save="1"></var>
+<var name="mu_innerTrack_ptError" save="1"></var>
+
+<var name="jet_n" save="1"></var>
+<var name="jet_pt" save="1"></var>
+<var name="jet_eta" save="1"></var>
+<var name="jet_phi" save="1"></var>
+<var name="jet_m" save="1"></var>
+<var name="jet_E" save="1"></var>
+
+<var name="jet_CSV" save="1"></var>
+<var name="jet_flavour" save="1"></var>
+
+<var name="jet_neutralHadronEnergy" save="1"></var>
+<var name="jet_neutralEmEnergy" save="1"></var>
+<var name="jet_chargedHadronEnergy" save="1"></var>
+<var name="jet_chargedEmEnergy" save="1"></var>
+<var name="jet_electronEnergy" save="1"></var>
+<var name="jet_muonEnergy" save="1"></var>
+<var name="jet_photonEnergy" save="1"></var>
+
+<var name="jet_pileupJetId" save="1"></var>
+
+<var name="jet_gen_pt" save="1"></var>
+<var name="jet_gen_eta" save="1"></var>
+<var name="jet_gen_phi" save="1"></var>
+<var name="jet_gen_m" save="1"></var>
+<var name="jet_gen_E" save="1"></var>
+
+<var name="jet_gen_status" save="1"></var>
+<var name="jet_gen_id" save="1"></var>
