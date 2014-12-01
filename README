@@ -1,9 +1,0 @@
-How to run FlatTreeProducer:
-
-scram b
-cd FlatTreeProducer/FlatTreeAOD/test/
-cmsRun runFlatTreeAOD_cfg.py
-
-List of saved ntuple variables is configured via conf.xml
-
-
