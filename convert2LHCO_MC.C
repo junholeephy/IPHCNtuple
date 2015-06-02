@@ -163,8 +163,9 @@ void convert2LHCO_MC(std::string infile,std::string outfile,int proc)
   int  mc_truth_Zl1_lhco_id   = -666.; 
   int  mc_truth_Zl2_lhco_id   = -666.;
   
-  
+  //blkaka
   //
+  float ii =0;
   std::string fline00 = "#   typ     eta    phi       pt  jmass  ntrk  btag   had/em  dummy dummy";
   
   std::string del = "	  ";
