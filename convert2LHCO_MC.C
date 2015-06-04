@@ -184,17 +184,17 @@ void convert2LHCO_MC(std::string infile,std::string outfile,int proc)
 	//
         // LHCO lepton ID convention
 	//
-	if(abs(mc_truth_h0Wl1_id)==11)      mc_truth_h0Wl1_lhco_id = 3;
+	if(abs(mc_truth_h0Wl1_id)==11)      mc_truth_h0Wl1_lhco_id = 1;
 	else if(abs(mc_truth_h0Wl1_id)==13) mc_truth_h0Wl1_lhco_id = 2;
-	if(abs(mc_truth_h0Wl2_id)==11)      mc_truth_h0Wl2_lhco_id = 3;
+	if(abs(mc_truth_h0Wl2_id)==11)      mc_truth_h0Wl2_lhco_id = 1;
 	else if(abs(mc_truth_h0Wl2_id)==13) mc_truth_h0Wl2_lhco_id = 2;
-	if(abs(mc_truth_tWl1_id)==11)       mc_truth_tWl1_lhco_id  = 3;
+	if(abs(mc_truth_tWl1_id)==11)       mc_truth_tWl1_lhco_id  = 1;
 	else if(abs(mc_truth_tWl1_id)==13)  mc_truth_tWl1_lhco_id  = 2;
-	if(abs(mc_truth_tWl2_id)==11)       mc_truth_tWl2_lhco_id  = 3;
+	if(abs(mc_truth_tWl2_id)==11)       mc_truth_tWl2_lhco_id  = 1;
 	else if(abs(mc_truth_tWl2_id)==13)  mc_truth_tWl2_lhco_id  = 2;
-	if(abs(mc_truth_Zl1_id)==11)        mc_truth_Zl1_lhco_id   = 3;
+	if(abs(mc_truth_Zl1_id)==11)        mc_truth_Zl1_lhco_id   = 1;
 	else if(abs(mc_truth_Zl1_id)==13)   mc_truth_Zl1_lhco_id   = 2;
-	if(abs(mc_truth_Zl2_id)==11)        mc_truth_Zl2_lhco_id   = 3;
+	if(abs(mc_truth_Zl2_id)==11)        mc_truth_Zl2_lhco_id   = 1;
 	else if(abs(mc_truth_Zl2_id)==13)   mc_truth_Zl2_lhco_id   = 2;
 	
 	//
