@@ -8,11 +8,13 @@ void convert2LHCO_MC(std::string infile,std::string outfile,int proc)
 {
    gROOT->SetBatch(1);   
 
-   if( proc<-1 || proc > 5 )
+   if( proc<-1 || proc > 6 )
      {
-	std::cout << "proc can only take following values: -1,1,2,3,4,5" << std::endl;
+	std::cout << "proc can only take following values: -1,1,2,3,4,5,6" << std::endl;
+	std::cout << "3l final state specific" << std::endl;	
 	std::cout << "1,2,3,4: specific to the ttH final state, cf patches provided to madweight" << std::endl;
-	std::cout << "5: specific to the ttZ, select Z->ll" << std::endl;
+	std::cout << "5: specific to the ttZ with l+l-l+ final state" << std::endl;
+	std::cout << "6: specific to the ttZ with l+l-l- final state" << std::endl;
 	std::cout << "-1: no selection on the final state applied" << std::endl;
 	
 	gApplication->Terminate();
@@ -60,6 +62,11 @@ void convert2LHCO_MC(std::string infile,std::string outfile,int proc)
   Int_t mc_truth_Zl2_id = -555;
   TLorentzVector* mc_truth_Zl2_p4 = 0;
   
+  Int_t mc_truth_tWtau1_id = -555; 
+  TLorentzVector* mc_truth_tWtau1_p4 = 0;
+  Int_t mc_truth_tWtau2_id = -555;
+  TLorentzVector* mc_truth_tWtau2_p4 = 0;
+ 
   TBranch* b_mc_truth_h0_id;
   TBranch* b_mc_truth_h0_p4;
   TBranch* b_mc_truth_h0Wl1_id;
@@ -96,6 +103,11 @@ void convert2LHCO_MC(std::string infile,std::string outfile,int proc)
   TBranch* b_mc_truth_Zl1_p4;
   TBranch* b_mc_truth_Zl2_id;
   TBranch* b_mc_truth_Zl2_p4;
+  
+  TBranch* b_mc_truth_tWtau1_id;
+  TBranch* b_mc_truth_tWtau1_p4;
+  TBranch* b_mc_truth_tWtau2_id;
+  TBranch* b_mc_truth_tWtau2_p4;
 
   TChain ch("FlatTree/tree");
    
@@ -136,7 +148,11 @@ void convert2LHCO_MC(std::string infile,std::string outfile,int proc)
   ch.SetBranchAddress("mc_truth_Zl2_id",&mc_truth_Zl2_id,&b_mc_truth_Zl2_id);
   ch.SetBranchAddress("mc_truth_Zl2_p4",&mc_truth_Zl2_p4,&b_mc_truth_Zl2_p4);
 
-   
+  ch.SetBranchAddress("mc_truth_tWtau1_id",&mc_truth_tWtau1_id,&b_mc_truth_tWtau1_id);
+  ch.SetBranchAddress("mc_truth_tWtau1_p4",&mc_truth_tWtau1_p4,&b_mc_truth_tWtau1_p4);
+  ch.SetBranchAddress("mc_truth_tWtau2_id",&mc_truth_tWtau2_id,&b_mc_truth_tWtau2_id);
+  ch.SetBranchAddress("mc_truth_tWtau2_p4",&mc_truth_tWtau2_p4,&b_mc_truth_tWtau2_p4);
+
   ch.Add(fileName.c_str());
   
   // needed for LHCO  definition
@@ -300,11 +316,16 @@ void convert2LHCO_MC(std::string infile,std::string outfile,int proc)
 	    !(mc_truth_h0Wl1_id != -666 && mc_truth_h0Wl2_id != -666) ) print = true; 
 	
 	if( proc == 5 && mc_truth_Zl1_id != -666 && mc_truth_Zl2_id != -666 &&
-	    (mc_truth_tWl1_id != -666 || mc_truth_tWl2_id != -666) ) print = true; 
-	
+	    ((mc_truth_tWl1_id != -666 && mc_truth_tWl1_id>0 && mc_truth_tWl2_id == -666 && mc_truth_tWtau2_id == -666) || 
+	     (mc_truth_tWl2_id != -666 && mc_truth_tWl2_id>0 && mc_truth_tWl1_id == -666 && mc_truth_tWtau1_id == -666)) ) print = true; 
+	  
+	if( proc == 6 && mc_truth_Zl1_id != -666 && mc_truth_Zl2_id != -666 &&
+	    ((mc_truth_tWl1_id != -666 && mc_truth_tWl1_id<0 && mc_truth_tWl2_id == -666 && mc_truth_tWtau2_id == -666) || 
+	     (mc_truth_tWl2_id != -666 && mc_truth_tWl2_id<0 && mc_truth_tWl1_id == -666 && mc_truth_tWtau1_id == -666)) ) print = true; 
+	  	  
 	if( proc == -1 ) print = true;
 	
-	
+ 
 	
 	if ( print == true )
 	 {
@@ -317,7 +338,7 @@ void convert2LHCO_MC(std::string infile,std::string outfile,int proc)
 	  if( mc_truth_tWl1_id  != -666 )   fout << l3_fline << std::endl;
 	  if( mc_truth_tWl2_id  != -666 )   fout << l4_fline << std::endl;
 	  if( mc_truth_Zl1_id   != -666 )   fout << l5_fline << std::endl;
-	  if( mc_truth_Zl2_id   != -666 )   fout << l6_fline << std::endl;	  
+	  if( mc_truth_Zl2_id   != -666 )   fout << l6_fline << std::endl;	     
 	  if( mc_truth_tWq11_id != -666 )   fout << j1_fline << std::endl;
 	  if( mc_truth_tWq21_id != -666 )   fout << j2_fline << std::endl;
 	  if( mc_truth_tWq12_id != -666 )   fout << j3_fline << std::endl;
@@ -327,8 +348,7 @@ void convert2LHCO_MC(std::string infile,std::string outfile,int proc)
           
 	  fout << met_fline << std::endl;	
          }
-	 
-	 
+	
      }   
    
    gApplication->Terminate();
