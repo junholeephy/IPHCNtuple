@@ -9,7 +9,7 @@ Install
 ```
 # ROOT is required
 
-git clone https://github.com/kskovpen/ttH.git
+git clone https://github.com/IPHC/ttH.git
 
 cd ttH/
 
