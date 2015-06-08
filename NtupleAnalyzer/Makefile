@@ -2,8 +2,8 @@
 
 CC = g++ -g
 
-NTUPLEINC    = -I$(CMSSW_BASE)/src/NtupleProducer/include
-NTUPLELIB    = -L$(CMSSW_BASE)/src/NtupleProducer \
+NTUPLEINC    = -I../NtupleProducer/include
+NTUPLELIB    = -L../NtupleProducer \
               -lNtuple
 
 SOVERSION               = $(shell echo $(VERSION) | \
@@ -21,13 +21,12 @@ LDLIBS  = $(ROOTLIBS) $(NTUPLELIB)
 
 ADDINC = $(NTUPLEINC)
 
-SRC = src/Analyzer.cxx src/Hist.cxx src/TransferFunc.cxx \
-      src/TopHiggs.cxx
+SRC = src/Analyzer.cxx src/Hist.cxx src/TransferFunc.cxx
 
 INC = include/Hist.h include/Ranges.h include/Analyzer.h \
-      include/TransferFunc.h include/TopHiggs.h
+      include/TransferFunc.h
 
-OBJ = Analyzer.o Hist.o TransferFunc.o TopHiggs.o
+OBJ = Analyzer.o Hist.o TransferFunc.o
 
 EXE = Analyzer
 
