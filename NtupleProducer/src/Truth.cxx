@@ -42,7 +42,7 @@ void Truth::read()
 	
 	gen_n_sel++;
      }
-
+/*
    _mc_truth_n = 0;
    
    // top as ttbar
@@ -145,57 +145,6 @@ void Truth::read()
 	_mc_truth_n++;
      }
 
-   // top as single top
-/*   int mc_truth_t_id = ntP->mc_truth_t_id;
-   if( mc_truth_t_id != UNINT )
-     {
-	_mc_truth_id.push_back(mc_truth_t_id);
-	_mc_truth_p4.push_back(*(ntP->mc_truth_t_p4));
-	_mc_truth_label.push_back(4);
-	_mc_truth_n++;
-     }   
-   
-   int mc_truth_tW_id = ntP->mc_truth_tW_id;
-   if( mc_truth_tW_id != UNINT )
-     {
-	_mc_truth_id.push_back(mc_truth_tW_id);
-	_mc_truth_p4.push_back(*(ntP->mc_truth_tW_p4));
-	_mc_truth_label.push_back(40);
-	_mc_truth_n++;
-     }   
-   int mc_truth_tb_id = ntP->mc_truth_tb_id;
-   if( mc_truth_tb_id != UNINT )
-     {
-	_mc_truth_id.push_back(mc_truth_tb_id);
-	_mc_truth_p4.push_back(*(ntP->mc_truth_tb_p4));
-	_mc_truth_label.push_back(41);
-	_mc_truth_n++;
-     }   
-   int mc_truth_tWl_id = ntP->mc_truth_tWl_id;
-   if( mc_truth_tWl_id != UNINT )
-     {
-	_mc_truth_id.push_back(mc_truth_tWl_id);
-	_mc_truth_p4.push_back(*(ntP->mc_truth_tWl_p4));
-	_mc_truth_label.push_back(420);
-	_mc_truth_n++;
-     }   
-   int mc_truth_tWq1_id = ntP->mc_truth_tWq1_id;
-   if( mc_truth_tWq1_id != UNINT )
-     {
-	_mc_truth_id.push_back(mc_truth_tWq1_id);
-	_mc_truth_p4.push_back(*(ntP->mc_truth_tWq1_p4));
-	_mc_truth_label.push_back(422);
-	_mc_truth_n++;
-     }   
-   int mc_truth_tWq2_id = ntP->mc_truth_tWq2_id;
-   if( mc_truth_tWq2_id != UNINT )
-     {
-	_mc_truth_id.push_back(mc_truth_tWq2_id);
-	_mc_truth_p4.push_back(*(ntP->mc_truth_tWq2_p4));
-	_mc_truth_label.push_back(423);
-	_mc_truth_n++;
-     }   
-*/   
    // higgs
    int mc_truth_h0_id = ntP->mc_truth_h0_id;
    if( mc_truth_h0_id != UNINT )
@@ -374,7 +323,7 @@ void Truth::read()
      }
 
    // bbbar
-/*   int mc_truth_h0b1_id = ntP->mc_truth_h0b1_id;
+   int mc_truth_h0b1_id = ntP->mc_truth_h0b1_id;
    if( mc_truth_h0b1_id != UNINT )
      {
 	_mc_truth_id.push_back(mc_truth_h0b1_id);
