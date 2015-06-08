@@ -1,15 +1,5 @@
 #include "../include/NtupleProducer.h"
-/*
-#include "TrigRootAnalysis/TrigDecisionToolD3PD.h"
-#include "TrigRootAnalysis/TrigConfigSvcD3PD.h"
 
-#include "GoodRunsLists/DQHelperFunctions.h"
-#include "GoodRunsLists/TGoodRunsListReader.h"
-#include "GoodRunsLists/TGoodRunsListWriter.h"
-
-#include "LeptonTruthTools/RecoTruthMatch.h"
-#include "SKYNtuple/HforToolD3PD.h"
-*/
 #include "Riostream.h"
 #include "TSystem.h"
 
@@ -19,28 +9,15 @@
 #include <algorithm>
 #include <assert.h>
 
-//#include <Cintex/Cintex.h>
-
 Tree *ntP;
 TChain *ch;
 Ntuple *nt;
 std::vector<int> *evdebug;
-/*SKY::D3PDfast *ntPfast;
 
-D3PD::TrigDecisionToolD3PD *m_tdt;
-*/
 unsigned int idx;
-/*int isData;
-int nocut;
-int dbug;
 
-void CopyMetadata(TFile*,TFile*);
-double Mt(TLorentzVector,TLorentzVector);
-*/
 int main(int argc, char *argv[])
 {
-//   gSystem->Load("/cvmfs/cms.cern.ch/slc6_amd64_gcc480/external/dpm/1.8.0.1-cms/lib/libdpm.so");
-   
    if( argc < 2 )
      {
 	std::cout << "NtupleProducer usage:" << std::endl;
@@ -63,10 +40,6 @@ int main(int argc, char *argv[])
    
    std::cout << "--file=" << fname << std::endl;
    std::cout << "--tree=" << stream << std::endl;
-
-   // force the production of dictionary to get rid of TBuffer errors on GRID
-//   ROOT::Cintex::Cintex::Enable();
-//   gROOT->ProcessLine("#include <vector>");
    
    Tree tree(0,const_cast<char*>(fname),stream);
    ntP = &tree;
@@ -89,7 +62,6 @@ int main(int argc, char *argv[])
 
    evdebug = new std::vector<int>();
 //   evdebug->push_back(120);
-//   evdebug->push_back(142);
    
    for(Long64_t i=0;i<nentries;i++)
      {   
@@ -102,17 +74,7 @@ int main(int argc, char *argv[])
 	bool isHtoZZ = (abs(ntP->mc_truth_h0Z1_id) == 23 &&
 			abs(ntP->mc_truth_h0Z2_id) == 23);
 	bool isHtoTT = (abs(ntP->mc_truth_h0tau1_id) == 15 &&
-			abs(ntP->mc_truth_h0tau2_id) == 15);
-	
-	for(int id=0;id<evdebug->size();id++)
-	  {
-	     if( ntP->ev_id == evdebug->at(id) )
-	       {
-		  std::cout << "isHtoWW=" << isHtoWW <<
-		    " isHtoZZ=" << isHtoZZ <<
-		    " isHtoTT=" << isHtoTT << std::endl;
-	       }
-	  }	
+			abs(ntP->mc_truth_h0tau2_id) == 15);	
 */	
 //	if( !(isHtoWW || isHtoZZ || isHtoTT) ) continue;
 	

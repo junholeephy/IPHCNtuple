@@ -73,13 +73,6 @@ void Jet::sel()
      {
 	float dr = GetDeltaR(_eta,_phi,nt->NtElectron->at(ie).eta(),nt->NtElectron->at(ie).phi());
 	if( dr < 0.4 && nt->NtElectron->at(ie).pt() > 10. && nt->NtElectron->at(ie).isTight() ) pass_elOverlap = 0;
-/*	for(int id=0;id<evdebug->size();id++)
-	  {	
-	     if( nt->NtEvent->at(0).id() == evdebug->at(id) )
-	       {
-		  std::cout << "el(pt=" << nt->NtElectron->at(ie).pt() << ") dr=" << dr << " overlap=" << pass_elOverlap << std::endl;
-	       }
-	  }*/
      }  
    
    _isTight = (
