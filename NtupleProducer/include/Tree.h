@@ -174,7 +174,8 @@ public :
    vector<int>     *jet_ntrk;
    vector<float>   *jet_CSV;
    vector<float>   *jet_CSVv2;
-   vector<int>     *jet_flavour;
+   vector<int>     *jet_partonFlavour;
+   vector<int>     *jet_hadronFlavour;
    vector<float>   *jet_neutralHadronEnergy;
    vector<float>   *jet_neutralEmEnergy;
    vector<float>   *jet_chargedHadronEnergy;
@@ -182,13 +183,13 @@ public :
    vector<float>   *jet_electronEnergy;
    vector<float>   *jet_muonEnergy;
    vector<float>   *jet_photonEnergy;
-   vector<float>   *jet_gen_pt;
-   vector<float>   *jet_gen_eta;
-   vector<float>   *jet_gen_phi;
-   vector<float>   *jet_gen_m;
-   vector<float>   *jet_gen_E;
-   vector<int>     *jet_gen_status;
-   vector<int>     *jet_gen_id;
+   vector<float>   *jet_genJet_pt;
+   vector<float>   *jet_genJet_eta;
+   vector<float>   *jet_genJet_phi;
+   vector<float>   *jet_genJet_m;
+   vector<float>   *jet_genJet_E;
+   vector<int>     *jet_genJet_status;
+   vector<int>     *jet_genJet_id;
    vector<float>   *jet_pileupJetId;
 
    Int_t gen_n;
@@ -446,7 +447,8 @@ public :
    TBranch        *b_jet_ntrk;   //!
    TBranch        *b_jet_CSV;   //!
    TBranch        *b_jet_CSVv2;   //!
-   TBranch        *b_jet_flavour;   //!
+   TBranch        *b_jet_partonFlavour;   //!
+   TBranch        *b_jet_hadronFlavour;   //!
    TBranch        *b_jet_neutralHadronEnergy;   //!
    TBranch        *b_jet_neutralEmEnergy;   //!
    TBranch        *b_jet_chargedHadronEnergy;   //!
@@ -454,13 +456,13 @@ public :
    TBranch        *b_jet_electronEnergy;   //!
    TBranch        *b_jet_muonEnergy;   //!
    TBranch        *b_jet_photonEnergy;   //!
-   TBranch        *b_jet_gen_pt;   //!
-   TBranch        *b_jet_gen_eta;   //!
-   TBranch        *b_jet_gen_phi;   //!
-   TBranch        *b_jet_gen_m;   //!
-   TBranch        *b_jet_gen_E;   //!
-   TBranch        *b_jet_gen_status;   //!
-   TBranch        *b_jet_gen_id;   //!
+   TBranch        *b_jet_genJet_pt;   //!
+   TBranch        *b_jet_genJet_eta;   //!
+   TBranch        *b_jet_genJet_phi;   //!
+   TBranch        *b_jet_genJet_m;   //!
+   TBranch        *b_jet_genJet_E;   //!
+   TBranch        *b_jet_genJet_status;   //!
+   TBranch        *b_jet_genJet_id;   //!
    TBranch        *b_jet_pileupJetId;   //!
 
    TBranch        *b_gen_n;
