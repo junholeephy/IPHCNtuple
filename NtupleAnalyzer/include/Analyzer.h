@@ -16,9 +16,6 @@
 #include "TH1D.h"
 #include "TRandom3.h"
 
-//#include "../CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
-//#include "../CondFormats/JetMETObjects/interface/JetCorrectionUncertainty.h"
-
 #define CHECK_BIT(var,pos) (((var) & (1<<(pos))) != 0 )
 
 #endif
