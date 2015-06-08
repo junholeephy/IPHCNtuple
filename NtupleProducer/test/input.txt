@@ -1,1 +1,1 @@
-/opt/sbg/data/safe1/cms/kskovpen/NtuplerDEV/CMSSW_7_2_3/src/IPHCFlatTree/FlatTreeProducer/test/output.root
+root://sbgse1.in2p3.fr//dpm/in2p3.fr/home/cms/phedex/store/user/kskovpen/FlatTree/MantaRay-pre-patch3-v20150607/TTbarH_M-125_13TeV_amcatnlo-pythia8-tauola/Phys14DR_PU20bx25_tsg_PHYS14_25_V1_v2_MINIAODSIM/150607_102909/0000/output_1.root
