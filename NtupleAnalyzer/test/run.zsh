@@ -4,11 +4,10 @@ cdir=$(pwd)/../
 NtupleDir=$(pwd)/../../NtupleProducer/
 export LD_LIBRARY_PATH=${cdir}:${NtupleDir}:$LD_LIBRARY_PATH
 
-# tools: plot, tran, th
+# tools: plot, tran
 
 ./../Analyzer \
 input.txt \
-testfile \
 plot \
 1
 
