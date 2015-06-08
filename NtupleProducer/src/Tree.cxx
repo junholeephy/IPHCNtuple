@@ -194,7 +194,8 @@ void Tree::Init(TChain *ch)
    jet_ntrk = 0;
    jet_CSV = 0;
    jet_CSVv2 = 0;
-   jet_flavour = 0;
+   jet_partonFlavour = 0;
+   jet_hadronFlavour = 0;
    jet_neutralHadronEnergy = 0;
    jet_neutralEmEnergy = 0;
    jet_chargedHadronEnergy = 0;
@@ -202,13 +203,13 @@ void Tree::Init(TChain *ch)
    jet_electronEnergy = 0;
    jet_muonEnergy = 0;
    jet_photonEnergy = 0;
-   jet_gen_pt = 0;
-   jet_gen_eta = 0;
-   jet_gen_phi = 0;
-   jet_gen_m = 0;
-   jet_gen_E = 0;
-   jet_gen_status = 0;
-   jet_gen_id = 0;
+   jet_genJet_pt = 0;
+   jet_genJet_eta = 0;
+   jet_genJet_phi = 0;
+   jet_genJet_m = 0;
+   jet_genJet_E = 0;
+   jet_genJet_status = 0;
+   jet_genJet_id = 0;
    jet_pileupJetId = 0;
 
    gen_pt = 0;
@@ -470,7 +471,8 @@ void Tree::Init(TChain *ch)
    fChain->SetBranchAddress("jet_ntrk", &jet_ntrk, &b_jet_ntrk);
    fChain->SetBranchAddress("jet_CSV", &jet_CSV, &b_jet_CSV);
    fChain->SetBranchAddress("jet_CSVv2", &jet_CSVv2, &b_jet_CSVv2);
-   fChain->SetBranchAddress("jet_flavour", &jet_flavour, &b_jet_flavour);
+   fChain->SetBranchAddress("jet_partonFlavour", &jet_partonFlavour, &b_jet_partonFlavour);
+   fChain->SetBranchAddress("jet_hadronFlavour", &jet_hadronFlavour, &b_jet_hadronFlavour);
    fChain->SetBranchAddress("jet_neutralHadronEnergy", &jet_neutralHadronEnergy, &b_jet_neutralHadronEnergy);
    fChain->SetBranchAddress("jet_neutralEmEnergy", &jet_neutralEmEnergy, &b_jet_neutralEmEnergy);
    fChain->SetBranchAddress("jet_chargedHadronEnergy", &jet_chargedHadronEnergy, &b_jet_chargedHadronEnergy);
@@ -478,13 +480,13 @@ void Tree::Init(TChain *ch)
    fChain->SetBranchAddress("jet_electronEnergy", &jet_electronEnergy, &b_jet_electronEnergy);
    fChain->SetBranchAddress("jet_muonEnergy", &jet_muonEnergy, &b_jet_muonEnergy);
    fChain->SetBranchAddress("jet_photonEnergy", &jet_photonEnergy, &b_jet_photonEnergy);
-   fChain->SetBranchAddress("jet_gen_pt", &jet_gen_pt, &b_jet_gen_pt);
-   fChain->SetBranchAddress("jet_gen_eta", &jet_gen_eta, &b_jet_gen_eta);
-   fChain->SetBranchAddress("jet_gen_phi", &jet_gen_phi, &b_jet_gen_phi);
-   fChain->SetBranchAddress("jet_gen_m", &jet_gen_m, &b_jet_gen_m);
-   fChain->SetBranchAddress("jet_gen_E", &jet_gen_E, &b_jet_gen_E);
-   fChain->SetBranchAddress("jet_gen_status", &jet_gen_status, &b_jet_gen_status);
-   fChain->SetBranchAddress("jet_gen_id", &jet_gen_id, &b_jet_gen_id);
+   fChain->SetBranchAddress("jet_genJet_pt", &jet_genJet_pt, &b_jet_genJet_pt);
+   fChain->SetBranchAddress("jet_genJet_eta", &jet_genJet_eta, &b_jet_genJet_eta);
+   fChain->SetBranchAddress("jet_genJet_phi", &jet_genJet_phi, &b_jet_genJet_phi);
+   fChain->SetBranchAddress("jet_genJet_m", &jet_genJet_m, &b_jet_genJet_m);
+   fChain->SetBranchAddress("jet_genJet_E", &jet_genJet_E, &b_jet_genJet_E);
+   fChain->SetBranchAddress("jet_genJet_status", &jet_genJet_status, &b_jet_genJet_status);
+   fChain->SetBranchAddress("jet_genJet_id", &jet_genJet_id, &b_jet_genJet_id);
    fChain->SetBranchAddress("jet_pileupJetId", &jet_pileupJetId, &b_jet_pileupJetId);
 
    if( fChain->GetBranch("gen_n") ) fChain->SetBranchAddress("gen_n", &gen_n, &b_gen_n);
