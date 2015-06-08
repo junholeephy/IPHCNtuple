@@ -88,8 +88,8 @@ int main(int argc, char *argv[])
    Truth truth;
 
    evdebug = new std::vector<int>();
-   evdebug->push_back(120);
-   evdebug->push_back(142);
+//   evdebug->push_back(120);
+//   evdebug->push_back(142);
    
    for(Long64_t i=0;i<nentries;i++)
      {   
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 
 	nt->clearVar();	
 	
-	bool isHtoWW = (abs(ntP->mc_truth_h0W1_id) == 24 &&
+/*	bool isHtoWW = (abs(ntP->mc_truth_h0W1_id) == 24 &&
 			abs(ntP->mc_truth_h0W2_id) == 24);
 	bool isHtoZZ = (abs(ntP->mc_truth_h0Z1_id) == 23 &&
 			abs(ntP->mc_truth_h0Z2_id) == 23);
@@ -113,17 +113,16 @@ int main(int argc, char *argv[])
 		    " isHtoTT=" << isHtoTT << std::endl;
 	       }
 	  }	
-	
-//////	if( !(isHtoWW || isHtoZZ) ) continue;
-	if( !(isHtoWW || isHtoZZ || isHtoTT) ) continue;
+*/	
+//	if( !(isHtoWW || isHtoZZ || isHtoTT) ) continue;
 	
 	// event
 	ev.init();
 	ev.read();
 	
-	if( isHtoWW ) ev._tth_channel = 0;
-	else if( isHtoZZ ) ev._tth_channel = 1;
-	else if( isHtoTT ) ev._tth_channel = 2;
+//	if( isHtoWW ) ev._tth_channel = 0;
+//	else if( isHtoZZ ) ev._tth_channel = 1;
+//	else if( isHtoTT ) ev._tth_channel = 2;
 	
 	nt->NtEvent->push_back(ev);
 	
