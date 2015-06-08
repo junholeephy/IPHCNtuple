@@ -1,22 +1,10 @@
 #include "../include/Hist.h"
 #include "../include/TransferFunc.h"
-//#include "ChargeMisid.h"
-//#include "RealEff.h"
-//#include "FakeRate.h"
-//#include "FakePred.h"
-//#include "FakeCR.h"
-//#include "FakeWeight.h"
 
 char *fin;
-char *flog;
-//char *runmode;
 char *tool;
 char *evc;
-//int lept;
-//int lepm;
-//int imfake;
 TTree *tr;
-//TTree *treePRESCALE;
 
 std::vector<Electron>             *v_Electron;
 std::vector<Muon>             *v_Muon;
@@ -26,27 +14,23 @@ std::vector<Truth>             *v_Truth;
 
 int main(int argc, char *argv[])
 {
-   if( argc < 4 )
+   if( argc < 3 )
      {
-	std::cout << "Usage: ./Analyzer [input file] [log file] [tool] [evc]" << std::endl;
+	std::cout << "Usage: ./Analyzer [input file] [tool] [evc]" << std::endl;
 	exit(1);
      }   
    
    fin = argv[1];
-   flog = argv[2];
-   tool = argv[3];
-   evc = argv[4];
+   tool = argv[2];
+   evc = argv[3];
    
    TChain f("Nt");
-   
-//	std::stringstream fnamev(fin);
 
    std::ifstream infile;
    infile.open(fin);
    
    std::string ifile = "";
    while( getline(infile, ifile) )
-     //	while( getline(fnamev, ifile, '@') )
      {
 	std::cout << ifile.c_str() << std::endl;
 	f.Add(ifile.c_str());
@@ -67,18 +51,8 @@ int main(int argc, char *argv[])
    f.SetBranchAddress("Truth", &v_Truth);
 
    int nent = f.GetEntries();
-   std::cout << nent << std::endl;
-   
-/*   SKYPLOT::FakeWeight fakeWeight;
-   if( strcmp(tool,"realeff") != 0 &&
-       strcmp(tool,"fakerate") != 0 )
-     {		
-	std::cout << "Read real efficiencies" << std::endl;
-	fakeWeight.readRealEff();
-	std::cout << "Read fake rate" << std::endl;
-	fakeWeight.readFakeRate();
-     }   
-  */ 
+   std::cout << "Number of input events in the file: " << nent << std::endl;
+
    std::cout << "Initialisation completed" << std::endl;
    
    if( strcmp(tool,"plot") == 0 )
@@ -90,7 +64,6 @@ int main(int argc, char *argv[])
 	hist.setMuon(v_Muon);
 	hist.setEvent(v_Event);
 	hist.setJet(v_Jet);
-//	hist.setFakeWeight(fakeWeight);
 	
 	if( strcmp(evc,"1") == 0 )
 	  {
@@ -139,106 +112,6 @@ int main(int argc, char *argv[])
 	
 	tran.close();
      }
-/*   else if( strcmp(tool,"misid") == 0 )
-     {		
-	SKYPLOT::ChargeMisid misid;
-	
-	misid.init();
-	misid.setEvent(v_Event);
-	misid.setElectron(v_Electron);
-	misid.setMuon(v_Muon);
-//	misid.setTau(v_Tau);
-	misid.setJet(v_Jet);
-	
-	for(int i=0;i<nent;i++)
-	  {	
-	     f.GetEntry(i);
-	     
-	     misid.run();
-	  }   
-	
-	misid.close();
-     }   
-   else if( strcmp(tool,"realeff") == 0 )
-     {		
-	SKYPLOT::RealEff realeff;
-	
-	realeff.init();
-	realeff.setEvent(v_Event);
-	realeff.setElectron(v_Electron);
-	realeff.setMuon(v_Muon);
-	realeff.setJet(v_Jet);
-	
-	for(int i=0;i<nent;i++)
-	  {	
-	     f.GetEntry(i);
-	     
-	     realeff.run();
-	  }   
-	
-	realeff.close();
-     }   
-   else if( strcmp(tool,"fakerate") == 0 )
-     {		
-	SKYPLOT::FakeRate fakerate;
-	
-	fakerate.init();
-	fakerate.setEvent(v_Event);
-	fakerate.setElectron(v_Electron);
-	fakerate.setMuon(v_Muon);
-//	fakerate.setTau(v_Tau);
-	fakerate.setJet(v_Jet);
-	fakerate.setMet(v_Met);
-	
-	for(int i=0;i<nent;i++)
-	  {	
-	     f.GetEntry(i);
-	     
-	     fakerate.run();
-	  }   
-	
-	fakerate.close();
-     }   
-   else if( strcmp(tool,"fakepred") == 0 )
-     {		
-	SKYPLOT::FakePred fakepred;
-	
-	fakepred.init();
-	fakepred.setEvent(v_Event);
-	fakepred.setElectron(v_Electron);
-	fakepred.setMuon(v_Muon);
-//	fakepred.setTau(v_Tau);
-	fakepred.setJet(v_Jet);
-	
-	for(int i=0;i<nent;i++)
-	  {	
-	     f.GetEntry(i);
-	     
-	     fakepred.run();
-	  }   
-	
-	fakepred.close();
-     }   
-   else if( strcmp(tool,"fakecr") == 0 )
-     {		
-	SKYPLOT::FakeCR fakecr;
-	
-	fakecr.init();
-	fakecr.setEvent(v_Event);
-	fakecr.setElectron(v_Electron);
-	fakecr.setMuon(v_Muon);
-	fakecr.setJet(v_Jet);
-	fakecr.setMet(v_Met);
-	
-	for(int i=0;i<nent;i++)
-	  {	
-	     f.GetEntry(i);
-	     
-	     fakecr.fill();
-	  }   
-	
-	fakecr.close();
-     }*/
    else
      {
 	std::cout << "Select a proper tool" << std::endl;
