@@ -7,7 +7,7 @@ Install
 -------
 
 ```
-# ROOT is required
+# ROOT is required, please use CMSSW 7_2_3
 
 git clone https://github.com/IPHC/ttH.git
 
