@@ -18,21 +18,24 @@ unsigned int idx;
 
 int main(int argc, char *argv[])
 {
-   if( argc < 2 )
+   if( argc < 3 )
      {
 	std::cout << "NtupleProducer usage:" << std::endl;
 	std::cout << "--file: input filename" << std::endl;
 	std::cout << "--tree: TTree name" << std::endl;
+	std::cout << "--nmax: max number of events" << std::endl;
 	exit(1);
      }
    
    const char *fname_str = "output.root";
    const char *stream_str = "FlatTree/tree";
+   int nmax = -1;
    
    for(int i=0;i<argc;i++)
      {
 	if( ! strcmp(argv[i],"--file") ) fname_str = argv[i+1];
 	if( ! strcmp(argv[i],"--tree") ) stream_str = argv[i+1];
+	if( ! strcmp(argv[i],"--nmax") ) nmax = atoi(argv[i+1]);
      }   
    
    const char *fname  = fname_str;
@@ -64,7 +67,9 @@ int main(int argc, char *argv[])
 //   evdebug->push_back(120);
    
    for(Long64_t i=0;i<nentries;i++)
-     {   
+     {
+	if( i > nmax && nmax >= 0 ) break; 
+	
 	ch->GetEntry(i);
 
 	nt->clearVar();	
