@@ -5,8 +5,6 @@
 #include "TLorentzVector.h"
 #include "Base.h"
 
-//#include "EgammaAnalysis/ElectronTools/interface/EGammaMvaEleEstimator.h"
-
 class Electron : public Base
 {
  public:
@@ -19,9 +17,7 @@ class Electron : public Base
    int ID()    {return _ID;};
    
    void setFakeType(int faketype)       {_fakeType = faketype;};
-//   void setChargeFlip(bool chargeflip)  {_chargeFlip = chargeflip;};
    int fakeType()    {return _fakeType;};
-//   bool chargeFlip() {return _chargeFlip;};
    void sel();
    
    // kinematics
@@ -78,7 +74,6 @@ class Electron : public Base
    int _ID;
    
    int _fakeType;
-//   bool _chargeFlip;
 
    bool _pass_isGsfCtfScPixChargeConsistent;
    

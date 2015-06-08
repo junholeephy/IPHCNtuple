@@ -24,7 +24,6 @@ class Base : public TLorentzVector
 	  return res;
        }
    
-//   std::pair<int,bool> truthGetParent(int p);
    float GetDPhi(float phi1,float phi2);
    float GetDeltaR(float eta1,float phi1,float eta2,float phi2);
 	

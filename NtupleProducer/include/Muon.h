@@ -17,9 +17,7 @@ class Muon : public Base
    int ID()    {return _ID;};
    
    void setFakeType(int faketype)       {_fakeType = faketype;};
-//   void setChargeFlip(bool chargeflip)  {_chargeFlip = chargeflip;};
    int fakeType()    {return _fakeType;};
-//   bool chargeFlip() {return _chargeFlip;};
    void sel();
    
    // kinematics
@@ -70,7 +68,6 @@ class Muon : public Base
    int _ID;
    
    int _fakeType;
-//   bool _chargeFlip;
 	
    float _E;
    float _pt;

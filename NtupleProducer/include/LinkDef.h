@@ -14,8 +14,6 @@
 #pragma link C++ nestedclasses;
 #pragma link C++ nestedtypedef;
 
-//#pragma link C++ class std::pair<TString,double>+;
-//#pragma link C++ class std::pair<unsigned int,double>+;
 #pragma link C++ class Electron+;
 #pragma link C++ class std::vector<Electron>+;
 #pragma link C++ class Muon+;
