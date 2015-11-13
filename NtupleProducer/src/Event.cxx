@@ -31,12 +31,20 @@ void Event::read()
 
    int trigger_comb = 0;
 
-   if( ntP->trigger_pass.at(94)  == 1) {trigger_comb = trigger_comb + 1   ;} // [94]  HLT_Mu17_Mu8_DZ_v1
-   if( ntP->trigger_pass.at(216) == 1) {trigger_comb = trigger_comb + 10  ;} // [216] HLT_Ele17_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v1
-   if( ntP->trigger_pass.at(219) == 1) {trigger_comb = trigger_comb + 100 ;} // [219] HLT_Mu8_TrkIsoVVL_Ele17_CaloIdL_TrackIdL_IsoVL_v1
-   if( ntP->trigger_pass.at(221) == 1) {trigger_comb = trigger_comb + 1000;} // [221] HLT_Mu17_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v1
-   // for more triggers, see /opt/sbg/data/data2/cms/xcoubez/PhD2ndYear/Production/Production_7_4_12_patch4/dev/JetInformation/CMSSW_7_4_12_patch4/src/IPHCFlatTree/FlatTreeProducer/test/TriggerList.out...
+   //std::cout << "Taille menu: " << ntP->trigger_pass->size() << std::endl;
+   
+   //for( int i = 0; i < ntP->trigger->size(); i++)
+   //{
+   //    std::cout << "Trigger [" << i << "]: " << ntP->trigger_name->at(i) << std::endl;
+   //}
+       
+   if( ntP->trigger_pass->at(19) == 1) {trigger_comb = trigger_comb + 1   ;} // [19]  HLT_Mu17_Mu8_DZ_v1
+   if( ntP->trigger_pass->at(60) == 1) {trigger_comb = trigger_comb + 10  ;} // [60] HLT_Ele17_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v1
+   if( ntP->trigger_pass->at(63) == 1) {trigger_comb = trigger_comb + 100 ;} // [63] HLT_Mu8_TrkIsoVVL_Ele17_CaloIdL_TrackIdL_IsoVL_v1
+   if( ntP->trigger_pass->at(65) == 1) {trigger_comb = trigger_comb + 1000;} // [65] HLT_Mu17_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v1
+    //for more triggers, see /opt/sbg/data/data2/cms/xcoubez/PhD2ndYear/Production/Production_7_4_12_patch4/dev/JetInformation/CMSSW_7_4_12_patch4/src/IPHCFlatTree/FlatTreeProducer/test/TriggerList.out...
 
+   //std::cout << "Trigger combination = " << trigger_comb << std::endl;
    _trigger_pass = trigger_comb;
 }
 

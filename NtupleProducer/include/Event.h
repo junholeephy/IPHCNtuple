@@ -31,7 +31,7 @@ class Event : public Base
         float mc_ptHat()       {return _mc_ptHat;};
         int mc_pu_trueNumInt() {return _mc_pu_trueNumInt;};
 
-        int trigger_pass()     {return _trigger_pass;};
+        int ev_trigger_pass()     {return _trigger_pass;};
 
         int tth_channel()      {return _tth_channel;};
 

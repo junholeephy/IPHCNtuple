@@ -62,6 +62,10 @@ void Tree::Init(TChain *ch)
     // Init() will be called many times when running on PROOF
     // (once per file to be processed).
 
+    trigger      = 0;
+    trigger_pass = 0;
+    trigger_name = 0;
+
     // Set object pointer
     nvertex = 0;
     pv_x = 0;
@@ -663,16 +667,21 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("ev_id", &ev_id, &b_ev_id);
     fChain->SetBranchAddress("ev_lumi", &ev_lumi, &b_ev_lumi);
     fChain->SetBranchAddress("ev_rho", &ev_rho, &b_ev_rho);
-    fChain->SetBranchAddress("trigger_pass", &trigger_pass, &b_trigger_pass);
     
+    fChain->SetBranchAddress("trigger",      &trigger,      &b_trigger     );
+    fChain->SetBranchAddress("trigger_pass", &trigger_pass, &b_trigger_pass);
+    fChain->SetBranchAddress("trigger_name", &trigger_name, &b_trigger_name);
+
     fChain->SetBranchAddress("met_pt", &met_pt, &b_met_pt);
     fChain->SetBranchAddress("met_phi", &met_phi, &b_met_phi);
     fChain->SetBranchAddress("met_sumet", &met_sumet, &b_met_sumet);
+    
     fChain->SetBranchAddress("nvertex", &nvertex, &b_nvertex);
     fChain->SetBranchAddress("pv_x", &pv_x, &b_pv_x);
     fChain->SetBranchAddress("pv_y", &pv_y, &b_pv_y);
     fChain->SetBranchAddress("pv_z", &pv_z, &b_pv_z);
     fChain->SetBranchAddress("pv_zError", &pv_zError, &b_pv_zError);
+    
     fChain->SetBranchAddress("mc_id", &mc_id, &b_mc_id);
     fChain->SetBranchAddress("mc_f1", &mc_f1, &b_mc_f1);
     fChain->SetBranchAddress("mc_f2", &mc_f2, &b_mc_f2);

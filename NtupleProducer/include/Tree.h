@@ -34,15 +34,21 @@ class Tree {
         Int_t           ev_id;
         Int_t           ev_lumi;
         Float_t         ev_rho;
-        vector<bool>    trigger_pass;
+
+        vector<int>     *trigger;
+        vector<bool>    *trigger_pass;
+        vector<string>  *trigger_name;
+
         Float_t         met_pt;
         Float_t         met_phi;
         Float_t         met_sumet;
+
         Int_t           nvertex;
         Float_t         pv_x;
         Float_t         pv_y;
         Float_t         pv_z;
         Float_t         pv_zError;
+
         Int_t           mc_id;
         Int_t           mc_f1;
         Int_t           mc_f2;
@@ -653,15 +659,21 @@ class Tree {
         TBranch        *b_ev_id;   //!
         TBranch        *b_ev_lumi;   //!
         TBranch        *b_ev_rho;   //!
+
+        TBranch        *b_trigger;
         TBranch        *b_trigger_pass;
+        TBranch        *b_trigger_name;
+
         TBranch        *b_met_pt;   //!
         TBranch        *b_met_phi;   //!
         TBranch        *b_met_sumet;   //!
-    TBranch        *b_nvertex;   //!
+
+        TBranch        *b_nvertex;   //!
         TBranch        *b_pv_x;   //!
         TBranch        *b_pv_y;   //!
         TBranch        *b_pv_z;   //!
-    TBranch        *b_pv_zError;   //!
+        TBranch        *b_pv_zError;   //!
+
         TBranch        *b_mc_weight;   //!
         TBranch        *b_mc_id;   //!
         TBranch        *b_mc_f1;   //!

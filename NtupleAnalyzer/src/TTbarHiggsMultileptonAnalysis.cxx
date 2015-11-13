@@ -226,23 +226,23 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         bool nLooseBtag  = ( nLooseBJets                                              >= 2 );
         bool nMediumBtag = ( nMediumBJets                                             >= 1 );
 
-        if( nLep )
-        {	 
+        //if( nLep )
+        //{	 
             // PrintEventList(vSelectedLeptons,vSelectedJets);
             // theHistoManager->fillHisto("CutFlow", "noSel", "emu", sampleName.Data(),  1, theweight);
 
-            if( (vSelectedBTagJets.size() + vSelectedNonBTagJets.size()) >= 4)
-            {
-                theHistoManager->fillHisto("CutFlow", "noSel", "emu", sampleName.Data(),  2, theweight);
+        //    if( (vSelectedBTagJets.size() + vSelectedNonBTagJets.size()) >= 4)
+        //    {
+        //        theHistoManager->fillHisto("CutFlow", "noSel", "emu", sampleName.Data(),  2, theweight);
 
-                if(vSelectedBTagJets.size() >=1)
-                {		     
-                    theHistoManager->fillHisto("CutFlow", "noSel", "emu", sampleName.Data(),  3, theweight);
-                }//NBjet selection
-            }//end NJet selection
-        }//end nlepton selection
+        //        if(vSelectedBTagJets.size() >=1)
+        //        {		     
+        //            theHistoManager->fillHisto("CutFlow", "noSel", "emu", sampleName.Data(),  3, theweight);
+        //        }//NBjet selection
+        //    }//end NJet selection
+        //}//end nlepton selection
 
-        ThreeLeptonSelection(vSelectedLeptons, vSelectedJets, vSelectedBTagJets, vSelectedNonBTagJets, nLooseBtag, nMediumBtag);
+        ThreeLeptonSelection(vSelectedLeptons, vSelectedJets, vSelectedBTagJets, vSelectedNonBTagJets, nLooseBJets, nMediumBJets);
 
         /*std::cout << "Number of selected leptons:    " << vSelectedLeptons.size()     << std::endl;
         std::cout << "Number of selected jets   :    " << (vSelectedBTagJets.size() + vSelectedNonBTagJets.size()) << std::endl;
@@ -317,12 +317,44 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection(std::vector<Lepton> vSe
     // # Three leptons event selection #
     // #################################
 
+    // three lepton selection
     bool nLep        = ( vSelectedLeptons.size()                                  == 3 );
     bool nJets       = ( (vSelectedBTagJets.size() + vSelectedNonBTagJets.size()) >= 4 );
+
+
+    bool pass_OSSF = true;
+    if (nLep) 
+    { 
+        if ( ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(1).id() ) && ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188 < 10 ) )
+          || ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(2).id() ) && ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188 < 10 ) )
+          || ( ( vSelectedLeptons.at(1).id() == -vSelectedLeptons.at(2).id() ) && ( ( vSelectedLeptons.at(1).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188 < 10 ) ) )
+        { pass_OSSF = false ;}
+    }
+
+    // common selection
+    bool leading_lep_pt = 0;
+    if (nLep) leading_lep_pt = ( vSelectedLeptons.at(0).pt() > 20 );
+    bool following_lep_pt = 0;
+    if (nLep) following_lep_pt = ( vSelectedLeptons.at(1).pt() > 10 );
+
+    bool passMll12Gt12;
+    if (nLep) passMll12Gt12  = ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M()  > 12
+                              && ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(2).p4() ).M()  > 12
+                              && ( vSelectedLeptons.at(1).p4() + vSelectedLeptons.at(2).p4() ).M()  > 12 );
+
     bool nLooseBtag  = ( nLooseBJets                                              >= 2 );
     bool nMediumBtag = ( nMediumBJets                                             >= 1 );
 
-    if ( nLep && nJets && (nLooseBtag || nMediumBtag) )
+    std::cout << "nLep: "              << nLep 
+              << " nJets: "            << nJets 
+              << " pass_OSSF: "        << pass_OSSF 
+              << " leading_lep_pt: "   << leading_lep_pt 
+              << " following_lep_pt: " << following_lep_pt
+              << " passMll12Gt12: "    << passMll12Gt12 
+              << " nLooseBtag: "       << nLooseBtag 
+              << " nMediumBtag: "      << nMediumBtag << std::endl; 
+
+    if ( nLep && nJets && pass_OSSF && leading_lep_pt && following_lep_pt && passMll12Gt12 && (nLooseBtag || nMediumBtag) )
     {
 
         // #############################
@@ -334,7 +366,6 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection(std::vector<Lepton> vSe
         std::cout << "Number of selected jets   :    " << (vSelectedBTagJets.size() + vSelectedNonBTagJets.size()) << std::endl;
         std::cout << "Number of loose b jets    :    " << nLooseBJets                 << std::endl;
         std::cout << "Number of medium b jets   :    " << nMediumBJets                << std::endl;
-
 
     }
 }
