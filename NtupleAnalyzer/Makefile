@@ -1,0 +1,49 @@
+# Makefile
+
+CC = g++ -g -Wno-writable-strings -Wno-write-strings
+
+NTUPLEINC    = -I../NtupleProducer/include
+NTUPLELIB    = -L../NtupleProducer \
+              -lNtuple
+
+SOVERSION               = $(shell echo $(VERSION) | \
+                               sed 's/\(.*\)\.\(.*\)\.\(.*\)/\1:\2:0/')
+ROOTCONF                = root-config
+ROOTCINT                = $(shell $(ROOTCONF) --prefix)/bin/rootcint
+ROOTLIBS                = $(shell $(ROOTCONF) --libs)
+ROOTGLIBS               = $(shell $(ROOTCONF) --glibs)
+ROOTCFLAGS              = $(shell $(ROOTCONF) --cflags)
+INCLUDES                = $(shell $(ROOTCONF) --incdir) $(ROOTCFLAGS)
+CINTINCLUDES            = $(shell $(ROOTCONF) --incdir)
+LIBS                    = $(ROOTLIBS)
+
+LDLIBS  = $(ROOTLIBS) $(NTUPLELIB)
+
+ADDINC = $(NTUPLEINC)
+
+SRC = src/Analyzer.cxx src/Hist.cxx \
+src/TTbarDileptonAnalysis.cxx src/HistoManager.cxx \
+src/TTbarHiggsMultileptonAnalysis.cxx src/Lepton.cxx
+
+INC = include/Hist.h include/Ranges.h include/Analyzer.h \
+      include/TTbarDileptonAnalysis.h \
+      include/HistoManager.h include/TTbarHiggsMultileptonAnalysis.h \
+      include/Lepton.h
+
+OBJ = Analyzer.o Hist.o \
+TTbarDileptonAnalysis.o HistoManager.o \
+TTbarHiggsMultileptonAnalysis.o \
+Lepton.o
+
+EXE = Analyzer
+
+all:  	     		$(EXE)
+#			@rm -f *.o
+
+$(EXE):     	 	$(OBJ) $@
+
+$(OBJ):     		$(SRC) $(INC)
+		        $(CC) -c $(ROOTCFLAGS) $(ADDINC) $(SRC)
+
+clean: 		
+			@rm -f $(OBJ) $(EXE)
