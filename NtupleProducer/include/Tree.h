@@ -34,6 +34,7 @@ class Tree {
         Int_t           ev_id;
         Int_t           ev_lumi;
         Float_t         ev_rho;
+        vector<bool>    trigger_pass;
         Float_t         met_pt;
         Float_t         met_phi;
         Float_t         met_sumet;
@@ -652,6 +653,7 @@ class Tree {
         TBranch        *b_ev_id;   //!
         TBranch        *b_ev_lumi;   //!
         TBranch        *b_ev_rho;   //!
+        TBranch        *b_trigger_pass;
         TBranch        *b_met_pt;   //!
         TBranch        *b_met_phi;   //!
         TBranch        *b_met_sumet;   //!

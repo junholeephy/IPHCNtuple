@@ -62,6 +62,8 @@ void Tree::Init(TChain *ch)
     // Init() will be called many times when running on PROOF
     // (once per file to be processed).
 
+    trigger = 0;
+    
     // Set object pointer
     nvertex = 0;
     pv_x = 0;
@@ -663,7 +665,7 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("ev_id", &ev_id, &b_ev_id);
     fChain->SetBranchAddress("ev_lumi", &ev_lumi, &b_ev_lumi);
     fChain->SetBranchAddress("ev_rho", &ev_rho, &b_ev_rho);
-    fChain->SetBranchAddress("trigger_pass", &trigger_pass, &b_trigger_pass);
+    fChain->SetBranchAddress("trigger", &trigger, &b_trigger);
     
     fChain->SetBranchAddress("met_pt", &met_pt, &b_met_pt);
     fChain->SetBranchAddress("met_phi", &met_phi, &b_met_phi);
