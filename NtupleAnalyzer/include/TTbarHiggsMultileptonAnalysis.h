@@ -20,39 +20,46 @@
 
 class TTbarHiggsMultileptonAnalysis
 {
-  
- public: 
+
+ public:
    TTbarHiggsMultileptonAnalysis();
    TTbarHiggsMultileptonAnalysis(TString inputfilename, TTree *tree, TString theSampleName);
-   
+
    ~TTbarHiggsMultileptonAnalysis();
-    
+
    void createHistograms();
    void writeHistograms();
-   
+
    void PrintEventList(std::vector<Lepton> leptons,std::vector<Jet> jets);
-      
+
+   void ThreeLeptonSelection(std::vector<Lepton> vSelectedLeptons,
+                             std::vector<Jet>    vSelectedJets,
+                             std::vector<Jet>    vSelectedBTagJets,
+                             std::vector<Jet>    vSelectedNonBTagJets,
+                             int                 nLoose,
+                             int                 nMedium);
+
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
-   
+
    std::vector<Electron>             *vElectron             = new std::vector<Electron>();
    std::vector<Muon>                 *vMuon                 = new std::vector<Muon>();
    std::vector<Event>                *vEvent                = new std::vector<Event>();
    std::vector<Jet>                  *vJet                  = new std::vector<Jet>();
    std::vector<Truth>                *vTruth                = new std::vector<Truth>();
-    
+
    virtual void     Init(TTree *tree);
-   
+
    virtual void     Loop();
-   
- private: 
-   
+
+ private:
+
    HistoManager * theHistoManager;
-   
+
    TFile * outputfile;
-   
+
    FILE *fevc;
-   
-   TString sampleName;    
+
+   TString sampleName;
 };
 
 #endif

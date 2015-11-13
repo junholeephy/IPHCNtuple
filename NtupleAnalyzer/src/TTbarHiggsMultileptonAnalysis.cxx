@@ -242,7 +242,9 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             }//end NJet selection
         }//end nlepton selection
 
-        std::cout << "Number of selected leptons:    " << vSelectedLeptons.size()     << std::endl;
+        ThreeLeptonSelection(vSelectedLeptons, vSelectedJets, vSelectedBTagJets, vSelectedNonBTagJets, nLooseBtag, nMediumBtag);
+
+        /*std::cout << "Number of selected leptons:    " << vSelectedLeptons.size()     << std::endl;
         std::cout << "Number of selected jets   :    " << (vSelectedBTagJets.size() + vSelectedNonBTagJets.size()) << std::endl;
         std::cout << "Number of loose b jets    :    " << nLooseBJets                 << std::endl;
         std::cout << "Number of medium b jets   :    " << nMediumBJets                << std::endl;
@@ -263,9 +265,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             std::cout << "Number of selected jets   :    " << (vSelectedBTagJets.size() + vSelectedNonBTagJets.size()) << std::endl;
             std::cout << "Number of loose b jets    :    " << nLooseBJets                 << std::endl;
             std::cout << "Number of medium b jets   :    " << nMediumBJets                << std::endl;
-
-
-        }
+        }*/
 
     }
 
@@ -298,4 +298,43 @@ void TTbarHiggsMultileptonAnalysis::PrintEventList(std::vector<Lepton> leptons, 
             l2id, l2pt, l2eta, l2phi,
             metpt, metphi,
             njets);
+}
+
+void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection(std::vector<Lepton> vSelectedLeptons, 
+                                                         std::vector<Jet>    vSelectedJets, 
+                                                         std::vector<Jet>    vSelectedBTagJets, 
+                                                         std::vector<Jet>    vSelectedNonBTagJets,
+                                                         int                 nLooseBJets, 
+                                                         int                 nMediumBJets)
+{
+    std::cout << "Number of selected leptons:    " << vSelectedLeptons.size()       << std::endl;
+    std::cout << "Number of selected jets   :    " << (vSelectedBTagJets.size() 
+                                                     + vSelectedNonBTagJets.size()) << std::endl;
+    std::cout << "Number of loose b jets    :    " << nLooseBJets                   << std::endl;
+    std::cout << "Number of medium b jets   :    " << nMediumBJets                  << std::endl;
+
+    // #################################
+    // # Three leptons event selection #
+    // #################################
+
+    bool nLep        = ( vSelectedLeptons.size()                                  == 3 );
+    bool nJets       = ( (vSelectedBTagJets.size() + vSelectedNonBTagJets.size()) >= 4 );
+    bool nLooseBtag  = ( nLooseBJets                                              >= 2 );
+    bool nMediumBtag = ( nMediumBJets                                             >= 1 );
+
+    if ( nLep && nJets && (nLooseBtag || nMediumBtag) )
+    {
+
+        // #############################
+        // # FILLING MULTILEPTON CLASS #
+        // #############################
+
+        std::cout << "******** SELECTED EVENT OF THE THREE LEPTON CATEGORY! ********" << std::endl;
+        std::cout << "Number of selected leptons:    " << vSelectedLeptons.size()     << std::endl;
+        std::cout << "Number of selected jets   :    " << (vSelectedBTagJets.size() + vSelectedNonBTagJets.size()) << std::endl;
+        std::cout << "Number of loose b jets    :    " << nLooseBJets                 << std::endl;
+        std::cout << "Number of medium b jets   :    " << nMediumBJets                << std::endl;
+
+
+    }
 }
