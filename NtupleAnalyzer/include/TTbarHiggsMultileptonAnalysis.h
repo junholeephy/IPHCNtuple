@@ -11,9 +11,11 @@
 #include "Jet.h"
 #include "Event.h"
 #include "Truth.h"
+#include "GenJet.h"
 #include <TObject.h>
 #include <TROOT.h>
 #include <iostream>
+#include <fstream>
 
 #include "HistoManager.h"
 #include "Lepton.h"
@@ -31,6 +33,10 @@ class TTbarHiggsMultileptonAnalysis
    void writeHistograms();
 
    void PrintEventList(std::vector<Lepton> leptons,std::vector<Jet> jets);
+
+   void InitLHCO(int process);
+   void PrintLHCOforMadweight();
+   float Phi_0_2Pi(float phi);
 
    void ThreeLeptonSelection(std::vector<Lepton> vSelectedLeptons,
                              std::vector<Jet>    vSelectedJets,
@@ -60,6 +66,18 @@ class TTbarHiggsMultileptonAnalysis
    FILE *fevc;
 
    TString sampleName;
+
+   // needed to print info in LHCO text format (madweight)
+   bool _printLHCO;
+   int _processLHCO;
+
+   std::ofstream fout;
+   std::string fline00 ;
+   std::string del;
+   std::string trig;
+   std::string fline0;
+   int nLHCOevts;
+
 };
 
 #endif
