@@ -22,6 +22,8 @@ void Electron::read()
     if( CHECK(ntP->el_eta)                           ) _eta       = ntP->el_eta->at(idx);
     if( CHECK(ntP->el_phi)                           ) _phi       = ntP->el_phi->at(idx);
     if( CHECK(ntP->el_m)                             ) _m         = ntP->el_m->at(idx);
+    if( CHECK(ntP->el_charge)                        ) _charge    = ntP->el_charge->at(idx);
+    if( CHECK(ntP->el_id)                            ) _id        = ntP->el_id->at(idx);
 
     // preselection variables
     if( CHECK(ntP->el_gsfTrack_PV_dxy)               ) _dxy       = ntP->el_gsfTrack_PV_dxy->at(idx);

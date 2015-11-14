@@ -22,6 +22,9 @@ void Muon::read()
     if( CHECK(ntP->mu_eta)               ) _eta      = ntP->mu_eta->at(idx);   
     if( CHECK(ntP->mu_phi)               ) _phi      = ntP->mu_phi->at(idx);   
     if( CHECK(ntP->mu_m)                 ) _m        = ntP->mu_m->at(idx);
+    if( CHECK(ntP->mu_charge)            ) _charge   = ntP->mu_charge->at(idx);
+    if( CHECK(ntP->mu_id)                ) _id       = ntP->mu_id->at(idx);
+
 
     // preselection variables
     if( CHECK(ntP->mu_innerTrack_PV_dxy) ) _dxy      = ntP->mu_innerTrack_PV_dxy->at(idx);
@@ -44,7 +47,6 @@ void Muon::read()
     //_jetPtRatio = ntP->mu_lepMVA_jetPtRatio->at(idx);
 
     // more variables
-    if( CHECK(ntP->mu_id)                ) _id       = ntP->mu_id->at(idx);
 
 }
 
