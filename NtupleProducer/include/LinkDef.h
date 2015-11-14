@@ -5,6 +5,7 @@
 #include "Tau.h"
 #include "Jet.h"
 #include "Truth.h"
+#include "GenJet.h"
 
 #ifdef __CINT__
 
@@ -29,5 +30,7 @@
 #pragma link C++ class std::vector<Jet>+;
 #pragma link C++ class Truth+;
 #pragma link C++ class std::vector<Truth>+;
+#pragma link C++ class GenJet+;
+#pragma link C++ class std::vector<GenJet>+;
 
 #endif

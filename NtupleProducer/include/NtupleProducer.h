@@ -7,6 +7,7 @@
 #include "Muon.h"
 #include "Tau.h"
 #include "Jet.h"
+#include "GenJet.h"
 #include "Truth.h"
 #include "Ntuple.h"
 

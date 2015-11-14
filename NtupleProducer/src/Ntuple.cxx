@@ -24,6 +24,7 @@ void Ntuple::setBranchAddress()
     m_tree->Branch("Tau",      "std::vector<Tau>",      (NtTau),      32000, 1);
     m_tree->Branch("Jet",      "std::vector<Jet>",      (NtJet),      32000, 1);
     m_tree->Branch("Truth",    "std::vector<Truth>",    (NtTruth),    32000, 1);
+    m_tree->Branch("GenJet",   "std::vector<GenJet>",   (NtGenJet),   32000, 1);
 }
 
 void Ntuple::createVar()
@@ -34,6 +35,7 @@ void Ntuple::createVar()
     NtTau       = new std::vector<Tau>;
     NtJet       = new std::vector<Jet>;
     NtTruth     = new std::vector<Truth>;
+    NtGenJet    = new std::vector<GenJet>;
 }
 
 void Ntuple::clearVar()
@@ -44,6 +46,7 @@ void Ntuple::clearVar()
     NtTau->clear();
     NtJet->clear();
     NtTruth->clear();
+    NtGenJet->clear();
 }
 
 void Ntuple::fill()

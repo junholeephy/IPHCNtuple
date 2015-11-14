@@ -23,16 +23,15 @@ EXE           = test/NtupleProducer
 
 INC 	      = include/NtupleProducer.h include/Tree.h include/Base.h \
                 include/Electron.h include/Muon.h include/Ntuple.h \
-		include/Event.h include/Jet.h include/Truth.h include/Tau.h \
-		#include/MultiLepton.h
+		include/Event.h include/Jet.h include/Truth.h include/Tau.h include/GenJet.h
 
 SRC	      = src/NtupleProducer.cxx src/Tree.cxx src/Base.cxx \
                 src/Electron.cxx src/Muon.cxx src/Ntuple.cxx \
-		src/Event.cxx src/Jet.cxx src/Truth.cxx src/Tau.cxx
+		src/Event.cxx src/Jet.cxx src/Truth.cxx src/Tau.cxx src/GenJet.cxx
 
 OBJS          = obj/NtupleProducer.o obj/Tree.o obj/Base.o \
                 obj/Electron.o obj/Muon.o obj/Ntuple.o \
-		obj/Event.o obj/Jet.o obj/Truth.o obj/Tau.o
+		obj/Event.o obj/Jet.o obj/Truth.o obj/Tau.o obj/GenJet.o
 
 LIB           = libNtuple.so
 

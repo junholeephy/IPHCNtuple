@@ -7,6 +7,7 @@
 #include "Tau.h"
 #include "Jet.h"
 #include "Truth.h"
+#include "GenJet.h"
 
 #include "TFile.h"
 #include "TTree.h"
@@ -25,6 +26,7 @@ class Ntuple
         std::vector<Tau>*      NtTau;
         std::vector<Jet>*      NtJet;
         std::vector<Truth>*    NtTruth;
+        std::vector<GenJet>*   NtGenJet;
 
         void Init();
 
