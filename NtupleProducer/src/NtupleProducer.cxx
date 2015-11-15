@@ -199,9 +199,9 @@ int main(int argc, char *argv[])
 
         // truth
         truth.init();
-        truth.read();
+        //truth.read();
 
-        nt->NtTruth->push_back(truth);
+        //nt->NtTruth->push_back(truth);
 
         //std::cout << "Truth DONE (kinda) " << std::endl;
 

@@ -8,4 +8,4 @@ infl="input.txt"
 ./NtupleProducer     \
 --file ${infl}       \
 --tree FlatTree/tree \
---nmax 10
+--nmax 1000
