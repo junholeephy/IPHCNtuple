@@ -395,7 +395,8 @@ void Tree::Init(TChain *ch)
     gen_status = 0;
     gen_index = 0;
     gen_mother_index = 0;
-
+    gen_PVz = 0;
+    
    // ##################################################
    // #   __  __  ____     _____           _   _       #
    // #  |  \/  |/ ___|   |_   _| __ _   _| |_| |__    #
@@ -738,23 +739,23 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("el_particleIso", &el_particleIso, &b_el_particleIso);
     fChain->SetBranchAddress("el_photonIso", &el_photonIso, &b_el_photonIso);
     fChain->SetBranchAddress("el_trackIso", &el_trackIso, &b_el_trackIso);
-    fChain->SetBranchAddress("el_isLoose", &el_isLoose, &b_el_isLoose);
-    fChain->SetBranchAddress("el_isTight", &el_isTight, &b_el_isTight);
-    fChain->SetBranchAddress("el_isRobustLoose", &el_isRobustLoose, &b_el_isRobustLoose);
-    fChain->SetBranchAddress("el_isRobustTight", &el_isRobustTight, &b_el_isRobustTight);
-    fChain->SetBranchAddress("el_isRobustHighEnergy", &el_isRobustHighEnergy, &b_el_isRobustHighEnergy);
+    //fChain->SetBranchAddress("el_isLoose", &el_isLoose, &b_el_isLoose);
+    //fChain->SetBranchAddress("el_isTight", &el_isTight, &b_el_isTight);
+    //fChain->SetBranchAddress("el_isRobustLoose", &el_isRobustLoose, &b_el_isRobustLoose);
+    //fChain->SetBranchAddress("el_isRobustTight", &el_isRobustTight, &b_el_isRobustTight);
+    //fChain->SetBranchAddress("el_isRobustHighEnergy", &el_isRobustHighEnergy, &b_el_isRobustHighEnergy);
     fChain->SetBranchAddress("el_vx", &el_vx, &b_el_vx);
     fChain->SetBranchAddress("el_vy", &el_vy, &b_el_vy);
     fChain->SetBranchAddress("el_vz", &el_vz, &b_el_vz);
-    fChain->SetBranchAddress("el_isGsf", &el_isGsf, &b_el_isGsf);
-    fChain->SetBranchAddress("el_dxy", &el_dxy, &b_el_dxy);
-    fChain->SetBranchAddress("el_dz", &el_dz, &b_el_dz);
-    fChain->SetBranchAddress("el_dxyError", &el_dxyError, &b_el_dxyError);
-    fChain->SetBranchAddress("el_dzError", &el_dzError, &b_el_dzError);
+    //fChain->SetBranchAddress("el_isGsf", &el_isGsf, &b_el_isGsf);
+    //fChain->SetBranchAddress("el_dxy", &el_dxy, &b_el_dxy);
+    //fChain->SetBranchAddress("el_dz", &el_dz, &b_el_dz);
+    //fChain->SetBranchAddress("el_dxyError", &el_dxyError, &b_el_dxyError);
+    //fChain->SetBranchAddress("el_dzError", &el_dzError, &b_el_dzError);
     fChain->SetBranchAddress("el_mvaNonTrigV0", &el_mvaNonTrigV0, &b_el_mvaNonTrigV0);
     fChain->SetBranchAddress("el_mvaNonTrigCat", &el_mvaNonTrigCat, &b_el_mvaNonTrigCat);
-    fChain->SetBranchAddress("el_mvaPassMedium", &el_mvaPassMedium, &b_el_mvaPassMedium);
-    fChain->SetBranchAddress("el_mvaPassTight", &el_mvaPassTight, &b_el_mvaPassTight);
+    //fChain->SetBranchAddress("el_mvaPassMedium", &el_mvaPassMedium, &b_el_mvaPassMedium);
+    //fChain->SetBranchAddress("el_mvaPassTight", &el_mvaPassTight, &b_el_mvaPassTight);
     fChain->SetBranchAddress("el_numberOfHits", &el_numberOfHits, &b_el_numberOfHits);
     fChain->SetBranchAddress("el_pfIso_sumChargedHadronPt", &el_pfIso_sumChargedHadronPt, &b_el_pfIso_sumChargedHadronPt);
     fChain->SetBranchAddress("el_pfIso_sumNeutralHadronEt", &el_pfIso_sumNeutralHadronEt, &b_el_pfIso_sumNeutralHadronEt);
@@ -764,9 +765,9 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("el_lepMVA_miniRelIsoCharged", &el_lepMVA_miniRelIsoCharged, &b_el_lepMVA_miniRelIsoCharged);
     fChain->SetBranchAddress("el_lepMVA_miniRelIsoNeutral", &el_lepMVA_miniRelIsoNeutral, &b_el_lepMVA_miniRelIsoNeutral);
     fChain->SetBranchAddress("el_lepMVA_jetPtRelv2", &el_lepMVA_jetPtRelv2, &b_el_lepMVA_jetPtRelv2);
-    fChain->SetBranchAddress("el_lepMVA_neuRelIso", &el_lepMVA_neuRelIso, &b_el_lepMVA_neuRelIso);
-    fChain->SetBranchAddress("el_lepMVA_chRelIso", &el_lepMVA_chRelIso, &b_el_lepMVA_chRelIso);
-    fChain->SetBranchAddress("el_lepMVA_jetDR", &el_lepMVA_jetDR, &b_el_lepMVA_jetDR);
+    //fChain->SetBranchAddress("el_lepMVA_neuRelIso", &el_lepMVA_neuRelIso, &b_el_lepMVA_neuRelIso);
+    //fChain->SetBranchAddress("el_lepMVA_chRelIso", &el_lepMVA_chRelIso, &b_el_lepMVA_chRelIso);
+    //fChain->SetBranchAddress("el_lepMVA_jetDR", &el_lepMVA_jetDR, &b_el_lepMVA_jetDR);
     fChain->SetBranchAddress("el_lepMVA_jetPtRatio", &el_lepMVA_jetPtRatio, &b_el_lepMVA_jetPtRatio);
     fChain->SetBranchAddress("el_lepMVA_jetBTagCSV", &el_lepMVA_jetBTagCSV, &b_el_lepMVA_jetBTagCSV);
     fChain->SetBranchAddress("el_lepMVA_sip3d", &el_lepMVA_sip3d, &b_el_lepMVA_sip3d);
@@ -777,11 +778,11 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("el_passConversionVeto", &el_passConversionVeto, &b_el_passConversionVeto);
     fChain->SetBranchAddress("el_deltaEtaSuperClusterTrackAtVtx", &el_deltaEtaSuperClusterTrackAtVtx, &b_el_deltaEtaSuperClusterTrackAtVtx);
     fChain->SetBranchAddress("el_deltaPhiSuperClusterTrackAtVtx", &el_deltaPhiSuperClusterTrackAtVtx, &b_el_deltaPhiSuperClusterTrackAtVtx);
-    fChain->SetBranchAddress("el_see", &el_see, &b_el_see);
+    //fChain->SetBranchAddress("el_see", &el_see, &b_el_see);
     fChain->SetBranchAddress("el_hadronicOverEm", &el_hadronicOverEm, &b_el_hadronicOverEm);
-    fChain->SetBranchAddress("el_scleta", &el_scleta, &b_el_scleta);
-    fChain->SetBranchAddress("el_dB3D", &el_dB3D, &b_el_dB3D);
-    fChain->SetBranchAddress("el_edB3D", &el_edB3D, &b_el_edB3D);
+    //fChain->SetBranchAddress("el_scleta", &el_scleta, &b_el_scleta);
+    //fChain->SetBranchAddress("el_dB3D", &el_dB3D, &b_el_dB3D);
+    //fChain->SetBranchAddress("el_edB3D", &el_edB3D, &b_el_edB3D);
     fChain->SetBranchAddress("el_hasMatchedConversion", &el_hasMatchedConversion, &b_el_hasMatchedConversion);
 
    // ####################################
@@ -882,8 +883,8 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("tau_eta", &tau_eta,  &b_tau_eta);
     fChain->SetBranchAddress("tau_phi", &tau_phi,  &b_tau_phi);
     fChain->SetBranchAddress("tau_m", &tau_m,  &b_tau_m);
-    fChain->SetBranchAddress("tau_dxy", &tau_dxy,  &b_tau_dxy);
-    fChain->SetBranchAddress("tau_dz", &tau_dz,  &b_tau_dz);
+    //fChain->SetBranchAddress("tau_dxy", &tau_dxy,  &b_tau_dxy);
+    //fChain->SetBranchAddress("tau_dz", &tau_dz,  &b_tau_dz);
     fChain->SetBranchAddress("tau_leadingTrackDxy", &tau_leadingTrackDxy, &b_tau_leadingTrackDxy);
     fChain->SetBranchAddress("tau_leadingTrackDz", & tau_leadingTrackDz, &b_tau_leadingTrackDz);
     fChain->SetBranchAddress("tau_charge", &tau_charge,  &b_tau_charge);
@@ -971,7 +972,8 @@ void Tree::Init(TChain *ch)
     if( fChain->GetBranch("gen_status") ) fChain->SetBranchAddress("gen_status", &gen_status, &b_gen_status);
     if( fChain->GetBranch("gen_index") ) fChain->SetBranchAddress("gen_index", &gen_index, &b_gen_index);
     if( fChain->GetBranch("gen_mother_index") ) fChain->SetBranchAddress("gen_mother_index", &gen_mother_index, &b_gen_mother_index);
-
+    if( fChain->GetBranch("gen_PVz") ) fChain->SetBranchAddress("gen_PVz", &gen_PVz, &b_gen_PVz);
+   
     // #########################################
     // #                                       #
     // #   __ _  ___ _ __     (_) ___| |_ ___  #
@@ -1049,6 +1051,12 @@ void Tree::Init(TChain *ch)
     if( fChain->GetBranch("mc_truth_tWq1_id") ) fChain->SetBranchAddress("mc_truth_tWq1_id", &mc_truth_tWq1_id, &b_mc_truth_tWq1_id);
     if( fChain->GetBranch("mc_truth_tWq2_id") ) fChain->SetBranchAddress("mc_truth_tWq2_id", &mc_truth_tWq2_id, &b_mc_truth_tWq2_id);
 
+    if( fChain->GetBranch("mc_truth_Wl_id") ) fChain->SetBranchAddress("mc_truth_Wl_id", &mc_truth_Wl_id, &b_mc_truth_Wl_id);
+    if( fChain->GetBranch("mc_truth_Zl1_id") ) fChain->SetBranchAddress("mc_truth_Zl1_id", &mc_truth_Zl1_id, &b_mc_truth_Zl1_id);
+    if( fChain->GetBranch("mc_truth_Zl2_id") ) fChain->SetBranchAddress("mc_truth_Zl2_id", &mc_truth_Zl2_id, &b_mc_truth_Zl2_id);
+    if( fChain->GetBranch("mc_truth_gammal1_id") ) fChain->SetBranchAddress("mc_truth_gammal1_id", &mc_truth_gammal1_id, &b_mc_truth_gammal1_id);
+    if( fChain->GetBranch("mc_truth_gammal2_id") ) fChain->SetBranchAddress("mc_truth_gammal2_id", &mc_truth_gammal2_id, &b_mc_truth_gammal2_id);
+  
     if( fChain->GetBranch("mc_truth_h0_pt") ) fChain->SetBranchAddress("mc_truth_h0_pt", &mc_truth_h0_pt, &b_mc_truth_h0_pt);
     if( fChain->GetBranch("mc_truth_h0W1_pt") ) fChain->SetBranchAddress("mc_truth_h0W1_pt", &mc_truth_h0W1_pt, &b_mc_truth_h0W1_pt);
     if( fChain->GetBranch("mc_truth_h0Wl1_pt") ) fChain->SetBranchAddress("mc_truth_h0Wl1_pt", &mc_truth_h0Wl1_pt, &b_mc_truth_h0Wl1_pt);
