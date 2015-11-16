@@ -7,8 +7,8 @@
 #include "Muon.h"
 #include "Tau.h"
 #include "Jet.h"
-#include "GenJet.h"
 #include "Truth.h"
+#include "GenJet.h"
 #include "Ntuple.h"
 
 extern Tree             *ntP;
