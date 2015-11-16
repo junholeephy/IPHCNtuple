@@ -67,31 +67,22 @@ int main(int argc, char *argv[])
     Tau      tau;
     Jet      jet;
     Truth  truth;
-
+    GenJet genjet;
+    
     evdebug = new std::vector<int>();
     //   evdebug->push_back(120);
 
-    int sync_muon = 0;
-    int sync_el   = 0;
-    int sync_jet  = 0;
-    int sync_tau  = 0;
-
+    int nlep = 0;
+    int njet = 0;
+   
     for(Long64_t i=0;i<nentries;i++)
     {
         if( i > nmax && nmax >= 0 ) break; 
 
         //std::cout << "i:" << i << std::endl;
         ch->GetEntry(i);
-        nt->clearVar();	
 
-        /*	
-         	bool isHtoWW = (abs(ntP->mc_truth_h0W1_id) == 24 &&
-            abs(ntP->mc_truth_h0W2_id) == 24);
-            bool isHtoZZ = (abs(ntP->mc_truth_h0Z1_id) == 23 &&
-            abs(ntP->mc_truth_h0Z2_id) == 23);
-            bool isHtoTT = (abs(ntP->mc_truth_h0tau1_id) == 15 &&
-            abs(ntP->mc_truth_h0tau2_id) == 15);	
-        */
+        nt->clearVar();	
 
         //	if( !(isHtoWW || isHtoZZ || isHtoTT) ) continue;
 
@@ -104,8 +95,19 @@ int main(int argc, char *argv[])
         //	else if( isHtoTT ) ev._tth_channel = 2;
 
         nt->NtEvent->push_back(ev);
+	
+         // electrons
+        for(int j=0;j<ntP->el_n;j++)
+        {
+            idx = j;
 
-        int x_mu = 0;
+            el.init();
+            el.read();
+            if( el.sel() ) nlep++;
+           
+            nt->NtElectron->push_back(el);
+        }
+
         // muons
         for(int j=0;j<ntP->mu_n;j++)
         {
@@ -113,44 +115,11 @@ int main(int argc, char *argv[])
 
             mu.init();
             mu.read();
-
-            if( mu.sel() && (x_mu == 0) )
-            {
-                sync_muon = sync_muon + 1;
-                x_mu = 1;
-            }
-
-            //std::cout << "sync_muon: " << sync_muon << std::endl;
-
-            if ( mu.sel() ) nt->NtMuon->push_back(mu);
-            //if ( x_mu == 1 ) break;
+            if( mu.sel() ) nlep++;
+   
+            nt->NtMuon->push_back(mu);
         }
-
-        //std::cout << "Muons DONE" << std::endl;
-
-        int x_el = 0;
-        // electrons
-        for(int j=0;j<ntP->el_n;j++)
-        {
-            idx = j;
-
-            el.init();
-            el.read();
-            
-            if( el.sel() && (x_el == 0) )
-            {
-                sync_el = sync_el + 1;
-                x_el = 1;
-            }
-
-            //std::cout << "sync_el: " << sync_el << std::endl;
-
-            if ( el.sel() ) nt->NtElectron->push_back(el);
-            //if ( x_el == 1 ) break;
-        }
-
-        //std::cout << "Electrons DONE" << std::endl;
-
+  
         int x_tau = 0;
         // taus 
         for(int j=0;j<ntP->tau_n;j++)
@@ -159,23 +128,11 @@ int main(int argc, char *argv[])
 
             tau.init();
             tau.read();
-            //tau.sel();
+            tau.sel();
 
-            if( tau.sel() && (x_tau == 0) )
-            {
-                sync_tau = sync_tau + 1;
-                x_tau = 1;
-            }
-
-            //std::cout << "sync_tau: " << sync_tau << std::endll;
-
-            if ( tau.sel() ) nt->NtTau->push_back(tau);
-            //if ( x_tau == 1 ) break;
+            nt->NtTau->push_back(tau);
         }		
 
-        //std::cout << "Taus DONE" << std::endl;
-
-        int x_jet = 0;
         // jets
         for(int j=0;j<ntP->jet_n;j++)
         {
@@ -183,31 +140,32 @@ int main(int argc, char *argv[])
 
             jet.init();
             jet.read();
-            //jet.sel();
+            //if (jet.sel()) njet++;
 
-            //if ( jet.sel() && (x_jet == 0) )
-            //{
-            //    sync_jet = sync_jet + 1;
-            //    x_jet = 1;
-            //}
-
-            if( jet.sel() ) nt->NtJet->push_back(jet);
-            //if ( x_jet == 1 ) break;
+            nt->NtJet->push_back(jet);
         }
-
-        //std::cout << "Jets DONE" << std::endl;
+	
+	// genjets
+        for(int j=0;j<ntP->genJet_n;j++)
+        {
+            idx = j;
+	    
+            genjet.init();
+            genjet.read();
+            if (genjet.sel()) nt->NtGenJet->push_back(genjet);
+        }
 
         // truth
         truth.init();
-        //truth.read();
+        truth.read();
+        truth.readMultiLepton();
 
-        //nt->NtTruth->push_back(truth);
+        nt->NtTruth->push_back(truth);
 
-        //std::cout << "Truth DONE (kinda) " << std::endl;
-
-        nt->fill();
-
-    }   
-
+        //if (nlep == 3 && njet >= 4) nt->fill();
+	nt->fill();
+	
+    }  
+    delete evdebug;
     delete nt;
 }
