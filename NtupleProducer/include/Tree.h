@@ -429,12 +429,12 @@ class Tree {
         Int_t           mc_truth_tWq2_id;
 
         Int_t           mc_truth_W_id;
-        Int_t       mc_truth_Wl_id;
-        Int_t       mc_truth_Z_id;
-        Int_t       mc_truth_Zl1_id;
-        Int_t       mc_truth_Zl2_id;
-        Int_t       mc_truth_gammal1_id;
-        Int_t       mc_truth_gammal2_id;
+        Int_t           mc_truth_Wl_id;
+        Int_t           mc_truth_Z_id;
+        Int_t           mc_truth_Zl1_id;
+        Int_t           mc_truth_Zl2_id;
+        Int_t           mc_truth_gammal1_id;
+        Int_t           mc_truth_gammal2_id;
 
         Float_t           mc_truth_t1_pt;
         Float_t           mc_truth_t2_pt;
@@ -456,7 +456,7 @@ class Tree {
         Float_t           mc_truth_tWq1_pt;
         Float_t           mc_truth_tWq2_pt;
 
-    Float_t           mc_truth_Wl_pt;
+        Float_t           mc_truth_Wl_pt;
         Float_t           mc_truth_Zl1_pt;
         Float_t           mc_truth_Zl2_pt;
         Float_t           mc_truth_gammal1_pt;
@@ -506,7 +506,7 @@ class Tree {
         Float_t           mc_truth_tWq1_eta;
         Float_t           mc_truth_tWq2_eta;
 
-    Float_t           mc_truth_Wl_eta;
+        Float_t           mc_truth_Wl_eta;
         Float_t           mc_truth_Zl1_eta;
         Float_t           mc_truth_Zl2_eta;
         Float_t           mc_truth_gammal1_eta;
@@ -609,8 +609,8 @@ class Tree {
         Float_t           mc_truth_Wl_E;
         Float_t           mc_truth_Zl1_E;
         Float_t           mc_truth_Zl2_E;
-        Float_t       mc_truth_gammal1_E;
-        Float_t       mc_truth_gammal2_E;
+        Float_t           mc_truth_gammal1_E;
+        Float_t           mc_truth_gammal2_E;
 
         Float_t           mc_truth_h0_E;
         Float_t           mc_truth_h0W1_E;
@@ -990,7 +990,8 @@ class Tree {
         TBranch        *b_gen_status;
         TBranch        *b_gen_index;
         TBranch        *b_gen_mother_index;
-    TBranch        *b_gen_PVz;
+        
+	TBranch        *b_gen_PVz;
 
         TBranch        *b_metGen_px;
         TBranch        *b_metGen_py;
@@ -1052,7 +1053,7 @@ class Tree {
         TBranch        *b_mc_truth_tWq1_id;
         TBranch         *b_mc_truth_tWq2_id;
 
-    TBranch        *b_mc_truth_Wl_id;
+        TBranch        *b_mc_truth_Wl_id;
         TBranch        *b_mc_truth_Zl1_id;
         TBranch        *b_mc_truth_Zl2_id;
         TBranch        *b_mc_truth_gammal1_id;
