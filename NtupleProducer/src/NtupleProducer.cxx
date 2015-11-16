@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
             el.read();
             if( el.sel() ) nlep++;
            
-            nt->NtElectron->push_back(el);
+            if( el.sel()) nt->NtElectron->push_back(el);
         }
 
         // muons
@@ -115,9 +115,8 @@ int main(int argc, char *argv[])
 
             mu.init();
             mu.read();
-            if( mu.sel() ) nlep++;
-   
-            nt->NtMuon->push_back(mu);
+         
+            if( mu.sel()) nt->NtMuon->push_back(mu);
         }
   
         int x_tau = 0;
@@ -128,9 +127,8 @@ int main(int argc, char *argv[])
 
             tau.init();
             tau.read();
-            tau.sel();
-
-            nt->NtTau->push_back(tau);
+         
+            if (tau.sel()) nt->NtTau->push_back(tau);
         }		
 
         // jets
@@ -140,9 +138,8 @@ int main(int argc, char *argv[])
 
             jet.init();
             jet.read();
-            //if (jet.sel()) njet++;
-
-            nt->NtJet->push_back(jet);
+            
+            if (jet.sel()) nt->NtJet->push_back(jet);
         }
 	
 	// genjets
