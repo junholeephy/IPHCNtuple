@@ -22,11 +22,12 @@ int main(int argc, char *argv[])
     //std::cout << "Jusqu'ici, tout va bien 0.0" << std::endl;
     TTbarHiggsMultileptonAnalysis * TTHanalysis = new TTbarHiggsMultileptonAnalysis("../../NtupleProducer/test/output.root", thetree, "TTbarHiggs");
     //std::cout << "Jusqu'ici, tout va bien 0.1" << std::endl;
+    //TTHanalysis->InitLHCO(1,1);
     TTHanalysis->createHistograms();
     //std::cout << "Jusqu'ici, tout va bien 0.2" << std::endl;
     TTHanalysis->Loop();
     //std::cout << "Jusqu'ici, tout va bien 0.3" << std::endl;
-    TTHanalysis->writeHistograms();
+    //TTHanalysis->writeHistograms();
     //std::cout << "Jusqu'ici, tout va bien 0.4" << std::endl;
 
 }
