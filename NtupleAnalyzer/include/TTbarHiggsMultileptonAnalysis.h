@@ -14,6 +14,7 @@
 #include <TObject.h>
 #include <TROOT.h>
 #include <iostream>
+#include <fstream>
 
 #include "HistoManager.h"
 #include "Lepton.h"
@@ -31,28 +32,39 @@ class TTbarHiggsMultileptonAnalysis
    void writeHistograms();
 
    void PrintEventList(std::vector<Lepton> leptons,std::vector<Jet> jets);
-
+   
+   // needed to print info in LHCO text format (madweight)
+   void InitLHCO(int process_MC, int process_RECO);
+   void PrintLHCOforMadweight_MC(int evt);
+   void PrintLHCOforMadweight_RECO(int evt);
+   float Phi_0_2Pi(float phi);
+   
+   //
    void ThreeLeptonSelection(std::vector<Lepton> vSelectedLeptons,
                              std::vector<Jet>    vSelectedJets,
                              std::vector<Jet>    vSelectedBTagJets,
                              std::vector<Jet>    vSelectedNonBTagJets,
                              int                 nLoose,
-                             int                 nMedium);
-
+                             int                 nMedium,
+			     int evt);
+   
+   bool ThreeLeptonSelection_MC();
+   
+  
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
 
-   std::vector<Electron>             *vElectron             = new std::vector<Electron>();
-   std::vector<Muon>                 *vMuon                 = new std::vector<Muon>();
-   std::vector<Event>                *vEvent                = new std::vector<Event>();
-   std::vector<Jet>                  *vJet                  = new std::vector<Jet>();
-   std::vector<Truth>                *vTruth                = new std::vector<Truth>();
+   std::vector<Electron>  *vElectron  = new std::vector<Electron>();
+   std::vector<Muon>      *vMuon      = new std::vector<Muon>();
+   std::vector<Event>     *vEvent     = new std::vector<Event>();
+   std::vector<Jet>       *vJet       = new std::vector<Jet>();
+   std::vector<Truth>     *vTruth     = new std::vector<Truth>();
 
-        std::vector<Muon>     vSelectedMuons;
-        std::vector<Electron> vSelectedElectrons;
-        std::vector<Lepton>   vSelectedLeptons;
-        std::vector<Jet>      vSelectedNonBTagJets;
-        std::vector<Jet>      vSelectedBTagJets;
-        std::vector<Jet>      vSelectedJets;
+   std::vector<Muon>	 vSelectedMuons;
+   std::vector<Electron> vSelectedElectrons;
+   std::vector<Lepton>   vSelectedLeptons;
+   std::vector<Jet>	 vSelectedNonBTagJets;
+   std::vector<Jet>	 vSelectedBTagJets;
+   std::vector<Jet>	 vSelectedJets;
 
 
    virtual void     Init(TTree *tree);
@@ -88,6 +100,22 @@ class TTbarHiggsMultileptonAnalysis
    FILE *fevc;
 
    TString sampleName;
+      
+   // needed to print info in LHCO text format (madweight)
+   
+   bool _printLHCO_MC;
+   int _processLHCO_MC;
+   std::ofstream fout_MC;
+   
+   bool _printLHCO_RECO;
+   int _processLHCO_RECO;
+   std::ofstream fout_RECO;
+      
+   std::string fline00 ;
+   std::string del;
+   std::string trig;
+   std::string fline0;
+   
 };
 
 #endif
