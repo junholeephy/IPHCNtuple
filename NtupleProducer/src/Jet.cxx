@@ -30,17 +30,13 @@ void Jet::read()
     if( CHECK(ntP->jet_ntrk) )  _ntrk  = ntP->jet_ntrk->at(idx);
     if( CHECK(ntP->jet_CSVv2) )          _CSVv2   = ntP->jet_CSVv2->at(idx);
 
-    // MET variables
-    _metpt      = ntP->met_pt;
-    _metphi     = ntP->met_phi;
-    _metsumet   = ntP->met_sumet;
 
     // Gen Jets variables
 
-//    _jet_partonFlavour    = ntP->jet_partonFlavour->at(idx);
-//    _jet_hadronFlavour    = ntP->jet_hadronFlavour->at(idx);
+    _jet_partonFlavour    = ntP->jet_partonFlavour->at(idx);
+    _jet_hadronFlavour    = ntP->jet_hadronFlavour->at(idx);
 
-//    _jet_genJet_pt        = ntP->jet_genJet_pt->at(idx);
+    _jet_genJet_pt        = ntP->jet_genJet_pt->at(idx);
 //    _jet_genJet_eta       = ntP->jet_genJet_eta->at(idx);
 //    _jet_genJet_phi       = ntP->jet_genJet_phi->at(idx);
     //_jet_genJet_m         = ntP->jet_genJet_m->at(idx);
@@ -48,13 +44,13 @@ void Jet::read()
     //_jet_genJet_status    = ntP->jet_genJet_status->at(idx);
     //_jet_genJet_id        = ntP->jet_genJet_id->at(idx);
 
-//    _jet_genParton_pt     = ntP->jet_genParton_pt->at(idx);
-//    _jet_genParton_eta    = ntP->jet_genParton_eta->at(idx);
-//    _jet_genParton_phi    = ntP->jet_genParton_phi->at(idx);
+    _jet_genParton_pt	  = ntP->jet_genParton_pt->at(idx);
+    //_jet_genParton_eta    = ntP->jet_genParton_eta->at(idx);
+    // _jet_genParton_phi    = ntP->jet_genParton_phi->at(idx);
     //_jet_genParton_m      = ntP->jet_genParton_m  ->at(idx);
     //_jet_genParton_E      = ntP->jet_genParton_E->at(idx);
     //_jet_genParton_status = ntP->jet_genParton_status->at(idx);
-    //_jet_genParton_id     = ntP->jet_genParton_id ->at(idx);
+    _jet_genParton_id     = ntP->jet_genParton_id ->at(idx);
 }
 
 void Jet::init()
@@ -72,31 +68,26 @@ void Jet::init()
     // other variables
     _ntrk    = -666;
     _CSVv2   = -666.;
-
-    // MET variables
-    _metpt       = -666;
-    _metphi      = -666;
-    _metsumet    = -666;
-
+ 
     // Gen Jet variables
     _jet_partonFlavour    = -666.;
     _jet_hadronFlavour    = -666.;
 
     _jet_genJet_pt        = -666.;
-    _jet_genJet_eta       = -666.;
-    _jet_genJet_phi       = -666.;
+    //_jet_genJet_eta       = -666.;
+    //_jet_genJet_phi       = -666.;
     //_jet_genJet_m         = -666.;
     //_jet_genJet_E         = -666.;
     //_jet_genJet_status    = -666.;
     //_jet_genJet_id        = -666.;
 
     _jet_genParton_pt    = -666.;
-    _jet_genParton_eta    = -666.;
-    _jet_genParton_phi   = -666.;
+    //_jet_genParton_eta    = -666.;
+    //_jet_genParton_phi   = -666.;
     //_jet_genParton_m   = -666.;
     //_jet_genParton_E   = -666.;
     //_jet_genParton_status = -666.;
-    //_jet_genParton_id  = -666.;
+    _jet_genParton_id  = -666.;
 }
 
 bool Jet::sel()
