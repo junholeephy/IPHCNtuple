@@ -344,8 +344,8 @@ class Tree {
         //vector<float>   *jet_genParton_m;
         //vector<float>   *jet_genParton_E;
         //vector<int>     *jet_genParton_status;
-        //vector<int>     *jet_genParton_id;
-         vector<float>   *jet_pileupJetId;
+        vector<int>     *jet_genParton_id;
+        vector<float>   *jet_pileupJetId;
 
         // #####################
         // #   __  __  ____    #
@@ -969,7 +969,7 @@ class Tree {
         //TBranch        *b_jet_genParton_m; //!
         //TBranch        *b_jet_genParton_E; //!
         //TBranch        *b_jet_genParton_status; //!
-        //TBranch        *b_jet_genParton_id; //!
+        TBranch        *b_jet_genParton_id; //!
         TBranch        *b_jet_pileupJetId;   //!
 
         // #####################
