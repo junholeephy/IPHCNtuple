@@ -9,5 +9,5 @@ export LD_LIBRARY_PATH=${cdir}:${NtupleDir}:${NtupleDir}/obj:$LD_LIBRARY_PATH
 ./../Analyzer \
 --file input.txt \
 --tree Nt \
---nmax 1
+--nmax -1
 
