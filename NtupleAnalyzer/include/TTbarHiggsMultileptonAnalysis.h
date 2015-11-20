@@ -4,7 +4,7 @@
 #include <TString.h>
 #include <TH1F.h>
 #include <TH2F.h>
-#include <TTree.h>
+#include <TChain.h>
 #include <TFile.h>
 #include "Muon.h"
 #include "Electron.h"
@@ -24,7 +24,7 @@ class TTbarHiggsMultileptonAnalysis
 
  public:
    TTbarHiggsMultileptonAnalysis();
-   TTbarHiggsMultileptonAnalysis(TString inputfilename, TTree *tree, TString theSampleName);
+   TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString theSampleName, TString treeName);
 
    ~TTbarHiggsMultileptonAnalysis();
 
@@ -51,7 +51,7 @@ class TTbarHiggsMultileptonAnalysis
    bool ThreeLeptonSelection_MC();
    
   
-   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
+   TChain          *fChain;   //!pointer to the analyzed TTree or TChain
 
    std::vector<Electron>  *vElectron  = new std::vector<Electron>();
    std::vector<Muon>      *vMuon      = new std::vector<Muon>();
@@ -67,7 +67,7 @@ class TTbarHiggsMultileptonAnalysis
    std::vector<Jet>	 vSelectedJets;
 
 
-   virtual void     Init(TTree *tree);
+   virtual void     Init(TChain *tree);
 
    virtual void     Loop();
 
