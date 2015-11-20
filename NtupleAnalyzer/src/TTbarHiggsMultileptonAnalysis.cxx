@@ -23,34 +23,38 @@ void TTbarHiggsMultileptonAnalysis::InitLHCO(int process_MC, int process_RECO)
    
    fline00 = "#   typ	  eta	 phi	   pt  jmass  ntrk  btag   had/em  dummy dummy";
    del = "    ";
-   trig = "8";
-   
+   trig = "8";   
 }
 
-TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputfilename, TTree *tree, TString theSampleName) 
+TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString theSampleName, TString treeName)
 {    
-    gSystem->Load("libNtuple.so");
+//   gSystem->Load("libNtuple.so");
 
-    if (tree == 0) 
-    {
-        TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject(inputfilename.Data());
-        if (!f || !f->IsOpen()) 
-        {
-            f = TFile::Open(inputfilename.Data(), "READ");
-        }
-        f->GetObject("Nt",tree);
-    }
-    Init(tree);
+   tree = new TChain(treeName.Data());
 
-    theHistoManager = new HistoManager();
+   std::ifstream infile;
+   infile.open(inputFileName.Data());
+   std::string ifile = "";
+   while( getline(infile, ifile) )
+     {
+	std::string fnameStr = std::string(ifile);
+	
+	tree->Add(fnameStr.c_str());
+	
+	std::cout << "file: " << fnameStr << std::endl;
+     }   
+   infile.close();
+   
+   Init(tree);
 
-    sampleName = theSampleName;
+   theHistoManager = new HistoManager();
+   
+   sampleName = theSampleName;
 
-    std::string foutlog = "output.txt";
-    fevc = fopen(foutlog.c_str(),"w");
-
+   std::string foutlog = "output.txt";
+   fevc = fopen(foutlog.c_str(),"w");
+   
    outputfile = new TFile("output.root", "recreate");
-
 }
 
 void TTbarHiggsMultileptonAnalysis::createHistograms()
@@ -272,7 +276,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
 
 }
 
-void TTbarHiggsMultileptonAnalysis::Init(TTree *tree)
+void TTbarHiggsMultileptonAnalysis::Init(TChain *tree)
 {
     // Set branch addresses and branch pointers
     if (!tree) return;
