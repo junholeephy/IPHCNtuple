@@ -43,6 +43,10 @@ class Tree {
         Float_t         met_phi;
         Float_t         met_sumet;
 
+        Float_t         metNoHF_pt;
+        Float_t         metNoHF_phi;
+        Float_t         metNoHF_sumet;
+
         Int_t           nvertex;
         Float_t         pv_x;
         Float_t         pv_y;
@@ -668,6 +672,10 @@ class Tree {
         TBranch        *b_met_phi;   //!
         TBranch        *b_met_sumet;   //!
 
+        TBranch        *b_metNoHF_pt;   //!
+        TBranch        *b_metNoHF_phi;   //!
+        TBranch        *b_metNoHF_sumet;   //!
+
         TBranch        *b_nvertex;   //!
         TBranch        *b_pv_x;   //!
         TBranch        *b_pv_y;   //!
@@ -990,7 +998,7 @@ class Tree {
         TBranch        *b_gen_status;
         TBranch        *b_gen_index;
         TBranch        *b_gen_mother_index;
-        
+
 	TBranch        *b_gen_PVz;
 
         TBranch        *b_metGen_px;

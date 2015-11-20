@@ -676,6 +676,10 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("met_pt", &met_pt, &b_met_pt);
     fChain->SetBranchAddress("met_phi", &met_phi, &b_met_phi);
     fChain->SetBranchAddress("met_sumet", &met_sumet, &b_met_sumet);
+
+    fChain->SetBranchAddress("metNoHF_pt",    &metNoHF_pt,    &b_metNoHF_pt);
+    fChain->SetBranchAddress("metNoHF_phi",   &metNoHF_phi,   &b_metNoHF_phi);
+    fChain->SetBranchAddress("metNoHF_sumet", &metNoHF_sumet, &b_metNoHF_sumet);
     
     fChain->SetBranchAddress("nvertex", &nvertex, &b_nvertex);
     fChain->SetBranchAddress("pv_x", &pv_x, &b_pv_x);
