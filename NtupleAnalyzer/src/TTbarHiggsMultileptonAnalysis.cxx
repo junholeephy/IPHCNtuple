@@ -83,7 +83,7 @@ void TTbarHiggsMultileptonAnalysis::writeHistograms()
     for(unsigned int i=0; i<the2DHisto.size(); i++)  the2DHisto[i]->Write();
 
     tOutput->Write();
-         
+    outputfile->Close();
 }
 
 void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
