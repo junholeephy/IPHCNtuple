@@ -7,7 +7,7 @@ export LD_LIBRARY_PATH=${cdir}:${NtupleDir}:${NtupleDir}/obj:$LD_LIBRARY_PATH
 # tools: plot, tran
 
 ./../Analyzer \
-input.txt \
-plot \
-1
+--file input.txt \
+--tree Nt \
+--nmax 1
 
