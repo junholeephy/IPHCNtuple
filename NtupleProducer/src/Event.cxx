@@ -11,7 +11,7 @@ Event::~Event()
 {
 }
 
-void Event::read()
+void Event::read(bool isdata)
 {
     // Event
     _id               = ntP->ev_id;
@@ -33,9 +33,11 @@ void Event::read()
     _metNoHF_phi       = ntP->metNoHF_phi;
     _metNoHF_sumet     = ntP->metNoHF_sumet;
 
+    if (!isdata)
+    {
     _mc_weight        = ntP->mc_weight;
     _mc_ptHat         = ntP->mc_ptHat;
-    _mc_pu_trueNumInt = ntP->mc_pu_trueNumInt;
+    _mc_pu_trueNumInt = ntP->mc_pu_trueNumInt;}
 
     // trigger
 

@@ -1,7 +1,8 @@
 #include "include/Ntuple.h"
 
-Ntuple::Ntuple()
+Ntuple::Ntuple(std::string fname_out)
 {
+    _fname_out = fname_out;
 }
 
 Ntuple::~Ntuple()
@@ -12,7 +13,7 @@ Ntuple::~Ntuple()
 
 void Ntuple::Init()
 {
-    m_file = new TFile("output.root","RECREATE");
+    m_file = new TFile(_fname_out.c_str(),"RECREATE");
     m_tree = new TTree("Nt"," Ntuple");
 }
 
