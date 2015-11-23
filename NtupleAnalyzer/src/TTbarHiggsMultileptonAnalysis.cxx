@@ -564,7 +564,9 @@ bool TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_MC()
   //std::cout <<" sel_MC 1"<< std::endl;
    
   //Check decays and presence of genjets
-  if (!((vTruth->at(0).ttbar_decay()==1 && vTruth->at(0).boson_decay()==0) || (vTruth->at(0).ttbar_decay()==2 && vTruth->at(0).boson_decay()==1))) 
+  if (!((vTruth->at(0).ttbar_decay()==1 && vTruth->at(0).boson_decay()==0) || 
+        (vTruth->at(0).ttbar_decay()==2 && vTruth->at(0).boson_decay()==1) ||   
+	(vTruth->at(0).ttbar_decay()==1 && vTruth->at(0).boson_decay()==2)   )) 
   { 
     sel_MC = false; 
     return sel_MC;}
