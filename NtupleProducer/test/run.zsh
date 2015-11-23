@@ -10,4 +10,4 @@ infl="input.txt"
 --outfile output.root \
 --tree FlatTree/tree  \
 --nmax -1             \
---isdata 1
+--isdata 0
