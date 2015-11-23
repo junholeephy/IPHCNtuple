@@ -41,10 +41,10 @@ void Event::read()
 
     //std::cout << "Taille menu: " << ntP->trigger_pass->size() << std::endl;
 
-    for( int i = 0; i < ntP->trigger->size(); i++)
-    {
-        std::cout << "Trigger [" << i << "]: " << ntP->trigger_name->at(i) << std::endl;
-    }
+    //for( int i = 0; i < ntP->trigger->size(); i++)
+    //{
+    //    std::cout << "Trigger [" << i << "]: " << ntP->trigger_name->at(i) << std::endl;
+    //}
 
     int trigger_comb        = 0;
 
@@ -76,20 +76,40 @@ void Event::read()
     }
 
     trigger_pass_byname     = 0;
-    for( int i = 0; i < ntP->trigger->size(), i++)
+    for( int i = 0; i < ntP->trigger->size(); i++)
     {
-        int test = -888;
-        test = strcmp(ntP->trigger_name->at(i), "HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL_v1");
-        std::cout << test << std::endl;
-        if ( ntP->trigger_name->at(i) == "HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL_v1"           ) {trigger_pass_byname = trigger_pass_byname + 1    ;}
-        if ( ntP->trigger_name->at(i) == "HLT_Mu17_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v1" ) {trigger_pass_byname = trigger_pass_byname + 2    ;}
-        if ( ntP->trigger_name->at(i) == "HLT_Mu8_TrkIsoVVL_Ele17_CaloIdL_TrackIdL_IsoVL_v1"  ) {trigger_pass_byname = trigger_pass_byname + 5    ;}
-        if ( ntP->trigger_name->at(i) == "HLT_Ele17_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v1"       ) {trigger_pass_byname = trigger_pass_byname + 10   ;}
-        if ( ntP->trigger_name->at(i) == "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v1"             ) {trigger_pass_byname = trigger_pass_byname + 20   ;}
-        if ( ntP->trigger_name->at(i) == "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v1"           ) {trigger_pass_byname = trigger_pass_byname + 50   ;}
-        if ( ntP->trigger_name->at(i) == "HLT_IsoMu20_v1"                                     ) {trigger_pass_byname = trigger_pass_byname + 100  ;}
-        if ( ntP->trigger_name->at(i) == "HLT_IsoTkMu20_v1"                                   ) {trigger_pass_byname = trigger_pass_byname + 200  ;}
-        if ( ntP->trigger_name->at(i) == "HLT_Ele23_CaloIdL_TrackIdL_IsoVL_v1"                ) {trigger_pass_byname = trigger_pass_byname + 500  ;}
+        std::string currentpath ("Nopathsofar");
+        if( ntP->trigger_pass->at(i) == 1) { currentpath = ntP->trigger_name->at(i); }
+
+        std::string eee  ("HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL_v1"            );
+        std::string me   ("HLT_Mu17_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v1"  );
+        std::string em   ("HLT_Mu8_TrkIsoVVL_Ele17_CaloIdL_TrackIdL_IsoVL_v1"   );
+        std::string ee   ("HLT_Ele17_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v1"        );
+        std::string mm   ("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v1"              );
+        std::string mmTk ("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v1"            );
+        std::string m    ("HLT_IsoMu20_v1"                                      );
+        std::string mTk  ("HLT_IsoTkMu20_v1"                                    );
+        std::string e    ("HLT_Ele23_CaloIdL_TrackIdL_IsoVL_v1"                 );
+
+        std::string eData ("HLT_Ele23_CaloIdL_TrackIdL_IsoVL_v1"                );
+        std::string mme   ("HLT_DiMu9_Ele9_CaloIdL_TrackIdL_v1"                 );
+        std::string eem   ("HLT_Mu8_DiEle12_CaloIdL_TrackIdL_v1"                );
+        std::string mmm   ("HLT_TripleMu_12_10_5_v1"                            );
+
+        if(currentpath.compare(eee)  == 0) {trigger_pass_byname = trigger_pass_byname + 1    ;}
+        if(currentpath.compare(me)   == 0) {trigger_pass_byname = trigger_pass_byname + 2    ;}
+        if(currentpath.compare(em)   == 0) {trigger_pass_byname = trigger_pass_byname + 5    ;}
+        if(currentpath.compare(ee)   == 0) {trigger_pass_byname = trigger_pass_byname + 10   ;}
+        if(currentpath.compare(mm)   == 0) {trigger_pass_byname = trigger_pass_byname + 20   ;}
+        if(currentpath.compare(mmTk) == 0) {trigger_pass_byname = trigger_pass_byname + 50   ;}
+        if(currentpath.compare(m)    == 0) {trigger_pass_byname = trigger_pass_byname + 100  ;}
+        if(currentpath.compare(mTk)  == 0) {trigger_pass_byname = trigger_pass_byname + 200  ;}
+        if(currentpath.compare(e)    == 0) {trigger_pass_byname = trigger_pass_byname + 500  ;}
+
+        if(currentpath.compare(eData)  == 0) {trigger_pass_byname = trigger_pass_byname + 1000   ;}
+        if(currentpath.compare(mme)    == 0) {trigger_pass_byname = trigger_pass_byname + 2000   ;}
+        if(currentpath.compare(eem)    == 0) {trigger_pass_byname = trigger_pass_byname + 5000   ;}
+        if(currentpath.compare(mmm)    == 0) {trigger_pass_byname = trigger_pass_byname + 10000  ;}
     }
 
     //std::cout << "Trigger combination = " << trigger_comb << std::endl;
