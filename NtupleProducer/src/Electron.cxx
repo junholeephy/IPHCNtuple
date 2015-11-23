@@ -40,7 +40,7 @@ void Electron::read()
     if( CHECK(ntP->el_isGsfCtfScPixChargeConsistent) ) _isPCC     = ntP->el_isGsfCtfScPixChargeConsistent->at(idx);
 
     // mva-based selection additionnal variables
-    // placeholder personnal MVA
+    if( CHECK(ntP->el_lepMVA)                        ) _lepMVA     = ntP->el_lepMVA->at(idx);
 
     // more variables
     if( CHECK(ntP->el_ip3d)                          ) _ip3d      = ntP->el_ip3d->at(idx);
@@ -68,7 +68,7 @@ void Electron::init()
     _dz           = -666;
 
     // more variables
-
+    _lepMVA       = -888;
 }
 
 bool Electron::sel()

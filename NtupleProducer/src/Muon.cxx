@@ -39,7 +39,7 @@ void Muon::read()
     // placeholder track.pt/errortrack.pt
 
     // mva-based selection additionnal variables
-    // placeholder personal MVA
+    if( CHECK(ntP->mu_lepMVA)            ) _lepMVA   = ntP->mu_lepMVA->at(idx);
 
     // jet related variables
     //_jetPtRel   = ntP->mu_lepMVA_jetPtRelv2->at(idx);
@@ -74,6 +74,7 @@ void Muon::init()
 
     // more variables
     _sip3d             = -666;
+    _lepMVA            = -888;
 }
 
 bool Muon::sel()

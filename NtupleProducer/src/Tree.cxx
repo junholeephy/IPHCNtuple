@@ -854,7 +854,7 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("mu_pfIso03_sumNeutralHadronEt", &mu_pfIso03_sumNeutralHadronEt, &b_mu_pfIso03_sumNeutralHadronEt);
     fChain->SetBranchAddress("mu_pfIso03_sumPhotonEt", &mu_pfIso03_sumPhotonEt, &b_mu_pfIso03_sumPhotonEt);
     fChain->SetBranchAddress("mu_pfIso03_sumPUPt", &mu_pfIso03_sumPUPt, &b_mu_pfIso03_sumPUPt);
-    //fChain->SetBranchAddress("mu_lepMVA", &mu_lepMVA, &b_mu_lepMVA);
+    fChain->SetBranchAddress("mu_lepMVA", &mu_lepMVA, &b_mu_lepMVA);
     fChain->SetBranchAddress("mu_lepMVA_miniRelIsoCharged", &mu_lepMVA_miniRelIsoCharged, &b_mu_lepMVA_miniRelIsoCharged);
     fChain->SetBranchAddress("mu_lepMVA_miniRelIsoNeutral", &mu_lepMVA_miniRelIsoNeutral, &b_mu_lepMVA_miniRelIsoNeutral);
     fChain->SetBranchAddress("mu_lepMVA_jetPtRelv2", &mu_lepMVA_jetPtRelv2, &b_mu_lepMVA_jetPtRelv2);

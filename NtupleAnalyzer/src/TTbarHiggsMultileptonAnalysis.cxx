@@ -339,10 +339,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         for(unsigned int imuon=0; imuon < vMuon->size() ; imuon++)
         {
-            // ADD CONDITION ON LEP MVA!
-
-            //if( !vMuon->at(imuon).passPtEta() ) continue;
-            //if( !vMuon->at(imuon).isLoose() )   continue;
+             if ( vMuon->at(imuon).lepMVA() < 0.65 ) continue;
 
             //	     theHistoManager->fillHisto("MuonPt",  "noSel", "emu", sampleName.Data(),  vMuon->at(imuon).pt(), theweight);
             //	     theHistoManager->fillHisto("MuonEta", "noSel", "emu", sampleName.Data(),  vMuon->at(imuon).eta(), theweight);
@@ -357,10 +354,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         for(unsigned int ielectron=0; ielectron < vElectron->size() ; ielectron++)
         {
-            // ADD CONDITION ON LEP MVA!
-
-            //if( !vElectron->at(ielectron).passPtEta() ) continue;
-            //if( !vElectron->at(ielectron).isLoose() )   continue;
+             if ( vElectron->at(ielectron).lepMVA() < 0.65 ) continue;
 
             //	     theHistoManager->fillHisto("ElectronPt",  "noSel", "emu", sampleName.Data(),  vElectron->at(ielectron).pt(), theweight);
             //	     theHistoManager->fillHisto("ElectronEta", "noSel", "emu", sampleName.Data(),  vElectron->at(ielectron).eta(), theweight);
