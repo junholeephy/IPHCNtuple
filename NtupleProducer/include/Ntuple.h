@@ -17,7 +17,7 @@ class Ntuple
 {
     public:
 
-        Ntuple();
+        Ntuple(std::string fname_out);
         virtual ~Ntuple();
 
         std::vector<Event>*    NtEvent;
@@ -41,6 +41,7 @@ class Ntuple
 
         TTree*  m_tree;
         TChain* m_chain;
+	std::string _fname_out;
 };
 
 #endif

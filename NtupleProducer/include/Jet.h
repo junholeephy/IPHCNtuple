@@ -32,11 +32,6 @@ class Jet : public Base
 
         float CSVv2()    {return _CSVv2;};
 
-        /*
-	float metpt()      {return _metpt;};
-        float metphi()       {return _metphi;};
-        float metsumet()     {return _metsumet;};*/
-
         float jet_partonFlavour() {return _jet_partonFlavour  ;};
         float jet_hadronFlavour() {return _jet_hadronFlavour  ;};
 
@@ -56,7 +51,7 @@ class Jet : public Base
           float jet_genParton_status() {return  _jet_genParton_status ;};*/
           float jet_genParton_id()     {return  _jet_genParton_id     ;};
 
-        void  read();
+        void  read(bool isdata);
         void  init();
 
     protected:

@@ -42,7 +42,7 @@ class Event : public Base
 
         float disc_TT()       {return _disc_TT;};
 
-        void read();
+        void read(bool isdata);
         void init();
 
     protected:
