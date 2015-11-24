@@ -37,9 +37,12 @@ void Jet::read(bool isdata)
     {
        _jet_partonFlavour    = ntP->jet_partonFlavour->at(idx);
        _jet_hadronFlavour    = ntP->jet_hadronFlavour->at(idx);
-       _jet_genJet_pt        = ntP->jet_genJet_pt->at(idx);
+       _jet_genJet_pt        = ntP->jet_genJet_pt->at(idx); 
+       _jet_genJet_E         = ntP->jet_genJet_E->at(idx);
        _jet_genParton_pt     = ntP->jet_genParton_pt->at(idx);
-       _jet_genParton_id     = ntP->jet_genParton_id ->at(idx);}
+       _jet_genParton_id     = ntP->jet_genParton_id ->at(idx);
+       _jet_genParton_E      = ntP->jet_genParton_E->at(idx);      
+       }
 
 }
 
@@ -64,7 +67,10 @@ void Jet::init()
     _jet_hadronFlavour    = -666.;
     _jet_genJet_pt        = -666.;
     _jet_genParton_pt     = -666.;
-    _jet_genParton_id     = -666.;
+    _jet_genParton_id     = -666.; 
+    _jet_genJet_E         = -666.;
+    _jet_genParton_E      = -666.;
+   
 }
 
 bool Jet::sel()
