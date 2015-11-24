@@ -36,6 +36,7 @@ class Jet : public Base
         float jet_hadronFlavour() {return _jet_hadronFlavour  ;};
 
         float jet_genJet_pt()     {return  _jet_genJet_pt    ;};
+	float jet_genJet_E()      {return  _jet_genJet_E   ;};
         /*float jet_genJet_eta()    {return  _jet_genJet_eta ;};
           float jet_genJet_phi()    {return  _jet_genJet_phi ;};
           float jet_genJet_m()      {return  _jet_genJet_m   ;};
@@ -44,6 +45,7 @@ class Jet : public Base
           float jet_genJet_id()     {return  _jet_genJet_id  ;};*/
 
         float jet_genParton_pt()     {return  _jet_genParton_pt     ;};
+	float jet_genParton_E()      {return  _jet_genParton_E      ;};
         /*float jet_genParton_eta()    {return  _jet_genParton_eta    ;};
           float jet_genParton_phi()    {return  _jet_genParton_phi    ;};
           float jet_genParton_m()      {return  _jet_genParton_m      ;};
@@ -76,6 +78,7 @@ class Jet : public Base
         float _jet_hadronFlavour  ;
 
         float _jet_genJet_pt      ;
+	float _jet_genJet_E       ;
         /*float _jet_genJet_eta     ;
           float _jet_genJet_phi     ;
           float _jet_genJet_m       ;
@@ -83,7 +86,8 @@ class Jet : public Base
           float _jet_genJet_status  ;
           float _jet_genJet_id      ;*/
 
-        float _jet_genParton_pt     ;
+        float _jet_genParton_pt     ; 
+	float _jet_genParton_E      ;
         /*float _jet_genParton_eta    ;
           float _jet_genParton_phi    ;
           float _jet_genParton_m      ;
