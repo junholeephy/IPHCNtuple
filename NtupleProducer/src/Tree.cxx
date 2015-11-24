@@ -386,7 +386,7 @@ void Tree::Init(TChain *ch)
    // #  |_|  |_|\____|   #
    // #                   #
    // #####################
-
+    gen_n = 0;
     gen_pt = 0;
     gen_eta = 0;
     gen_phi = 0;
