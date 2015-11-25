@@ -837,7 +837,16 @@ void Truth::readMultiLepton()
 }
 
 void Truth::init()
-{
+{   
+    _gen_PVz = -666.;
+    
+    _metGen_px = -666.;
+    _metGen_py = -666.;
+    _metGen_pt = -666.;
+    _metGen_phi = -666.;
+    _metGen_sumet = -666.;
+    _metGen_MuonEt = -666.;
+	
     _mc_truth_n = 0;
 
     _mc_truth_id.clear();
@@ -846,6 +855,8 @@ void Truth::init()
     _mc_truth_phi.clear();
     _mc_truth_E.clear();
     _mc_truth_label.clear();
+    
+    _gen_n = 0;
   
     _gen_pt.clear();
     _gen_eta.clear();
