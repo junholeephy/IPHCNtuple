@@ -1,6 +1,7 @@
 #include "../include/Hist.h"
 #include "../include/TTbarDileptonAnalysis.h"
 #include "../include/TTbarHiggsMultileptonAnalysis.h"
+#include "../include/TTbarHiggsTFAnalysis.h"
 
 #include "TChain.h"
 
@@ -37,19 +38,19 @@ int main(int argc, char *argv[])
 
    TChain *thetree = 0;
    
-   //  TTbarDileptonAnalysis * thettbaranalysis = new TTbarDileptonAnalysis("../../NtupleProducer/test/output.root", thetree, "TTbar");
-   //  thettbaranalysis->createHistograms();
-   //  thettbaranalysis->Loop();
-   //  thettbaranalysis->writeHistograms();
+   //TTH MEM analysis
+      TTbarHiggsMultileptonAnalysis *TTHanalysis = new TTbarHiggsMultileptonAnalysis(fname,thetree,"TTbarHiggs",stream);
+   // TTHanalysis->InitLHCO(1,1); // to print LHCO files
+      TTHanalysis->createHistograms();
+      TTHanalysis->Loop();
+      TTHanalysis->writeHistograms();
 
-   //std::cout << "Jusqu'ici, tout va bien 0.0" << std::endl;
-   TTbarHiggsMultileptonAnalysis *TTHanalysis = new TTbarHiggsMultileptonAnalysis(fname,thetree,"TTbarHiggs",stream);
-   //std::cout << "Jusqu'ici, tout va bien 0.1" << std::endl;
-   //TTHanalysis->InitLHCO(1,1);
-   TTHanalysis->createHistograms();
-   //std::cout << "Jusqu'ici, tout va bien 0.2" << std::endl;
-   TTHanalysis->Loop();
-   //std::cout << "Jusqu'ici, tout va bien 0.3" << std::endl;
-   TTHanalysis->writeHistograms();
-   //std::cout << "Jusqu'ici, tout va bien 0.4" << std::endl;
+   ////TTH Transfer Function analysis
+   //TTbarHiggsTFAnalysis *TTHTFanalysis = new TTbarHiggsTFAnalysis(fname,thetree,"TTbarHiggs",stream);
+   //TTHTFanalysis->createHistograms();
+   //TTHTFanalysis->Loop();
+   //TTHTFanalysis->writeHistograms();
+
+
+
 }
