@@ -560,44 +560,41 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection(std::vector<Lepton> vSe
 bool TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_MC() 
 { 
   bool sel_MC = true;
-  
-  //std::cout <<" sel_MC 1"<< std::endl;
-   
-  //Check decays and presence of genjets
-  if (!((vTruth->at(0).ttbar_decay()==1 && vTruth->at(0).boson_decay()==0) || 
-        (vTruth->at(0).ttbar_decay()==2 && vTruth->at(0).boson_decay()==1) ||   
-	(vTruth->at(0).ttbar_decay()==1 && vTruth->at(0).boson_decay()==2)   )) 
+    
+  //Check decays 
+  if (!((vTruth->at(0).ttbar_decay()==1 && vTruth->at(0).boson_decay()==0) || //ttH
+        (vTruth->at(0).ttbar_decay()==2 && vTruth->at(0).boson_decay()==1) || //ttH
+	(vTruth->at(0).ttbar_decay()==1 && vTruth->at(0).boson_decay()==2) || //tt semi-lep, ttZ
+	(vTruth->at(0).ttbar_decay()==2 && vTruth->at(0).boson_decay()==3)    //tt di-lep, ttW
+	                                                                      )) 
   { 
     sel_MC = false; 
     return sel_MC;}
-    
+  
+  // 
   if (vTruth->at(0).JetsHighestPt_phi().size()<2 || vTruth->at(0).JetsClosestMw_phi().size()<2 || vTruth->at(0).JetsLowestMjj_phi().size()<2) 
   { 
     sel_MC = false; 
     return sel_MC;}
   
-  //std::cout <<" sel_MC 212 "<<vTruth->at(0).Leptons_id().size()<< std::endl;
   
-  //SFOS 
-  if (!(vTruth->at(0).Leptons_id().at(0)==-vTruth->at(0).Leptons_id().at(1) || 
-        vTruth->at(0).Leptons_id().at(1)==-vTruth->at(0).Leptons_id().at(2) ||
-	vTruth->at(0).Leptons_id().at(0)==-vTruth->at(0).Leptons_id().at(2)   )) sel_MC = false; 
+  //SFOS && M(ll) not in 81-101 ??? 
+  if (! ((vTruth->at(0).Leptons_id().at(0)==-vTruth->at(0).Leptons_id().at(1) && ( (vTruth->at(0).Leptons_id().at(0).p4() + vTruth->at(0).Leptons_id().at(1).p4() ).M() - 91.188 < 10 ) || 
+          vTruth->at(0).Leptons_id().at(1)==-vTruth->at(0).Leptons_id().at(2) && ( (vTruth->at(0).Leptons_id().at(1).p4() + vTruth->at(0).Leptons_id().at(2).p4() ).M() - 91.188 < 10 ) ||
+	  vTruth->at(0).Leptons_id().at(0)==-vTruth->at(0).Leptons_id().at(2) && ( (vTruth->at(0).Leptons_id().at(0).p4() + vTruth->at(0).Leptons_id().at(2).p4() ).M() - 91.188 < 10 )  )) sel_MC = false; 
  
-  //std::cout <<" sel_MC 3"<< std::endl;
   	 
-  //pt , eta of leptons	
+  //pt, eta of leptons	
   if (!(vTruth->at(0).Leptons_pt().at(0)> 10 && 
         vTruth->at(0).Leptons_pt().at(1)> 10 &&
 	vTruth->at(0).Leptons_pt().at(2)> 10   )) sel_MC = false; 
   
-  //std::cout <<" sel_MC 4"<< std::endl;
-
+ 
   if (!(fabs(vTruth->at(0).Leptons_eta().at(0)) <2.5 && 
         fabs(vTruth->at(0).Leptons_eta().at(1)) <2.5 &&
         fabs(vTruth->at(0).Leptons_eta().at(2)) <2.5   )) sel_MC = false; 
   
-  //std::cout <<" sel_MC 5"<< std::endl;
-	
+ 	
   //lead. lepton
   if (!(vTruth->at(0).Leptons_pt().at(0) > 20 || 
         vTruth->at(0).Leptons_pt().at(1) > 20 ||
