@@ -21,18 +21,22 @@ LDLIBS  = $(ROOTLIBS) $(NTUPLELIB)
 
 ADDINC = $(NTUPLEINC)
 
-SRC = src/Analyzer.cxx src/Hist.cxx \
+SRC = src/Analyzer.cxx  src/Hist.cxx \
 src/TTbarDileptonAnalysis.cxx src/HistoManager.cxx \
-src/TTbarHiggsMultileptonAnalysis.cxx src/Lepton.cxx
+src/TTbarHiggsMultileptonAnalysis.cxx src/TTbarHiggsTFAnalysis.cxx \
+src/Lepton.cxx 
+
 
 INC = include/Hist.h include/Ranges.h include/Analyzer.h \
       include/TTbarDileptonAnalysis.h \
       include/HistoManager.h include/TTbarHiggsMultileptonAnalysis.h \
+      include/TTbarHiggsTFAnalysis.h \
       include/Lepton.h
 
 OBJ = Analyzer.o Hist.o \
 TTbarDileptonAnalysis.o HistoManager.o \
 TTbarHiggsMultileptonAnalysis.o \
+TTbarHiggsTFAnalysis.o \
 Lepton.o
 
 EXE = Analyzer
