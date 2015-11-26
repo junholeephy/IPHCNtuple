@@ -576,13 +576,6 @@ bool TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_MC()
   { 
     sel_MC = false; 
     return sel_MC;}
-  
-  
-  //SFOS && M(ll) not in 81-101 ??? 
-  if (! ((vTruth->at(0).Leptons_id().at(0)==-vTruth->at(0).Leptons_id().at(1) && ( (vTruth->at(0).Leptons_id().at(0).p4() + vTruth->at(0).Leptons_id().at(1).p4() ).M() - 91.188 < 10 ) || 
-          vTruth->at(0).Leptons_id().at(1)==-vTruth->at(0).Leptons_id().at(2) && ( (vTruth->at(0).Leptons_id().at(1).p4() + vTruth->at(0).Leptons_id().at(2).p4() ).M() - 91.188 < 10 ) ||
-	  vTruth->at(0).Leptons_id().at(0)==-vTruth->at(0).Leptons_id().at(2) && ( (vTruth->at(0).Leptons_id().at(0).p4() + vTruth->at(0).Leptons_id().at(2).p4() ).M() - 91.188 < 10 )  )) sel_MC = false; 
- 
   	 
   //pt, eta of leptons	
   if (!(vTruth->at(0).Leptons_pt().at(0)> 10 && 
@@ -600,6 +593,14 @@ bool TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_MC()
         vTruth->at(0).Leptons_pt().at(1) > 20 ||
 	vTruth->at(0).Leptons_pt().at(2) > 20  )) sel_MC = false; 
 	
+	
+  //SFOS && M(ll) not in 81-101 ??? 
+  int SFOSpair = -1;
+  if ((vTruth->at(0).Leptons_id().at(0)==-vTruth->at(0).Leptons_id().at(1))) SFOSpair = 0;
+  if ((vTruth->at(0).Leptons_id().at(1)==-vTruth->at(0).Leptons_id().at(2))) SFOSpair = 1;
+  if ((vTruth->at(0).Leptons_id().at(0)==-vTruth->at(0).Leptons_id().at(2))) SFOSpair = 2;
+  	
+	
   TLorentzVector Lep1;
   Lep1.SetPtEtaPhiE(vTruth->at(0).Leptons_pt().at(0),  vTruth->at(0).Leptons_eta().at(0), vTruth->at(0).Leptons_phi().at(0), vTruth->at(0).Leptons_E().at(0));
   TLorentzVector Lep2;
@@ -609,6 +610,10 @@ bool TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_MC()
  
   
   if ( !(( Lep1+Lep2 ).M()  > 12 && ( Lep1+Lep3 ).M()  > 12 && ( Lep2+Lep3 ).M()  > 12 )) sel_MC = false;
+  
+  if ( (SFOSpair == 0 && ( (Lep1+Lep2 ).M()-91.188 ) < 10. ) || 
+       (SFOSpair == 1 && ( (Lep2+Lep3 ).M()-91.188 ) < 10. ) ||  
+       (SFOSpair == 2 && ( (Lep1+Lep3 ).M()-91.188 ) < 10. )    ) sel_MC = false;
   
   return sel_MC;
    
