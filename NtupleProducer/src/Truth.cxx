@@ -46,7 +46,18 @@ void Truth::read()
     _gen_PVz = ntP->gen_PVz;
    
     _mc_truth_n = 0;
-
+    
+    int mc_truth_h0_id = ntP->mc_truth_h0_id;
+    if( mc_truth_h0_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0_E);
+        _mc_truth_label.push_back(1);
+        _mc_truth_n++;
+    }
     int mc_truth_h0W1_id = ntP->mc_truth_h0W1_id;
     if( mc_truth_h0W1_id != UNINT )
     {
@@ -91,6 +102,28 @@ void Truth::read()
         _mc_truth_label.push_back(123);
         _mc_truth_n++;
     }
+    int mc_truth_h0Wtau1_id = ntP->mc_truth_h0Wtau1_id;
+    if( mc_truth_h0Wtau1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0Wtau1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0Wtau1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0Wtau1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0Wtau1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0Wtau1_E);
+        _mc_truth_label.push_back(124);
+        _mc_truth_n++;
+    }
+    int mc_truth_h0Wtaul1_id = ntP->mc_truth_h0Wtaul1_id;
+    if( mc_truth_h0Wtaul1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0Wtaul1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0Wtaul1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0Wtaul1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0Wtaul1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0Wtaul1_E);
+        _mc_truth_label.push_back(1240);
+        _mc_truth_n++;
+    }
     int mc_truth_h0W2_id = ntP->mc_truth_h0W2_id;
     if( mc_truth_h0W2_id != UNINT )
     {
@@ -133,6 +166,28 @@ void Truth::read()
         _mc_truth_phi.push_back(ntP->mc_truth_h0Wq22_phi);
         _mc_truth_E.push_back(ntP->mc_truth_h0Wq22_E);
         _mc_truth_label.push_back(133);
+        _mc_truth_n++;
+    }
+    int mc_truth_h0Wtau2_id = ntP->mc_truth_h0Wtau2_id;
+    if( mc_truth_h0Wtau2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0Wtau2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0Wtau2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0Wtau2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0Wtau2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0Wtau2_E);
+        _mc_truth_label.push_back(134);
+        _mc_truth_n++;
+    }
+    int mc_truth_h0Wtaul2_id = ntP->mc_truth_h0Wtaul2_id;
+    if( mc_truth_h0Wtaul2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0Wtaul2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0Wtaul2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0Wtaul2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0Wtaul2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0Wtaul2_E);
+        _mc_truth_label.push_back(1340);
         _mc_truth_n++;
     }
     int mc_truth_h0Z1_id = ntP->mc_truth_h0Z1_id;
@@ -190,6 +245,52 @@ void Truth::read()
         _mc_truth_label.push_back(143);
         _mc_truth_n++;
     }
+    //AC
+    int mc_truth_h0Ztau11_id = ntP->mc_truth_h0Ztau11_id;
+    if( mc_truth_h0Ztau11_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0Ztau11_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0Ztau11_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0Ztau11_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0Ztau11_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0Ztau11_E);
+        _mc_truth_label.push_back(144);
+        _mc_truth_n++;
+    }
+    int mc_truth_h0Ztaul11_id = ntP->mc_truth_h0Ztaul11_id;
+    if( mc_truth_h0Ztaul11_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0Ztaul11_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0Ztaul11_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0Ztaul11_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0Ztaul11_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0Ztaul11_E);
+        _mc_truth_label.push_back(1440);
+        _mc_truth_n++;
+    }
+    int mc_truth_h0Ztau21_id = ntP->mc_truth_h0Ztau21_id;
+    if( mc_truth_h0Ztau21_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0Ztau21_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0Ztau21_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0Ztau21_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0Ztau21_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0Ztau21_E);
+        _mc_truth_label.push_back(145);
+        _mc_truth_n++;
+    }
+    int mc_truth_h0Ztaul21_id = ntP->mc_truth_h0Ztaul21_id;
+    if( mc_truth_h0Ztaul21_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0Ztaul21_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0Ztaul21_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0Ztaul21_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0Ztaul21_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0Ztaul21_E);
+        _mc_truth_label.push_back(1450);
+        _mc_truth_n++;
+    }
+    //AC
     int mc_truth_h0Z2_id = ntP->mc_truth_h0Z2_id;
     if( mc_truth_h0Z2_id != UNINT )
     {
@@ -245,6 +346,52 @@ void Truth::read()
         _mc_truth_label.push_back(153);
         _mc_truth_n++;
     }
+    //AC
+    int mc_truth_h0Ztau12_id = ntP->mc_truth_h0Ztau12_id;
+    if( mc_truth_h0Ztau12_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0Ztau12_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0Ztau12_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0Ztau12_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0Ztau12_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0Ztau12_E);
+        _mc_truth_label.push_back(154);
+        _mc_truth_n++;
+    }
+    int mc_truth_h0Ztaul12_id = ntP->mc_truth_h0Ztaul12_id;
+    if( mc_truth_h0Ztaul12_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0Ztaul12_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0Ztaul12_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0Ztaul12_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0Ztaul12_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0Ztaul12_E);
+        _mc_truth_label.push_back(1540);
+        _mc_truth_n++;
+    }
+    int mc_truth_h0Ztau22_id = ntP->mc_truth_h0Ztau22_id;
+    if( mc_truth_h0Ztau22_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0Ztau22_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0Ztau22_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0Ztau22_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0Ztau22_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0Ztau22_E);
+        _mc_truth_label.push_back(155);
+        _mc_truth_n++;
+    }
+    int mc_truth_h0Ztaul22_id = ntP->mc_truth_h0Ztaul22_id;
+    if( mc_truth_h0Ztaul22_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0Ztaul22_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0Ztaul22_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0Ztaul22_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0Ztaul22_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0Ztaul22_E);
+        _mc_truth_label.push_back(1550);
+        _mc_truth_n++;
+    }
+    //AC
     int mc_truth_h0tau1_id = ntP->mc_truth_h0tau1_id;
     if( mc_truth_h0tau1_id != UNINT )
     {
@@ -254,6 +401,17 @@ void Truth::read()
         _mc_truth_phi.push_back(ntP->mc_truth_h0tau1_phi);
         _mc_truth_E.push_back(ntP->mc_truth_h0tau1_E);
         _mc_truth_label.push_back(16);
+        _mc_truth_n++;
+    }
+    int mc_truth_h0taul1_id = ntP->mc_truth_h0taul1_id;
+    if( mc_truth_h0taul1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0taul1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0taul1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0taul1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0taul1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0taul1_E);
+        _mc_truth_label.push_back(160);
         _mc_truth_n++;
     }
     int mc_truth_h0tau2_id = ntP->mc_truth_h0tau2_id;
@@ -267,7 +425,439 @@ void Truth::read()
         _mc_truth_label.push_back(17);
         _mc_truth_n++;	
     }
+    int mc_truth_h0taul2_id = ntP->mc_truth_h0taul2_id;
+    if( mc_truth_h0taul2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_h0taul2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_h0taul2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_h0taul2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_h0taul2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_h0taul2_E);
+        _mc_truth_label.push_back(170);
+        _mc_truth_n++;	
+    }   
+    //
+    int mc_truth_t1_id = ntP->mc_truth_t1_id;
+    if( mc_truth_t1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_t1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_t1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_t1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_t1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_t1_E);
+        _mc_truth_label.push_back(2);
+        _mc_truth_n++;
+    }
+    int mc_truth_t2_id = ntP->mc_truth_t2_id;
+    if( mc_truth_t2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_t2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_t2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_t2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_t2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_t2_E);
+        _mc_truth_label.push_back(3);
+        _mc_truth_n++;
+    }
+    int mc_truth_tb1_id = ntP->mc_truth_tb1_id;
+    if( mc_truth_tb1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_tb1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_tb1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_tb1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_tb1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_tb1_E);
+        _mc_truth_label.push_back(20);
+        _mc_truth_n++;
+    }
+    int mc_truth_tb2_id = ntP->mc_truth_tb2_id;
+    if( mc_truth_tb2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_tb2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_tb2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_tb2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_tb2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_tb2_E);
+        _mc_truth_label.push_back(30);
+        _mc_truth_n++;
+    }
+    int mc_truth_tW1_id = ntP->mc_truth_tW1_id;
+    if( mc_truth_tW1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_tW1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_tW1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_tW1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_tW1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_tW1_E);
+        _mc_truth_label.push_back(21);
+        _mc_truth_n++;
+    }
+    int mc_truth_tW2_id = ntP->mc_truth_tW2_id;
+    if( mc_truth_tW2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_tW2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_tW2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_tW2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_tW2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_tW2_E);
+        _mc_truth_label.push_back(31);
+        _mc_truth_n++;
+    }
+    int mc_truth_tWl1_id = ntP->mc_truth_tWl1_id;
+    if( mc_truth_tWl1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_tWl1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_tWl1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_tWl1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_tWl1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_tWl1_E);
+        _mc_truth_label.push_back(210);
+        _mc_truth_n++;
+    }
+    int mc_truth_tWl2_id = ntP->mc_truth_tWl2_id;
+    if( mc_truth_tWl2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_tWl2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_tWl2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_tWl2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_tWl2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_tWl2_E);
+        _mc_truth_label.push_back(310);
+        _mc_truth_n++;
+    }
+    int mc_truth_tWtau1_id = ntP->mc_truth_tWtau1_id;
+    if( mc_truth_tWtau1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_tWtau1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_tWtau1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_tWtau1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_tWtau1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_tWtau1_E);
+        _mc_truth_label.push_back(22);
+        _mc_truth_n++;
+    }
+    int mc_truth_tWtau2_id = ntP->mc_truth_tWtau2_id;
+    if( mc_truth_tWtau2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_tWtau2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_tWtau2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_tWtau2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_tWtau2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_tWtau2_E);
+        _mc_truth_label.push_back(32);
+        _mc_truth_n++;
+    }
+    int mc_truth_tWtaul1_id = ntP->mc_truth_tWtaul1_id;
+    if( mc_truth_tWtaul1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_tWtaul1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_tWtaul1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_tWtaul1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_tWtaul1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_tWtaul1_E);
+        _mc_truth_label.push_back(2220);
+        _mc_truth_n++;
+    }
+    int mc_truth_tWtaul2_id = ntP->mc_truth_tWtaul2_id;
+    if( mc_truth_tWtaul2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_tWtaul2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_tWtaul2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_tWtaul2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_tWtaul2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_tWtaul2_E);
+        _mc_truth_label.push_back(3220);
+        _mc_truth_n++;
+    }
+   int mc_truth_tWq11_id = ntP->mc_truth_tWq11_id;
+    if( mc_truth_tWq11_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_tWq11_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_tWq11_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_tWq11_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_tWq11_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_tWq11_E);
+        _mc_truth_label.push_back(223);
+        _mc_truth_n++;
+    }
+    int mc_truth_tWq21_id = ntP->mc_truth_tWq21_id;
+    if( mc_truth_tWq21_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_tWq21_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_tWq21_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_tWq21_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_tWq21_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_tWq21_E);
+        _mc_truth_label.push_back(224);
+        _mc_truth_n++;
+    }
+   int mc_truth_tWq12_id = ntP->mc_truth_tWq12_id;
+    if( mc_truth_tWq12_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_tWq12_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_tWq12_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_tWq12_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_tWq12_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_tWq12_E);
+        _mc_truth_label.push_back(323);
+        _mc_truth_n++;
+    }
+    int mc_truth_tWq22_id = ntP->mc_truth_tWq22_id;
+    if( mc_truth_tWq22_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_tWq22_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_tWq22_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_tWq22_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_tWq22_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_tWq22_E);
+        _mc_truth_label.push_back(324);
+        _mc_truth_n++;
+    }
+   int mc_truth_W_id = ntP->mc_truth_W_id;
+    if( mc_truth_W_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_W_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_W_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_W_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_W_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_W_E);
+        _mc_truth_label.push_back(4);
+        _mc_truth_n++;
+    }
+    int mc_truth_Wl_id = ntP->mc_truth_Wl_id;
+    if( mc_truth_Wl_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_Wl_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_Wl_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_Wl_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_Wl_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_Wl_E);
+        _mc_truth_label.push_back(40);
+        _mc_truth_n++;
+    }
+    int mc_truth_Wtau_id = ntP->mc_truth_Wtau_id;
+    if( mc_truth_Wtau_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_Wtau_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_Wtau_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_Wtau_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_Wtau_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_Wtau_E);
+        _mc_truth_label.push_back(43);
+        _mc_truth_n++;
+    }
+    int mc_truth_Wtaul_id = ntP->mc_truth_Wtaul_id;
+    if( mc_truth_Wtaul_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_Wtaul_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_Wtaul_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_Wtaul_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_Wtaul_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_Wtaul_E);
+        _mc_truth_label.push_back(430);
+        _mc_truth_n++;
+    }
+   int mc_truth_Wq1_id = ntP->mc_truth_Wq1_id;
+    if( mc_truth_Wq1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_Wq1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_Wq1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_Wq1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_Wq1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_Wq1_E);
+        _mc_truth_label.push_back(41);
+        _mc_truth_n++;
+    }
+    int mc_truth_Wq2_id = ntP->mc_truth_Wq2_id;
+    if( mc_truth_Wq2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_Wq2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_Wq2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_Wq2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_Wq2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_Wq2_E);
+        _mc_truth_label.push_back(42);
+        _mc_truth_n++;
+    }
+    int mc_truth_Z_id = ntP->mc_truth_Z_id;
+    if( mc_truth_Z_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_Z_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_Z_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_Z_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_Z_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_Z_E);
+        _mc_truth_label.push_back(5);
+        _mc_truth_n++;
+    }
+    int mc_truth_Zl1_id = ntP->mc_truth_Zl1_id;
+    if( mc_truth_Zl1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_Zl1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_Zl1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_Zl1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_Zl1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_Zl1_E);
+        _mc_truth_label.push_back(50);
+        _mc_truth_n++;
+    }
+   int mc_truth_Zl2_id = ntP->mc_truth_Zl2_id;
+    if( mc_truth_Zl2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_Zl2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_Zl2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_Zl2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_Zl2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_Zl2_E);
+        _mc_truth_label.push_back(51);
+        _mc_truth_n++;
+    }
+    int mc_truth_Ztau1_id = ntP->mc_truth_Ztau1_id;
+    if( mc_truth_Ztau1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_Ztau1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_Ztau1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_Ztau1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_Ztau1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_Ztau1_E);
+        _mc_truth_label.push_back(52);
+        _mc_truth_n++;
+    }
+   int mc_truth_Ztau2_id = ntP->mc_truth_Ztau2_id;
+    if( mc_truth_Ztau2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_Ztau2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_Ztau2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_Ztau2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_Ztau2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_Ztau2_E);
+        _mc_truth_label.push_back(53);
+        _mc_truth_n++;
+    }
+    int mc_truth_Ztaul1_id = ntP->mc_truth_Ztaul1_id;
+    if( mc_truth_Ztaul1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_Ztaul1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_Ztaul1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_Ztaul1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_Ztaul1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_Ztaul1_E);
+        _mc_truth_label.push_back(520);
+        _mc_truth_n++;
+    }
+    int mc_truth_Ztaul2_id = ntP->mc_truth_Ztaul2_id;
+    if( mc_truth_Ztaul2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_Ztaul2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_Ztaul2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_Ztaul2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_Ztaul2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_Ztaul2_E);
+        _mc_truth_label.push_back(530);
+        _mc_truth_n++;
+    }
+    int mc_truth_Zq1_id = ntP->mc_truth_Zq1_id;
+    if( mc_truth_Zq1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_Zq1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_Zq1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_Zq1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_Zq1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_Zq1_E);
+        _mc_truth_label.push_back(54);
+        _mc_truth_n++;
+    }
+    int mc_truth_Zq2_id = ntP->mc_truth_Zq2_id;
+    if( mc_truth_Zq2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_Zq2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_Zq2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_Zq2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_Zq2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_Zq2_E);
+        _mc_truth_label.push_back(55);
+        _mc_truth_n++;
+    }
+    int mc_truth_gamma_id = ntP->mc_truth_gamma_id;
+    if( mc_truth_gamma_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_gamma_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_gamma_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_gamma_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_gamma_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_gamma_E);
+        _mc_truth_label.push_back(6);
+        _mc_truth_n++;
+    }
+    int mc_truth_gammal1_id = ntP->mc_truth_gammal1_id;
+    if( mc_truth_gammal1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_gammal1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_gammal1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_gammal1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_gammal1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_gammal1_E);
+        _mc_truth_label.push_back(60);
+        _mc_truth_n++;
+    }
+    int mc_truth_gammal2_id = ntP->mc_truth_gammal2_id;
+    if( mc_truth_gammal2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_gammal2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_gammal2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_gammal2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_gammal2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_gammal2_E);
+        _mc_truth_label.push_back(61);
+        _mc_truth_n++;
+    }
+    int mc_truth_gammatau1_id = ntP->mc_truth_gammatau1_id;
+    if( mc_truth_gammatau1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_gammatau1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_gammatau1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_gammatau1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_gammatau1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_gammatau1_E);
+        _mc_truth_label.push_back(62);
+        _mc_truth_n++;
+    }
+    int mc_truth_gammatau2_id = ntP->mc_truth_gammatau2_id;
+    if( mc_truth_gammatau2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_gammatau2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_gammatau2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_gammatau2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_gammatau2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_gammatau2_E);
+        _mc_truth_label.push_back(63);
+        _mc_truth_n++;
+    }
+    int mc_truth_gammataul1_id = ntP->mc_truth_gammataul1_id;
+    if( mc_truth_gammataul1_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_gammataul1_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_gammataul1_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_gammataul1_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_gammataul1_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_gammataul1_E);
+        _mc_truth_label.push_back(620);
+        _mc_truth_n++;
+    }
+    int mc_truth_gammataul2_id = ntP->mc_truth_gammataul2_id;
+    if( mc_truth_gammataul2_id != UNINT )
+    {
+        _mc_truth_id.push_back(mc_truth_gammataul2_id);
+        _mc_truth_pt.push_back(ntP->mc_truth_gammataul2_pt);
+        _mc_truth_eta.push_back(ntP->mc_truth_gammataul2_eta);
+        _mc_truth_phi.push_back(ntP->mc_truth_gammataul2_phi);
+        _mc_truth_E.push_back(ntP->mc_truth_gammataul2_E);
+        _mc_truth_label.push_back(630);
+        _mc_truth_n++;
+    }
    
+   
+    //   
     _metGen_px = ntP->metGen_px;
     _metGen_py = ntP->metGen_py;
     _metGen_pt = ntP->metGen_pt;
