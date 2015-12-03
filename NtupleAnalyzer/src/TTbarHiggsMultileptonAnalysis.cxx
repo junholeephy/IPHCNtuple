@@ -29,7 +29,16 @@ void TTbarHiggsMultileptonAnalysis::InitLHCO(int process_MC, int process_RECO)
 TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString theSampleName, TString treeName)
 {    
 //   gSystem->Load("libNtuple.so");
-
+ 
+   //
+   _printLHCO_MC = false;
+   _processLHCO_MC = -1;
+   
+   _printLHCO_RECO = false;
+   _processLHCO_RECO = -1;
+   
+   
+   //
    tree = new TChain(treeName.Data());
 
    std::ifstream infile;
@@ -54,7 +63,8 @@ TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileNa
    std::string foutlog = "output.txt";
    fevc = fopen(foutlog.c_str(),"w");
    
-   outputfile = new TFile("output.root", "recreate");
+   outputfile = new TFile("output.root", "recreate"); 
+
 }
 
 void TTbarHiggsMultileptonAnalysis::createHistograms()
