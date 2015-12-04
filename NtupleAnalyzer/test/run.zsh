@@ -9,5 +9,9 @@ export LD_LIBRARY_PATH=${cdir}:${NtupleDir}:${NtupleDir}/obj:$LD_LIBRARY_PATH
 ./../Analyzer \
 --file input.txt \
 --tree Nt \
---nmax -1
-
+--outfile ./ \
+--nmax -1 \
+--isdata 0 \
+--nowe -1 \
+--xsec -1. \
+--lumi 2110 \
