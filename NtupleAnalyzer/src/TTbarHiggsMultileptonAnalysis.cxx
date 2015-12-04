@@ -13,30 +13,33 @@ TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis()
 
 void TTbarHiggsMultileptonAnalysis::InitLHCO(int process_MC, int process_RECO) 
 {  
-   _printLHCO_MC = true;
-   _processLHCO_MC = process_MC;
-   fout_MC.open("LHCO_MC.txt");
+   if (!_isdata)
+   {
+     _printLHCO_MC = true;
+     _processLHCO_MC = process_MC;
+     TString fout_MC_path = outputPath+"/LHCO_MC.txt";
+     fout_MC.open(fout_MC_path.Data());        
+     }
    
    _printLHCO_RECO = true;
    _processLHCO_RECO = process_RECO;
-   fout_RECO.open("LHCO_RECO.txt");
+   TString fout_RECO_path = outputPath+"/LHCO_RECO.txt";
+   fout_RECO.open(fout_RECO_path.Data());
    
    fline00 = "#   typ	  eta	 phi	   pt  jmass  ntrk  btag   had/em  dummy dummy";
    del = "    ";
    trig = "8";   
 }
 
-TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString theSampleName, TString treeName)
+TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString theSampleName, TString treeName, TString outputPath, bool isdata, float xsec, float lumi, int nowe, int nmax)
 {    
-//   gSystem->Load("libNtuple.so");
- 
+  
    //
-   _printLHCO_MC = false;
-   _processLHCO_MC = -1;
-   
-   _printLHCO_RECO = false;
-   _processLHCO_RECO = -1;
-   
+   _isdata = isdata;
+   _xsec = xsec;
+   _lumi = lumi;
+   _nowe = nowe;
+   _nmax = nmax;
    
    //
    tree = new TChain(treeName.Data());
@@ -60,17 +63,27 @@ TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileNa
    
    sampleName = theSampleName;
 
-   std::string foutlog = "output.txt";
-   fevc = fopen(foutlog.c_str(),"w");
+
+   //std::string foutlog = "output.txt";
+   //fevc = fopen(foutlog.c_str(),"w");
    
-   outputfile = new TFile("output.root", "recreate"); 
+   TString outputFile = outputPath + "output.root";
+   outputfile = new TFile(outputFile.Data(), "recreate");  
+   
+   //
+   _printLHCO_MC = false;
+   _processLHCO_MC = -1;
+   
+   _printLHCO_RECO = false;
+   _processLHCO_RECO = -1;
+   
 
 }
 
 void TTbarHiggsMultileptonAnalysis::createHistograms()
 {    
  
-   outputfile->cd();
+    outputfile->cd();
 
     theHistoManager->addHisto("CutFlow",      "noSel", "emu", sampleName.Data(), 10, 0, 10);
 
@@ -310,12 +323,15 @@ void TTbarHiggsMultileptonAnalysis::Loop()
     if (fChain == 0) return;
 
     Long64_t nentries = fChain->GetEntries();
+    int nentries_max = nentries;
+    if ( _nmax != -1 && _nmax < nentries ) nentries_max = _nmax;
 
     std::cout << "Number of input events = " << nentries << std::endl;
+    std::cout << "Number of processed events = " << nentries_max << std::endl;
 
     Long64_t nbytes = 0, nb = 0;
 
-    for (Long64_t jentry=0; jentry<nentries;jentry++) 
+    for (Long64_t jentry=0; jentry<nentries_max;jentry++) 
     {
         Long64_t ientry = fChain->LoadTree(jentry);
         if (ientry < 0) break;
@@ -397,11 +413,11 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             vSelectedJets.push_back(vJet->at(ijet));
         }
 
-        //	theHistoManager->fillHisto("CutFlow", "noSel", "emu", sampleName.Data(),  0, theweight);
+        //theHistoManager->fillHisto("CutFlow", "noSel", "emu", sampleName.Data(),  0, theweight);
 
         //bool nLep = (vSelectedLeptons.size() >= 2);
 
-       //std::cout << "Jusqu'ici tout va bien 5" << std::endl; 
+        //std::cout << "Jusqu'ici tout va bien 5" << std::endl; 
 
         // #################################
         // # Three leptons event selection #
@@ -453,7 +469,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             std::cout << "Number of medium b jets   :    " << nMediumBJets                << std::endl;
         }*/
         
-	if (_printLHCO_MC && ThreeLeptonSelection_MC()) PrintLHCOforMadweight_MC(jentry);
+	if ( !_isdata && _printLHCO_MC && ThreeLeptonSelection_MC()) PrintLHCOforMadweight_MC(jentry);
 	
     }
 
@@ -480,12 +496,12 @@ void TTbarHiggsMultileptonAnalysis::PrintEventList(std::vector<Lepton> leptons, 
 
     int   njets = jets.size();
 
-    fprintf(fevc,"%6d %6d %10d  %+2d  %6.2f %+4.2f %+4.2f   %+2d  %6.2f %+4.2f %+4.2f    %6.1f  %+4.2f    %d \n",
+    /*fprintf(fevc,"%6d %6d %10d  %+2d  %6.2f %+4.2f %+4.2f   %+2d  %6.2f %+4.2f %+4.2f    %6.1f  %+4.2f    %d \n",
             run, lumi, id,
             l1id, l1pt, l1eta, l1phi,
             l2id, l2pt, l2eta, l2phi,
             metpt, metphi,
-            njets);
+            njets);*/
 }
 
 void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection(std::vector<Lepton> vSelectedLeptons, 
