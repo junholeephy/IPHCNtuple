@@ -24,7 +24,8 @@ class TTbarHiggsMultileptonAnalysis
 
  public:
    TTbarHiggsMultileptonAnalysis();
-   TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString theSampleName, TString treeName);
+   TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString theSampleName, TString treeName, 
+                                 TString outputPath, bool isdata, float xsec, float lumi, int nowe, int nmax);
 
    ~TTbarHiggsMultileptonAnalysis();
 
@@ -100,6 +101,14 @@ class TTbarHiggsMultileptonAnalysis
    FILE *fevc;
 
    TString sampleName;
+   TString outputPath;
+   
+   bool _isdata;
+   float _xsec;
+   float _lumi;
+   int _nowe;    // number of weighted events
+   int _nmax;    // max number of events to process 
+ 
       
    // needed to print info in LHCO text format (madweight)
    
