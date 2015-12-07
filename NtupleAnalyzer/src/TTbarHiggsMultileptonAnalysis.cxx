@@ -17,13 +17,13 @@ void TTbarHiggsMultileptonAnalysis::InitLHCO(int process_MC, int process_RECO)
    {    
      _printLHCO_MC = true;
      _processLHCO_MC = process_MC;     
-     TString fout_MC_path(_outputFile(0,_outputFile.Sizeof()-11)+"LHCO_MC.txt"); 
+     TString fout_MC_path(_outputFile+"_LHCO_MC.txt"); 
      fout_MC.open(fout_MC_path.Data());        
      }
    
    _printLHCO_RECO = true;
    _processLHCO_RECO = process_RECO;
-   TString fout_RECO_path = _outputFile-"output.root"+"LHCO_RECO.txt";
+   TString fout_RECO_path(_outputFile+"_LHCO_RECO.txt");
    fout_RECO.open(fout_RECO_path.Data());
    
    fline00 = "#   typ	  eta	 phi	   pt  jmass  ntrk  btag   had/em  dummy dummy";
