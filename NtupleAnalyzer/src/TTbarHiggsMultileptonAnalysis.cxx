@@ -14,16 +14,16 @@ TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis()
 void TTbarHiggsMultileptonAnalysis::InitLHCO(int process_MC, int process_RECO) 
 {  
    if (!_isdata)
-   {
+   {    
      _printLHCO_MC = true;
-     _processLHCO_MC = process_MC;
-     TString fout_MC_path = outputPath+"/LHCO_MC.txt";
+     _processLHCO_MC = process_MC;     
+     TString fout_MC_path(_outputFile(0,_outputFile.Sizeof()-11)+"LHCO_MC.txt"); 
      fout_MC.open(fout_MC_path.Data());        
      }
    
    _printLHCO_RECO = true;
    _processLHCO_RECO = process_RECO;
-   TString fout_RECO_path = outputPath+"/LHCO_RECO.txt";
+   TString fout_RECO_path = _outputFile-"output.root"+"LHCO_RECO.txt";
    fout_RECO.open(fout_RECO_path.Data());
    
    fline00 = "#   typ	  eta	 phi	   pt  jmass  ntrk  btag   had/em  dummy dummy";
@@ -31,7 +31,7 @@ void TTbarHiggsMultileptonAnalysis::InitLHCO(int process_MC, int process_RECO)
    trig = "8";   
 }
 
-TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString theSampleName, TString treeName, TString outputPath, bool isdata, float xsec, float lumi, int nowe, int nmax)
+TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString theSampleName, TString treeName, TString outputFile, bool isdata, float xsec, float lumi, int nowe, int nmax)
 {    
   
    //
@@ -40,6 +40,7 @@ TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileNa
    _lumi = lumi;
    _nowe = nowe;
    _nmax = nmax;
+   _outputFile = outputFile;
    
    //
    tree = new TChain(treeName.Data());
@@ -67,8 +68,8 @@ TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileNa
    //std::string foutlog = "output.txt";
    //fevc = fopen(foutlog.c_str(),"w");
    
-   TString outputFile = outputPath + "output.root";
-   outputfile = new TFile(outputFile.Data(), "recreate");  
+  
+   outputfile = new TFile(_outputFile.Data(), "recreate");  
    
    //
    _printLHCO_MC = false;
