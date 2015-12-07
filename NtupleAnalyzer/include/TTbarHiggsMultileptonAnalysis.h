@@ -101,7 +101,7 @@ class TTbarHiggsMultileptonAnalysis
    FILE *fevc;
 
    TString sampleName;
-   TString outputPath;
+   TString _outputFile;
    
    bool _isdata;
    float _xsec;
