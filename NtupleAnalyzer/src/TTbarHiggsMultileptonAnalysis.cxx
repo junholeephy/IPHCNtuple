@@ -68,8 +68,8 @@ TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileNa
    //std::string foutlog = "output.txt";
    //fevc = fopen(foutlog.c_str(),"w");
    
-  
-   outputfile = new TFile(_outputFile.Data(), "recreate");  
+   TString outputfileRoot = _outputFile+".root";
+   outputfile = new TFile(outputfileRoot.Data(), "recreate");  
    
    //
    _printLHCO_MC = false;
