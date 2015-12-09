@@ -1,0 +1,16 @@
+#!/bin/csh
+
+setenv LOCALDIR `pwd`
+setenv EXECDIR "/afs/cern.ch/work/c/chanon/MEM/test/"
+
+source /afs/cern.ch/user/c/chanon/setupMEM.csh 
+
+cd ${LOCALDIR}
+
+${EXECDIR}/./test root://eoscms//eos/cms/store/user/chanon/TTH/FlatTree/MantaRay-patch9_ter/Analyzed_Reco_2b_1b/outputAnalyzer_Reco_PROC.root  NMIN NMAX --MEMRun /afs/cern.ch/work/c/chanon/MEM/test/JobsReco/Jobs_OPTION/config.cfg > log_PROC_OPTION_NUM
+
+ls 
+
+cp log_PROC_OPTION_NUM ${EXECDIR}/JobsReco/Jobs_OPTION/
+cp output.root ${EXECDIR}/JobsReco/Jobs_OPTION/output_PROC_OPTION_NUM.root
+
