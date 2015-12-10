@@ -200,6 +200,7 @@ class Tree {
         vector<int>     *mu_isStandAloneMuon;
         vector<int>     *mu_isCaloMuon;
         vector<int>     *mu_isPFMuon;
+        vector<bool>    *mu_isMediumMuon;
         vector<bool>    *mu_isTightMuon;
         vector<float>   *mu_vx;
         vector<float>   *mu_vy;
@@ -225,6 +226,8 @@ class Tree {
         vector<float>   *mu_bestTrack_dz;
         vector<float>   *mu_bestTrack_dxyError;
         vector<float>   *mu_bestTrack_dzError;
+        vector<float>   *mu_bestTrack_pt;
+        vector<float>   *mu_bestTrack_ptError;
         vector<int>     *mu_numberOfMatches;
         vector<int>     *mu_numberOfValidMuonHits;
         vector<float>   *mu_pfIso03_sumChargedHadronPt;
@@ -391,37 +394,37 @@ class Tree {
         Int_t           mc_truth_h0_id;
         Int_t           mc_truth_h0W1_id;
         Int_t           mc_truth_h0Wl1_id;
-        Int_t           mc_truth_h0Wtau1_id; 
-	Int_t           mc_truth_h0Wtaul1_id;
+        Int_t           mc_truth_h0Wtau1_id;
+        Int_t           mc_truth_h0Wtaul1_id;
         Int_t           mc_truth_h0Wq11_id;
         Int_t           mc_truth_h0Wq21_id;
         Int_t           mc_truth_h0W2_id;
         Int_t           mc_truth_h0Wl2_id;
-	Int_t           mc_truth_h0Wtau2_id;
-	Int_t           mc_truth_h0Wtaul2_id;
+        Int_t           mc_truth_h0Wtau2_id;
+        Int_t           mc_truth_h0Wtaul2_id;
         Int_t           mc_truth_h0Wq12_id;
         Int_t           mc_truth_h0Wq22_id;
         Int_t           mc_truth_h0Z1_id;
         Int_t           mc_truth_h0Zl11_id;
         Int_t           mc_truth_h0Zl21_id;
-	Int_t	        mc_truth_h0Ztau11_id;
+        Int_t	        mc_truth_h0Ztau11_id;
         Int_t	        mc_truth_h0Ztau21_id;
-	Int_t	        mc_truth_h0Ztaul11_id;
-        Int_t	        mc_truth_h0Ztaul21_id;	     
+        Int_t	        mc_truth_h0Ztaul11_id;
+        Int_t	        mc_truth_h0Ztaul21_id;
         Int_t           mc_truth_h0Zq11_id;
         Int_t           mc_truth_h0Zq21_id;
         Int_t           mc_truth_h0Z2_id;
         Int_t           mc_truth_h0Zl12_id;
         Int_t           mc_truth_h0Zl22_id;
-	Int_t	        mc_truth_h0Ztau12_id;
+        Int_t	        mc_truth_h0Ztau12_id;
         Int_t	        mc_truth_h0Ztau22_id;
-	Int_t	        mc_truth_h0Ztaul12_id;
+        Int_t	        mc_truth_h0Ztaul12_id;
         Int_t	        mc_truth_h0Ztaul22_id;
         Int_t           mc_truth_h0Zq12_id;
         Int_t           mc_truth_h0Zq22_id;
         Int_t           mc_truth_h0tau1_id;
-        Int_t           mc_truth_h0tau2_id; 
-	Int_t           mc_truth_h0taul1_id;
+        Int_t           mc_truth_h0tau2_id;
+        Int_t           mc_truth_h0taul1_id;
         Int_t           mc_truth_h0taul2_id;
         Int_t           mc_truth_h0b1_id;
         Int_t           mc_truth_h0b2_id;
@@ -434,9 +437,9 @@ class Tree {
         Int_t           mc_truth_tW2_id;
         Int_t           mc_truth_tWl1_id;
         Int_t           mc_truth_tWl2_id;
-	Int_t           mc_truth_tWtau1_id;
+        Int_t           mc_truth_tWtau1_id;
         Int_t           mc_truth_tWtau2_id;
-	Int_t           mc_truth_tWtaul1_id;
+        Int_t           mc_truth_tWtaul1_id;
         Int_t           mc_truth_tWtaul2_id;
         Int_t           mc_truth_tWq11_id;
         Int_t           mc_truth_tWq21_id;
@@ -451,19 +454,19 @@ class Tree {
         Int_t           mc_truth_tWq2_id;
 
         Int_t           mc_truth_W_id;
-        Int_t           mc_truth_Wl_id; 
-	Int_t           mc_truth_Wtau_id;
-	Int_t           mc_truth_Wtaul_id;
-	Int_t           mc_truth_Wq1_id;
-	Int_t           mc_truth_Wq2_id;
+        Int_t           mc_truth_Wl_id;
+        Int_t           mc_truth_Wtau_id;
+        Int_t           mc_truth_Wtaul_id;
+        Int_t           mc_truth_Wq1_id;
+        Int_t           mc_truth_Wq2_id;
         Int_t           mc_truth_Z_id;
         Int_t           mc_truth_Zl1_id;
         Int_t           mc_truth_Zl2_id;
-	Int_t           mc_truth_Ztau1_id;
+        Int_t           mc_truth_Ztau1_id;
         Int_t           mc_truth_Ztau2_id;
-	Int_t           mc_truth_Ztaul1_id;
+        Int_t           mc_truth_Ztaul1_id;
         Int_t           mc_truth_Ztaul2_id;
-	Int_t           mc_truth_Zq1_id;
+        Int_t           mc_truth_Zq1_id;
         Int_t           mc_truth_Zq2_id;
         Int_t           mc_truth_gammal1_id;
         Int_t           mc_truth_gammal2_id;
@@ -480,10 +483,10 @@ class Tree {
         Float_t           mc_truth_tW1_pt;
         Float_t           mc_truth_tW2_pt;
         Float_t           mc_truth_tWl1_pt;
-        Float_t           mc_truth_tWl2_pt;  
-	Float_t           mc_truth_tWtau1_pt;
+        Float_t           mc_truth_tWl2_pt;
+        Float_t           mc_truth_tWtau1_pt;
         Float_t           mc_truth_tWtau2_pt;
-	Float_t           mc_truth_tWtaul1_pt;
+        Float_t           mc_truth_tWtaul1_pt;
         Float_t           mc_truth_tWtaul2_pt;
         Float_t           mc_truth_tWq11_pt;
         Float_t           mc_truth_tWq21_pt;
@@ -496,21 +499,21 @@ class Tree {
         Float_t           mc_truth_tWl_pt;
         Float_t           mc_truth_tWq1_pt;
         Float_t           mc_truth_tWq2_pt;
-	
+
         Float_t           mc_truth_W_pt;
         Float_t           mc_truth_Wl_pt;
-	Float_t	          mc_truth_Wtau_pt;
-	Float_t	          mc_truth_Wtaul_pt;	
-	Float_t           mc_truth_Wq1_pt;
-	Float_t           mc_truth_Wq2_pt;
-	Float_t           mc_truth_Z_pt;
+        Float_t	          mc_truth_Wtau_pt;
+        Float_t	          mc_truth_Wtaul_pt;
+        Float_t           mc_truth_Wq1_pt;
+        Float_t           mc_truth_Wq2_pt;
+        Float_t           mc_truth_Z_pt;
         Float_t           mc_truth_Zl1_pt;
         Float_t           mc_truth_Zl2_pt;
-	Float_t           mc_truth_Zq1_pt;
+        Float_t           mc_truth_Zq1_pt;
         Float_t           mc_truth_Zq2_pt;
-	Float_t 	  mc_truth_Ztau1_pt;
+        Float_t 	  mc_truth_Ztau1_pt;
         Float_t 	  mc_truth_Ztau2_pt;
-	Float_t 	  mc_truth_Ztaul1_pt;
+        Float_t 	  mc_truth_Ztaul1_pt;
         Float_t 	  mc_truth_Ztaul2_pt;
         Float_t           mc_truth_gammal1_pt;
         Float_t           mc_truth_gammal2_pt;
@@ -523,37 +526,37 @@ class Tree {
         Float_t           mc_truth_h0_pt;
         Float_t           mc_truth_h0W1_pt;
         Float_t           mc_truth_h0Wtau1_pt;
-	Float_t           mc_truth_h0Wtaul1_pt;
+        Float_t           mc_truth_h0Wtaul1_pt;
         Float_t           mc_truth_h0Wl1_pt;
         Float_t           mc_truth_h0Wq11_pt;
         Float_t           mc_truth_h0Wq21_pt;
         Float_t           mc_truth_h0W2_pt;
-        Float_t           mc_truth_h0Wl2_pt;  
-	Float_t           mc_truth_h0Wtau2_pt;
-	Float_t           mc_truth_h0Wtaul2_pt;
+        Float_t           mc_truth_h0Wl2_pt;
+        Float_t           mc_truth_h0Wtau2_pt;
+        Float_t           mc_truth_h0Wtaul2_pt;
         Float_t           mc_truth_h0Wq12_pt;
         Float_t           mc_truth_h0Wq22_pt;
         Float_t           mc_truth_h0Z1_pt;
         Float_t           mc_truth_h0Zl11_pt;
         Float_t           mc_truth_h0Zl21_pt;
-	Float_t           mc_truth_h0Ztau11_pt;
+        Float_t           mc_truth_h0Ztau11_pt;
         Float_t           mc_truth_h0Ztau21_pt;
-	Float_t           mc_truth_h0Ztaul11_pt;
+        Float_t           mc_truth_h0Ztaul11_pt;
         Float_t           mc_truth_h0Ztaul21_pt;
         Float_t           mc_truth_h0Zq11_pt;
         Float_t           mc_truth_h0Zq21_pt;
         Float_t           mc_truth_h0Z2_pt;
         Float_t           mc_truth_h0Zl12_pt;
         Float_t           mc_truth_h0Zl22_pt;
-	Float_t           mc_truth_h0Ztau12_pt;
+        Float_t           mc_truth_h0Ztau12_pt;
         Float_t           mc_truth_h0Ztau22_pt;
-	Float_t           mc_truth_h0Ztaul12_pt;
-        Float_t           mc_truth_h0Ztaul22_pt;      
+        Float_t           mc_truth_h0Ztaul12_pt;
+        Float_t           mc_truth_h0Ztaul22_pt;
         Float_t           mc_truth_h0Zq12_pt;
         Float_t           mc_truth_h0Zq22_pt;
         Float_t           mc_truth_h0tau1_pt;
-        Float_t           mc_truth_h0tau2_pt; 
-	Float_t           mc_truth_h0taul1_pt;
+        Float_t           mc_truth_h0tau2_pt;
+        Float_t           mc_truth_h0taul1_pt;
         Float_t           mc_truth_h0taul2_pt;
         Float_t           mc_truth_h0b1_pt;
         Float_t           mc_truth_h0b2_pt;
@@ -566,9 +569,9 @@ class Tree {
         Float_t           mc_truth_tW2_eta;
         Float_t           mc_truth_tWl1_eta;
         Float_t           mc_truth_tWl2_eta;
-	Float_t	          mc_truth_tWtau1_eta;
+        Float_t	          mc_truth_tWtau1_eta;
         Float_t	          mc_truth_tWtau2_eta;
-	Float_t	          mc_truth_tWtaul1_eta;
+        Float_t	          mc_truth_tWtaul1_eta;
         Float_t	          mc_truth_tWtaul2_eta;
         Float_t           mc_truth_tWq11_eta;
         Float_t           mc_truth_tWq21_eta;
@@ -581,21 +584,21 @@ class Tree {
         Float_t           mc_truth_tWl_eta;
         Float_t           mc_truth_tWq1_eta;
         Float_t           mc_truth_tWq2_eta;
-	
+
         Float_t           mc_truth_W_eta;
         Float_t           mc_truth_Wl_eta;
-	Float_t	          mc_truth_Wtau_eta;
-	Float_t	          mc_truth_Wtaul_eta;	
-	Float_t           mc_truth_Wq1_eta;
-	Float_t           mc_truth_Wq2_eta;
-	Float_t           mc_truth_Z_eta;
+        Float_t	          mc_truth_Wtau_eta;
+        Float_t	          mc_truth_Wtaul_eta;
+        Float_t           mc_truth_Wq1_eta;
+        Float_t           mc_truth_Wq2_eta;
+        Float_t           mc_truth_Z_eta;
         Float_t           mc_truth_Zl1_eta;
-        Float_t           mc_truth_Zl2_eta; 
-	Float_t           mc_truth_Zq1_eta;
+        Float_t           mc_truth_Zl2_eta;
+        Float_t           mc_truth_Zq1_eta;
         Float_t           mc_truth_Zq2_eta;
-	Float_t 	  mc_truth_Ztau1_eta;
+        Float_t 	  mc_truth_Ztau1_eta;
         Float_t 	  mc_truth_Ztau2_eta;
-	Float_t 	  mc_truth_Ztaul1_eta;
+        Float_t 	  mc_truth_Ztaul1_eta;
         Float_t 	  mc_truth_Ztaul2_eta;
         Float_t           mc_truth_gammal1_eta;
         Float_t           mc_truth_gammal2_eta;
@@ -608,37 +611,37 @@ class Tree {
         Float_t           mc_truth_h0_eta;
         Float_t           mc_truth_h0W1_eta;
         Float_t           mc_truth_h0Wl1_eta;
-        Float_t           mc_truth_h0Wtau1_eta; 
-	Float_t           mc_truth_h0Wtaul1_eta;
+        Float_t           mc_truth_h0Wtau1_eta;
+        Float_t           mc_truth_h0Wtaul1_eta;
         Float_t           mc_truth_h0Wq11_eta;
         Float_t           mc_truth_h0Wq21_eta;
         Float_t           mc_truth_h0W2_eta;
-        Float_t           mc_truth_h0Wl2_eta; 
-	Float_t           mc_truth_h0Wtau2_eta;
-	Float_t           mc_truth_h0Wtaul2_eta;
+        Float_t           mc_truth_h0Wl2_eta;
+        Float_t           mc_truth_h0Wtau2_eta;
+        Float_t           mc_truth_h0Wtaul2_eta;
         Float_t           mc_truth_h0Wq12_eta;
         Float_t           mc_truth_h0Wq22_eta;
         Float_t           mc_truth_h0Z1_eta;
         Float_t           mc_truth_h0Zl11_eta;
         Float_t           mc_truth_h0Zl21_eta;
-	Float_t           mc_truth_h0Ztau11_eta;
+        Float_t           mc_truth_h0Ztau11_eta;
         Float_t           mc_truth_h0Ztau21_eta;
-	Float_t           mc_truth_h0Ztaul11_eta;
-        Float_t           mc_truth_h0Ztaul21_eta; 
+        Float_t           mc_truth_h0Ztaul11_eta;
+        Float_t           mc_truth_h0Ztaul21_eta;
         Float_t           mc_truth_h0Zq11_eta;
         Float_t           mc_truth_h0Zq21_eta;
         Float_t           mc_truth_h0Z2_eta;
         Float_t           mc_truth_h0Zl12_eta;
         Float_t           mc_truth_h0Zl22_eta;
-	Float_t           mc_truth_h0Ztau12_eta;
+        Float_t           mc_truth_h0Ztau12_eta;
         Float_t           mc_truth_h0Ztau22_eta;
-	Float_t           mc_truth_h0Ztaul12_eta;
-        Float_t           mc_truth_h0Ztaul22_eta; 
+        Float_t           mc_truth_h0Ztaul12_eta;
+        Float_t           mc_truth_h0Ztaul22_eta;
         Float_t           mc_truth_h0Zq12_eta;
         Float_t           mc_truth_h0Zq22_eta;
         Float_t           mc_truth_h0tau1_eta;
-        Float_t           mc_truth_h0tau2_eta; 
-	Float_t           mc_truth_h0taul1_eta;
+        Float_t           mc_truth_h0tau2_eta;
+        Float_t           mc_truth_h0taul1_eta;
         Float_t           mc_truth_h0taul2_eta;
         Float_t           mc_truth_h0b1_eta;
         Float_t           mc_truth_h0b2_eta;
@@ -651,9 +654,9 @@ class Tree {
         Float_t           mc_truth_tW2_phi;
         Float_t           mc_truth_tWl1_phi;
         Float_t           mc_truth_tWl2_phi;
-	Float_t	          mc_truth_tWtau1_phi;
+        Float_t	          mc_truth_tWtau1_phi;
         Float_t	          mc_truth_tWtau2_phi;
-	Float_t	          mc_truth_tWtaul1_phi;
+        Float_t	          mc_truth_tWtaul1_phi;
         Float_t	          mc_truth_tWtaul2_phi;
         Float_t           mc_truth_tWq11_phi;
         Float_t           mc_truth_tWq21_phi;
@@ -666,21 +669,21 @@ class Tree {
         Float_t           mc_truth_tWl_phi;
         Float_t           mc_truth_tWq1_phi;
         Float_t           mc_truth_tWq2_phi;
-	
+
         Float_t           mc_truth_W_phi;
         Float_t           mc_truth_Wl_phi;
-	Float_t	          mc_truth_Wtau_phi;
-	Float_t	          mc_truth_Wtaul_phi;	
-	Float_t           mc_truth_Wq1_phi;
-	Float_t           mc_truth_Wq2_phi;
-	Float_t           mc_truth_Z_phi;
+        Float_t	          mc_truth_Wtau_phi;
+        Float_t	          mc_truth_Wtaul_phi;
+        Float_t           mc_truth_Wq1_phi;
+        Float_t           mc_truth_Wq2_phi;
+        Float_t           mc_truth_Z_phi;
         Float_t           mc_truth_Zl1_phi;
         Float_t           mc_truth_Zl2_phi;
-	Float_t           mc_truth_Zq1_phi;
+        Float_t           mc_truth_Zq1_phi;
         Float_t           mc_truth_Zq2_phi;
-	Float_t 	  mc_truth_Ztau1_phi;
+        Float_t 	  mc_truth_Ztau1_phi;
         Float_t 	  mc_truth_Ztau2_phi;
-	Float_t 	  mc_truth_Ztaul1_phi;
+        Float_t 	  mc_truth_Ztaul1_phi;
         Float_t 	  mc_truth_Ztaul2_phi;
         Float_t           mc_truth_gammal1_phi;
         Float_t           mc_truth_gammal2_phi;
@@ -693,37 +696,37 @@ class Tree {
         Float_t           mc_truth_h0_phi;
         Float_t           mc_truth_h0W1_phi;
         Float_t           mc_truth_h0Wl1_phi;
-        Float_t           mc_truth_h0Wtau1_phi; 
-	Float_t           mc_truth_h0Wtaul1_phi;
+        Float_t           mc_truth_h0Wtau1_phi;
+        Float_t           mc_truth_h0Wtaul1_phi;
         Float_t           mc_truth_h0Wq11_phi;
         Float_t           mc_truth_h0Wq21_phi;
         Float_t           mc_truth_h0W2_phi;
         Float_t           mc_truth_h0Wl2_phi;
-	Float_t           mc_truth_h0Wtau2_phi;
-	Float_t           mc_truth_h0Wtaul2_phi;
+        Float_t           mc_truth_h0Wtau2_phi;
+        Float_t           mc_truth_h0Wtaul2_phi;
         Float_t           mc_truth_h0Wq12_phi;
         Float_t           mc_truth_h0Wq22_phi;
         Float_t           mc_truth_h0Z1_phi;
         Float_t           mc_truth_h0Zl11_phi;
         Float_t           mc_truth_h0Zl21_phi;
-	Float_t           mc_truth_h0Ztau11_phi;
+        Float_t           mc_truth_h0Ztau11_phi;
         Float_t           mc_truth_h0Ztau21_phi;
-	Float_t           mc_truth_h0Ztaul11_phi;
-        Float_t           mc_truth_h0Ztaul21_phi; 
+        Float_t           mc_truth_h0Ztaul11_phi;
+        Float_t           mc_truth_h0Ztaul21_phi;
         Float_t           mc_truth_h0Zq11_phi;
         Float_t           mc_truth_h0Zq21_phi;
         Float_t           mc_truth_h0Z2_phi;
         Float_t           mc_truth_h0Zl12_phi;
         Float_t           mc_truth_h0Zl22_phi;
-	Float_t           mc_truth_h0Ztau12_phi;
+        Float_t           mc_truth_h0Ztau12_phi;
         Float_t           mc_truth_h0Ztau22_phi;
-	Float_t           mc_truth_h0Ztaul12_phi;
-        Float_t           mc_truth_h0Ztaul22_phi; 
+        Float_t           mc_truth_h0Ztaul12_phi;
+        Float_t           mc_truth_h0Ztaul22_phi;
         Float_t           mc_truth_h0Zq12_phi;
         Float_t           mc_truth_h0Zq22_phi;
         Float_t           mc_truth_h0tau1_phi;
-        Float_t           mc_truth_h0tau2_phi; 
-	Float_t           mc_truth_h0taul1_phi;
+        Float_t           mc_truth_h0tau2_phi;
+        Float_t           mc_truth_h0taul1_phi;
         Float_t           mc_truth_h0taul2_phi;
         Float_t           mc_truth_h0b1_phi;
         Float_t           mc_truth_h0b2_phi;
@@ -736,9 +739,9 @@ class Tree {
         Float_t           mc_truth_tW2_E;
         Float_t           mc_truth_tWl1_E;
         Float_t           mc_truth_tWl2_E;
-	Float_t	          mc_truth_tWtau1_E;
+        Float_t	          mc_truth_tWtau1_E;
         Float_t	          mc_truth_tWtau2_E;
-	Float_t	          mc_truth_tWtaul1_E;
+        Float_t	          mc_truth_tWtaul1_E;
         Float_t	          mc_truth_tWtaul2_E;
         Float_t           mc_truth_tWq11_E;
         Float_t           mc_truth_tWq21_E;
@@ -751,21 +754,21 @@ class Tree {
         Float_t           mc_truth_tWl_E;
         Float_t           mc_truth_tWq1_E;
         Float_t           mc_truth_tWq2_E;
-	
+
         Float_t           mc_truth_W_E;
         Float_t           mc_truth_Wl_E;
-	Float_t	          mc_truth_Wtau_E;
-	Float_t	          mc_truth_Wtaul_E;
-	Float_t           mc_truth_Wq1_E;
-	Float_t           mc_truth_Wq2_E;
-	Float_t           mc_truth_Z_E;
+        Float_t	          mc_truth_Wtau_E;
+        Float_t	          mc_truth_Wtaul_E;
+        Float_t           mc_truth_Wq1_E;
+        Float_t           mc_truth_Wq2_E;
+        Float_t           mc_truth_Z_E;
         Float_t           mc_truth_Zl1_E;
         Float_t           mc_truth_Zl2_E;
-	Float_t 	  mc_truth_Ztau1_E;
+        Float_t 	  mc_truth_Ztau1_E;
         Float_t 	  mc_truth_Ztau2_E;
-	Float_t 	  mc_truth_Ztaul1_E;
+        Float_t 	  mc_truth_Ztaul1_E;
         Float_t 	  mc_truth_Ztaul2_E;
-	Float_t           mc_truth_Zq1_E;
+        Float_t           mc_truth_Zq1_E;
         Float_t           mc_truth_Zq2_E;
         Float_t           mc_truth_gammal1_E;
         Float_t           mc_truth_gammal2_E;
@@ -779,36 +782,36 @@ class Tree {
         Float_t           mc_truth_h0W1_E;
         Float_t           mc_truth_h0Wl1_E;
         Float_t           mc_truth_h0Wtau1_E;
-	Float_t           mc_truth_h0Wtaul1_E;
+        Float_t           mc_truth_h0Wtaul1_E;
         Float_t           mc_truth_h0Wq11_E;
         Float_t           mc_truth_h0Wq21_E;
         Float_t           mc_truth_h0W2_E;
-        Float_t           mc_truth_h0Wl2_E; 
-	Float_t           mc_truth_h0Wtau2_E;
-	Float_t           mc_truth_h0Wtaul2_E;
+        Float_t           mc_truth_h0Wl2_E;
+        Float_t           mc_truth_h0Wtau2_E;
+        Float_t           mc_truth_h0Wtaul2_E;
         Float_t           mc_truth_h0Wq12_E;
         Float_t           mc_truth_h0Wq22_E;
         Float_t           mc_truth_h0Z1_E;
         Float_t           mc_truth_h0Zl11_E;
         Float_t           mc_truth_h0Zl21_E;
-	Float_t           mc_truth_h0Ztau11_E;
+        Float_t           mc_truth_h0Ztau11_E;
         Float_t           mc_truth_h0Ztau21_E;
-	Float_t           mc_truth_h0Ztaul11_E;
-        Float_t           mc_truth_h0Ztaul21_E; 
+        Float_t           mc_truth_h0Ztaul11_E;
+        Float_t           mc_truth_h0Ztaul21_E;
         Float_t           mc_truth_h0Zq11_E;
         Float_t           mc_truth_h0Zq21_E;
         Float_t           mc_truth_h0Z2_E;
         Float_t           mc_truth_h0Zl12_E;
         Float_t           mc_truth_h0Zl22_E;
-	Float_t           mc_truth_h0Ztau12_E;
+        Float_t           mc_truth_h0Ztau12_E;
         Float_t           mc_truth_h0Ztau22_E;
-	Float_t           mc_truth_h0Ztaul12_E;
-        Float_t           mc_truth_h0Ztaul22_E; 
+        Float_t           mc_truth_h0Ztaul12_E;
+        Float_t           mc_truth_h0Ztaul22_E;
         Float_t           mc_truth_h0Zq12_E;
         Float_t           mc_truth_h0Zq22_E;
         Float_t           mc_truth_h0tau1_E;
-        Float_t           mc_truth_h0tau2_E; 
-	Float_t           mc_truth_h0taul1_E;
+        Float_t           mc_truth_h0tau2_E;
+        Float_t           mc_truth_h0taul1_E;
         Float_t           mc_truth_h0taul2_E;
         Float_t           mc_truth_h0b1_E;
         Float_t           mc_truth_h0b2_E;
@@ -1002,6 +1005,7 @@ class Tree {
         TBranch        *b_mu_isStandAloneMuon;   //!
         TBranch        *b_mu_isCaloMuon;   //!
         TBranch        *b_mu_isPFMuon;   //!
+        TBranch        *b_mu_isMediumMuon;
         TBranch        *b_mu_isTightMuon;   //!
         TBranch        *b_mu_vx;   //!
         TBranch        *b_mu_vy;   //!
@@ -1027,6 +1031,8 @@ class Tree {
         TBranch        *b_mu_bestTrack_dz;   //!
         TBranch        *b_mu_bestTrack_dxyError;   //!
         TBranch        *b_mu_bestTrack_dzError;   //!
+        TBranch        *b_mu_bestTrack_pt;
+        TBranch        *b_mu_bestTrack_ptError;
         TBranch        *b_mu_numberOfMatches;   //!
         TBranch        *b_mu_numberOfValidMuonHits;   //!
         TBranch        *b_mu_pfIso03_sumChargedHadronPt;   //!
@@ -1205,7 +1211,7 @@ class Tree {
         TBranch        *b_mc_truth_h0Wq22_id;
         TBranch        *b_mc_truth_h0Z1_id;
         TBranch        *b_mc_truth_h0Zl11_id;
-        TBranch        *b_mc_truth_h0Zl21_id;	
+        TBranch        *b_mc_truth_h0Zl21_id;
 	TBranch        *b_mc_truth_h0Ztau11_id;
         TBranch        *b_mc_truth_h0Ztau21_id;
 	TBranch        *b_mc_truth_h0Ztaul11_id;
@@ -1219,7 +1225,7 @@ class Tree {
         TBranch        *b_mc_truth_h0Ztau22_id;
 	TBranch        *b_mc_truth_h0Ztaul12_id;
         TBranch        *b_mc_truth_h0Ztaul22_id;
-   
+
         TBranch        *b_mc_truth_h0Zq12_id;
         TBranch        *b_mc_truth_h0Zq22_id;
         TBranch        *b_mc_truth_h0tau1_id;
@@ -1252,11 +1258,11 @@ class Tree {
         TBranch        *b_mc_truth_tWl_id;
         TBranch        *b_mc_truth_tWq1_id;
         TBranch         *b_mc_truth_tWq2_id;
-	
-        TBranch        *b_mc_truth_W_id;  
-        TBranch        *b_mc_truth_Wl_id;   
-	TBranch        *b_mc_truth_Wtau_id; 
-	TBranch        *b_mc_truth_Wtaul_id; 
+
+        TBranch        *b_mc_truth_W_id;
+        TBranch        *b_mc_truth_Wl_id;
+	TBranch        *b_mc_truth_Wtau_id;
+	TBranch        *b_mc_truth_Wtaul_id;
 	TBranch        *b_mc_truth_Wq1_id;
 	TBranch        *b_mc_truth_Wq2_id;
 	TBranch        *b_mc_truth_Z_id;
@@ -1267,7 +1273,7 @@ class Tree {
 	TBranch        *b_mc_truth_Ztau1_id;
         TBranch        *b_mc_truth_Ztau2_id;
 	TBranch        *b_mc_truth_Ztaul1_id;
-        TBranch        *b_mc_truth_Ztaul2_id;	
+        TBranch        *b_mc_truth_Ztaul2_id;
         TBranch        *b_mc_truth_gammal1_id;
         TBranch        *b_mc_truth_gammal2_id;
         TBranch        *b_mc_truth_gammatau1_id;
@@ -1279,12 +1285,12 @@ class Tree {
         TBranch        *b_mc_truth_h0_pt;
         TBranch        *b_mc_truth_h0W1_pt;
         TBranch        *b_mc_truth_h0Wl1_pt;
-        TBranch        *b_mc_truth_h0Wtau1_pt; 
+        TBranch        *b_mc_truth_h0Wtau1_pt;
 	TBranch        *b_mc_truth_h0Wtaul1_pt;
         TBranch        *b_mc_truth_h0Wq11_pt;
         TBranch        *b_mc_truth_h0Wq21_pt;
         TBranch        *b_mc_truth_h0W2_pt;
-        TBranch        *b_mc_truth_h0Wl2_pt;  
+        TBranch        *b_mc_truth_h0Wl2_pt;
 	TBranch        *b_mc_truth_h0Wtau2_pt;
 	TBranch        *b_mc_truth_h0Wtaul2_pt;
         TBranch        *b_mc_truth_h0Wq12_pt;
@@ -1295,7 +1301,7 @@ class Tree {
 	TBranch        *b_mc_truth_h0Ztau11_pt;
         TBranch        *b_mc_truth_h0Ztau21_pt;
 	TBranch        *b_mc_truth_h0Ztaul11_pt;
-        TBranch        *b_mc_truth_h0Ztaul21_pt;       
+        TBranch        *b_mc_truth_h0Ztaul21_pt;
         TBranch        *b_mc_truth_h0Zq11_pt;
         TBranch        *b_mc_truth_h0Zq21_pt;
         TBranch        *b_mc_truth_h0Z2_pt;
@@ -1304,11 +1310,11 @@ class Tree {
 	TBranch        *b_mc_truth_h0Ztau12_pt;
         TBranch        *b_mc_truth_h0Ztau22_pt;
 	TBranch        *b_mc_truth_h0Ztaul12_pt;
-        TBranch        *b_mc_truth_h0Ztaul22_pt;       
+        TBranch        *b_mc_truth_h0Ztaul22_pt;
         TBranch        *b_mc_truth_h0Zq12_pt;
         TBranch        *b_mc_truth_h0Zq22_pt;
         TBranch        *b_mc_truth_h0tau1_pt;
-        TBranch        *b_mc_truth_h0tau2_pt; 
+        TBranch        *b_mc_truth_h0tau2_pt;
 	TBranch        *b_mc_truth_h0taul1_pt;
         TBranch        *b_mc_truth_h0taul2_pt;
         TBranch        *b_mc_truth_h0b1_pt;
@@ -1337,11 +1343,11 @@ class Tree {
         TBranch        *b_mc_truth_tWl_pt;
         TBranch        *b_mc_truth_tWq1_pt;
         TBranch        *b_mc_truth_tWq2_pt;
-	
+
         TBranch        *b_mc_truth_W_pt;
         TBranch        *b_mc_truth_Wl_pt;
-	TBranch        *b_mc_truth_Wtau_pt; 
-	TBranch        *b_mc_truth_Wtaul_pt; 
+	TBranch        *b_mc_truth_Wtau_pt;
+	TBranch        *b_mc_truth_Wtaul_pt;
 	TBranch        *b_mc_truth_Wq1_pt;
 	TBranch        *b_mc_truth_Wq2_pt;
 	TBranch        *b_mc_truth_Z_pt;
@@ -1380,7 +1386,7 @@ class Tree {
 	TBranch        *b_mc_truth_h0Ztau11_eta;
         TBranch        *b_mc_truth_h0Ztau21_eta;
 	TBranch        *b_mc_truth_h0Ztaul11_eta;
-        TBranch        *b_mc_truth_h0Ztaul21_eta; 
+        TBranch        *b_mc_truth_h0Ztaul21_eta;
         TBranch        *b_mc_truth_h0Zq11_eta;
         TBranch        *b_mc_truth_h0Zq21_eta;
         TBranch        *b_mc_truth_h0Z2_eta;
@@ -1389,7 +1395,7 @@ class Tree {
 	TBranch        *b_mc_truth_h0Ztau12_eta;
         TBranch        *b_mc_truth_h0Ztau22_eta;
 	TBranch        *b_mc_truth_h0Ztaul12_eta;
-        TBranch        *b_mc_truth_h0Ztaul22_eta; 
+        TBranch        *b_mc_truth_h0Ztaul22_eta;
         TBranch        *b_mc_truth_h0Zq12_eta;
         TBranch        *b_mc_truth_h0Zq22_eta;
         TBranch        *b_mc_truth_h0tau1_eta;
@@ -1422,16 +1428,16 @@ class Tree {
         TBranch        *b_mc_truth_tWl_eta;
         TBranch        *b_mc_truth_tWq1_eta;
         TBranch        *b_mc_truth_tWq2_eta;
-	
-        TBranch        *b_mc_truth_W_eta; 
-        TBranch        *b_mc_truth_Wl_eta; 
-	TBranch        *b_mc_truth_Wtau_eta; 
-	TBranch        *b_mc_truth_Wtaul_eta; 
+
+        TBranch        *b_mc_truth_W_eta;
+        TBranch        *b_mc_truth_Wl_eta;
+	TBranch        *b_mc_truth_Wtau_eta;
+	TBranch        *b_mc_truth_Wtaul_eta;
 	TBranch        *b_mc_truth_Wq1_eta;
 	TBranch        *b_mc_truth_Wq2_eta;
 	TBranch        *b_mc_truth_Z_eta;
         TBranch        *b_mc_truth_Zl1_eta;
-        TBranch        *b_mc_truth_Zl2_eta; 
+        TBranch        *b_mc_truth_Zl2_eta;
 	TBranch        *b_mc_truth_Zq1_eta;
         TBranch        *b_mc_truth_Zq2_eta;
 	TBranch        *b_mc_truth_Ztau1_eta;
@@ -1465,7 +1471,7 @@ class Tree {
 	TBranch        *b_mc_truth_h0Ztau11_phi;
         TBranch        *b_mc_truth_h0Ztau21_phi;
 	TBranch        *b_mc_truth_h0Ztaul11_phi;
-        TBranch        *b_mc_truth_h0Ztaul21_phi; 
+        TBranch        *b_mc_truth_h0Ztaul21_phi;
         TBranch        *b_mc_truth_h0Zq11_phi;
         TBranch        *b_mc_truth_h0Zq21_phi;
         TBranch        *b_mc_truth_h0Z2_phi;
@@ -1474,11 +1480,11 @@ class Tree {
 	TBranch        *b_mc_truth_h0Ztau12_phi;
         TBranch        *b_mc_truth_h0Ztau22_phi;
 	TBranch        *b_mc_truth_h0Ztaul12_phi;
-        TBranch        *b_mc_truth_h0Ztaul22_phi; 
+        TBranch        *b_mc_truth_h0Ztaul22_phi;
         TBranch        *b_mc_truth_h0Zq12_phi;
         TBranch        *b_mc_truth_h0Zq22_phi;
         TBranch        *b_mc_truth_h0tau1_phi;
-        TBranch        *b_mc_truth_h0tau2_phi; 
+        TBranch        *b_mc_truth_h0tau2_phi;
 	TBranch        *b_mc_truth_h0taul1_phi;
         TBranch        *b_mc_truth_h0taul2_phi;
         TBranch        *b_mc_truth_h0b1_phi;
@@ -1507,16 +1513,16 @@ class Tree {
         TBranch        *b_mc_truth_tWl_phi;
         TBranch        *b_mc_truth_tWq1_phi;
         TBranch        *b_mc_truth_tWq2_phi;
-	
+
         TBranch        *b_mc_truth_W_phi;
         TBranch        *b_mc_truth_Wl_phi;
-	TBranch        *b_mc_truth_Wtau_phi; 
-	TBranch        *b_mc_truth_Wtaul_phi; 
+	TBranch        *b_mc_truth_Wtau_phi;
+	TBranch        *b_mc_truth_Wtaul_phi;
 	TBranch        *b_mc_truth_Wq1_phi;
 	TBranch        *b_mc_truth_Wq2_phi;
 	TBranch        *b_mc_truth_Z_phi;
         TBranch        *b_mc_truth_Zl1_phi;
-        TBranch        *b_mc_truth_Zl2_phi; 
+        TBranch        *b_mc_truth_Zl2_phi;
 	TBranch        *b_mc_truth_Zq1_phi;
         TBranch        *b_mc_truth_Zq2_phi;
 	TBranch        *b_mc_truth_Ztau1_phi;
@@ -1534,12 +1540,12 @@ class Tree {
         TBranch        *b_mc_truth_h0_E;
         TBranch        *b_mc_truth_h0W1_E;
         TBranch        *b_mc_truth_h0Wl1_E;
-        TBranch        *b_mc_truth_h0Wtau1_E;  
+        TBranch        *b_mc_truth_h0Wtau1_E;
 	TBranch        *b_mc_truth_h0Wtaul1_E;
         TBranch        *b_mc_truth_h0Wq11_E;
         TBranch        *b_mc_truth_h0Wq21_E;
         TBranch        *b_mc_truth_h0W2_E;
-        TBranch        *b_mc_truth_h0Wl2_E; 
+        TBranch        *b_mc_truth_h0Wl2_E;
 	TBranch        *b_mc_truth_h0Wtau2_E;
 	TBranch        *b_mc_truth_h0Wtaul2_E;
         TBranch        *b_mc_truth_h0Wq12_E;
@@ -1592,11 +1598,11 @@ class Tree {
         TBranch        *b_mc_truth_tWl_E;
         TBranch        *b_mc_truth_tWq1_E;
         TBranch        *b_mc_truth_tWq2_E;
-	
+
         TBranch        *b_mc_truth_W_E;
         TBranch        *b_mc_truth_Wl_E;
-	TBranch        *b_mc_truth_Wtau_E; 
-	TBranch        *b_mc_truth_Wtaul_E; 
+	TBranch        *b_mc_truth_Wtau_E;
+	TBranch        *b_mc_truth_Wtaul_E;
 	TBranch        *b_mc_truth_Wq1_E;
 	TBranch        *b_mc_truth_Wq2_E;
 	TBranch        *b_mc_truth_Z_E;
@@ -1615,7 +1621,7 @@ class Tree {
         TBranch        *b_mc_truth_gammataul1_E;
         TBranch        *b_mc_truth_gammataul2_E;
         TBranch        *b_mc_truth_gamma_E;
-       
+
         TBranch       *b_genJet_n;
         TBranch       *b_genJet_pt;
         TBranch       *b_genJet_eta;

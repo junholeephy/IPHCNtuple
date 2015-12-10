@@ -34,8 +34,10 @@ void Muon::read()
     if( CHECK(ntP->mu_isPFMuon)          ) _isPFMuon = ntP->mu_isPFMuon->at(idx);
 
     // cut-based selection additionnal variables
-    if( CHECK(ntP->mu_lepMVA_sip3d)      ) _sip3d    = ntP->mu_lepMVA_sip3d->at(idx);
-    // placholder Medium ID
+    if( CHECK(ntP->mu_lepMVA_sip3d)      ) _sip3d             = ntP->mu_lepMVA_sip3d->at(idx);
+    if( CHECK(ntP->mu_isMediumMuon)      ) _isMedium          = ntP->mu_isMediumMuon->at(idx);
+    if( CHECK(ntP->mu_bestTrack_pt)      ) _bestTrack_pt      = ntP->mu_bestTrack_pt->at(idx);
+    if( CHECK(ntP->mu_bestTrack_ptError) ) _bestTrack_ptError = ntP->mu_bestTrack_ptError->at(idx);
     // placeholder track.pt/errortrack.pt
 
     // mva-based selection additionnal variables
@@ -63,14 +65,17 @@ void Muon::init()
 
     // Id
     _isLoose           = 0;
+    _isMedium          = 0;
     _isTight           = 0;
     _isLooseMVA        = 0;
     _isTightMVA        = 0;
 
     // variables for Id
-    _dxy               = -666;
-    _dz                = -666;
-    _iso               = -666;
+    _dxy                = -666;
+    _dz                 = -666;
+    _iso                = -666;
+    _bestTrack_pt       = -888;
+    _bestTrack_ptError  = -888;
 
     // more variables
     _sip3d             = -666;
@@ -135,30 +140,3 @@ bool Muon::sel()
     return isPreselectionMuon;
 }
 
-float Muon::effectiveArea(int dr,float eta)
-{
-    float effArea = 0.;
-
-    if( fabs(eta) >= 0 && fabs(eta) < 0.8 )
-    {
-        effArea = 0.0735;
-    }   
-    else if( fabs(eta) >= 0.8 && fabs(eta) < 1.3 )
-    {
-        effArea = 0.0619;
-    }   
-    else if( fabs(eta) >= 1.3 && fabs(eta) < 2.0 )
-    {
-        effArea = 0.0465;
-    }   
-    else if( fabs(eta) >= 2.0 && fabs(eta) < 2.2 )
-    {
-        effArea = 0.0433;
-    }   
-    else if( fabs(eta) >= 2.2 && fabs(eta) < 2.5 )
-    {
-        effArea = 0.0577;
-    }   
-
-    return effArea;
-}

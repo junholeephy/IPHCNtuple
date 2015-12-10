@@ -57,7 +57,7 @@ class Electron : public Base
         bool passChargeFlip()                  {return _passChargeFlip;};
         bool hasMatchedConversion()            {return _hasMatchedConversion;};
 
-        bool pass_isGsfCtfScPixChargeConsistent() {return _pass_isGsfCtfScPixChargeConsistent;};
+        bool isGsfCtfScPixChargeConsistent()   {return _isGsfCtfScPixChargeConsistent;};
 
         float deltaEtaSuperClusterTrackAtVtx() {return _deltaEtaSuperClusterTrackAtVtx;};
         float deltaPhiSuperClusterTrackAtVtx() {return _deltaPhiSuperClusterTrackAtVtx;};
@@ -126,7 +126,7 @@ class Electron : public Base
         bool _passChargeFlip;
         bool _hasMatchedConversion;
 
-        bool _pass_isGsfCtfScPixChargeConsistent;
+        bool _isGsfCtfScPixChargeConsistent;
 
         float _deltaEtaSuperClusterTrackAtVtx;
         float _deltaPhiSuperClusterTrackAtVtx;

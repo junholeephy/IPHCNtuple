@@ -24,32 +24,33 @@ class Muon : public Base
         void init();
 
         // General informations
-        float E()                {return _E;};
-        float pt()               {return _pt;};
-        float eta()              {return _eta;};
-        float phi()              {return _phi;};
-        float m()                {return _m;};
-        int charge()             {return _charge;};
-        int id()                 {return _id;};
+        float E()                  {return _E;};
+        float pt()                 {return _pt;};
+        float eta()                {return _eta;};
+        float phi()                {return _phi;};
+        float m()                  {return _m;};
+        int charge()               {return _charge;};
+        int id()                   {return _id;};
 
         // Id
         //bool isPFMuon            {return _isPFMuon;};
-        bool isLoose()           {return _isLoose;};
-        bool isTight()           {return _isTight;};
-        bool isLooseMVA()        {return _isLooseMVA;};
-        bool isTightMVA()        {return _isTightMVA;};
-        bool isTightMuonOld()    {return _isTightMuonOld;};
-        bool isTightMuon()       {return _isTightMuon;};
+        bool isLoose()             {return _isLoose;};
+        bool isTight()             {return _isTight;};
+        bool isLooseMVA()          {return _isLooseMVA;};
+        bool isTightMVA()          {return _isTightMVA;};
+        bool isTightMuonOld()      {return _isTightMuonOld;};
+        bool isMediumMuon()        {return _isMedium;};
+        bool isTightMuon()         {return _isTightMuon;};
 
         // Variables for Id
-        float dxy()              {return _dxy;};
-        float dz()               {return _dz;};
-        float iso()              {return _iso;};
-        bool  passPtEta()        {return _passPtEta;};
-        float sip3d()            {return _sip3d;};
+        float dxy()                {return _dxy;};
+        float dz()                 {return _dz;};
+        float iso()                {return _iso;};
+        bool  passPtEta()          {return _passPtEta;};
+        float sip3d()              {return _sip3d;};
 
         // MVA
-        float lepMVA()           {return _lepMVA;};
+        float lepMVA()             {return _lepMVA;};
         float lepMVA_neuRelIso()   {return _lepMVA_neuRelIso;};
         float lepMVA_chRelIso()    {return _lepMVA_chRelIso;};
         float lepMVA_jetDR()       {return _lepMVA_jetDR;};
@@ -61,8 +62,11 @@ class Muon : public Base
         float lepMVA_mvaId()       {return _lepMVA_mvaId;};
 
         // Other variables
-        bool passChargeFlip()    {return _passChargeFlip;};
-        bool hasInnerTrack()     {return _hasInnerTrack;};
+        bool passChargeFlip()      {return _passChargeFlip;};
+        bool hasInnerTrack()       {return _hasInnerTrack;};
+
+        float bestTrackpt()        {return _bestTrack_pt;};
+        float bestTrackptError()   {return _bestTrack_ptError;};
 
         float dB3D()               {return _dB3D;};
         float edB3D()              {return _edB3D;};
@@ -90,6 +94,7 @@ class Muon : public Base
         bool _isTight;
         bool _isLooseMVA;
         bool _isTightMVA;
+        bool _isMedium;
         bool _isTightMuon;
         bool _isTightMuonOld;
 
@@ -115,6 +120,9 @@ class Muon : public Base
         // Other variables
         bool _passChargeFlip;
         bool _hasInnerTrack;
+
+        float _bestTrack_pt;
+        float _bestTrack_ptError;
 
         float _dB3D;
         float _edB3D;
