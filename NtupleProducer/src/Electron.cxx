@@ -66,6 +66,8 @@ void Electron::init()
     // variables for Id
     _dxy          = -666;
     _dz           = -666;
+    _passCV       = -888;
+    _isPCC        = -888;
 
     // more variables
     _lepMVA       = -888;
