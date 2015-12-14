@@ -65,6 +65,7 @@ class TTbarHiggsMultileptonAnalysis
    std::vector<Lepton>   vSelectedLeptons;
    std::vector<Jet>	 vSelectedNonBTagJets;
    std::vector<Jet>	 vSelectedBTagJets;
+   std::vector<Jet>      vSelectedMediumBTagJets;
    std::vector<Jet>	 vSelectedJets;
 
 
@@ -79,7 +80,7 @@ class TTbarHiggsMultileptonAnalysis
    TTree* tOutput;
    Int_t mc_event;
    Float_t mc_weight;
-   Int_t mc_3l_category, mc_ttbar_decay, mc_boson_decay, mc_ttZhypAllowed, mc_nJets25, mc_nBtagJets25, mc_nNonBtagJets25;
+   Int_t mc_3l_category, mc_ttbar_decay, mc_boson_decay, mc_ttZhypAllowed, mc_nJets25, mc_nBtagJets25, mc_nMediumBtagJets25, mc_nNonBtagJets25;
    Int_t multilepton_Bjet1_Id, multilepton_Bjet2_Id;
    Int_t multilepton_Lepton1_Id, multilepton_Lepton2_Id, multilepton_Lepton3_Id;
    Int_t multilepton_JetHighestPt1_Id, multilepton_JetHighestPt2_Id, multilepton_JetClosestMw1_Id, multilepton_JetClosestMw2_Id, multilepton_JetLowestMjj1_Id, multilepton_JetLowestMjj2_Id;
