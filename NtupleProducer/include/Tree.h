@@ -823,6 +823,28 @@ class Tree {
         vector<float>   *genJet_phi;
         vector<float>   *genJet_m;
         vector<float>   *genJet_E;
+	
+	
+	// Trigger Object, sorry no nice picture..
+	
+	Int_t          triggerobject_n;
+	vector<float>  *triggerobject_pt;
+	vector<float>  *triggerobject_eta;
+	vector<float>  *triggerobject_phi;
+	vector<string> *triggerobject_collection;
+	vector<int>    *triggerobject_filterIds_n;
+        vector<int>    *triggerobject_filterLabels_n;
+	vector<int>    *triggerobject_pathNamesAll_n;
+	
+	vector<string> *triggerobject_pathNamesAll;
+        vector<bool>   *triggerobject_pathNamesAll_isL3;
+        vector<bool>   *triggerobject_pathNamesAll_isLF;
+        vector<bool>   *triggerobject_pathNamesAll_isBoth;
+        vector<bool>   *triggerobject_pathNamesAll_isNone;
+	
+        vector<int>    *triggerobject_filterIds;
+        vector<string> *triggerobject_filterLabels;
+	
 
         // List of branches
 
@@ -1622,13 +1644,32 @@ class Tree {
         TBranch        *b_mc_truth_gammataul2_E;
         TBranch        *b_mc_truth_gamma_E;
 
-        TBranch       *b_genJet_n;
-        TBranch       *b_genJet_pt;
-        TBranch       *b_genJet_eta;
-        TBranch       *b_genJet_phi;
-        TBranch       *b_genJet_m;
-        TBranch       *b_genJet_E;
-
+        TBranch        *b_genJet_n;
+        TBranch        *b_genJet_pt;
+        TBranch        *b_genJet_eta;
+        TBranch        *b_genJet_phi;
+        TBranch        *b_genJet_m;
+        TBranch        *b_genJet_E;
+	
+        TBranch        *b_triggerobject_n;
+	TBranch        *b_triggerobject_pt;
+	TBranch        *b_triggerobject_eta;
+	TBranch        *b_triggerobject_phi;
+	TBranch        *b_triggerobject_collection;
+	
+	TBranch        *b_triggerobject_filterIds_n;
+        TBranch        *b_triggerobject_filterLabels_n;
+	TBranch        *b_triggerobject_pathNamesAll_n;
+	
+	TBranch        *b_triggerobject_pathNamesAll;
+        TBranch        *b_triggerobject_pathNamesAll_isL3;
+        TBranch        *b_triggerobject_pathNamesAll_isLF;
+        TBranch        *b_triggerobject_pathNamesAll_isBoth;
+        TBranch        *b_triggerobject_pathNamesAll_isNone;
+	
+        TBranch        *b_triggerobject_filterIds;
+        TBranch        *b_triggerobject_filterLabels;
+	
         Tree(TChain *tree=0,std::string fname="output.root",std::string treename="FlatTree/tree");
         virtual ~Tree();
         virtual Int_t    GetEntry(Long64_t entry);
