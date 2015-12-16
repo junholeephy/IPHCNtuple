@@ -112,14 +112,16 @@ ROOTGLIBS     = $(shell root-config --glibs) -lMathMore
 #LHAPDFLIB=-LLHAPDF-6.1.5-install/lib/ -lLHAPDF
 #LHAPDFINCDIR=-I/grid_mnt/home/nchanon/LHAPDF-6.1.5-install/include
 #LHAPDFLIB=-L/grid_mnt/home/nchanon/LHAPDF-6.1.5-install/lib/ -lLHAPDF 
-LHAPDFINCDIR=-I/afs/cern.ch/work/c/chanon/LHAPDF-6.1.5-install/include
-LHAPDFLIB=-L/afs/cern.ch/work/c/chanon/LHAPDF-6.1.5-install/lib -lLHAPDF 
+#LHAPDFINCDIR=-I/afs/cern.ch/work/c/chanon/LHAPDF-6.1.5-install/include
+#LHAPDFLIB=-L/afs/cern.ch/work/c/chanon/LHAPDF-6.1.5-install/lib -lLHAPDF 
+LHAPDFINCDIR=-I${LHAPDF}/include
+LHAPDFLIB=-L${LHAPDF}/lib -lLHAPDF
 
 #------------------------------------------------------------------------------
 # g++ options
 
 CXX = g++
-CXXFLAGS = -g -O -fPIC -Wall -Wno-deprecated
+CXXFLAGS = -g -O -fPIC -Wall -Wno-deprecated -m64
 LD = g++
 
 SOFLAGS = #-shared #-dynamiclib #-single_module #-undefined dynamic_lookup

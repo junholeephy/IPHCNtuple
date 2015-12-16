@@ -128,6 +128,7 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
   tOutput->Branch("mc_ttZhypAllowed",&mc_ttZhypAllowed,"mc_ttZhypAllowed/I");
   tOutput->Branch("mc_nJets25",&mc_nJets25,"mc_nJets25/I");
   tOutput->Branch("mc_nBtagJets25",&mc_nBtagJets25,"mc_nBtagJets25/I");
+  tOutput->Branch("mc_nMediumBtagJets25",&mc_nMediumBtagJets25,"mc_nMediumBtagJets25/I");
   tOutput->Branch("mc_nNonBtagJets25",&mc_nNonBtagJets25,"mc_nNonBtagJets25/I");
 
   tOutput->Branch("multilepton_Bjet1_Id",&multilepton_Bjet1_Id,"multilepton_Bjet1_Id/I");
@@ -166,7 +167,7 @@ void TTbarHiggsMultileptonAnalysis::selectBjets(std::string BjetSel, int* ibsel1
   if (BjetSel=="HighestBtagDiscrim"){
     float btag_max=-999, btag_max2=-999;
     for (unsigned int ib=0; ib<vSelectedJets.size(); ib++){
-      if (vSelectedJets.at(ib).CSVv2()<0.423) continue;
+      //if (vSelectedJets.at(ib).CSVv2()<0.423) continue;
       if (vSelectedJets.at(ib).CSVv2()>btag_max){
         btag_max2 = btag_max;
         ib2 = ib1;
@@ -203,7 +204,9 @@ void TTbarHiggsMultileptonAnalysis::selectBjets(std::string BjetSel, int* ibsel1
 
 void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
 
-  if (vSelectedLeptons.size()!=3 || vSelectedBTagJets.size()<2 || vSelectedJets.size()<4 ) return; 
+  //if (vSelectedLeptons.size()!=3 || vSelectedBTagJets.size()<2 || vSelectedJets.size()<4 ) return; 
+  if (vSelectedLeptons.size()!=3 ||  vSelectedJets.size()<4 ) return;
+  if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return;
 
   mc_weight = vEvent->at(0).mc_weight();
   //std::cout << "fillOutputTree mc_weight="<<mc_weight<<std::endl;
@@ -290,6 +293,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
 
   mc_nJets25 = vSelectedJets.size();
   mc_nBtagJets25 = vSelectedBTagJets.size();
+  mc_nMediumBtagJets25 = vSelectedMediumBTagJets.size();
   mc_nNonBtagJets25 = vSelectedNonBTagJets.size();
 
   //std::cout << "mc_ttZhypAllowed="<<mc_ttZhypAllowed<<" mc_nJets25="<<mc_nJets25<<" mc_nBtagJets25="<<mc_nBtagJets25<<" mc_nNonBtagJets25="<<mc_nNonBtagJets25<<std::endl;
@@ -360,6 +364,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 	vSelectedLeptons.clear();
 	vSelectedNonBTagJets.clear();
 	vSelectedBTagJets.clear();
+        vSelectedMediumBTagJets.clear();
 	vSelectedJets.clear();
 
         //std::cout << "Jusqu'ici tout va bien 2" << std::endl;
@@ -409,6 +414,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             if( vJet->at(ijet).CSVv2() > 0.814 ) nMediumBJets = nMediumBJets + 1;
 
             if(vJet->at(ijet).CSVv2() >= 0.423 ) vSelectedBTagJets.push_back(vJet->at(ijet));
+            if(vJet->at(ijet).CSVv2() >= 0.814 ) vSelectedMediumBTagJets.push_back(vJet->at(ijet));
             else                                 vSelectedNonBTagJets.push_back(vJet->at(ijet));
 
             vSelectedJets.push_back(vJet->at(ijet));
