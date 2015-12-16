@@ -8,6 +8,7 @@
 #include "Jet.h"
 #include "Truth.h"
 #include "GenJet.h"
+#include "TriggerObj.h"
 
 #include "TFile.h"
 #include "TTree.h"
@@ -20,13 +21,14 @@ class Ntuple
         Ntuple(std::string fname_out);
         virtual ~Ntuple();
 
-        std::vector<Event>*    NtEvent;
-        std::vector<Electron>* NtElectron;
-        std::vector<Muon>*     NtMuon;
-        std::vector<Tau>*      NtTau;
-        std::vector<Jet>*      NtJet;
-        std::vector<Truth>*    NtTruth;
-        std::vector<GenJet>*   NtGenJet;
+        std::vector<Event>*      NtEvent;
+        std::vector<Electron>*   NtElectron;
+        std::vector<Muon>*       NtMuon;
+        std::vector<Tau>*        NtTau;
+        std::vector<Jet>*        NtJet;
+        std::vector<Truth>*      NtTruth;
+        std::vector<GenJet>*     NtGenJet;
+        std::vector<TriggerObj>* NtTriggerObj;
 
         void Init();
 
