@@ -782,8 +782,26 @@ void Tree::Init(TChain *ch)
     mc_truth_gammataul1_E = 0;
     mc_truth_gammataul2_E = 0;
     mc_truth_gamma_E = 0;
+    
+    triggerobject_n = 0;
+    triggerobject_pt = 0;
+    triggerobject_eta = 0;
+    triggerobject_phi = 0;  
+    triggerobject_collection = 0;
+    triggerobject_filterIds_n = 0;
+    triggerobject_filterLabels_n = 0;
+    triggerobject_pathNamesAll_n = 0;
+	
+    triggerobject_pathNamesAll = 0;
+    triggerobject_pathNamesAll_isL3 = 0;
+    triggerobject_pathNamesAll_isLF = 0;
+    triggerobject_pathNamesAll_isBoth = 0;
+    triggerobject_pathNamesAll_isNone = 0;
 
-  
+    triggerobject_filterIds = 0;
+    triggerobject_filterLabels = 0;
+	
+	
     // Set branch addresses and branch pointers
     if (!ch) return;
     fChain = ch;
@@ -1133,7 +1151,28 @@ void Tree::Init(TChain *ch)
    if( fChain->GetBranch("metGen_phi") ) fChain->SetBranchAddress("metGen_phi", &metGen_phi, &b_metGen_phi);
    if( fChain->GetBranch("metGen_sumet") ) fChain->SetBranchAddress("metGen_sumet", &metGen_sumet, &b_metGen_sumet);
    if( fChain->GetBranch("metGen_MuonEt") ) fChain->SetBranchAddress("metGen_MuonEt", &metGen_MuonEt, &b_metGen_MuonEt);
+   
+   if( fChain->GetBranch("triggerobject_n") ) fChain->SetBranchAddress("triggerobject_n", &triggerobject_n, &b_triggerobject_n);
+   if( fChain->GetBranch("triggerobject_pt") ) fChain->SetBranchAddress("triggerobject_pt", &triggerobject_pt, &b_triggerobject_pt);
+   if( fChain->GetBranch("triggerobject_eta") ) fChain->SetBranchAddress("triggerobject_eta", &triggerobject_eta, &b_triggerobject_eta);
+   if( fChain->GetBranch("triggerobject_phi") ) fChain->SetBranchAddress("triggerobject_phi", &triggerobject_phi, &b_triggerobject_phi);
+   if( fChain->GetBranch("triggerobject_collection") ) fChain->SetBranchAddress("triggerobject_collection", &triggerobject_collection, &b_triggerobject_collection);
+   
+   if( fChain->GetBranch("triggerobject_filterIds_n") ) fChain->SetBranchAddress("triggerobject_filterIds_n", &triggerobject_filterIds_n, &b_triggerobject_filterIds_n);
+   if( fChain->GetBranch("triggerobject_filterLabels_n") ) fChain->SetBranchAddress("triggerobject_filterLabels_n", &triggerobject_filterLabels_n, &b_triggerobject_filterLabels_n);
+   if( fChain->GetBranch("triggerobject_pathNamesAll_n") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_n", &triggerobject_pathNamesAll_n, &b_triggerobject_pathNamesAll_n);
+   
+   if( fChain->GetBranch("triggerobject_pathNamesAll") ) fChain->SetBranchAddress("triggerobject_pathNamesAll", &triggerobject_pathNamesAll, &b_triggerobject_pathNamesAll);
+   if( fChain->GetBranch("triggerobject_pathNamesAll_isL3") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_isL3", &triggerobject_pathNamesAll_isL3, &b_triggerobject_pathNamesAll_isL3);
+   if( fChain->GetBranch("triggerobject_pathNamesAll_isLF") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_isLF", &triggerobject_pathNamesAll_isLF, &b_triggerobject_pathNamesAll_isLF);
+   if( fChain->GetBranch("triggerobject_pathNamesAll_isBoth") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_isBoth", &triggerobject_pathNamesAll_isBoth, &b_triggerobject_pathNamesAll_isBoth);
+   if( fChain->GetBranch("triggerobject_pathNamesAll_isNone") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_isNone", &triggerobject_pathNamesAll_isNone, &b_triggerobject_pathNamesAll_isNone);
 
+   if( fChain->GetBranch("triggerobject_filterIds") ) fChain->SetBranchAddress("triggerobject_filterIds", &triggerobject_filterIds, &b_triggerobject_filterIds);
+   if( fChain->GetBranch("triggerobject_filterLabels") ) fChain->SetBranchAddress("triggerobject_filterLabels", &triggerobject_filterLabels, &b_triggerobject_filterLabels);
+    
+    
+    
    // ##################################################
    // #   __  __  ____     _____           _   _       #
    // #  |  \/  |/ ___|   |_   _| __ _   _| |_| |__    #
