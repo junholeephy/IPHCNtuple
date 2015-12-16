@@ -6,6 +6,7 @@
 #include "Jet.h"
 #include "Truth.h"
 #include "GenJet.h"
+#include "TriggerObj.h"
 
 #ifdef __CINT__
 
@@ -32,5 +33,7 @@
 #pragma link C++ class std::vector<Truth>+;
 #pragma link C++ class GenJet+;
 #pragma link C++ class std::vector<GenJet>+;
+#pragma link C++ class TriggerObj+;
+#pragma link C++ class std::vector<TriggerObj>+;
 
 #endif
