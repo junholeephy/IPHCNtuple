@@ -19,24 +19,26 @@ void Ntuple::Init()
 
 void Ntuple::setBranchAddress()
 {
-    m_tree->Branch("Event",    "std::vector<Event>",    (NtEvent),    32000, 1);
-    m_tree->Branch("Electron", "std::vector<Electron>", (NtElectron), 32000, 1);
-    m_tree->Branch("Muon",     "std::vector<Muon>",     (NtMuon),     32000, 1);
-    m_tree->Branch("Tau",      "std::vector<Tau>",      (NtTau),      32000, 1);
-    m_tree->Branch("Jet",      "std::vector<Jet>",      (NtJet),      32000, 1);
-    m_tree->Branch("Truth",    "std::vector<Truth>",    (NtTruth),    32000, 1);
-    m_tree->Branch("GenJet",   "std::vector<GenJet>",   (NtGenJet),   32000, 1);
+    m_tree->Branch("Event",     "std::vector<Event>",      (NtEvent),     32000, 1);
+    m_tree->Branch("Electron",  "std::vector<Electron>",   (NtElectron),  32000, 1);
+    m_tree->Branch("Muon",      "std::vector<Muon>",       (NtMuon),      32000, 1);
+    m_tree->Branch("Tau",       "std::vector<Tau>",        (NtTau),       32000, 1);
+    m_tree->Branch("Jet",       "std::vector<Jet>",        (NtJet),       32000, 1);
+    m_tree->Branch("Truth",     "std::vector<Truth>",      (NtTruth),     32000, 1);
+    m_tree->Branch("GenJet",    "std::vector<GenJet>",     (NtGenJet),    32000, 1);
+    m_tree->Branch("TriggerObj","std::vector<TriggerObj>", (NtTriggerObj),32000, 1);
 }
 
 void Ntuple::createVar()
 {
-    NtEvent     = new std::vector<Event>;
-    NtElectron  = new std::vector<Electron>;
-    NtMuon      = new std::vector<Muon>;
-    NtTau       = new std::vector<Tau>;
-    NtJet       = new std::vector<Jet>;
-    NtTruth     = new std::vector<Truth>;
-    NtGenJet    = new std::vector<GenJet>;
+    NtEvent      = new std::vector<Event>;
+    NtElectron   = new std::vector<Electron>;
+    NtMuon       = new std::vector<Muon>;
+    NtTau        = new std::vector<Tau>;
+    NtJet        = new std::vector<Jet>;
+    NtTruth      = new std::vector<Truth>;
+    NtGenJet     = new std::vector<GenJet>; 
+    NtTriggerObj = new std::vector<TriggerObj>;
 }
 
 void Ntuple::clearVar()
@@ -47,7 +49,8 @@ void Ntuple::clearVar()
     NtTau->clear();
     NtJet->clear();
     NtTruth->clear();
-    NtGenJet->clear();
+    NtGenJet->clear(); 
+    NtTriggerObj->clear();
 }
 
 void Ntuple::fill()
