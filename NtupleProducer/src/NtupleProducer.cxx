@@ -78,6 +78,7 @@ int main(int argc, char *argv[])
     Jet      jet;
     Truth  truth;
     GenJet genjet;
+    TriggerObj trigObj;
     
     evdebug = new std::vector<int>();
     //   evdebug->push_back(120);
@@ -155,6 +156,17 @@ int main(int argc, char *argv[])
             if (jet.sel()) nt->NtJet->push_back(jet);
         }
 	
+	//trigger objects
+	for(int j=0;j<ntP->triggerobject_n;j++)
+        {
+            idx = j;
+            
+            trigObj.init();
+            trigObj.read();
+          
+            if (trigObj.sel()) nt->NtTriggerObj->push_back(trigObj);
+        }
+	
 	if (!isdata)
 	{
 	  // genjets
@@ -164,6 +176,7 @@ int main(int argc, char *argv[])
 	      
               genjet.init();
               genjet.read();
+	      
               if (genjet.sel()) nt->NtGenJet->push_back(genjet);
           }
 
