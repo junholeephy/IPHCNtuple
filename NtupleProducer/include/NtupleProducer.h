@@ -9,6 +9,7 @@
 #include "Jet.h"
 #include "Truth.h"
 #include "GenJet.h"
+#include "TriggerObj.h"
 #include "Ntuple.h"
 
 extern Tree             *ntP;
