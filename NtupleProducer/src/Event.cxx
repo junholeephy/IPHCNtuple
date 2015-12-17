@@ -83,20 +83,19 @@ void Event::read(bool isdata)
         std::string currentpath ("Nopathsofar");
         if( ntP->trigger_pass->at(i) == 1) { currentpath = ntP->trigger_name->at(i); }
 
-        std::string eee  ("HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL_v1"            );
-        std::string me   ("HLT_Mu17_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v1"  );
-        std::string em   ("HLT_Mu8_TrkIsoVVL_Ele17_CaloIdL_TrackIdL_IsoVL_v1"   );
-        std::string ee   ("HLT_Ele17_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v1"        );
-        std::string mm   ("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v1"              );
-        std::string mmTk ("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v1"            );
-        std::string m    ("HLT_IsoMu20_v1"                                      );
-        std::string mTk  ("HLT_IsoTkMu20_v1"                                    );
-        std::string e    ("HLT_Ele23_CaloIdL_TrackIdL_IsoVL_v1"                 );
-
-        std::string eData ("HLT_Ele23_CaloIdL_TrackIdL_IsoVL_v1"                );
-        std::string mme   ("HLT_DiMu9_Ele9_CaloIdL_TrackIdL_v1"                 );
-        std::string eem   ("HLT_Mu8_DiEle12_CaloIdL_TrackIdL_v1"                );
-        std::string mmm   ("HLT_TripleMu_12_10_5_v1"                            );
+        std::string eee   ("HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL_v1"            );
+        std::string me    ("HLT_Mu17_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v1"  );
+        std::string em    ("HLT_Mu8_TrkIsoVVL_Ele17_CaloIdL_TrackIdL_IsoVL_v1"   );
+        std::string ee    ("HLT_Ele17_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v1"        );
+        std::string mm    ("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v1"              );
+        std::string mmTk  ("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v1"            );
+        std::string m     ("HLT_IsoMu20_v1"                                      );
+        std::string mTk   ("HLT_IsoTkMu20_v1"                                    );
+        std::string e     ("HLT_Ele23_CaloIdL_TrackIdL_IsoVL_v1"                 );
+        std::string eData ("HLT_Ele23_WPLoose_Gsf_v1"                            );
+        std::string mme   ("HLT_DiMu9_Ele9_CaloIdL_TrackIdL_v1"                  );
+        std::string eem   ("HLT_Mu8_DiEle12_CaloIdL_TrackIdL_v1"                 );
+        std::string mmm   ("HLT_TripleMu_12_10_5_v1"                             );
 
         if(currentpath.compare(eee)  == 0) {trigger_pass_byname = trigger_pass_byname + 1    ;}
         if(currentpath.compare(me)   == 0) {trigger_pass_byname = trigger_pass_byname + 2    ;}
@@ -114,9 +113,51 @@ void Event::read(bool isdata)
         if(currentpath.compare(mmm)    == 0) {trigger_pass_byname = trigger_pass_byname + 10000  ;}
     }
 
+    int trigger_pass_byname_1     = 0;
+    for( int i = 0; i < ntP->trigger->size(); i++)
+    {
+        std::string currentpath ("Nopathsofar");
+        if( ntP->trigger_pass->at(i) == 1) { currentpath = ntP->trigger_name->at(i); }
+
+        std::size_t eee   = currentpath.find("HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL_v"            );
+        std::size_t me    = currentpath.find("HLT_Mu17_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v"  );
+        std::size_t em    = currentpath.find("HLT_Mu8_TrkIsoVVL_Ele17_CaloIdL_TrackIdL_IsoVL_v"   );
+        std::size_t ee    = currentpath.find("HLT_Ele17_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v"        );
+        std::size_t mm    = currentpath.find("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v"              );
+        std::size_t mmTk  = currentpath.find("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v"            );
+        std::size_t m     = currentpath.find("HLT_IsoMu20_v"                                      );
+        std::size_t mTk   = currentpath.find("HLT_IsoTkMu20_v"                                    );
+        std::size_t e     = currentpath.find("HLT_Ele23_CaloIdL_TrackIdL_IsoVL_v"                 );
+        std::size_t eData = currentpath.find("HLT_Ele23_WPLoose_Gsf_v"                            );
+        std::size_t mme   = currentpath.find("HLT_DiMu9_Ele9_CaloIdL_TrackIdL_v"                  );
+        std::size_t eem   = currentpath.find("HLT_Mu8_DiEle12_CaloIdL_TrackIdL_v"                 );
+        std::size_t mmm   = currentpath.find("HLT_TripleMu_12_10_5_v"                             );
+
+        if(eee  != std::string::npos) {trigger_pass_byname_1 = trigger_pass_byname_1 + 1    ;}
+        if(me   != std::string::npos) {trigger_pass_byname_1 = trigger_pass_byname_1 + 2    ;}
+        if(em   != std::string::npos) {trigger_pass_byname_1 = trigger_pass_byname_1 + 5    ;}
+        if(ee   != std::string::npos) {trigger_pass_byname_1 = trigger_pass_byname_1 + 10   ;}
+        if(mm   != std::string::npos) {trigger_pass_byname_1 = trigger_pass_byname_1 + 20   ;}
+        if(mmTk != std::string::npos) {trigger_pass_byname_1 = trigger_pass_byname_1 + 50   ;}
+        if(m    != std::string::npos) {trigger_pass_byname_1 = trigger_pass_byname_1 + 100  ;}
+        if(mTk  != std::string::npos) {trigger_pass_byname_1 = trigger_pass_byname_1 + 200  ;}
+        if(e    != std::string::npos) {trigger_pass_byname_1 = trigger_pass_byname_1 + 500  ;}
+
+        if(eData !=std::string::npos) {trigger_pass_byname_1 = trigger_pass_byname_1 + 1000   ;}
+        if(mme   !=std::string::npos) {trigger_pass_byname_1 = trigger_pass_byname_1 + 2000   ;}
+        if(eem   !=std::string::npos) {trigger_pass_byname_1 = trigger_pass_byname_1 + 5000   ;}
+        if(mmm   !=std::string::npos) {trigger_pass_byname_1 = trigger_pass_byname_1 + 10000  ;}
+    }
+
+
+
+
+
+
     //std::cout << "Trigger combination = " << trigger_comb << std::endl;
-    _trigger_pass        = trigger_comb;
-    _trigger_pass_byname = trigger_pass_byname;
+    _trigger_pass          = trigger_comb;
+    _trigger_pass_byname   = trigger_pass_byname;
+    _trigger_pass_byname_1 = trigger_pass_byname_1;
 
     // discriminant vs tt
     _disc_TT = 0;
@@ -145,8 +186,9 @@ void Event::init()
     _mc_ptHat         = -888;
     _mc_pu_trueNumInt = -888;
 
-    _trigger_pass        = -888;
-    _trigger_pass_byname = -888;
+    _trigger_pass          = -888;
+    _trigger_pass_byname   = -888;
+    _trigger_pass_byname_1 = -888;
 
     _tth_channel      = -888;
 

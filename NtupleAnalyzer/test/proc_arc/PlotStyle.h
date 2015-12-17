@@ -5,7 +5,6 @@
 
 void SetPlotStyle();
 
-TStyle* PlotStyle();
+TStyle* PlotStyle(); 
 
 #endif
-

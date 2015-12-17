@@ -24,7 +24,7 @@ class TTbarHiggsMultileptonAnalysis
 
  public:
    TTbarHiggsMultileptonAnalysis();
-   TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString theSampleName, TString treeName, 
+   TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString theSampleName, TString treeName,
                                  TString outputPath, bool isdata, float xsec, float lumi, int nowe, int nmax);
 
    ~TTbarHiggsMultileptonAnalysis();
@@ -33,25 +33,32 @@ class TTbarHiggsMultileptonAnalysis
    void writeHistograms();
 
    void PrintEventList(std::vector<Lepton> leptons,std::vector<Jet> jets);
-   
+
    // needed to print info in LHCO text format (madweight)
    void InitLHCO(int process_MC, int process_RECO);
    void PrintLHCOforMadweight_MC(int evt);
    void PrintLHCOforMadweight_RECO(int evt);
    float Phi_0_2Pi(float phi);
-   
-   //
+
    void ThreeLeptonSelection(std::vector<Lepton> vSelectedLeptons,
                              std::vector<Jet>    vSelectedJets,
                              std::vector<Jet>    vSelectedBTagJets,
                              std::vector<Jet>    vSelectedNonBTagJets,
                              int                 nLoose,
                              int                 nMedium,
-			     int evt);
-   
+			                 int                 evt);
+
+   void ThreeLeptonSelectionWZ(std::vector<Lepton> vSelectedLeptons,
+                               std::vector<Jet>    vSelectedJets,
+                               std::vector<Jet>    vSelectedBTagJets,
+                               std::vector<Jet>    vSelectedNonBTagJets,
+                               int                 nLoose,
+                               int                 nMedium,
+                               int                 evt,
+                               float               theweight);
+
    bool ThreeLeptonSelection_MC();
-   
-  
+
    TChain          *fChain;   //!pointer to the analyzed TTree or TChain
 
    std::vector<Electron>  *vElectron  = new std::vector<Electron>();
@@ -103,29 +110,29 @@ class TTbarHiggsMultileptonAnalysis
 
    TString sampleName;
    TString _outputFile;
-   
+
    bool _isdata;
    float _xsec;
    float _lumi;
    int _nowe;    // number of weighted events
-   int _nmax;    // max number of events to process 
- 
-      
+   int _nmax;    // max number of events to process
+
+
    // needed to print info in LHCO text format (madweight)
-   
+
    bool _printLHCO_MC;
    int _processLHCO_MC;
    std::ofstream fout_MC;
-   
+
    bool _printLHCO_RECO;
    int _processLHCO_RECO;
    std::ofstream fout_RECO;
-      
+
    std::string fline00 ;
    std::string del;
    std::string trig;
    std::string fline0;
-   
+
 };
 
 #endif

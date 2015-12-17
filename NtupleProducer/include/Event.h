@@ -35,8 +35,9 @@ class Event : public Base
         float mc_ptHat()       {return _mc_ptHat;};
         int mc_pu_trueNumInt() {return _mc_pu_trueNumInt;};
 
-        int ev_trigger_pass()        {return _trigger_pass;};
-        int ev_trigger_pass_byname() {return _trigger_pass_byname;};
+        int ev_trigger_pass()          {return _trigger_pass;};
+        int ev_trigger_pass_byname()   {return _trigger_pass_byname;};
+        int ev_trigger_pass_byname_1() {return _trigger_pass_byname_1;};
 
         int tth_channel()      {return _tth_channel;};
 
@@ -71,6 +72,7 @@ class Event : public Base
 
         int _trigger_pass;
         int _trigger_pass_byname;
+        int _trigger_pass_byname_1;
 
         float _disc_TT;
 
