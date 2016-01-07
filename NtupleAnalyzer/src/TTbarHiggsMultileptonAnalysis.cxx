@@ -198,6 +198,7 @@ void TTbarHiggsMultileptonAnalysis::selectBjets(std::string BjetSel, int* ibsel1
         ib2 = ib;
       }
     }
+   }
     if (BjetSel=="BtagHighestPt"){
         float pt_max=0, pt_max2=0;
         for (unsigned int ib=0; ib<vSelectedJets.size(); ib++){
