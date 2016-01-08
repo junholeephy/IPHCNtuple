@@ -17,7 +17,7 @@ que="sbg_local"
 
 export HOME=$(pwd)
 
-dout="/home-pbs/lebihan/someone/ttH_27112015_MC/ttH/NtupleAnalyzer/test/"
+dout="/home-pbs/lebihan/someone/ttH_070116/ttH/NtupleAnalyzer/test/"
 
 
 runName="toy${jName}"
@@ -30,7 +30,7 @@ mkdir ${logName}
 
 nmax=-1
 
-fxsec="table.txt"
+fxsec="table_MC_Akoula-patch1_20151217.txt"
 
 fdir=$(ls -d lists*)
 
