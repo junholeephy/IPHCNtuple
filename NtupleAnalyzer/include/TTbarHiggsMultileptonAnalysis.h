@@ -32,57 +32,57 @@ class TTbarHiggsMultileptonAnalysis
    void createHistograms();
    void writeHistograms();
 
-   void PrintEventList(std::vector<Lepton> leptons,std::vector<Jet> jets);
+
+   void ThreeLeptonSelection_TTH3l(int evt, float theweight);
+   bool ThreeLeptonSelection_TTH3l_MC();
+  
+   void ThreeLeptonSelection_CR_WZ(int evt, float theweight);
+   void ThreeLeptonSelection_CR_TTl(int evt, float theweight);
+   void ThreeLeptonSelection_CR_Zl(int evt, float theweight);
+  
+   void ThreeLeptonSelection_TTZ(int evt, float theweight);
+  
+   TChain *fChain;   //!pointer to the analyzed TTree or TChain
+
+   std::vector<Electron> *vElectron  = new std::vector<Electron>();
+   std::vector<Muon>     *vMuon      = new std::vector<Muon>();
+   std::vector<Event>    *vEvent     = new std::vector<Event>();
+   std::vector<Jet>      *vJet       = new std::vector<Jet>();
+   std::vector<Truth>    *vTruth     = new std::vector<Truth>();
+
+   std::vector<Muon>	 vSelectedMuons;
+   std::vector<Electron> vSelectedElectrons;
+   std::vector<Lepton>   vSelectedLeptons;
+   std::vector<Muon>	 vFakeMuons;     // inverted MVA cut
+   std::vector<Electron> vFakeElectrons; // inverted MVA cut
+   std::vector<Lepton>   vFakeLeptons;   // inverted MVA cut
+   std::vector<Jet>	 vSelectedNonBTagJets;
+   std::vector<Jet>	 vSelectedBTagJets;
+   std::vector<Jet>      vSelectedMediumBTagJets;
+   std::vector<Jet>	 vSelectedJets;
+   
+   int nLooseBJets;
+   int nMediumBJets;
+   
+   bool is_TTH3l;  // TTH 3l analysis
+   bool is_CR_TTl; // TTbar CR w/ 3l (one fake lepton)
+   bool is_CR_WZ;  // WZ CR w/ 3l no b-jets
+   bool is_CR_Zl;  // Drell-Yan CR w/ 3l (one fake lepton)
+   
+   bool is_TTZ;    // TTZ 3l analysis (for the future..)
+   
+   virtual void     Init(TChain *tree);
+   virtual void     Loop();
+
+   void initializeOutputTree();
+   void selectBjets(std::string, int*, int*);
+   void fillOutputTree();
 
    // needed to print info in LHCO text format (madweight)
    void InitLHCO(int process_MC, int process_RECO);
    void PrintLHCOforMadweight_MC(int evt);
    void PrintLHCOforMadweight_RECO(int evt);
    float Phi_0_2Pi(float phi);
-
-   void ThreeLeptonSelection(std::vector<Lepton> vSelectedLeptons,
-                             std::vector<Jet>    vSelectedJets,
-                             std::vector<Jet>    vSelectedBTagJets,
-                             std::vector<Jet>    vSelectedNonBTagJets,
-                             int                 nLoose,
-                             int                 nMedium,
-			                 int                 evt);
-
-   void ThreeLeptonSelectionWZ(std::vector<Lepton> vSelectedLeptons,
-                               std::vector<Jet>    vSelectedJets,
-                               std::vector<Jet>    vSelectedBTagJets,
-                               std::vector<Jet>    vSelectedNonBTagJets,
-                               int                 nLoose,
-                               int                 nMedium,
-                               int                 evt,
-                               float               theweight);
-
-   bool ThreeLeptonSelection_MC();
-
-   TChain          *fChain;   //!pointer to the analyzed TTree or TChain
-
-   std::vector<Electron>  *vElectron  = new std::vector<Electron>();
-   std::vector<Muon>      *vMuon      = new std::vector<Muon>();
-   std::vector<Event>     *vEvent     = new std::vector<Event>();
-   std::vector<Jet>       *vJet       = new std::vector<Jet>();
-   std::vector<Truth>     *vTruth     = new std::vector<Truth>();
-
-   std::vector<Muon>	 vSelectedMuons;
-   std::vector<Electron> vSelectedElectrons;
-   std::vector<Lepton>   vSelectedLeptons;
-   std::vector<Jet>	 vSelectedNonBTagJets;
-   std::vector<Jet>	 vSelectedBTagJets;
-   std::vector<Jet>      vSelectedMediumBTagJets;
-   std::vector<Jet>	 vSelectedJets;
-
-
-   virtual void     Init(TChain *tree);
-
-   virtual void     Loop();
-
-   void initializeOutputTree();
-   void selectBjets(std::string, int*, int*);
-   void fillOutputTree();
 
    TTree* tOutput;
    Int_t mc_event;
@@ -97,9 +97,6 @@ class TTbarHiggsMultileptonAnalysis
    TLorentzVector multilepton_mET, multilepton_Ptot;
 
 
-
-
-
  private:
 
    HistoManager * theHistoManager;
@@ -108,14 +105,14 @@ class TTbarHiggsMultileptonAnalysis
 
    FILE *fevc;
 
-   TString sampleName;
+   TString _sampleName;
    TString _outputFile;
 
    bool _isdata;
    float _xsec;
    float _lumi;
-   int _nowe;    // number of weighted events
-   int _nmax;    // max number of events to process
+   int   _nowe; // number of weighted events
+   int   _nmax; // max number of events to process
 
 
    // needed to print info in LHCO text format (madweight)
