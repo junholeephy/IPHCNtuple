@@ -52,7 +52,7 @@ do
   fi
   linexsec=$(grep $dataset $fxsec)
   nowe=$(echo $linexsec | awk '{print $3}')
-  xsec=$(echo $linexsec | awk '{print $2}')
+  xsec=$(echo $linexsec | awk '{printf $2}')
   if [[ $nowe == "" ]]; then
     nowe=1
   fi
@@ -72,10 +72,11 @@ do
     nmax=${nmax}
   fi
   
+  
   fout=$(echo ${runName}/${dataset}/${line}_${jidx} | sed 's%.txt%%g')
   lout=$(echo ${line}_${jidx} | sed 's%.txt%%g')
 
-  echo "${dataset}: $nowe $xsec"
+  echo "${dataset}: $nowe $xsec $lumi"
   #echo "${fpath}${line}"
  
   qsub -N ${dir} -q ${que} -o ${logName}/${sample}.log -j oe single_batch_job.sh \
