@@ -33,14 +33,16 @@ class TTbarHiggsMultileptonAnalysis
    void writeHistograms();
 
 
-   void ThreeLeptonSelection_TTH3l(int evt, float theweight);
+   void ThreeLeptonSelection_TTH3l(int evt);
    bool ThreeLeptonSelection_TTH3l_MC();
   
-   void ThreeLeptonSelection_CR_WZ(int evt, float theweight);
-   void ThreeLeptonSelection_CR_TTl(int evt, float theweight);
-   void ThreeLeptonSelection_CR_Zl(int evt, float theweight);
+   void ThreeLeptonSelection_CR_WZ(int evt);
+   void ThreeLeptonSelection_CR_TTl(int evt);
+   void ThreeLeptonSelection_CR_Zl(int evt);
   
-   void ThreeLeptonSelection_TTZ(int evt, float theweight);
+   void ThreeLeptonSelection_TTZ(int evt);
+   
+   void isTrigger();
   
    TChain *fChain;   //!pointer to the analyzed TTree or TChain
 
@@ -71,6 +73,8 @@ class TTbarHiggsMultileptonAnalysis
    
    bool is_TTZ;    // TTZ 3l analysis (for the future..)
    
+   bool is_trigger;   
+  
    virtual void     Init(TChain *tree);
    virtual void     Loop();
 
@@ -86,7 +90,7 @@ class TTbarHiggsMultileptonAnalysis
 
    TTree* tOutput;
    Int_t mc_event;
-   Float_t mc_weight;
+   Float_t weight;
    Int_t mc_3l_category, mc_ttbar_decay, mc_boson_decay, mc_ttZhypAllowed, mc_nJets25, mc_nBtagJets25, mc_nMediumBtagJets25, mc_nNonBtagJets25;
    Int_t multilepton_Bjet1_Id, multilepton_Bjet2_Id;
    Int_t multilepton_Lepton1_Id, multilepton_Lepton2_Id, multilepton_Lepton3_Id;
