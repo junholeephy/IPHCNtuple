@@ -42,8 +42,7 @@ class TTbarHiggsMultileptonAnalysis
   
    void ThreeLeptonSelection_TTZ(int evt);
    
-   void isTrigger();
-  
+ 
    TChain *fChain;   //!pointer to the analyzed TTree or TChain
 
    std::vector<Electron> *vElectron  = new std::vector<Electron>();
@@ -91,6 +90,7 @@ class TTbarHiggsMultileptonAnalysis
    TTree* tOutput;
    Int_t mc_event;
    Float_t weight;
+   Float_t weight_PV; // PU reweighting from PV distribution
    Int_t mc_3l_category, mc_ttbar_decay, mc_boson_decay, mc_ttZhypAllowed, mc_nJets25, mc_nBtagJets25, mc_nMediumBtagJets25, mc_nNonBtagJets25;
    Int_t multilepton_Bjet1_Id, multilepton_Bjet2_Id;
    Int_t multilepton_Lepton1_Id, multilepton_Lepton2_Id, multilepton_Lepton3_Id;
@@ -107,8 +107,6 @@ class TTbarHiggsMultileptonAnalysis
 
    TFile * outputfile;
 
-   FILE *fevc;
-
    TString _sampleName;
    TString _outputFile;
 
@@ -118,6 +116,8 @@ class TTbarHiggsMultileptonAnalysis
    int   _nowe; // number of weighted events
    int   _nmax; // max number of events to process
 
+   TFile * _file_PVreweighting;
+   TH1F* _h_PV;
 
    // needed to print info in LHCO text format (madweight)
 
