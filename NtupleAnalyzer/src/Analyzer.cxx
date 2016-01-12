@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
         if( ! strcmp(argv[i],"--nmax") )    nmax = atoi(argv[i+1]);
         if( ! strcmp(argv[i],"--nowe") )    nowe = atoi(argv[i+1]);
         if( ! strcmp(argv[i],"--lumi") )    lumi = atoi(argv[i+1]);
-        if( ! strcmp(argv[i],"--xsec") )    xsec = atoi(argv[i+1]);
+        if( ! strcmp(argv[i],"--xsec") )    xsec = atof(argv[i+1]);
         if( ! strcmp(argv[i],"--isdata") )  isdata = (bool) atoi(argv[i+1]);
     }
 
