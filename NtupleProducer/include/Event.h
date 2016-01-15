@@ -73,6 +73,7 @@ class Event : public Base
         int _trigger_pass;
         int _trigger_pass_byname;
         int _trigger_pass_byname_1;
+        int _trigger_pass_byname_1_noDz;
 
         float _disc_TT;
 
