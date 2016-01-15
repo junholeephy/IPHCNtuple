@@ -152,11 +152,14 @@ bool TriggerObj::sel()
     std::size_t ok12 = _pathNamesAll.at(j).find("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL");
     std::size_t ok13 = _pathNamesAll.at(j).find("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL");
     
+    std::size_t ok14 = _pathNamesAll.at(j).find("hltEle17Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter");
+    std::size_t ok15 = _pathNamesAll.at(j).find("hltEle17Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter");
+    
     //
-    if ( ok1!=std::string::npos || ok2!=std::string::npos  || ok3!=std::string::npos  || ok4!=std::string::npos  ||
-         ok5!=std::string::npos || ok6!=std::string::npos  || ok7!=std::string::npos  || ok8!=std::string::npos  ||
-         ok9!=std::string::npos || ok10!=std::string::npos || ok11!=std::string::npos || ok12!=std::string::npos ||
-	 ok13!=std::string::npos ) 
+    if ( ok1!=std::string::npos  || ok2!=std::string::npos  || ok3!=std::string::npos  || ok4!=std::string::npos  ||
+         ok5!=std::string::npos  || ok6!=std::string::npos  || ok7!=std::string::npos  || ok8!=std::string::npos  ||
+         ok9!=std::string::npos  || ok10!=std::string::npos || ok11!=std::string::npos || ok12!=std::string::npos ||
+	 ok13!=std::string::npos || ok14!=std::string::npos || ok15!=std::string::npos) 
     {
       isTrigger = true;
       break;
