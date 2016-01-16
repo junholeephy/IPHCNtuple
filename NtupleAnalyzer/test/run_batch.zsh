@@ -21,10 +21,10 @@ que="sbg_local"
 export HOME=$(pwd)
 
 dout="/home-pbs/lebihan/someone/ttH_070116/ttH/NtupleAnalyzer/test/"
+dout_f="/opt/sbg/scratch1/cms/lebihan/trees_Analyzer_akoula_patch1_15012016/"
 
-
-runName="toy${jName}"
-logName="log${jName}"
+runName="toy_${jName}"
+logName="log_${jName}"
 
 rm -rf ${runName}
 mkdir ${runName}
@@ -83,7 +83,7 @@ do
   #echo "${fpath}${line}"
  
   qsub -N ${dir} -q ${que} -o ${logName}/${sample}.log -j oe single_batch_job.sh \
--v dout=${dout},line2=${fpath}${line},fout=${fout},nowe=${nowe},xsec=${xsec},lumi=${lumi},isdata=${isdata},sample=${sample},nmax=${nmax}
+-v dout=${dout},line2=${fpath}${line},dout_f=$dout_f$,fout=${fout},nowe=${nowe},xsec=${xsec},lumi=${lumi},isdata=${isdata},sample=${sample},nmax=${nmax}
 done
 
 echo "going to sleep 2700 s (45 mn)"
