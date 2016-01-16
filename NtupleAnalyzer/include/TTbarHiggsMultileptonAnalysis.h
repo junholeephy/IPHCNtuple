@@ -90,6 +90,7 @@ class TTbarHiggsMultileptonAnalysis
    TTree* tOutput;
    Int_t mc_event;
    Float_t weight;
+   Float_t mc_weight;
    Float_t weight_PV; // PU reweighting from PV distribution
    Int_t mc_3l_category, mc_ttbar_decay, mc_boson_decay, mc_ttZhypAllowed, mc_nJets25, mc_nBtagJets25, mc_nMediumBtagJets25, mc_nNonBtagJets25;
    Int_t multilepton_Bjet1_Id, multilepton_Bjet2_Id;
