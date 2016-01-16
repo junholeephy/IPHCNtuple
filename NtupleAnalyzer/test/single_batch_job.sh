@@ -10,15 +10,20 @@ cd -
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${dout}/../:${dout}/../../NtupleProducer/
 
+
+echo ${xsec}
+
 line2=${line2}
 fout=${fout}
 isdata=${isdata}
 nowe=${nowe}
 xsec=${xsec}
 dout=${dout}
+dout_f=${dout_f}
 sample=${sample}
 lumi=${lumi}
 
 
+
 echo "Executing .././NtupleAnalyzer --file ${line2} --outfile ${dout}${fout} --isdata ${isdata} --nowe ${nowe} --xsec ${xsec} --lumi ${lumi} --nmax ${nmax}"
-${dout}/../Analyzer --file ${line2} --outfile ${dout}${fout} --isdata ${isdata} --nowe ${nowe} --xsec ${xsec} --lumi ${lumi} --nmax ${nmax} --tree Nt
+${dout}/../Analyzer --file ${line2} --outfile ${dout_f}${fout} --isdata ${isdata} --nowe ${nowe} --xsec ${xsec} --lumi ${lumi} --nmax ${nmax} --tree Nt
