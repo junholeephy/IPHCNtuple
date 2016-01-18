@@ -58,7 +58,32 @@ void HistoManager::fillHisto2D(TString var, TString selstep, TString channel, TS
 }
 
 
+void HistoManager::writeHisto()
+{
+}
 
-void HistoManager::writeHisto(){
 
+void HistoManager::addHisto1D(TH1F* h1)
+{  
+  histo1D_list.push_back(h1);
+}
+
+
+void HistoManager::addHisto2D(TH2F* h2)
+{
+  histo2D_list.push_back(h2);
+}
+
+
+TH1F* HistoManager::getHisto1D(TString var, TString selstep, TString channel, TString sample)
+{  
+  TString histoname = var+"_"+selstep+"_"+channel+"__"+sample;
+  return histo1D_list[histo1D_map[histoname.Data()]];
+}
+
+
+TH2F* HistoManager::getHisto2D(TString var, TString selstep, TString channel, TString sample)
+{
+  TString histoname = var+"_"+selstep+"_"+channel+"__"+sample;
+  return histo2D_list[histo2D_map[histoname.Data()]];
 }
