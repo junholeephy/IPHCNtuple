@@ -1,6 +1,12 @@
 #include "../include/TTbarHiggsMultileptonAnalysis.h"
 #include "TSystem.h"
 
+#define kCat_3l_2b_2j 0
+#define kCat_3l_1b_2j 1
+#define kCat_3l_2b_1j 2
+#define kCat_3l_1b_1j 3
+#define kCat_3l_2b_0j 4
+
 TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis() 
 {
     _printLHCO_MC = false;
@@ -311,7 +317,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
 
     // three lepton selection
     bool nLep  = ( vSelectedLeptons.size()				    == 3 );
-    bool nJets = ( (vSelectedBTagJets.size() + vSelectedNonBTagJets.size()) >= 4 );
+    bool nJets = ( (vSelectedBTagJets.size() + vSelectedNonBTagJets.size()) >= 2 );
 
 
     bool pass_OSSF = true;
@@ -382,7 +388,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
 
     // three lepton selection
     bool nLep  = ( vSelectedLeptons.size()				    == 3 );
-    bool nJets = ( (vSelectedBTagJets.size() + vSelectedNonBTagJets.size()) >= 4 );
+    bool nJets = ( (vSelectedBTagJets.size() + vSelectedNonBTagJets.size()) >= 2 );
 
 
     bool pass_OSSF = false;
@@ -543,7 +549,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_Zl(int evt)
 {
     bool nLep     = ( vSelectedLeptons.size() == 2 ); 
     bool nLepFake = ( vFakeLeptons.size() == 1 );
-    bool nJets    = ( vSelectedNonBTagJets.size() + vSelectedBTagJets.size() >= 4 );
+    bool nJets    = ( vSelectedNonBTagJets.size() + vSelectedBTagJets.size() >= 2 );
 
     float MZ = -1.;
 
@@ -588,7 +594,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_TTl(int evt)
 {
     bool nLep     = ( vSelectedLeptons.size() == 2 ); 
     bool nLepFake = ( vFakeLeptons.size() == 1 );
-    bool nJets    = ( vSelectedNonBTagJets.size() + vSelectedBTagJets.size() >= 4 );
+    bool nJets    = ( vSelectedNonBTagJets.size() + vSelectedBTagJets.size() >= 2 );
 
     float Mll = -1.;
 
@@ -713,12 +719,14 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
   tOutput->Branch("mc_nMediumBtagJets25",&mc_nMediumBtagJets25,"mc_nMediumBtagJets25/I");
   tOutput->Branch("mc_nNonBtagJets25",&mc_nNonBtagJets25,"mc_nNonBtagJets25/I");
   
+  tOutput->Branch("catJets",&catJets,"catJets/I");
+
   tOutput->Branch("is_TTH3l",&is_TTH3l,"is_TTH3l/B");
   tOutput->Branch("is_CR_TTl",&is_CR_TTl,"is_CR_TTl/B");
   //tOutput->Branch("is_CR_WZ",&is_CR_WZ,"is_CR_WZ/B");
   tOutput->Branch("is_CR_Zl",&is_CR_Zl,"is_CR_Zl/B");
   tOutput->Branch("is_TTZ",&is_TTZ,"is_TTZ/B");
-  
+ 
   tOutput->Branch("is_trigger",&is_trigger,"is_trigger/B");
 
   tOutput->Branch("multilepton_Bjet1_Id",&multilepton_Bjet1_Id,"multilepton_Bjet1_Id/I");
@@ -753,10 +761,22 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
 void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
 
   //if (vSelectedLeptons.size()!=3 || vSelectedBTagJets.size()<2 || vSelectedJets.size()<4 ) return; 
-  if (!( vSelectedLeptons.size()==3 || (vSelectedLeptons.size() == 2 &&  vFakeLeptons.size() == 1 ) ) ||  vSelectedJets.size()<4) return;
+  if (!( vSelectedLeptons.size()==3 || (vSelectedLeptons.size() == 2 &&  vFakeLeptons.size() == 1 ) ) ||  vSelectedJets.size()<2) return;
   if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return; 
   //if (!vSelectedBTagJets.size()>=2) return; //ACDC ????
-  
+ 
+  if (vSelectedLeptons.size()==3){
+    //4j
+    if (vSelectedBTagJets.size()>=2 && vSelectedNonBTagJets.size()>=2) catJets = kCat_3l_2b_2j;
+    //3j
+    else if (vSelectedBTagJets.size()==1 && vSelectedNonBTagJets.size()>=2) catJets = kCat_3l_1b_2j;
+    else if (vSelectedBTagJets.size()>=2 && vSelectedNonBTagJets.size()==1) catJets = kCat_3l_2b_1j;
+    //2j
+    else if (vSelectedBTagJets.size()==1 && vSelectedNonBTagJets.size()==1) catJets = kCat_3l_1b_1j;
+    else if (vSelectedBTagJets.size()>=2 && vSelectedNonBTagJets.size()==0) catJets = kCat_3l_2b_0j;
+    else catJets = -1;
+  }
+ 
   multilepton_Lepton1_P4 = vSelectedLeptons.at(0).p4();
   multilepton_Lepton1_Id = vSelectedLeptons.at(0).id();
   multilepton_Lepton2_P4 = vSelectedLeptons.at(1).p4();
