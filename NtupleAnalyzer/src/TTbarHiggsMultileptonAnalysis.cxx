@@ -219,7 +219,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         {   
 	    Lepton l; l.setLepton(&vMuon->at(imuon),imuon,0);
             
-	    if ( vMuon->at(imuon).lepMVA() > 0.65 )
+	    if ( vMuon->at(imuon).lepMVA() > 0.65 && vMuon->at(imuon).isMediumMuon() == true )
 	    {
               vSelectedMuons.push_back(vMuon->at(imuon));
               vSelectedLeptons.push_back(l);}
@@ -263,9 +263,9 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             if( vJet->at(ijet).CSVv2() > 0.814 ) nMediumBJets++;
 
             if(vJet->at(ijet).CSVv2() >= 0.423 ) vSelectedBTagJets.push_back(vJet->at(ijet));
-            if(vJet->at(ijet).CSVv2() >= 0.814 ) vSelectedMediumBTagJets.push_back(vJet->at(ijet));
             else                                 vSelectedNonBTagJets.push_back(vJet->at(ijet));
-
+            if(vJet->at(ijet).CSVv2() >= 0.814 ) vSelectedMediumBTagJets.push_back(vJet->at(ijet));
+            
             vSelectedJets.push_back(vJet->at(ijet));
         }
 
@@ -289,9 +289,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 	ThreeLeptonSelection_TTZ(jentry);
 	
         //std::cout <<is_CR_TTl<<" "<< is_CR_Zl <<" " << is_CR_WZ<<" " << is_TTH3l<< std::endl;
-	
+	//if (is_TTH3l==true ) std::cout <<"is_TTH3l" << std::endl;
 	if ( is_CR_TTl || is_CR_Zl || is_TTH3l || is_TTZ ) fillOutputTree();
-	
 		
 	//---------------------------
         //Madweight LHCO stuff
@@ -757,7 +756,6 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
   if (!( vSelectedLeptons.size()==3 || (vSelectedLeptons.size() == 2 &&  vFakeLeptons.size() == 1 ) ) ||  vSelectedJets.size()<4) return;
   if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return; 
   //if (!vSelectedBTagJets.size()>=2) return; //ACDC ????
-
   
   multilepton_Lepton1_P4 = vSelectedLeptons.at(0).p4();
   multilepton_Lepton1_Id = vSelectedLeptons.at(0).id();
