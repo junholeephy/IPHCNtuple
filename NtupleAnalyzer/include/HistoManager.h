@@ -31,11 +31,16 @@ class HistoManager
    
    std::vector<TH1F*> getHisto1D_list(){return histo1D_list;};
    std::vector<TH2F*> getHisto2D_list(){return histo2D_list;};
+      
+   TH1F* getHisto1D(TString var, TString selstep, TString channel, TString sample);
+   void addHisto1D(TH1F* h1);
+     
+   TH2F* getHisto2D(TString var, TString selstep, TString channel, TString sample);
+   void addHisto2D(TH2F* h2);
    
    
  private:
  	
-
 
   std::vector<TH2F*> histo2D_list;
   std::map<std::string, int> histo2D_map;
@@ -43,7 +48,6 @@ class HistoManager
   std::vector<TH1F*> histo1D_list;
   std::map<std::string, int> histo1D_map;
  
-
 
 };
 
