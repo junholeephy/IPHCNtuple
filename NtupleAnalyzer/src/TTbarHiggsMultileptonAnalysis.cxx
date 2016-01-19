@@ -798,8 +798,8 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
   TLorentzVector Bjet1, Bjet2; 
   int ib1=-1, ib2=-1;
   selectBjets("HighestBtagDiscrim", &ib1, &ib2);
-  Bjet1.SetPtEtaPhiE(vSelectedJets.at(ib1).pt(), vSelectedJets.at(ib1).eta(), vSelectedJets.at(ib1).phi(), vSelectedJets.at(ib1).E());
-  Bjet2.SetPtEtaPhiE(vSelectedJets.at(ib2).pt(), vSelectedJets.at(ib2).eta(), vSelectedJets.at(ib2).phi(), vSelectedJets.at(ib2).E());
+  if (ib1!=-1) Bjet1.SetPtEtaPhiE(vSelectedJets.at(ib1).pt(), vSelectedJets.at(ib1).eta(), vSelectedJets.at(ib1).phi(), vSelectedJets.at(ib1).E());
+  if (ib2!=-1) Bjet2.SetPtEtaPhiE(vSelectedJets.at(ib2).pt(), vSelectedJets.at(ib2).eta(), vSelectedJets.at(ib2).phi(), vSelectedJets.at(ib2).E());
 
   multilepton_Bjet1_P4 = Bjet1;
   multilepton_Bjet1_Id = 5;
@@ -840,7 +840,16 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
             } 
         } 
     }  
-    
+
+    if (ij1==-1 && ij2==-1){
+        multilepton_JetHighestPt1_Id = 0;
+        multilepton_JetHighestPt2_Id = 0;
+    } 
+    if (ij1!=-1 && ij2==-1){
+        multilepton_JetHighestPt1_Id = 1;
+        multilepton_JetHighestPt2_Id = 0;
+        multilepton_JetHighestPt1_P4.SetPtEtaPhiE(vSelectedJets.at(ij1).pt(), vSelectedJets.at(ij1).eta(), vSelectedJets.at(ij1).phi(), vSelectedJets.at(ij1).E());
+    }   
     if (ij1!=-1 && ij2!=-1) {
         multilepton_JetHighestPt1_Id = 1;
         multilepton_JetHighestPt2_Id = 1;
@@ -872,10 +881,6 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
             || ( vSelectedLeptons.at(1).id() == -vSelectedLeptons.at(2).id() ))
         mc_ttZhypAllowed = 1; }
      
-
-    mc_nJets25 = vSelectedJets.size();
-    mc_nBtagJets25 = vSelectedBTagJets.size();
-    mc_nNonBtagJets25 = vSelectedNonBTagJets.size();
 
     mc_nJets25 = vSelectedJets.size();
     mc_nBtagJets25 = vSelectedBTagJets.size();
@@ -1242,13 +1247,13 @@ float TTbarHiggsMultileptonAnalysis::PUweight()
 
 void TTbarHiggsMultileptonAnalysis::selectBjets(std::string BjetSel, int* ibsel1, int* ibsel2){
 
-  //Assumes there are at least 2 b-tagged jets in the event
+  //Selects the two highest b-tag jets. If only one b-tag select just this one.
   int ib1=-1, ib2=-1;
 
   if (BjetSel=="HighestBtagDiscrim"){
     float btag_max=-999, btag_max2=-999;
     for (unsigned int ib=0; ib<vSelectedJets.size(); ib++){
-      //if (vSelectedJets.at(ib).CSVv2()<0.423) continue;
+      if (vSelectedJets.at(ib).CSVv2()<0.423) continue;
       if (vSelectedJets.at(ib).CSVv2()>btag_max){
         btag_max2 = btag_max;
         ib2 = ib1;
