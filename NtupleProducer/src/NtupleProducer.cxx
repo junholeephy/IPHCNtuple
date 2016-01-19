@@ -85,7 +85,11 @@ int main(int argc, char *argv[])
 
     int nlep = 0;
     int njet = 0;
-    
+ 
+    int n_mu  = 0;
+    int n_el  = 0;
+    int n_tau = 0;
+    int n_jet = 0;
    
     for(Long64_t i=0;i<nentries;i++)
     {
@@ -109,7 +113,12 @@ int main(int argc, char *argv[])
         //	else if( isHtoTT ) ev._tth_channel = 2;
 
         nt->NtEvent->push_back(ev);
-	
+
+        bool mu_presel  = false,
+             el_presel  = false,
+             tau_presel = false,
+             jet_presel = false;
+
          // electrons
         for(int j=0;j<ntP->el_n;j++)
         {
@@ -119,9 +128,14 @@ int main(int argc, char *argv[])
             el.read();
             if( el.sel() ) nlep++;
            
-            if( el.sel()) nt->NtElectron->push_back(el);
+            if( el.sel()) 
+            {    
+                nt->NtElectron->push_back(el);
+                el_presel = true;
+            }
         }
-   
+        if(el_presel) n_el++;
+
         // muons
         for(int j=0;j<ntP->mu_n;j++)
         {
@@ -130,10 +144,14 @@ int main(int argc, char *argv[])
             mu.init();
             mu.read();
          
-            if( mu.sel()) nt->NtMuon->push_back(mu);
+            if( mu.sel()) 
+            {
+                nt->NtMuon->push_back(mu);
+                mu_presel = true;
+            }
         }
-  
-        int x_tau = 0;
+        if(mu_presel) n_mu++;
+
         // taus 
         for(int j=0;j<ntP->tau_n;j++)
         {
@@ -142,8 +160,13 @@ int main(int argc, char *argv[])
             tau.init();
             tau.read();
          
-            if (tau.sel()) nt->NtTau->push_back(tau);
+            if (tau.sel()) 
+            {    
+                nt->NtTau->push_back(tau);
+                tau_presel = true;
+            }
         }	
+        if(tau_presel) n_tau++;
 
         // jets
         for(int j=0;j<ntP->jet_n;j++)
@@ -153,8 +176,13 @@ int main(int argc, char *argv[])
             jet.init();
             jet.read(isdata);
             
-            if (jet.sel()) nt->NtJet->push_back(jet);
+            if (jet.sel()) 
+            {    
+                nt->NtJet->push_back(jet);
+                jet_presel = true;
+            }    
         }
+        if(jet_presel) n_jet++;
 	
 	//trigger objects
 	for(int j=0;j<ntP->triggerobject_n;j++)
@@ -187,6 +215,11 @@ int main(int argc, char *argv[])
 
           nt->NtTruth->push_back(truth);
 	}
+
+        std::cout << " n_mu :  " << n_mu  << std::endl
+                  << " n_el :  " << n_el  << std::endl
+                  << " n_tau:  " << n_tau << std::endl
+                  << " n_jet:  " << n_jet << std::endl;
 
         nt->fill();
     }  
