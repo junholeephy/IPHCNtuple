@@ -17,11 +17,11 @@ export LD_LIBRARY_PATH=${cdir}:${NtupleDir}:${NtupleDir}/obj:$LD_LIBRARY_PATH
 #--lumi 1600 \
 
 ./../Analyzer \
---file input_DoubleMuon_DATA.txt \
+--file input.txt \
 --tree Nt \
---outfile ./output_DoubleMuon_DATA \
+--outfile ./output \
 --nmax -1 \
---isdata 1 \
+--isdata 0 \
 --nowe 1 \
 --xsec 1 \
 --lumi 1 \

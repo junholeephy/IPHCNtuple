@@ -764,8 +764,10 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
   if (!( vSelectedLeptons.size()==3 || (vSelectedLeptons.size() == 2 &&  vFakeLeptons.size() == 1 ) ) ||  vSelectedJets.size()<2) return;
   if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return; 
   //if (!vSelectedBTagJets.size()>=2) return; //ACDC ????
+
+  //std::cout << "lept="<<vSelectedLeptons.size()<<" fake="<<vFakeLeptons.size()<<std::endl;
+  //std::cout << "btag="<<vSelectedBTagJets.size()<<" nonbtag="<<vSelectedNonBTagJets.size()<<std::endl;
  
-  if (vSelectedLeptons.size()==3){
     //4j
     if (vSelectedBTagJets.size()>=2 && vSelectedNonBTagJets.size()>=2) catJets = kCat_3l_2b_2j;
     //3j
@@ -775,7 +777,8 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     else if (vSelectedBTagJets.size()==1 && vSelectedNonBTagJets.size()==1) catJets = kCat_3l_1b_1j;
     else if (vSelectedBTagJets.size()>=2 && vSelectedNonBTagJets.size()==0) catJets = kCat_3l_2b_0j;
     else catJets = -1;
-  }
+
+  //std::cout << "catJets="<<catJets<<std::endl;
  
   multilepton_Lepton1_P4 = vSelectedLeptons.at(0).p4();
   multilepton_Lepton1_Id = vSelectedLeptons.at(0).id();
