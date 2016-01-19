@@ -53,12 +53,15 @@ class TTbarHiggsTriggerAnalysis
    
    std::vector<TriggerObj> vSelectedTriggerObj_IsoMu20;
    std::vector<int>        vSelectedTriggerObj_IsoMu20_recoMatched;
+   
    std::vector<TriggerObj> vSelectedTriggerObj_Ele23;
    std::vector<int>        vSelectedTriggerObj_Ele23_recoMatched;
    
    std::vector<TriggerObj> vSelectedTriggerObj_Ele17Ele12Leg1;
    std::vector<TriggerObj> vSelectedTriggerObj_Ele17Ele12Leg2;
    
+   std::vector<TriggerObj> vSelectedTriggerObj_Mu17Mu8;
+   std::vector<TriggerObj> vSelectedTriggerObj_Mu17TkMu8;
   
  private:
 
@@ -74,6 +77,13 @@ class TTbarHiggsTriggerAnalysis
    float _lumi;
    int   _nowe; // number of weighted events
    int   _nmax; // max number of events to process
+   
+   float _n_Mu17_Mu8_noDz;
+   float _n_Mu17_Mu8;
+   float _n_Mu17_TkMu8_noDz;
+   float _n_Mu17_TkMu8; 
+   float _n_Ele17_Ele12_noDz; 
+   float _n_Ele17_Ele12;
      
 };
 
