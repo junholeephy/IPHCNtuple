@@ -154,12 +154,23 @@ bool TriggerObj::sel()
     
     std::size_t ok14 = _pathNamesAll.at(j).find("hltEle17Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter");
     std::size_t ok15 = _pathNamesAll.at(j).find("hltEle17Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter");
+    std::size_t ok16 = _pathNamesAll.at(j).find("hltL3fL1sDoubleMu103p5L1f0L2f10OneMuL3Filtered17");
+    std::size_t ok17 = _pathNamesAll.at(j).find("hltL3pfL1sDoubleMu103p5L1f0L2pf0L3PreFiltered8");
+    std::size_t ok18 = _pathNamesAll.at(j).find("hltL3fL1sDoubleMu103p5L1f0L2f10L3Filtered17");
+    std::size_t ok19 = _pathNamesAll.at(j).find("hltDiMuonGlbFiltered17TrkFiltered8");
+    std::size_t ok20 = _pathNamesAll.at(j).find("hltDiMuonGlb17Glb8RelTrkIsoFiltered0p4");
+    std::size_t ok21 = _pathNamesAll.at(j).find("hltDiMuonGlb17Trk8RelTrkIsoFiltered0p4");
+    
+    std::size_t ok22 = _pathNamesAll.at(j).find("HLT_Ele22_eta2p1_WPLoose_Gsf");
     
     //
     if ( ok1!=std::string::npos  || ok2!=std::string::npos  || ok3!=std::string::npos  || ok4!=std::string::npos  ||
          ok5!=std::string::npos  || ok6!=std::string::npos  || ok7!=std::string::npos  || ok8!=std::string::npos  ||
          ok9!=std::string::npos  || ok10!=std::string::npos || ok11!=std::string::npos || ok12!=std::string::npos ||
-	 ok13!=std::string::npos || ok14!=std::string::npos || ok15!=std::string::npos) 
+	 ok13!=std::string::npos || ok14!=std::string::npos || ok15!=std::string::npos || ok16!=std::string::npos ||
+	 ok17!=std::string::npos || ok18!=std::string::npos || ok19!=std::string::npos || ok20!=std::string::npos ||
+	 ok21!=std::string::npos || ok22!=std::string::npos
+	 ) 
     {
       isTrigger = true;
       break;
