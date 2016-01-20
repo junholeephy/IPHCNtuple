@@ -350,7 +350,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     //std::cout << "size jets: " << vSelectedNonBTagJets.size() << std::endl;
 
     TLorentzVector jetp4;
-    for(int i=0; i<vSelectedNonBTagJets.size(); i++)
+    for(int i=0; i<vSelectedJets.size(); i++)
     {
         jetp4.SetPtEtaPhiE(vSelectedJets.at(i).pt(), vSelectedJets.at(i).eta(), vSelectedJets.at(i).phi(), vSelectedJets.at(i).E());
         jet_px = jet_px + jetp4.Px();
@@ -371,9 +371,9 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
 
 
     if( met_ld                      > 0.2 )     theHistoManager->fillHisto("CutFlow",                 "PassingMETLD", "", _sampleName.Data(), 1, 1);
-    if( vSelectedNonBTagJets.size() >= 4  )     theHistoManager->fillHisto("CutFlow",                  "PassingJets", "", _sampleName.Data(), 1, 1);
+    if( vSelectedJets.size() >= 4  )     theHistoManager->fillHisto("CutFlow",                  "PassingJets", "", _sampleName.Data(), 1, 1);
 
-    if( met_ld < 0.2 && vSelectedNonBTagJets.size() < 4 ) return;
+    if( met_ld < 0.2 && vSelectedJets.size() < 4 ) return;
 
     theHistoManager->fillHisto("CutFlow",           "PassingMETLDorJets", "", _sampleName.Data(), 1, 1);
 
