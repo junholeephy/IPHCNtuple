@@ -8,7 +8,7 @@ echo "Don't forget to update the lumi and the maximum number of events to run on
 isdata=0
 lumi=2260
 
-cp /tmp/x509up_u6155 /home-pbs/lebihan/someone/proxy/.
+cp /tmp/x509up_u8148 /home-pbs/nchanon/proxy/.
 
 jName=${1}
 if [[ ${jName} == "" ]]; then
@@ -20,8 +20,8 @@ que="sbg_local"
 
 export HOME=$(pwd)
 
-dout="/home-pbs/lebihan/someone/ttH_070116/ttH/NtupleAnalyzer/test/"
-dout_f="/opt/sbg/scratch1/cms/lebihan/trees_Analyzer_akoula_patch1_15012016/"
+dout="/home-pbs/nchanon/CMSSW_7_4_12_patch4/src/IPHCNtuple/NtupleAnalyzer/test/"
+dout_f="/home-pbs/nchanon/CMSSW_7_4_12_patch4/src/IPHCNtuple/NtupleAnalyzer/test/"
 
 runName="toy_${jName}"
 logName="log_${jName}"
