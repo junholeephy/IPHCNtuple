@@ -76,7 +76,7 @@ do
   fi
   
   
-  fout=$(echo ${runName}/${dataset}/${line}_${jidx} | sed 's%.txt%%g')
+  fout=`echo ${runName}/${dataset}/${line}_${jidx} | sed 's%.txt%%g'`
   lout=$(echo ${line}_${jidx} | sed 's%.txt%%g')
 
   echo "${dataset}: $nowe $xsec $lumi"
