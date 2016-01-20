@@ -38,6 +38,7 @@ class Event : public Base
         int ev_trigger_pass()          {return _trigger_pass;};
         int ev_trigger_pass_byname()   {return _trigger_pass_byname;};
         int ev_trigger_pass_byname_1() {return _trigger_pass_byname_1;};
+        //int ev_trigger_pass_byname_1_noDz() {return _trigger_pass_byname_1_noDz;};
 
         int tth_channel()      {return _tth_channel;};
 
@@ -73,7 +74,7 @@ class Event : public Base
         int _trigger_pass;
         int _trigger_pass_byname;
         int _trigger_pass_byname_1;
-        int _trigger_pass_byname_1_noDz;
+        //int _trigger_pass_byname_1_noDz;
 
         float _disc_TT;
 
