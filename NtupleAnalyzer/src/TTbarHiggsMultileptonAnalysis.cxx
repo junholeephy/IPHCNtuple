@@ -186,19 +186,24 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         //if(jentry > 100000) break;
         nb = fChain->GetEntry(jentry);   nbytes += nb;
-
-        weight = _lumi*_xsec/_nowe;
-
-        mc_weight = vEvent->at(0).mc_weight();
-
-        //std::cout << weight <<" "<< _lumi <<" " << _xsec <<" " << _nowe << std::endl;
-
-
-        int pvn = vEvent->at(0).pv_n();
-        weight_PV = _h_PV->GetBinContent(pvn);
-
-        //
+        
+	//
+	int pvn = vEvent->at(0).pv_n();
         theHistoManager->fillHisto("NumberOfPrimaryVertex", "noSel", "", _sampleName.Data(),  pvn, 1);
+
+	
+	if ( !_isdata )
+	{
+          weight = _lumi*_xsec/_nowe;
+          mc_weight = vEvent->at(0).mc_weight();
+          weight_PV = _h_PV->GetBinContent(pvn); 
+	  }
+	else 
+	{
+	  weight    = 1.;
+          mc_weight = 1.;
+          weight_PV = 1.; 
+	  }
 
 
         //---------------------------
@@ -244,7 +249,6 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             {
                 vFakeMuons.push_back(vMuon->at(imuon));
                 vFakeLeptons.push_back(l);}	      
-
         }     
 
 
@@ -263,7 +267,6 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             {
                 vFakeElectrons.push_back(vElectron->at(ielectron));	     
                 vFakeLeptons.push_back(l);} 
-
         }  
 
 
