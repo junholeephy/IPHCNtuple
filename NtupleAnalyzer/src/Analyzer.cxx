@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     TChain *thetree = 0;
 
     //TTH MEM analysis
-    TTbarHiggsMultileptonAnalysis *TTHanalysis = new TTbarHiggsMultileptonAnalysis(fname,thetree,"TTbarHiggs",stream,outfile,isdata,xsec,lumi,nowe,nmax);
+    TTbarHiggsMultileptonAnalysis *TTHanalysis = new TTbarHiggsMultileptonAnalysis(fname,thetree,"",stream,outfile,isdata,xsec,lumi,nowe,nmax);
     // TTHanalysis->InitLHCO(1,1); // to print LHCO files
     TTHanalysis->createHistograms();
     TTHanalysis->Loop();
