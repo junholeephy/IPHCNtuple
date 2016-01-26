@@ -517,9 +517,9 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
     bool pass_OSSF = false;
     if (nLep) 
     { 
-        if (   ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(1).id() ) && ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188 < 10 ) )
-                || ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(2).id() ) && ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188 < 10 ) )
-                || ( ( vSelectedLeptons.at(1).id() == -vSelectedLeptons.at(2).id() ) && ( ( vSelectedLeptons.at(1).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188 < 10 ) ) )
+        if (   ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(1).id() ) && fabs( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188 )< 10  )
+            || ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(2).id() ) && fabs( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188 )< 10  )
+            || ( ( vSelectedLeptons.at(1).id() == -vSelectedLeptons.at(2).id() ) && fabs( ( vSelectedLeptons.at(1).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188 )< 10  ) )
         { pass_OSSF = true ;}
     }
 
@@ -586,7 +586,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     bool pass_OSSF = false;
     if (nLep)
     {
-        if ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(1).id() ) && ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188 < 10 ) )
+        if ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(1).id() ) && fabs( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188) < 10  )
         {
             Delta = fabs( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188 < 10 );
             M12   = ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M();
@@ -594,7 +594,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
             ZM    = M12;
             Zpt   = ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).Pt();
         }
-        if ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(2).id() ) && ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188 < Delta ) )
+        if ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(2).id() ) && fabs( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188) < Delta )
         {
             Delta = fabs( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188 < 10 );
             M13   = ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(2).p4() ).M();
@@ -602,7 +602,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
             ZM    = M13;
             Zpt   = ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(2).p4() ).Pt();
         }
-        if ( ( vSelectedLeptons.at(1).id() == -vSelectedLeptons.at(2).id() ) && ( ( vSelectedLeptons.at(1).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188 < Delta ) )
+        if ( ( vSelectedLeptons.at(1).id() == -vSelectedLeptons.at(2).id() ) && fabs( ( vSelectedLeptons.at(1).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188 ) < Delta )
         {
             Delta = fabs( ( vSelectedLeptons.at(1).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188 < 10 );
             M23   = ( vSelectedLeptons.at(1).p4() + vSelectedLeptons.at(2).p4() ).M();
@@ -677,7 +677,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_Zl(int evt)
     float MZ = -1.;
 
     bool pass_OSSF = false;
-    if (nLep && vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(1).id() &&  ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188 ) < 10  )
+    if (nLep && vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(1).id() &&  fabs( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188 ) < 10  )
     {
         MZ = ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M();
         pass_OSSF = true;
@@ -724,7 +724,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_TTl(int evt)
     bool pass_OSOF = false;
     if ( nLep && vSelectedLeptons.at(0).charge() == -vSelectedLeptons.at(1).charge() && 
             fabs(vSelectedLeptons.at(0).id()) != fabs(vSelectedLeptons.at(1).id()) &&  
-            ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188 ) > 15  )
+            fabs( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188 ) > 15  )
     {
         Mll = ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M();
         pass_OSOF = true;
@@ -815,9 +815,9 @@ bool TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l_MC()
 
             if ( !(( Lep1+Lep2 ).M()  > 12 && ( Lep1+Lep3 ).M()  > 12 && ( Lep2+Lep3 ).M()  > 12 )) sel_MC = false;
 
-            if ( (SFOSpair == 0 && ( (Lep1+Lep2 ).M()-91.188 ) < 10. ) || 
-                    (SFOSpair == 1 && ( (Lep2+Lep3 ).M()-91.188 ) < 10. ) ||  
-                    (SFOSpair == 2 && ( (Lep1+Lep3 ).M()-91.188 ) < 10. )    ) sel_MC = false;
+            if ( (SFOSpair == 0 && fabs( (Lep1+Lep2 ).M()-91.188 ) < 10. ) || 
+                 (SFOSpair == 1 && fabs( (Lep2+Lep3 ).M()-91.188 ) < 10. ) ||  
+                 (SFOSpair == 2 && fabs( (Lep1+Lep3 ).M()-91.188 ) < 10. )    ) sel_MC = false;
 
             return sel_MC;
 
