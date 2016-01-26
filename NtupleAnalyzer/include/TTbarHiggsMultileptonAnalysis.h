@@ -24,8 +24,8 @@ class TTbarHiggsMultileptonAnalysis
 
  public:
    TTbarHiggsMultileptonAnalysis();
-   TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString theSampleName, TString treeName,
-                                 TString outputPath, bool isdata, float xsec, float lumi, int nowe, int nmax);
+   TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString sampleName, TString treeName,
+                                 TString outputFileName, bool isdata, float xsec, float lumi, int nowe, int nmax);
 
    ~TTbarHiggsMultileptonAnalysis();
 
@@ -110,7 +110,7 @@ class TTbarHiggsMultileptonAnalysis
    TFile * outputfile;
 
    TString _sampleName;
-   TString _outputFile;
+   TString _outputFileName;
 
    bool _isdata;
    float _xsec;
