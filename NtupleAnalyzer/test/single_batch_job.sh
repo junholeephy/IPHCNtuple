@@ -22,8 +22,9 @@ dout=${dout}
 dout_f=${dout_f}
 sample=${sample}
 lumi=${lumi}
+dataset=${dataset}
 
 
 
-echo "Executing .././NtupleAnalyzer --file ${line2} --outfile ${dout}${fout} --isdata ${isdata} --nowe ${nowe} --xsec ${xsec} --lumi ${lumi} --nmax ${nmax}"
-${dout}/../Analyzer --file ${line2} --outfile ${dout}${fout} --isdata ${isdata} --nowe ${nowe} --xsec ${xsec} --lumi ${lumi} --nmax ${nmax} --tree Nt
+echo "Executing .././NtupleAnalyzer --file ${line2} --outfile ${dout}${fout} --isdata ${isdata} --nowe ${nowe} --xsec ${xsec} --lumi ${lumi} --nmax ${nmax} --dataset ${dataset}"
+${dout}/../Analyzer --file ${line2} --outfile ${dout}${fout} --isdata ${isdata} --nowe ${nowe} --xsec ${xsec} --lumi ${lumi} --nmax ${nmax} --tree Nt --dataset ${dataset}
