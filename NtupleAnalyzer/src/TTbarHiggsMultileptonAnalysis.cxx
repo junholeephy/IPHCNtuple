@@ -200,10 +200,64 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 	  }
 	else 
 	{
-	  weight    = 1.;
-          mc_weight = 1.;
-          weight_PV = 1.; 
-	  }
+	    weight    = 1.;
+        mc_weight = 1.;
+        weight_PV = 1.; 
+
+        int tab[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        int a = vEvent->at(0).ev_trigger_pass_byname_1();
+        int n = 0, size = 0;
+
+        do{
+            n = a%10;
+            a = a/10;
+            tab[size] = n;
+            size = size + 1;
+        }while(a!=0);
+
+        bool E = false, M = false, EE = false, MM = false, EM = false;
+        int result_trigger = 0;
+        if (size > 2) {if ( tab[3] == 1                ) E  = true;}
+        if (size > 1) {if ( tab[2] == 1 || tab[2] == 2 ) M  = true;}
+        if (size > 0) {if ( tab[1] == 1                ) EE = true;}
+        if (size > 1) {if ( tab[1] == 2 || tab[1] == 5 ) MM = true;}
+        if ( tab[0] == 2 || tab[0] == 5 )                EM = true;
+
+        bool emdataset = _sampleName.Contains("MuonEG");
+        bool mmdataset = _sampleName.Contains("DoubleMuon");
+        bool eedataset = _sampleName.Contains("DoubleEG");
+        bool mdataset  = _sampleName.Contains("SingleMuon");
+        bool edataset  = _sampleName.Contains("SingleEG");
+
+        if ( EM  &&                               (emdataset) ) result_trigger = 1;
+        if ( !EM && MM  &&                        (mmdataset) ) result_trigger = 1;
+        if ( !EM && !MM && EE  &&                 (eedataset) ) result_trigger = 1;
+        if ( !EM && !MM && !EE && M  &&           (mdataset ) ) result_trigger = 1;
+        if ( !EM && !MM && !EE && !M && E &&      (edataset ) ) result_trigger = 1;
+
+        if(result_trigger == 1)
+        {
+            weight = 1;
+            std::cout << " EM: " << EM 
+                      << " MM: " << MM 
+                      << " EE: " << EE
+                      << " M:  " << M
+                      << " E:  " << E                    << std::endl;
+            std::cout << " sampleName: " << _sampleName   << std::endl;
+            std::cout << " weight:     " << weight       << std::endl; 
+        }
+        else
+        {
+            weight = 0;
+            std::cout << " EM: " << EM 
+                      << " MM: " << MM  
+                      << " EE: " << EE
+                      << " M:  " << M
+                      << " E:  " << E                    << std::endl;
+            std::cout << " sampleName: " << _sampleName   << std::endl;
+            std::cout << " weight:     " << weight       << std::endl;  
+         }
+	}
 
 
         //---------------------------
@@ -387,12 +441,12 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     bool pass_OSSF = true;
     if (nLep) 
     { 
-        if ( ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(1).id() ) && ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188 < 10 ) )
-                || ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(2).id() ) && ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188 < 10 ) )
-                || ( ( vSelectedLeptons.at(1).id() == -vSelectedLeptons.at(2).id() ) && ( ( vSelectedLeptons.at(1).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188 < 10 ) ) )
+        if (    ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(1).id() ) &&  fabs(( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188) < 10  )
+             || ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(2).id() ) &&  fabs(( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188) < 10  )
+             || ( ( vSelectedLeptons.at(1).id() == -vSelectedLeptons.at(2).id() ) &&  fabs(( vSelectedLeptons.at(1).p4() + vSelectedLeptons.at(2).p4() ).M() - 91.188) < 10  ) )
         { pass_OSSF = false ;}
     }
-    
+  
     if(!pass_OSSF) return;
     theHistoManager->fillHisto("CutFlow",                 "PassingZVeto", "", "", 1, 1);
 
