@@ -83,7 +83,7 @@ do
   #echo "${fpath}${line}"
  
   qsub -N ${dir} -q ${que} -o ${logName}/${sample}.log -j oe single_batch_job.sh \
--v dout=${dout},line2=${fpath}${line},dout_f=$dout_f$,fout=${fout},nowe=${nowe},xsec=${xsec},lumi=${lumi},isdata=${isdata},sample=${sample},nmax=${nmax}
+-v dout=${dout},line2=${fpath}${line},dout_f=$dout_f$,fout=${fout},nowe=${nowe},xsec=${xsec},lumi=${lumi},isdata=${isdata},dataset=${dataset},nmax=${nmax}
 done
 
 echo "going to sleep 2700 s (45 mn)"
