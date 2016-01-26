@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
         std::cout << "--xsec: cross section (pb)"    	 << std::endl;
         std::cout << "--lumi: luminosity in (pb-1)"  	 << std::endl;
         std::cout << "--isdata: is data or not"      	 << std::endl;
+        std::cout << "--dataset: dataset name"      	 << std::endl;
         exit(1);
     }
 
@@ -31,7 +32,8 @@ int main(int argc, char *argv[])
     float xsec = -1.;
     bool isdata = 0;
     const char *outfile_str = "./";
-
+    const char *dataset_str = "";
+ 
     for(int i=0;i<argc;i++)
     {
         if( ! strcmp(argv[i],"--file") )    fname_str  = argv[i+1];
@@ -42,11 +44,13 @@ int main(int argc, char *argv[])
         if( ! strcmp(argv[i],"--lumi") )    lumi = atoi(argv[i+1]);
         if( ! strcmp(argv[i],"--xsec") )    xsec = atof(argv[i+1]);
         if( ! strcmp(argv[i],"--isdata") )  isdata = (bool) atoi(argv[i+1]);
+	if( ! strcmp(argv[i],"--dataset") ) dataset_str = argv[i+1];
     }
 
     const char *fname = fname_str;                                                                                         
     const char *stream = stream_str;                                                                                        
     const char *outfile = outfile_str;                                                                                        
+    const char *dataset = dataset_str;                                                                                        
 
     std::cout << "--file=" << fname  << std::endl;                                                                          
     std::cout << "--tree=" << stream << std::endl;                                                                          
@@ -56,11 +60,12 @@ int main(int argc, char *argv[])
     std::cout << "--lumi=" << lumi   << std::endl;
     std::cout << "--outfile=" << outfile << std::endl;
     std::cout << "--isdata="  << isdata  << std::endl;
+    std::cout << "--dataset=" << dataset  << std::endl;
 
     TChain *thetree = 0;
 
     //TTH MEM analysis
-    TTbarHiggsMultileptonAnalysis *TTHanalysis = new TTbarHiggsMultileptonAnalysis(fname,thetree,"",stream,outfile,isdata,xsec,lumi,nowe,nmax);
+    TTbarHiggsMultileptonAnalysis *TTHanalysis = new TTbarHiggsMultileptonAnalysis(fname,thetree,dataset,stream,outfile,isdata,xsec,lumi,nowe,nmax);
     // TTHanalysis->InitLHCO(1,1); // to print LHCO files
     TTHanalysis->createHistograms();
     TTHanalysis->Loop();
