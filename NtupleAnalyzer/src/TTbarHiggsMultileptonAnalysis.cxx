@@ -91,67 +91,75 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     initializeOutputTree();
 
     // General
-    theHistoManager->addHisto("CutFlow",                        "noSel", "", _sampleName.Data(), 10, 0, 10);
+    theHistoManager->addHisto("CutFlow",                           "noSel",        "",   "",  10,   0,     10);
 
     // Preselection variables
 
-    theHistoManager->addHisto("MuonPt",                         "noSel", "", _sampleName.Data(), 100, 0, 200);
-    theHistoManager->addHisto("MuonEta",                        "noSel", "", _sampleName.Data(), 100, -3, 3);
-
-    theHistoManager->addHisto("ElectronPt",                     "noSel", "", _sampleName.Data(), 100, 0, 200);
-    theHistoManager->addHisto("ElectronEta",                    "noSel", "", _sampleName.Data(), 100, -3, 3);
-
-    theHistoManager->addHisto("JetPt",                          "noSel", "", _sampleName.Data(), 100, 0, 200);
-    theHistoManager->addHisto("JetEta",                         "noSel", "", _sampleName.Data(), 100, -3, 3);
+    theHistoManager->addHisto("MuonPt",                            "noSel",        "",   "",  100,   0,   200);
+    theHistoManager->addHisto("MuonEta",                           "noSel",        "",   "",  100,  -3,     3);
+    theHistoManager->addHisto("MuonMVA",                           "noSel",        "",   "",   40,   0,     1);
+    theHistoManager->addHisto("ElectronPt",                        "noSel",        "",   "",  100,   0,   200);
+    theHistoManager->addHisto("ElectronEta",                       "noSel",        "",   "",  100,  -3,     3);
+    theHistoManager->addHisto("ElectronMVA",                       "noSel",        "",   "",   40,   0,     1);
+    theHistoManager->addHisto("TauPt",                             "noSel",        "",   "",  100,   0,   200);
+    theHistoManager->addHisto("TauEta",                            "noSel",        "",   "",  100,  -3,     3);
+    theHistoManager->addHisto("JetPt",                             "noSel",        "",   "",  100,   0,   200);
+    theHistoManager->addHisto("JetEta",                            "noSel",        "",   "",  100,  -3,     3);
+    theHistoManager->addHisto("JetCSVv2",                          "noSel",        "",   "",   20,   0,     1);
+    theHistoManager->addHisto("MET",                               "noSel",        "",   "",  100,   0,   200);
 
     // Signal Region Three Leptons
 
-    theHistoManager->addHisto("CutFlow",                "FullThreeLeptons",   "ttH3l", _sampleName.Data(),   8,  -1,     7);
+    theHistoManager->addHisto("CutFlow",                "FullThreeLeptons",   "ttH3l",   "",   10,   -1,    9);
 
-    theHistoManager->addHisto("LeadingLeptonPt",        "FullThreeLeptons",   "ttH3l", _sampleName.Data(),   20,  0,     200);
-    theHistoManager->addHisto("SubLeadingLeptonPt",     "FullThreeLeptons",   "ttH3l", _sampleName.Data(),   20,  0,     200);
-    theHistoManager->addHisto("ThirdLeptonPt",          "FullThreeLeptons",   "ttH3l", _sampleName.Data(),   20,  0,     200);
-    theHistoManager->addHisto("MetLD",                  "FullThreeLeptons",   "ttH3l", _sampleName.Data(),   15,  -0.2,   1.4);
-    theHistoManager->addHisto("JetMultiplicity",        "FullThreeLeptons",   "ttH3l", _sampleName.Data(),   10,  -1,     9);
+    theHistoManager->addHisto("LeadingLeptonPt",                "FinalCut",   "ttH3l",   "",   20,    0,  200);
+    theHistoManager->addHisto("SubLeadingLeptonPt",             "FinalCut",   "ttH3l",   "",   20,    0,  200);
+    theHistoManager->addHisto("ThirdLeptonPt",                  "FinalCut",   "ttH3l",   "",   20,    0,  200);
+    theHistoManager->addHisto("MetLD",                          "FinalCut",   "ttH3l",   "",   15, -0.2,  1.4);
+    theHistoManager->addHisto("JetMultiplicity",                "FinalCut",   "ttH3l",   "",   10,   -1,    9);
 
     // cut 1: / cut 2: / cut 3: ...
 
     // WZ variables
 
-    theHistoManager->addHisto("CutFlow",                           "noSel", "WZZZ_CR", _sampleName.Data(),   8,  -1,     7);
-    theHistoManager->addHisto("CutFlow",                "ThreePreselected", "WZZZ_CR", _sampleName.Data(),   3,  -1,     2);
-    theHistoManager->addHisto("CutFlow",                 "PassingTightMVA", "WZZZ_CR", _sampleName.Data(),   3,  -1,     2);
-    theHistoManager->addHisto("CutFlow",                        "PassingZ", "WZZZ_CR", _sampleName.Data(),   3,  -1,     2);
-    theHistoManager->addHisto("CutFlow",                    "PassingMETLD", "WZZZ_CR", _sampleName.Data(),   3,  -1,     2);
-    theHistoManager->addHisto("CutFlow",                     "PassingJets", "WZZZ_CR", _sampleName.Data(),   3,  -1,     2);
-    theHistoManager->addHisto("CutFlow",              "PassingMETLDorJets", "WZZZ_CR", _sampleName.Data(),   3,  -1,     2);
-    theHistoManager->addHisto("CutFlow",                "PassingbJetsVeto", "WZZZ_CR", _sampleName.Data(),   3,  -1,     2);
+    theHistoManager->addHisto("CutFlow",                           "noSel", "WZZZ_CR",   "",   10,   -1,    9);
+    theHistoManager->addHisto("CutFlow",                "ThreePreselected", "WZZZ_CR",   "",    3,   -1,    2);
+    theHistoManager->addHisto("CutFlow",                 "PassingTightMVA", "WZZZ_CR",   "",    3,   -1,    2);
+    theHistoManager->addHisto("CutFlow",                        "PassingZ", "WZZZ_CR",   "",    3,   -1,    2);
+    theHistoManager->addHisto("CutFlow",                    "PassingMETLD", "WZZZ_CR",   "",    3,   -1,    2);
+    theHistoManager->addHisto("CutFlow",                     "PassingJets", "WZZZ_CR",   "",    3,   -1,    2);
+    theHistoManager->addHisto("CutFlow",              "PassingMETLDorJets", "WZZZ_CR",   "",    3,   -1,    2);
+    theHistoManager->addHisto("CutFlow",                "PassingbJetsVeto", "WZZZ_CR",   "",    3,   -1,    2);
 
-    theHistoManager->addHisto("ZCandidateInvariantMass",        "FinalCut", "WZZZ_CR", _sampleName.Data(),  15,   60,   120);
-    theHistoManager->addHisto("ZCandidateTransverseMomentum",   "FinalCut", "WZZZ_CR", _sampleName.Data(),  12,    0,   500);
-    theHistoManager->addHisto("MET",                            "FinalCut", "WZZZ_CR", _sampleName.Data(),  20,    0,   200);
-    theHistoManager->addHisto("MHT",                            "FinalCut", "WZZZ_CR", _sampleName.Data(),  20,    0,   200);
-    theHistoManager->addHisto("MetLD",                          "FinalCut", "WZZZ_CR", _sampleName.Data(),  15, -0.2,   1.4);
-    theHistoManager->addHisto("JetMultiplicity",                "FinalCut", "WZZZ_CR", _sampleName.Data(),   8,    0,     8);
+    theHistoManager->addHisto("ZCandidateInvariantMass",        "FinalCut", "WZZZ_CR",   "",  15,   60,   120);
+    theHistoManager->addHisto("ZCandidateTransverseMomentum",   "FinalCut", "WZZZ_CR",   "",  12,    0,   500);
+    theHistoManager->addHisto("MET",                            "FinalCut", "WZZZ_CR",   "",  20,    0,   200);
+    theHistoManager->addHisto("MHT",                            "FinalCut", "WZZZ_CR",   "",  20,    0,   200);
+    theHistoManager->addHisto("MetLD",                          "FinalCut", "WZZZ_CR",   "",  15, -0.2,   1.4);
+    theHistoManager->addHisto("JetMultiplicity",                "FinalCut", "WZZZ_CR",   "",   8,    0,     8);
 
-    theHistoManager->addHisto("InvariantMassOfSelectedLeptons", "FinalCut", "WZZZ_CR", _sampleName.Data(),  30,    0,   600);
-    theHistoManager->addHisto("SumOfSelectedLeptonsCharges",    "FinalCut", "WZZZ_CR", _sampleName.Data(),  10,   -5,     5);
-    theHistoManager->addHisto("SumVecPtSelectedLeptons",        "FinalCut", "WZZZ_CR", _sampleName.Data(),  25,    0,   500);
+    theHistoManager->addHisto("InvariantMassOfSelectedLeptons", "FinalCut", "WZZZ_CR",   "",  30,    0,   600);
+    theHistoManager->addHisto("SumOfSelectedLeptonsCharges",    "FinalCut", "WZZZ_CR",   "",  10,   -5,     5);
+    theHistoManager->addHisto("SumVecPtSelectedLeptons",        "FinalCut", "WZZZ_CR",   "",  25,    0,   500);
 
-    theHistoManager->addHisto("InvMassRemainingLepton",         "FinalCut", "WZZZ_CR", _sampleName.Data(),  15,    0,   300);
-    theHistoManager->addHisto("SumOfRemainingLeptonsCharges",   "FinalCut", "WZZZ_CR", _sampleName.Data(),  10,   -5,     5);
-    theHistoManager->addHisto("SumVecPtRemainingLeptons",       "FinalCut", "WZZZ_CR", _sampleName.Data(),  25,    0,   500);
+    theHistoManager->addHisto("InvMassRemainingLepton",         "FinalCut", "WZZZ_CR",   "",  15,    0,   300);
+    theHistoManager->addHisto("SumOfRemainingLeptonsCharges",   "FinalCut", "WZZZ_CR",   "",  10,   -5,     5);
+    theHistoManager->addHisto("SumVecPtRemainingLeptons",       "FinalCut", "WZZZ_CR",   "",  25,    0,   500);
 
 
     // PU reweighting
-    // theHistoManager->addHisto("NumberOfPrimaryVertex",          "noSel", "", "", 100, 0, 99);
+    theHistoManager->addHisto("NumberOfPrimaryVertex",             "noSel",        "",   "", 100,    0,    99);
 
     // 2D histo
 
-    theHistoManager->addHisto2D("SelectedLeptonsVsJets",        "noSel", "emu", _sampleName.Data(), 8, 0, 7, 8, 0, 7);
-    theHistoManager->addHisto2D("InvMassLastLeptonVSZMass",     "WZ_CR", "emu", _sampleName.Data(), 15, 0, 300, 15, 60, 120);
-    theHistoManager->addHisto2D("SumPtLepVSZMass",              "ZZ_CR", "emu", _sampleName.Data(), 25, 0, 500, 15, 60, 120);
+    theHistoManager->addHisto2D("SelectedLeptonsVsJets",           "noSel",   "ttH3l",   "",    8,    0,    7,    8,    0,    7);
+    theHistoManager->addHisto2D("SelectedLeptonsVsBJets",          "noSel",   "ttH3l",   "",    8,    0,    7,    8,    0,    7);
+    theHistoManager->addHisto2D("SelectedLeptonsVsJets",           "noSel", "WZZZ_CR",   "",    8,    0,    7,    8,    0,    7);
+    theHistoManager->addHisto2D("SelectedLeptonsVsBJets",          "noSel", "WZZZ_CR",   "",    8,    0,    7,    8,    0,    7);
 
+    theHistoManager->addHisto2D("InvMassLastLeptonVSZMass",     "FinalCut", "WZZZ_CR",   "",   15,    0,  300,   15,   60,  120);
+    theHistoManager->addHisto2D("SumPtLepVSZMass",              "FinalCut", "WZZZ_CR",   "",   25,    0,  500,   15,   60,  120);
+    theHistoManager->addHisto2D("METLDVSZMass",                 "FinalCut", "WZZZ_CR",   "",  15, -0.2,  1.4,   15,   60,  120);
 }
 
 
@@ -334,6 +342,10 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                 vFakeMuons.push_back(vMuon->at(imuon));
                 vFakeLeptons.push_back(l);
             }
+                
+            theHistoManager->fillHisto("MuonPt",                            "noSel",        "",   "",  vMuon->at(imuon).pt(),             weight);
+            theHistoManager->fillHisto("MuonEta",                           "noSel",        "",   "",  vMuon->at(imuon).eta(),            weight);
+            theHistoManager->fillHisto("MuonMVA",                           "noSel",        "",   "",  vMuon->at(imuon).lepMVA(),         weight);
         }     
 
 
@@ -354,6 +366,10 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                 vFakeElectrons.push_back(vElectron->at(ielectron));	     
                 vFakeLeptons.push_back(l);
             }
+
+            theHistoManager->fillHisto("ElectronPt",                        "noSel",        "",   "",  vElectron->at(ielectron).pt(),     weight);
+            theHistoManager->fillHisto("ElectronEta",                       "noSel",        "",   "",  vElectron->at(ielectron).eta(),    weight);
+            theHistoManager->fillHisto("ElectronMVA",                       "noSel",        "",   "",  vElectron->at(ielectron).lepMVA(), weight);
         }  
 
 
@@ -374,7 +390,13 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             if(vJet->at(ijet).CSVv2() >= 0.814 ) vSelectedMediumBTagJets.push_back(vJet->at(ijet));
 
             vSelectedJets.push_back(vJet->at(ijet));
+
+            theHistoManager->fillHisto("JetPt",                             "noSel",        "",   "",  vJet->at(ijet).pt(),               weight);
+            theHistoManager->fillHisto("JetEta",                            "noSel",        "",   "",  vJet->at(ijet).eta(),              weight);
+            theHistoManager->fillHisto("JetCSVv2",                          "noSel",        "",   "",  vJet->at(ijet).CSVv2(),            weight);
         }
+
+        theHistoManager->fillHisto("MET",                               "noSel",        "",   "",  vEvent->at(0).metpt(),            weight );
 
         theHistoManager->fillHisto("CutFlow",                        "noSel", "", "", 1, 1);
         
@@ -408,6 +430,12 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
 void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
 {
+
+    theHistoManager->fillHisto2D("SelectedLeptonsVsJets",           "noSel",   "ttH3l",   "",    vSelectedLeptons.size(),   vSelectedJets.size(),      weight);
+    theHistoManager->fillHisto2D("SelectedLeptonsVsBJets",          "noSel",   "ttH3l",   "",    vSelectedLeptons.size(),   vSelectedBTagJets.size(),  weight);
+
+    if(weight==0)         return; // For data not passing the relevant trigger, clean up the histograms from events with weight 0)
+
     // ####################
     // # Common selection #
     // ####################
@@ -442,7 +470,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     bool third_lep_pt     = ( vSelectedLeptons.at(2).pt()               > 10 );
     if(!third_lep_pt)     return;
 
-    theHistoManager->fillHisto("CutFlow",               "FullThreeLeptons",    "ttH3l", "",                  1, weight);
+    theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH3l",   "",    1, weight);
 
     passMll12Gt12  = ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(2).p4() ).M()  > 12
                     && ( vSelectedLeptons.at(1).p4() + vSelectedLeptons.at(2).p4() ).M()  > 12 );
@@ -465,7 +493,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     }
     if(!pass_Zveto)       return;
     
-    theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH3l", _sampleName.Data(),   2, weight);
+    theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH3l",   "",   2, weight);
 
     // ##########
     // # MET LD #
@@ -496,7 +524,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
 
 
     if( met_ld < 0.2 && vSelectedJets.size() < 4 ) return;
-    theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH3l", _sampleName.Data(),   5, weight);
+    theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH3l",   "",   5, weight);
 
     // ########
     // # SFOS #
@@ -513,18 +541,18 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
         }
     }
     
-    if( met_ld               > 0.3 ) theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH3l", _sampleName.Data(),   6, weight);
-    if( passSFOS                   ) theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH3l", _sampleName.Data(),   7, weight);
+    if( met_ld               > 0.3 ) theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH3l",   "",   6, weight);
+    if( passSFOS                   ) theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH3l",   "",   7, weight);
 
     if(met_ld < 0.3 && !passSFOS) return; 
 
-    theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH3l", _sampleName.Data(),   8, weight);
+    theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH3l",   "",   8, weight);
 
-    theHistoManager->fillHisto("LeadingLeptonPt",        "FullThreeLeptons",   "ttH3l", _sampleName.Data(), vSelectedLeptons.at(0).pt()  , weight);
-    theHistoManager->fillHisto("SubLeadingLeptonPt",     "FullThreeLeptons",   "ttH3l", _sampleName.Data(), vSelectedLeptons.at(1).pt()  , weight);
-    theHistoManager->fillHisto("ThirdLeptonPt",          "FullThreeLeptons",   "ttH3l", _sampleName.Data(), vSelectedLeptons.at(2).pt()  , weight);
-    theHistoManager->fillHisto("MetLD",                  "FullThreeLeptons",   "ttH3l", _sampleName.Data(), met_ld                       , weight);
-    theHistoManager->fillHisto("JetMultiplicity",        "FullThreeLeptons",   "ttH3l", _sampleName.Data(), vSelectedJets.size()         , weight);
+    theHistoManager->fillHisto("LeadingLeptonPt",        "FullThreeLeptons",   "ttH3l",   "", vSelectedLeptons.at(0).pt()  , weight);
+    theHistoManager->fillHisto("SubLeadingLeptonPt",     "FullThreeLeptons",   "ttH3l",   "", vSelectedLeptons.at(1).pt()  , weight);
+    theHistoManager->fillHisto("ThirdLeptonPt",          "FullThreeLeptons",   "ttH3l",   "", vSelectedLeptons.at(2).pt()  , weight);
+    theHistoManager->fillHisto("MetLD",                  "FullThreeLeptons",   "ttH3l",   "", met_ld                       , weight);
+    theHistoManager->fillHisto("JetMultiplicity",        "FullThreeLeptons",   "ttH3l",   "", vSelectedJets.size()         , weight);
 
     is_TTH3l = true;   
 
@@ -571,16 +599,6 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
 
     bool nLooseBtag  = ( nLooseBJets  >= 2 );
 
-
-    /*   std::cout << "nLep: "              << nLep 
-         << " nJets: "            << nJets 
-         << " pass_OSSF: "        << pass_OSSF 
-         << " leading_lep_pt: "   << leading_lep_pt 
-         << " following_lep_pt: " << following_lep_pt
-         << " passMll12Gt12: "    << passMll12Gt12 
-         << " nLooseBtag: "       << nLooseBtag  << std::endl; */
-
-
     //bool passCharge = true;
     //if (vSelectedLeptons.size()>=3 && vSelectedLeptons.at(0).charge()==vSelectedLeptons.at(1).charge() && vSelectedLeptons.at(1).charge()==vSelectedLeptons.at(2).charge() ) passCharge = false;
 
@@ -595,6 +613,12 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
 
 void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_diboson(int evt)
 {
+
+    theHistoManager->fillHisto2D("SelectedLeptonsVsJets",           "noSel", "WZZZ_CR",   "",    vSelectedLeptons.size(),   vSelectedJets.size(),      weight);
+    theHistoManager->fillHisto2D("SelectedLeptonsVsBJets",          "noSel", "WZZZ_CR",   "",    vSelectedLeptons.size(),   vSelectedBTagJets.size(),  weight);
+
+    if(weight==0)         return; // For data not passing the relevant trigger, clean up the histograms from events with weight 0)
+
     // ####################
     // # Common selection #
     // ####################
@@ -628,8 +652,8 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_diboson(int evt)
                     && ( vSelectedLeptons.at(1).p4() + vSelectedLeptons.at(2).p4() ).M()  > 12 );
     if(!passMll12Gt12)    return;
 
-    theHistoManager->fillHisto("CutFlow",                           "noSel", "WZZZ_CR", _sampleName.Data(),   2, weight);
-    theHistoManager->fillHisto("CutFlow",                 "PassingTightMVA", "WZZZ_CR", _sampleName.Data(),   1, weight);
+    theHistoManager->fillHisto("CutFlow",                           "noSel", "WZZZ_CR",   "",   2, weight);
+    theHistoManager->fillHisto("CutFlow",                 "PassingTightMVA", "WZZZ_CR",   "",   1, weight);
 
     // ##########
     // # Z peak #
@@ -657,8 +681,8 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_diboson(int evt)
     }
     if(!pass_Zpeak)       return;
     
-    theHistoManager->fillHisto("CutFlow",                           "noSel", "WZZZ_CR", _sampleName.Data(),   3, weight);
-    theHistoManager->fillHisto("CutFlow",                        "PassingZ", "WZZZ_CR", _sampleName.Data(),   1, weight);
+    theHistoManager->fillHisto("CutFlow",                           "noSel", "WZZZ_CR",   "",   3, weight);
+    theHistoManager->fillHisto("CutFlow",                        "PassingZ", "WZZZ_CR",   "",   1, weight);
 
     // ##########
     // # MET LD #
@@ -684,11 +708,11 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_diboson(int evt)
 
     met_ld = 0.00397 * vEvent->at(0).metpt() + 0.00265 * MHT;
 
-    if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                    "PassingMETLD", "WZZZ_CR", _sampleName.Data(),   1, weight);
-    if( vSelectedJets.size() >= 4  )  theHistoManager->fillHisto("CutFlow",                     "PassingJets", "WZZZ_CR", _sampleName.Data(),   1, weight); 
+    if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                    "PassingMETLD", "WZZZ_CR",   "",   1, weight);
+    if( vSelectedJets.size() >= 4  )  theHistoManager->fillHisto("CutFlow",                     "PassingJets", "WZZZ_CR",   "",   1, weight); 
 
     if( met_ld < 0.2 && vSelectedJets.size() < 4 ) return;
-    theHistoManager->fillHisto("CutFlow",              "PassingMETLDorJets", "WZZZ_CR", _sampleName.Data(),   1, weight);
+    theHistoManager->fillHisto("CutFlow",              "PassingMETLDorJets", "WZZZ_CR",   "",   1, weight);
 
     // ########
     // # SFOS #
@@ -715,7 +739,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_diboson(int evt)
     bool nMediumBtag      = ( nMediumBJets                              == 0 );
     if(!nLooseBtag || !nMediumBtag)      return;
 
-    theHistoManager->fillHisto("CutFlow",                "PassingbJetsVeto", "WZZZ_CR", _sampleName.Data(),   1, weight);
+    theHistoManager->fillHisto("CutFlow",                "PassingbJetsVeto", "WZZZ_CR",   "",   1, weight);
 
     // Building arbitrary variables with all leptons...
 
@@ -759,20 +783,24 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_diboson(int evt)
     rem_lep_invmass = rem_lep_invmass_p4.M();
     rem_lep_sumofpt = sqrt( (rem_lep_px*rem_lep_px) + (rem_lep_py*rem_lep_py) );
 
-    theHistoManager->fillHisto("ZCandidateInvariantMass",        "FinalCut", "WZZZ_CR", _sampleName.Data(), ZM                    , weight);
-    theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "FinalCut", "WZZZ_CR", _sampleName.Data(), Zpt                   , weight);
-    theHistoManager->fillHisto("MET",                            "FinalCut", "WZZZ_CR", _sampleName.Data(), vEvent->at(0).metpt() , weight);
-    theHistoManager->fillHisto("MHT",                            "FinalCut", "WZZZ_CR", _sampleName.Data(), MHT                   , weight);
-    theHistoManager->fillHisto("MetLD",                          "FinalCut", "WZZZ_CR", _sampleName.Data(), met_ld                , weight);
-    theHistoManager->fillHisto("JetMultiplicity",                "FinalCut", "WZZZ_CR", _sampleName.Data(), vSelectedJets.size()  , weight);
+    theHistoManager->fillHisto("ZCandidateInvariantMass",        "FinalCut", "WZZZ_CR",   "",   ZM                    , weight);
+    theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "FinalCut", "WZZZ_CR",   "",   Zpt                   , weight);
+    theHistoManager->fillHisto("MET",                            "FinalCut", "WZZZ_CR",   "",   vEvent->at(0).metpt() , weight);
+    theHistoManager->fillHisto("MHT",                            "FinalCut", "WZZZ_CR",   "",   MHT                   , weight);
+    theHistoManager->fillHisto("MetLD",                          "FinalCut", "WZZZ_CR",   "",   met_ld                , weight);
+    theHistoManager->fillHisto("JetMultiplicity",                "FinalCut", "WZZZ_CR",   "",   vSelectedJets.size()  , weight);
 
-    theHistoManager->fillHisto("InvariantMassOfSelectedLeptons", "FinalCut", "WZZZ_CR", _sampleName.Data(), all_lep_invmass       , weight);
-    theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "FinalCut", "WZZZ_CR", _sampleName.Data(), all_lep_sumofcharges  , weight);
-    theHistoManager->fillHisto("SumVecPtSelectedLeptons",        "FinalCut", "WZZZ_CR", _sampleName.Data(), all_lep_sumofpt       , weight);
+    theHistoManager->fillHisto("InvariantMassOfSelectedLeptons", "FinalCut", "WZZZ_CR",   "",   all_lep_invmass       , weight);
+    theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "FinalCut", "WZZZ_CR",   "",   all_lep_sumofcharges  , weight);
+    theHistoManager->fillHisto("SumVecPtSelectedLeptons",        "FinalCut", "WZZZ_CR",   "",   all_lep_sumofpt       , weight);
  
-    theHistoManager->fillHisto("InvMassRemainingLepton",         "FinalCut", "WZZZ_CR", _sampleName.Data(), rem_lep_invmass       , weight);
-    theHistoManager->fillHisto("SumOfRemainingLeptonsCharges",   "FinalCut", "WZZZ_CR", _sampleName.Data(), rem_lep_sumofcharges  , weight);
-    theHistoManager->fillHisto("SumVecPtRemainingLeptons",       "FinalCut", "WZZZ_CR", _sampleName.Data(), rem_lep_sumofpt       , weight);
+    theHistoManager->fillHisto("InvMassRemainingLepton",         "FinalCut", "WZZZ_CR",   "",   rem_lep_invmass       , weight);
+    theHistoManager->fillHisto("SumOfRemainingLeptonsCharges",   "FinalCut", "WZZZ_CR",   "",   rem_lep_sumofcharges  , weight);
+    theHistoManager->fillHisto("SumVecPtRemainingLeptons",       "FinalCut", "WZZZ_CR",   "",   rem_lep_sumofpt       , weight);
+
+    theHistoManager->fillHisto2D("InvMassLastLeptonVSZMass",     "FinalCut", "WZZZ_CR",   "",   rem_lep_invmass, ZM, weight);
+    theHistoManager->fillHisto2D("SumPtLepVSZMass",              "FinalCut", "WZZZ_CR",   "",   rem_lep_sumofpt, ZM, weight);
+    theHistoManager->fillHisto2D("METLDVSZMass",                 "FinalCut", "WZZZ_CR",   "",            met_ld, ZM, weight);
 
     is_CR_WZ = true;
 }
