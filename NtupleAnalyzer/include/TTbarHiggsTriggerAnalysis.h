@@ -60,8 +60,10 @@ class TTbarHiggsTriggerAnalysis
    std::vector<TriggerObj> vSelectedTriggerObj_Ele17Ele12Leg1;
    std::vector<TriggerObj> vSelectedTriggerObj_Ele17Ele12Leg2;
    
-   std::vector<TriggerObj> vSelectedTriggerObj_Mu17Mu8;
-   std::vector<TriggerObj> vSelectedTriggerObj_Mu17TkMu8;
+   std::vector<TriggerObj> vSelectedTriggerObj_Mu17Mu8Leg1;
+   std::vector<TriggerObj> vSelectedTriggerObj_Mu17Mu8Leg2;
+   std::vector<TriggerObj> vSelectedTriggerObj_Mu17TkMu8Leg1;
+   std::vector<TriggerObj> vSelectedTriggerObj_Mu17TkMu8Leg2;
   
  private:
 
