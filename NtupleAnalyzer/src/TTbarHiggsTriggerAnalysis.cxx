@@ -50,17 +50,30 @@ void TTbarHiggsTriggerAnalysis::createHistograms()
  
     _outputFile->cd();
 
-    theHistoManager->addHisto("ProbeMuonPt", "", "", "", 50, 0, 100);
-    theHistoManager->addHisto("ProbeMuonPt_IsoMu20_Matched", "", "", "", 50, 0, 100);
+    theHistoManager->addHisto("ProbeMuonPt", "", "", "", 30, 0, 40);
+    theHistoManager->addHisto("ProbeMuonPt_IsoMu20_Matched", "", "", "", 30, 0, 40);
     
-    theHistoManager->addHisto("ProbeElPt", "", "", "", 50, 0, 100);
-    theHistoManager->addHisto("ProbeElPt_Ele23_Matched", "", "", "", 50, 0, 100);
+    theHistoManager->addHisto("ProbeElPt", "", "", "", 30, 0, 40);
+    theHistoManager->addHisto("ProbeElPt_Ele23_Matched", "", "", "", 30, 0, 40);
     
-    theHistoManager->addHisto("ProbeElPtLeg1", "", "", "", 50, 0, 100);
-    theHistoManager->addHisto("ProbeElPtLeg1_Matched", "", "", "", 50, 0, 100);
+    theHistoManager->addHisto("ProbeElPtLeg1", "", "", "", 30, 0, 40);
+    theHistoManager->addHisto("ProbeElPtLeg1_Matched", "", "", "", 30, 0, 40);
 
-    theHistoManager->addHisto("ProbeElPtLeg2", "", "", "", 50, 0, 100);
-    theHistoManager->addHisto("ProbeElPtLeg2_Matched", "", "", "", 50, 0, 100);
+    theHistoManager->addHisto("ProbeElPtLeg2", "", "", "", 30, 0, 40);
+    theHistoManager->addHisto("ProbeElPtLeg2_Matched", "", "", "", 30, 0, 40);
+
+    theHistoManager->addHisto("ProbeMuonPt_Mu17Mu8Leg1", "", "", "", 30, 0, 40);
+    theHistoManager->addHisto("ProbeMuonPt_Mu17Mu8Leg1_Matched", "", "", "", 30, 0, 40);
+    
+    theHistoManager->addHisto("ProbeMuonPt_Mu17Mu8Leg2", "", "", "", 30, 0, 40);
+    theHistoManager->addHisto("ProbeMuonPt_Mu17Mu8Leg2_Matched", "", "", "", 30, 0, 40);
+    
+    theHistoManager->addHisto("ProbeMuonPt_Mu17TkMu8Leg1", "", "", "", 30, 0, 40);
+    theHistoManager->addHisto("ProbeMuonPt_Mu17TkMu8Leg1_Matched", "", "", "", 30, 0, 40);
+    
+    theHistoManager->addHisto("ProbeMuonPt_Mu17TkMu8Leg2", "", "", "", 30, 0, 40);
+    theHistoManager->addHisto("ProbeMuonPt_Mu17TkMu8Leg2_Matched", "", "", "", 30, 0, 40);
+
 }  
 
 void TTbarHiggsTriggerAnalysis::writeHistograms()
@@ -86,7 +99,28 @@ void TTbarHiggsTriggerAnalysis::writeHistograms()
     eff_EleLeg1->SetTitle("Eff_EleLeg1");
     eff_EleLeg1->Divide(theHistoManager->getHisto1D("ProbeElPtLeg1", "", "", ""));
     theHistoManager->addHisto1D(eff_EleLeg1);
-
+   
+    TH1F* eff_MuLeg1 = (TH1F*)theHistoManager->getHisto1D("ProbeMuonPt_Mu17Mu8Leg1_Matched", "", "", "")->Clone("Eff_MuLeg1");
+    eff_MuLeg1->SetTitle("Eff_MuLeg1");
+    eff_MuLeg1->Divide(theHistoManager->getHisto1D("ProbeMuonPt_Mu17Mu8Leg1", "", "", ""));
+    theHistoManager->addHisto1D(eff_MuLeg1);
+    
+    TH1F* eff_MuLeg2 = (TH1F*)theHistoManager->getHisto1D("ProbeMuonPt_Mu17Mu8Leg2_Matched", "", "", "")->Clone("Eff_MuLeg2");
+    eff_MuLeg2->SetTitle("Eff_MuLeg2");
+    eff_MuLeg2->Divide(theHistoManager->getHisto1D("ProbeMuonPt_Mu17Mu8Leg2", "", "", ""));
+    theHistoManager->addHisto1D(eff_MuLeg2);
+    
+    TH1F* eff_TkMuLeg1 = (TH1F*)theHistoManager->getHisto1D("ProbeMuonPt_Mu17TkMu8Leg1_Matched", "", "", "")->Clone("Eff_TkMuLeg1");
+    eff_TkMuLeg1->SetTitle("Eff_TkMuLeg1");
+    eff_TkMuLeg1->Divide(theHistoManager->getHisto1D("ProbeMuonPt_Mu17TkMu8Leg1", "", "", ""));
+    theHistoManager->addHisto1D(eff_TkMuLeg1);
+    
+    TH1F* eff_TkMuLeg2 = (TH1F*)theHistoManager->getHisto1D("ProbeMuonPt_Mu17TkMu8Leg2_Matched", "", "", "")->Clone("Eff_TkMuLeg2");
+    eff_TkMuLeg2->SetTitle("Eff_TkMuLeg2");
+    eff_TkMuLeg2->Divide(theHistoManager->getHisto1D("ProbeMuonPt_Mu17TkMu8Leg2", "", "", ""));
+    theHistoManager->addHisto1D(eff_TkMuLeg2);
+    
+    //
   
     std::vector<TH1F*> the1DHisto =  theHistoManager->getHisto1D_list();
     std::vector<TH2F*> the2DHisto =  theHistoManager->getHisto2D_list();
@@ -96,9 +130,9 @@ void TTbarHiggsTriggerAnalysis::writeHistograms()
 
     _outputFile->Close();
     
-    std::cout <<"Dz filter efficiency di_mu :    " <<  _n_Mu17_Mu8/_n_Mu17_Mu8_noDz        << std::endl;
-    std::cout <<"Dz filter efficiency di_mu_tk : " <<  _n_Mu17_TkMu8/_n_Mu17_TkMu8_noDz    << std::endl;
-    std::cout <<"Dz filter efficiency di_el    : " <<  _n_Ele17_Ele12/_n_Ele17_Ele12_noDz  << std::endl;
+    std::cout <<"Dz filter efficiency di_mu :    " <<  _n_Mu17_Mu8/_n_Mu17_Mu8_noDz        <<"+- " << _n_Mu17_Mu8   <<" "<<_n_Mu17_Mu8_noDz<<" "<< sqrt((_n_Mu17_Mu8/_n_Mu17_Mu8_noDz)*(1.-_n_Mu17_Mu8/_n_Mu17_Mu8_noDz))/ sqrt(_n_Mu17_Mu8_noDz)<<  std::endl;
+    std::cout <<"Dz filter efficiency di_mu_tk : " <<  _n_Mu17_TkMu8/_n_Mu17_TkMu8_noDz    <<"+- " << _n_Mu17_TkMu8 <<" "<<_n_Mu17_TkMu8_noDz<<" "<< sqrt((_n_Mu17_TkMu8/_n_Mu17_TkMu8_noDz)*(1.-_n_Mu17_TkMu8/_n_Mu17_TkMu8_noDz))/sqrt(_n_Mu17_TkMu8_noDz)<<std::endl;
+    std::cout <<"Dz filter efficiency di_el    : " <<  _n_Ele17_Ele12/_n_Ele17_Ele12_noDz  <<"+- " << _n_Ele17_Ele12<<" "<< _n_Ele17_Ele12_noDz<<" "<< sqrt((_n_Mu17_TkMu8/_n_Mu17_TkMu8_noDz)*(1.-_n_Mu17_TkMu8/_n_Mu17_TkMu8_noDz))/sqrt(_n_Ele17_Ele12_noDz)<<std::endl;
     
 }
 
@@ -123,12 +157,12 @@ void TTbarHiggsTriggerAnalysis::Init(TChain *tree)
     fChain->SetBranchAddress("Truth",      &vTruth);
     fChain->SetBranchAddress("TriggerObj", &vTriggerObj); 
     
-   _n_Mu17_Mu8_noDz= 0;
-   _n_Mu17_Mu8= 0;
-   _n_Mu17_TkMu8_noDz= 0;
-   _n_Mu17_TkMu8 = 0;
-   _n_Ele17_Ele12_noDz = 0; 
-   _n_Ele17_Ele12 = 0;
+    _n_Mu17_Mu8_noDz= 0;
+    _n_Mu17_Mu8= 0;
+    _n_Mu17_TkMu8_noDz= 0;
+    _n_Mu17_TkMu8 = 0;
+    _n_Ele17_Ele12_noDz = 0; 
+    _n_Ele17_Ele12 = 0;
   
 }
 
@@ -169,9 +203,15 @@ void TTbarHiggsTriggerAnalysis::Loop()
 	vSelectedTriggerObj_Ele17Ele12Leg1.clear();
         vSelectedTriggerObj_Ele17Ele12Leg2.clear();
 	
-	vSelectedTriggerObj_Mu17Mu8.clear();
-	vSelectedTriggerObj_Mu17TkMu8.clear();
+	vSelectedTriggerObj_Mu17Mu8Leg1.clear();
+	vSelectedTriggerObj_Mu17Mu8Leg2.clear();
+	vSelectedTriggerObj_Mu17TkMu8Leg1.clear();
+	vSelectedTriggerObj_Mu17TkMu8Leg2.clear();
 	
+	////////////////////////////////////////////////
+	//
+	////////////////////////////////////////////////
+
 	  
 	for(unsigned int imuon=0; imuon < vMuon->size() ; imuon++)
         {             
@@ -205,12 +245,12 @@ void TTbarHiggsTriggerAnalysis::Loop()
 	bool nMu = ( vSelectedMuons.size() == 2 );
 	bool nEl = ( vSelectedElectrons.size() == 2 );
 	
-	if (nMu && !nEl ) 
+	if (nMu ) 
         { 
          if ( ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(1).id() ) && ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188 < 10 ) ) )
          isOSSmu = true ; }
 	
-	if (nEl && !nMu ) 
+	if (nEl ) 
         { 
          if ( ( ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(1).id() ) && ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188 < 10 ) ) )
          isOSSel = true ; }
@@ -225,7 +265,7 @@ void TTbarHiggsTriggerAnalysis::Loop()
 	int  trigCode_c = trigCode /100 % 10;
 	int  trigCode_m = trigCode /1000 % 10;
 	
-	int  trigCode_noDz = 0.;//vEvent->at(0).ev_trigger_pass_byname_1_noDz();
+	int  trigCode_noDz = -1;//vEvent->at(0).ev_trigger_pass_byname_1_noDz();
 	
 	////////////////////////////////////////////////
 	// MUONS
@@ -235,13 +275,15 @@ void TTbarHiggsTriggerAnalysis::Loop()
 	{  
 	   //std::cout <<"isOSSmu " << isOSSmu <<" "<< vTriggerObj->size() <<" " << trigCode << std::endl;
 	   
-	   for (unsigned int i=0; i < vTriggerObj->size() ; i++)
+	   for (unsigned int i=0 ; i<vTriggerObj->size() ; i++)
            {  
 	   
               std::vector<std::string> pathNamesAll = vTriggerObj->at(i).pathNamesAll();
 	      std::vector<std::string> filterLabels = vTriggerObj->at(i).filterLabels();
 	      
-	      for(int j=0;j<vTriggerObj->at(i).pathNamesAll_n();j++)
+	      //--------------------------------
+	      
+	      for(int j=0 ; j<vTriggerObj->at(i).pathNamesAll_n() ; j++)
               { 
 	        //
 	        //Single muon triggers
@@ -256,37 +298,67 @@ void TTbarHiggsTriggerAnalysis::Loop()
 		{  		
 		  vSelectedTriggerObj_IsoMu20.push_back(vTriggerObj->at(i));
 		  
+		 /* 
 		  if ( base.GetDeltaR(vTriggerObj->at(i).eta(),vTriggerObj->at(i).phi(),vSelectedMuons.at(0).eta(),vSelectedMuons.at(0).phi()) < 0.3 )
 		  vSelectedTriggerObj_IsoMu20_recoMatched.push_back(0);
 		  else if ( base.GetDeltaR(vTriggerObj->at(i).eta(),vTriggerObj->at(i).phi(),vSelectedMuons.at(1).eta(),vSelectedMuons.at(1).phi()) < 0.3 )
 		  vSelectedTriggerObj_IsoMu20_recoMatched.push_back(1);
 		  else vSelectedTriggerObj_IsoMu20_recoMatched.push_back(-1);
-		  
+		  */
+		  break;
 		}
+	      }   
+   	   
+           //--------------------------------	   
+	     bool ok3 = false;
+	     bool ok4 = false;
+	     bool ok5 = false;
+	     bool ok6 = false;
+	     bool ok7 = false;
+	     bool ok8 = false;
+	   
+	     for(int k=0 ; k<vTriggerObj->at(i).filterLabels().size() ; k++)
+             {
+	        //std::cout << filterLabels.at(k) << std::endl;
 		
-		//
-	        //Di-muon triggers
-		//	   	
-           	std::size_t ok3 = pathNamesAll.at(j).find("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v");	
-		std::size_t ok4 = pathNamesAll.at(j).find("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v");	
+		if ( filterLabels.at(k).find("hltL3fL1sDoubleMu103p5L1f0L2f10L3Filtered17") != std::string::npos ) 
+		{ ok3 = true;
+		  //std::cout <<"ok 3 true  "<< std::endl;	
+		  }						 
+		if ( filterLabels.at(k).find("hltDiMuonGlbFiltered17TrkFiltered8") != std::string::npos )
+		{  ok4 = true;
+		   //std::cout <<"ok 4 true "<< std::endl;	
+		   }
+		if ( filterLabels.at(k).find("hltDiMuonGlb17Trk8RelTrkIsoFiltered0p4") != std::string::npos ) 
+		{  ok5 = true;
+		   //std::cout <<"ok 5 true "<< std::endl;	
+		   }
 		
-		if ( ok3 != std::string::npos )
-		  vSelectedTriggerObj_Mu17Mu8.push_back(vTriggerObj->at(i));
-		if ( ok4 != std::string::npos )
-		  vSelectedTriggerObj_Mu17TkMu8.push_back(vTriggerObj->at(i));
-		
-              }   
-            }
-	 
+		if ( filterLabels.at(k).find("hltL3fL1sDoubleMu103p5L1f0L2f10OneMuL3Filtered17") != std::string::npos ) ok6 = true;
+		if ( filterLabels.at(k).find("hltL3pfL1sDoubleMu103p5L1f0L2pf0L3PreFiltered8") != std::string::npos ) ok7 = true;
+		if ( filterLabels.at(k).find("hltDiMuonGlb17Glb8RelTrkIsoFiltered0p4") != std::string::npos ) ok8 = true;
+		                                        
+	     }
+	     //std::cout <<"OK : "<< ok3<<" "<<ok4<<" "<<ok5<<" "<<ok6<<" " <<ok7<<" "<< ok8 << std::endl;
+	     if ( ok3 )
+	     //{
+	       vSelectedTriggerObj_Mu17TkMu8Leg1.push_back(vTriggerObj->at(i));
+	       //std::cout <<"yoouppi "<< std::endl;}
+	     if ( ok4 && ok5 )
+	       vSelectedTriggerObj_Mu17TkMu8Leg2.push_back(vTriggerObj->at(i)); 	               
+	     if ( ok6 && ok8 )
+	       vSelectedTriggerObj_Mu17Mu8Leg1.push_back(vTriggerObj->at(i));
+	     if ( ok7 && ok8 )
+	       vSelectedTriggerObj_Mu17Mu8Leg2.push_back(vTriggerObj->at(i));		     
+           
+	   }
+
 	  
-	  
-	   //
-	   //Single muon triggers
-	   //		  
-           	
+    	   //--------------------------------	   
+     	
 	   int mu0_IsoMu20Matched = -1;
 	   int mu1_IsoMu20Matched = -1; 
-	   
+	   	    
 	   for (unsigned int i=0; i < vSelectedTriggerObj_IsoMu20.size() ; i++)
 	   {
 	     if (base.GetDeltaR(vSelectedTriggerObj_IsoMu20.at(i).eta(),vSelectedTriggerObj_IsoMu20.at(i).phi(),vSelectedMuons.at(0).eta(),vSelectedMuons.at(0).phi()) < 0.3) 
@@ -294,25 +366,101 @@ void TTbarHiggsTriggerAnalysis::Loop()
 	     if (base.GetDeltaR(vSelectedTriggerObj_IsoMu20.at(i).eta(),vSelectedTriggerObj_IsoMu20.at(i).phi(),vSelectedMuons.at(1).eta(),vSelectedMuons.at(1).phi()) < 0.3)
 	       mu1_IsoMu20Matched = i;
 	   }
-	    	    
+	   
+	   
+	   //--------------------------------	   
+
+	   int mu0_Mu17TkMu8Leg1Matched = -1;
+	   int mu1_Mu17TkMu8Leg1Matched = -1;
+	   int mu0_Mu17TkMu8Leg2Matched = -1;
+	   int mu1_Mu17TkMu8Leg2Matched = -1;
+	   
+	   int mu0_Mu17Mu8Leg1Matched = -1;
+	   int mu1_Mu17Mu8Leg1Matched = -1;
+	   int mu0_Mu17Mu8Leg2Matched = -1;
+	   int mu1_Mu17Mu8Leg2Matched = -1;
+	
+	   /*std::cout <<"o1 "<< vSelectedTriggerObj_Mu17Mu8Leg1.size()   << std::endl;
+	   std::cout <<"o2 "<< vSelectedTriggerObj_Mu17Mu8Leg2.size()   << std::endl;
+	   std::cout <<"o3 "<< vSelectedTriggerObj_Mu17TkMu8Leg1.size() << std::endl;
+	   std::cout <<"o4 "<< vSelectedTriggerObj_Mu17TkMu8Leg2.size() << std::endl;*/
+	
+	
+	   for (unsigned int i=0; i < vSelectedTriggerObj_Mu17Mu8Leg1.size() ; i++)
+	   {
+	     if (base.GetDeltaR(vSelectedTriggerObj_Mu17Mu8Leg1.at(i).eta(),vSelectedTriggerObj_Mu17Mu8Leg1.at(i).phi(),vSelectedMuons.at(0).eta(),vSelectedMuons.at(0).phi()) < 0.3) 
+	       mu0_Mu17Mu8Leg1Matched = i;
+	     if (base.GetDeltaR(vSelectedTriggerObj_Mu17Mu8Leg1.at(i).eta(),vSelectedTriggerObj_Mu17Mu8Leg1.at(i).phi(),vSelectedMuons.at(1).eta(),vSelectedMuons.at(1).phi()) < 0.3)
+	       mu1_Mu17Mu8Leg1Matched = i;
+	   }
+	   for (unsigned int i=0; i < vSelectedTriggerObj_Mu17Mu8Leg2.size() ; i++)
+	   {
+	     if (base.GetDeltaR(vSelectedTriggerObj_Mu17Mu8Leg2.at(i).eta(),vSelectedTriggerObj_Mu17Mu8Leg2.at(i).phi(),vSelectedMuons.at(0).eta(),vSelectedMuons.at(0).phi()) < 0.3) 
+	       mu0_Mu17Mu8Leg2Matched = i;
+	     if (base.GetDeltaR(vSelectedTriggerObj_Mu17Mu8Leg2.at(i).eta(),vSelectedTriggerObj_Mu17Mu8Leg2.at(i).phi(),vSelectedMuons.at(1).eta(),vSelectedMuons.at(1).phi()) < 0.3)
+	       mu1_Mu17Mu8Leg2Matched = i;
+	   }
+	   for (unsigned int i=0; i < vSelectedTriggerObj_Mu17TkMu8Leg1.size() ; i++)
+	   {
+	     if (base.GetDeltaR(vSelectedTriggerObj_Mu17TkMu8Leg1.at(i).eta(),vSelectedTriggerObj_Mu17TkMu8Leg1.at(i).phi(),vSelectedMuons.at(0).eta(),vSelectedMuons.at(0).phi()) < 0.3) 
+	       mu0_Mu17TkMu8Leg1Matched = i;
+	     if (base.GetDeltaR(vSelectedTriggerObj_Mu17TkMu8Leg1.at(i).eta(),vSelectedTriggerObj_Mu17TkMu8Leg1.at(i).phi(),vSelectedMuons.at(1).eta(),vSelectedMuons.at(1).phi()) < 0.3)
+	       mu1_Mu17TkMu8Leg1Matched = i;
+	   }	  	   
+	   for (unsigned int i=0; i < vSelectedTriggerObj_Mu17TkMu8Leg2.size() ; i++)
+	   {
+	     if (base.GetDeltaR(vSelectedTriggerObj_Mu17TkMu8Leg2.at(i).eta(),vSelectedTriggerObj_Mu17TkMu8Leg2.at(i).phi(),vSelectedMuons.at(0).eta(),vSelectedMuons.at(0).phi()) < 0.3) 
+	       mu0_Mu17TkMu8Leg2Matched = i;
+	     if (base.GetDeltaR(vSelectedTriggerObj_Mu17TkMu8Leg2.at(i).eta(),vSelectedTriggerObj_Mu17TkMu8Leg2.at(i).phi(),vSelectedMuons.at(1).eta(),vSelectedMuons.at(1).phi()) < 0.3)
+	       mu1_Mu17TkMu8Leg2Matched = i;
+	   }	  
+		  
+	  
+	   //--------------------------------
+	   
 	   if ( mu0_IsoMu20Matched !=-1 )
 	   {
 	     theHistoManager->fillHisto("ProbeMuonPt", "", "", "", vSelectedMuons.at(1).pt(),1);
 	     if ( mu1_IsoMu20Matched !=-1 ) theHistoManager->fillHisto("ProbeMuonPt_IsoMu20_Matched", "", "", "", vSelectedMuons.at(1).pt(),1);   
+	     
+	     //
+	     //if ( mu0_Mu17TkMu8Leg1Matched !=-1 ) 
+	     //{ 
+	       theHistoManager->fillHisto("ProbeMuonPt_Mu17TkMu8Leg2", "", "", "", vSelectedMuons.at(1).pt(),1);   
+	       if ( mu1_Mu17TkMu8Leg2Matched !=-1 ) theHistoManager->fillHisto("ProbeMuonPt_Mu17TkMu8Leg2_Matched", "", "", "", vSelectedMuons.at(1).pt(),1);   
+	      //}
+	     
+	     theHistoManager->fillHisto("ProbeMuonPt_Mu17TkMu8Leg1", "", "", "", vSelectedMuons.at(1).pt(),1);   
+	     if ( mu1_Mu17TkMu8Leg1Matched !=-1 ) theHistoManager->fillHisto("ProbeMuonPt_Mu17TkMu8Leg1_Matched", "", "", "", vSelectedMuons.at(1).pt(),1);   
+	     
+	     //
+	     //if ( mu0_Mu17Mu8Leg1Matched !=-1 ) 
+	     //{ 
+	       theHistoManager->fillHisto("ProbeMuonPt_Mu17Mu8Leg2", "", "", "", vSelectedMuons.at(1).pt(),1);   
+	       if ( mu1_Mu17Mu8Leg2Matched !=-1 ) theHistoManager->fillHisto("ProbeMuonPt_Mu17Mu8Leg2_Matched", "", "", "", vSelectedMuons.at(1).pt(),1);   
+	      //}
+	     
+	     theHistoManager->fillHisto("ProbeMuonPt_Mu17Mu8Leg1", "", "", "", vSelectedMuons.at(1).pt(),1);   
+	     if ( mu1_Mu17Mu8Leg1Matched !=-1 ) theHistoManager->fillHisto("ProbeMuonPt_Mu17Mu8Leg1_Matched", "", "", "", vSelectedMuons.at(1).pt(),1);   
+	   
 	   }
 	   
 	   
+	   //--------------------------------	   
+
 	   if ( trigCode_c == 1 || trigCode_c == 2 || trigCode_c == 3 || trigCode_c == 6 || trigCode_c == 7 || trigCode_c == 8 ) 
 	   {
 	     if ( trigCode_noDz == 20 || trigCode_noDz == 30 || trigCode_noDz == 70 || trigCode_noDz == 80 )
 	     {  
 	       _n_Mu17_Mu8_noDz++;
-	       if ( trigCode_d == 2 || trigCode_d == 3 || trigCode_d == 7 || trigCode_d == 8 )  _n_Mu17_Mu8++;}
+	       if ( trigCode_d == 2 || trigCode_d == 3 || trigCode_d == 7 || trigCode_d == 8 )  _n_Mu17_Mu8++;
+	       }
 	     
 	     if ( trigCode_noDz == 50 || trigCode_noDz == 60 || trigCode_noDz == 70 || trigCode_noDz == 80 )
 	     { 
 	       _n_Mu17_TkMu8_noDz++;
-	       if ( trigCode_d == 5 || trigCode_d == 6 || trigCode_d == 7 || trigCode_d == 8 )  _n_Mu17_TkMu8++;}   
+	       if ( trigCode_d == 5 || trigCode_d == 6 || trigCode_d == 7 || trigCode_d == 8 )  _n_Mu17_TkMu8++;
+	       }   
 	    }
 	 
         }//isOSSmu
@@ -323,7 +471,8 @@ void TTbarHiggsTriggerAnalysis::Loop()
 	
 	if (isOSSel)
 	{ 
-	   
+	   std::cout <<"isOSSel "<< isOSSel <<" "<< vTriggerObj->size() <<" "<< trigCode << std::endl;
+	
 	   for (unsigned int i=0; i < vTriggerObj->size() ; i++)
            {  
 	    	
@@ -337,16 +486,19 @@ void TTbarHiggsTriggerAnalysis::Loop()
 		std::size_t ok1 = pathNamesAll.at(j).find("HLT_Ele23_WPLoose_Gsf_v");
 		std::size_t ok2 = pathNamesAll.at(j).find("HLT_Ele23_CaloIdL_TrackIdL_IsoVL_v");
 		   
-	   	if ( (ok1!=std::string::npos || ok2!=std::string::npos) && ( trigCode_c >= 5 && trigCode_c <= 8 ) ) 
+	   	//if ( ( ok1!=std::string::npos || ok2!=std::string::npos ) && ( trigCode_c >= 5 && trigCode_c <= 8 ) ) 
+		if ( ( ok1!=std::string::npos || ok2!=std::string::npos ) ) 		
 		{  
 		
 		  vSelectedTriggerObj_Ele23.push_back(vTriggerObj->at(i));
+		  break;
 		  	  
+		  /*
 		  if ( base.GetDeltaR(vTriggerObj->at(i).eta(),vTriggerObj->at(i).phi(),vSelectedElectrons.at(0).eta(),vSelectedElectrons.at(0).phi()) < 0.3 )
 		  vSelectedTriggerObj_Ele23_recoMatched.push_back(0);
 		  else if ( base.GetDeltaR(vTriggerObj->at(i).eta(),vTriggerObj->at(i).phi(),vSelectedElectrons.at(1).eta(),vSelectedElectrons.at(1).phi()) < 0.3 )
 		  vSelectedTriggerObj_Ele23_recoMatched.push_back(1);
-		  else vSelectedTriggerObj_Ele23_recoMatched.push_back(-1);
+		  else vSelectedTriggerObj_Ele23_recoMatched.push_back(-1);*/
 		  
 		 }
 	       }
@@ -355,16 +507,13 @@ void TTbarHiggsTriggerAnalysis::Loop()
 	       for(int k=0;k<vTriggerObj->at(i).filterLabels().size();k++)
                {
 	       
-	        //std::cout <<"------------ "<<k<< std::endl;
-                //std::cout <<"------------ "<<vTriggerObj->at(i).filterLabels().at(k)<< std::endl;
-		
 		std::size_t ok3 = filterLabels.at(k).find("hltEle17Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter");
 		std::size_t ok4 = filterLabels.at(k).find("hltEle17Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter");
 		
 		if ( ok3 != std::string::npos )
-		  vSelectedTriggerObj_Ele17Ele12Leg1.push_back(vTriggerObj->at(i));
+		  { vSelectedTriggerObj_Ele17Ele12Leg1.push_back(vTriggerObj->at(i)); }
 		if ( ok4 != std::string::npos )
-		  vSelectedTriggerObj_Ele17Ele12Leg2.push_back(vTriggerObj->at(i));		
+		  { vSelectedTriggerObj_Ele17Ele12Leg2.push_back(vTriggerObj->at(i)); }   
                }
 	     
             }
@@ -421,9 +570,9 @@ void TTbarHiggsTriggerAnalysis::Loop()
 	      
 	    }
 	     	 
-	  //---------------------------------
-	  if ( trigCode_c >= 5 && trigCode_c <= 8 ) 
-	  {
+	   //---------------------------------
+	   if ( trigCode_c >= 5 && trigCode_c <= 8 ) 
+	   {
 	     if ( trigCode_noDz == 10 || trigCode_noDz == 30 || trigCode_noDz == 60 || trigCode_noDz == 80 )
 	     {
 	      _n_Ele17_Ele12_noDz++;
