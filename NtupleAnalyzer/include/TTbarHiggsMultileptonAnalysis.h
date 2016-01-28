@@ -35,14 +35,14 @@ class TTbarHiggsMultileptonAnalysis
 
    void ThreeLeptonSelection_TTH3l(int evt);
    bool ThreeLeptonSelection_TTH3l_MC();
-  
-   void ThreeLeptonSelection_CR_WZ(int evt);
+
+   void ThreeLeptonSelection_CR_diboson(int evt);
    void ThreeLeptonSelection_CR_TTl(int evt);
    void ThreeLeptonSelection_CR_Zl(int evt);
-  
+
    void ThreeLeptonSelection_TTZ(int evt);
-   
- 
+
+
    TChain *fChain;   //!pointer to the analyzed TTree or TChain
 
    std::vector<Electron> *vElectron  = new std::vector<Electron>();
@@ -61,19 +61,19 @@ class TTbarHiggsMultileptonAnalysis
    std::vector<Jet>	 vSelectedBTagJets;
    std::vector<Jet>      vSelectedMediumBTagJets;
    std::vector<Jet>	 vSelectedJets;
-   
+
    int nLooseBJets;
    int nMediumBJets;
-   
+
    bool is_TTH3l;  // TTH 3l analysis
    bool is_CR_TTl; // TTbar CR w/ 3l (one fake lepton)
    bool is_CR_WZ;  // WZ CR w/ 3l no b-jets
    bool is_CR_Zl;  // Drell-Yan CR w/ 3l (one fake lepton)
-   
+
    bool is_TTZ;    // TTZ 3l analysis (for the future..)
-   
-   bool is_trigger;   
-  
+
+   bool is_trigger;
+
    virtual void     Init(TChain *tree);
    virtual void     Loop();
 
