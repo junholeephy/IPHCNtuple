@@ -155,6 +155,9 @@ class Tree {
         vector<float>   *el_lepMVA_dxy;
         vector<float>   *el_lepMVA_dz;
         vector<float>   *el_lepMVA_mvaId;
+	vector<float>   *el_lepMVA_eta;
+	vector<float>   *el_lepMVA_jetNDauChargedMVASel;
+	vector<float>   *el_lepMVA_Moriond16;
         vector<int>     *el_isGsfCtfScPixChargeConsistent;
         vector<int>     *el_passConversionVeto;
         vector<float>   *el_deltaEtaSuperClusterTrackAtVtx;
@@ -247,6 +250,9 @@ class Tree {
         vector<float>   *mu_lepMVA_dxy;
         vector<float>   *mu_lepMVA_dz;
         vector<float>   *mu_lepMVA_mvaId;
+	vector<float>   *mu_lepMVA_eta;
+	vector<float>   *mu_lepMVA_jetNDauChargedMVASel;
+	vector<float>   *mu_lepMVA_Moriond16;
         vector<float>   *mu_innerTrack_pt;
         vector<float>   *mu_innerTrack_ptError;
         vector<float>   *mu_dB3D;
@@ -982,6 +988,9 @@ class Tree {
         TBranch        *b_el_lepMVA_dxy;
         TBranch        *b_el_lepMVA_dz;
         TBranch        *b_el_lepMVA_mvaId;
+	TBranch        *b_el_lepMVA_Moriond16;   //!
+        TBranch        *b_el_lepMVA_eta;   //!
+        TBranch        *b_el_lepMVA_jetNDauChargedMVASel;   //!     
         TBranch        *b_el_isGsfCtfScPixChargeConsistent;   //!
         TBranch        *b_el_passConversionVeto;   //!
         TBranch        *b_el_deltaEtaSuperClusterTrackAtVtx;
@@ -1074,6 +1083,9 @@ class Tree {
         TBranch        *b_mu_lepMVA_dxy;
         TBranch        *b_mu_lepMVA_dz;
         TBranch        *b_mu_lepMVA_mvaId;
+	TBranch        *b_mu_lepMVA_Moriond16;   //!
+        TBranch        *b_mu_lepMVA_eta;   //!
+        TBranch        *b_mu_lepMVA_jetNDauChargedMVASel;   //!     
         TBranch        *b_mu_innerTrack_pt;   //!
         TBranch        *b_mu_innerTrack_ptError;   //!
         TBranch        *b_mu_dB3D;   //!
