@@ -6,10 +6,11 @@
 #include <TH2F.h>
 #include <TChain.h>
 #include <TFile.h>
+#include "Event.h"
 #include "Muon.h"
+#include "Tau.h"
 #include "Electron.h"
 #include "Jet.h"
-#include "Event.h"
 #include "Truth.h"
 #include <TObject.h>
 #include <TROOT.h>
@@ -45,22 +46,24 @@ class TTbarHiggsMultileptonAnalysis
 
    TChain *fChain;   //!pointer to the analyzed TTree or TChain
 
+   std::vector<Event>    *vEvent     = new std::vector<Event>();
    std::vector<Electron> *vElectron  = new std::vector<Electron>();
    std::vector<Muon>     *vMuon      = new std::vector<Muon>();
-   std::vector<Event>    *vEvent     = new std::vector<Event>();
+   std::vector<Tau>      *vTau       = new std::vector<Tau>();
    std::vector<Jet>      *vJet       = new std::vector<Jet>();
    std::vector<Truth>    *vTruth     = new std::vector<Truth>();
 
    std::vector<Muon>	 vSelectedMuons;
    std::vector<Electron> vSelectedElectrons;
+   std::vector<Tau>      vSelectedTaus;
    std::vector<Lepton>   vSelectedLeptons;
    std::vector<Muon>	 vFakeMuons;     // inverted MVA cut
    std::vector<Electron> vFakeElectrons; // inverted MVA cut
    std::vector<Lepton>   vFakeLeptons;   // inverted MVA cut
-   std::vector<Jet>	 vSelectedNonBTagJets;
-   std::vector<Jet>	 vSelectedBTagJets;
+   std::vector<Jet>	     vSelectedNonBTagJets;
+   std::vector<Jet>	     vSelectedBTagJets;
    std::vector<Jet>      vSelectedMediumBTagJets;
-   std::vector<Jet>	 vSelectedJets;
+   std::vector<Jet>	     vSelectedJets;
 
    int nLooseBJets;
    int nMediumBJets;
