@@ -160,6 +160,9 @@ void Tree::Init(TChain *ch)
     el_lepMVA_dxy = 0;
     el_lepMVA_dz = 0;
     el_lepMVA_mvaId = 0;
+    el_lepMVA_Moriond16 = 0; 
+    el_lepMVA_eta = 0;
+    el_lepMVA_jetNDauChargedMVASel = 0;         
     el_isGsfCtfScPixChargeConsistent = 0;
     el_passConversionVeto = 0;
     el_deltaEtaSuperClusterTrackAtVtx = 0;
@@ -251,6 +254,9 @@ void Tree::Init(TChain *ch)
     mu_lepMVA_dxy = 0;
     mu_lepMVA_dz = 0;
     mu_lepMVA_mvaId = 0;
+    mu_lepMVA_Moriond16 = 0; 
+    mu_lepMVA_eta = 0;
+    mu_lepMVA_jetNDauChargedMVASel = 0;        
     mu_innerTrack_pt = 0;
     mu_innerTrack_ptError = 0;
     mu_dB3D = 0;
@@ -922,6 +928,9 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("el_lepMVA_dxy", &el_lepMVA_dxy, &b_el_lepMVA_dxy);
     fChain->SetBranchAddress("el_lepMVA_dz", &el_lepMVA_dz, &b_el_lepMVA_dz);
     fChain->SetBranchAddress("el_lepMVA_mvaId", &el_lepMVA_mvaId, &b_el_lepMVA_mvaId);
+    fChain->SetBranchAddress("el_lepMVA_Moriond16", &el_lepMVA_Moriond16, &b_el_lepMVA_Moriond16);
+    fChain->SetBranchAddress("el_lepMVA_eta", &el_lepMVA_eta, &b_el_lepMVA_eta);
+    fChain->SetBranchAddress("el_lepMVA_jetNDauChargedMVASel", &el_lepMVA_jetNDauChargedMVASel, &b_el_lepMVA_jetNDauChargedMVASel);   
     fChain->SetBranchAddress("el_isGsfCtfScPixChargeConsistent", &el_isGsfCtfScPixChargeConsistent, &b_el_isGsfCtfScPixChargeConsistent);
     fChain->SetBranchAddress("el_passConversionVeto", &el_passConversionVeto, &b_el_passConversionVeto);
     fChain->SetBranchAddress("el_deltaEtaSuperClusterTrackAtVtx", &el_deltaEtaSuperClusterTrackAtVtx, &b_el_deltaEtaSuperClusterTrackAtVtx);
@@ -1018,7 +1027,10 @@ void Tree::Init(TChain *ch)
     //fChain->SetBranchAddress("mu_innerTrack_ptError", &mu_innerTrack_ptError, &b_mu_innerTrack_ptError);
     //fChain->SetBranchAddress("mu_dB3D", &mu_dB3D, &b_mu_dB3D);
     //fChain->SetBranchAddress("mu_edB3D", &mu_edB3D, &b_mu_edB3D);
-
+    fChain->SetBranchAddress("mu_lepMVA_Moriond16", &mu_lepMVA_Moriond16, &b_mu_lepMVA_Moriond16);
+    fChain->SetBranchAddress("mu_lepMVA_eta", &mu_lepMVA_eta, &b_mu_lepMVA_eta);
+    fChain->SetBranchAddress("mu_lepMVA_jetNDauChargedMVASel", &mu_lepMVA_jetNDauChargedMVASel, &b_mu_lepMVA_jetNDauChargedMVASel);   
+  
     // #########################
     // #  _____                #
     // # |_   _|_ _ _   _ ___  #

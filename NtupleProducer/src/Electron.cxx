@@ -40,8 +40,21 @@ void Electron::read()
     if( CHECK(ntP->el_isGsfCtfScPixChargeConsistent) ) _isPCC     = ntP->el_isGsfCtfScPixChargeConsistent->at(idx);
 
     // mva-based selection additionnal variables
-    if( CHECK(ntP->el_lepMVA)                        ) _lepMVA     = ntP->el_lepMVA->at(idx);
-
+    if( CHECK(ntP->el_lepMVA)                        ) _lepMVA           = ntP->el_lepMVA->at(idx);
+    if( CHECK(ntP->el_lepMVA_Moriond16)              ) _lepMVA_Moriond16 = ntP->el_lepMVA_Moriond16->at(idx);
+   
+    if( CHECK(ntP->el_lepMVA_neuRelIso)	             ) _lepMVA_neuRelIso = ntP->el_lepMVA_neuRelIso->at(idx);
+    if( CHECK(ntP->el_lepMVA_chRelIso) 	             ) _lepMVA_chRelIso = ntP->el_lepMVA_chRelIso->at(idx);
+    if( CHECK(ntP->el_lepMVA_jetDR)		     ) _lepMVA_jetDR = ntP->el_lepMVA_jetDR->at(idx);
+    if( CHECK(ntP->el_lepMVA_jetPtRatio) 	     ) _lepMVA_jetPtRatio = ntP->el_lepMVA_jetPtRatio->at(idx);
+    if( CHECK(ntP->el_lepMVA_jetBTagCSV)	     ) _lepMVA_jetBTagCSV = ntP->el_lepMVA_jetBTagCSV->at(idx);
+    if( CHECK(ntP->el_lepMVA_sip3d) 	             ) _lepMVA_sip3d = ntP->el_lepMVA_sip3d->at(idx);
+    if( CHECK(ntP->el_lepMVA_dxy)		     ) _lepMVA_dxy = ntP->el_lepMVA_dxy->at(idx);
+    if( CHECK(ntP->el_lepMVA_dz) 	             ) _lepMVA_dz = ntP->el_lepMVA_dz->at(idx);
+    if( CHECK(ntP->el_lepMVA_mvaId)		     ) _lepMVA_mvaId = ntP->el_lepMVA_mvaId->at(idx);
+    if( CHECK(ntP->el_lepMVA_eta) 	             ) _lepMVA_eta = ntP->el_lepMVA_eta->at(idx);
+    if( CHECK(ntP->el_lepMVA_jetNDauChargedMVASel)   ) _lepMVA_jetNDauChargedMVASel = ntP->el_lepMVA_jetNDauChargedMVASel->at(idx);
+ 
     // more variables
     if( CHECK(ntP->el_ip3d)                          ) _ip3d      = ntP->el_ip3d->at(idx);
     if( CHECK(ntP->el_ip3dErr)                       ) _ip3dErr   = ntP->el_ip3dErr->at(idx);
@@ -70,7 +83,22 @@ void Electron::init()
     _isPCC        = -888;
 
     // more variables
-    _lepMVA       = -888;
+    _lepMVA           = -888; 
+    _lepMVA_Moriond16 = -888;  
+    
+    _lepMVA_neuRelIso = -666;
+    _lepMVA_chRelIso = -666;
+    _lepMVA_jetDR = -666;
+    _lepMVA_jetPtRatio = -666;
+    _lepMVA_jetBTagCSV = -666;
+    _lepMVA_sip3d = -666;
+    _lepMVA_dxy = -666;
+    _lepMVA_dz = -666;
+    _lepMVA_mvaId = -666;
+    _lepMVA_eta = -666;
+    _lepMVA_jetNDauChargedMVASel = -666;
+           
+  
 }
 
 bool Electron::sel()

@@ -41,7 +41,21 @@ void Muon::read()
     // placeholder track.pt/errortrack.pt
 
     // mva-based selection additionnal variables
-    if( CHECK(ntP->mu_lepMVA)            ) _lepMVA   = ntP->mu_lepMVA->at(idx);
+    if( CHECK(ntP->mu_lepMVA)            ) _lepMVA           = ntP->mu_lepMVA->at(idx);
+    if( CHECK(ntP->mu_lepMVA_Moriond16)  ) _lepMVA_Moriond16 = ntP->mu_lepMVA_Moriond16->at(idx);
+
+    if( CHECK(ntP->mu_lepMVA_neuRelIso)	             ) _lepMVA_neuRelIso = ntP->mu_lepMVA_neuRelIso->at(idx);
+    if( CHECK(ntP->mu_lepMVA_chRelIso) 	             ) _lepMVA_chRelIso = ntP->mu_lepMVA_chRelIso->at(idx);
+    if( CHECK(ntP->mu_lepMVA_jetDR)		     ) _lepMVA_jetDR = ntP->mu_lepMVA_jetDR->at(idx);
+    if( CHECK(ntP->mu_lepMVA_jetPtRatio) 	     ) _lepMVA_jetPtRatio = ntP->mu_lepMVA_jetPtRatio->at(idx);
+    if( CHECK(ntP->mu_lepMVA_jetBTagCSV)	     ) _lepMVA_jetBTagCSV = ntP->mu_lepMVA_jetBTagCSV->at(idx);
+    if( CHECK(ntP->mu_lepMVA_sip3d) 	             ) _lepMVA_sip3d = ntP->mu_lepMVA_sip3d->at(idx);
+    if( CHECK(ntP->mu_lepMVA_dxy)		     ) _lepMVA_dxy = ntP->mu_lepMVA_dxy->at(idx);
+    if( CHECK(ntP->mu_lepMVA_dz) 	             ) _lepMVA_dz = ntP->mu_lepMVA_dz->at(idx);
+    if( CHECK(ntP->mu_lepMVA_mvaId)		     ) _lepMVA_mvaId = ntP->mu_lepMVA_mvaId->at(idx);
+    if( CHECK(ntP->mu_lepMVA_eta) 	             ) _lepMVA_eta = ntP->mu_lepMVA_eta->at(idx);
+    if( CHECK(ntP->mu_lepMVA_jetNDauChargedMVASel)   ) _lepMVA_jetNDauChargedMVASel = ntP->mu_lepMVA_jetNDauChargedMVASel->at(idx);
+ 
 
     // jet related variables
     //_jetPtRel   = ntP->mu_lepMVA_jetPtRelv2->at(idx);
@@ -79,7 +93,21 @@ void Muon::init()
 
     // more variables
     _sip3d             = -666;
-    _lepMVA            = -888;
+    _lepMVA            = -888; 
+    _lepMVA_Moriond16  = -888; 
+    
+    _lepMVA_neuRelIso = -666;
+    _lepMVA_chRelIso = -666;
+    _lepMVA_jetDR = -666;
+    _lepMVA_jetPtRatio = -666;
+    _lepMVA_jetBTagCSV = -666;
+    _lepMVA_sip3d = -666;
+    _lepMVA_dxy = -666;
+    _lepMVA_dz = -666;
+    _lepMVA_mvaId = -666;
+    _lepMVA_eta = -666;
+    _lepMVA_jetNDauChargedMVASel = -666;
+           
 }
 
 bool Muon::sel()

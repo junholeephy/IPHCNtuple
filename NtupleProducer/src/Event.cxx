@@ -166,7 +166,7 @@ void Event::read(bool isdata)
     _trigger_pass               = trigger_comb;
     _trigger_pass_byname        = trigger_pass_byname;
     _trigger_pass_byname_1      = trigger_pass_byname_1;
-    //_trigger_pass_byname_1_noDz = trigger_pass_byname_1_noDz;
+    _trigger_pass_byname_1_noDz = trigger_pass_byname_1_noDz;
 
     // discriminant vs tt
     _disc_TT = 0;
