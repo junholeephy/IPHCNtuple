@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
     const char *fname = fname_str;
     const char *stream = stream_str;
     const char *fname_out = fname_out_str;
-
+    
     std::cout << "--file="   << fname      << std::endl;
     std::cout << "--outfile="<< fname_out  << std::endl;
     std::cout << "--tree="   << stream     << std::endl;
@@ -62,7 +62,10 @@ int main(int argc, char *argv[])
     Long64_t nentries = ch->GetEntries();
     ntP->registerInputBranches(ch);
 
-    nt = new Ntuple(fname_out);
+
+    TString fname_out_root = fname_out;
+    fname_out_root += ".root";
+    nt = new Ntuple(fname_out_root.Data());
 
     nt->Init();
     std::cout << "Initialization DONE" << std::endl;
