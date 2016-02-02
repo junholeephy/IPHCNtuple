@@ -33,7 +33,7 @@ mkdir ${logName}
 
 nmax=-1
 
-fxsec="table_MC_Akoula-patch1_20151217.txt"
+fxsec="table_MC_Akoula-patch2_02022016.txt"
 
 fdir=$(ls -d lists*)
 
