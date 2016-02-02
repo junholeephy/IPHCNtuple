@@ -12,7 +12,8 @@ que="sbg_local"
 
 export HOME=$(pwd)
 
-dout="/home-pbs/lebihan/someone/ttH_22112015_MC/ttH/NtupleProducer/test/"
+dout="/home-pbs/lebihan/someone/ttH_010216/ttH/NtupleProducer/test/"
+dout_f="/opt/sbg/scratch1/cms/lebihan/trees_Analyzer_akoula_patch2_01022016_pbs/"
 
 
 runName="toy${jName}"
@@ -22,6 +23,8 @@ rm -rf ${runName}
 mkdir ${runName}
 rm -rf ${logName}
 mkdir ${logName}
+rm -rf ${dout_f}/${runName}
+mkdir ${dout_f}/${runName}
 
 nmax=-1
 
@@ -44,6 +47,7 @@ do
   dataset=$(echo $sample | sed 's%_ID..*%%g')
   if [[ ! -d ${runName}/${dataset} ]]; then
     mkdir ${runName}/${dataset}
+    mkdir ${dout_f}/${runName}/${dataset}
   fi
   linexsec=$(grep $dataset $fxsec)
   noe=$(echo $linexsec | awk '{print $3}')
@@ -68,7 +72,7 @@ do
   fi
   
   isdata=0
-
+   
   fout=$(echo ${runName}/${dataset}/${line}_${jidx} | sed 's%.txt%%g')
   lout=$(echo ${line}_${jidx} | sed 's%.txt%%g')
 
@@ -76,7 +80,7 @@ do
   echo "${fpath}${line}"
  
   qsub -N ${dir} -q ${que} -o ${logName}/${sample}.log -j oe single_batch_job.sh \
--v dout=${dout},line2=${fpath}${line},fout=${fout},noe=${noe},xsec=${xsec},isdata=${isdata},sample=${sample},nmax=${nmax}
+-v dout=${dout},line2=${fpath}${line},fout=${fout},noe=${noe},xsec=${xsec},isdata=${isdata},sample=${sample},nmax=${nmax},dout_f=${dout_f}
 done
 
 echo "going to sleep 2700 s (45 mn)"
