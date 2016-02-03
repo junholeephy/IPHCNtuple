@@ -26,8 +26,8 @@ dout_f="/home-pbs/nchanon/CMSSW_7_4_12_patch4/src/IPHCNtuple/NtupleAnalyzer/test
 runName="toy_${jName}"
 logName="log_${jName}"
 
-rm -rf ${runName}
-mkdir ${runName}
+rm -rf $dout_f}/${runName}
+mkdir $dout_f}/${runName}
 rm -rf ${logName}
 mkdir ${logName}
 
@@ -51,7 +51,7 @@ do
   sample=$(echo $line | sed 's%.txt%%g')
   dataset=$(echo $sample | sed 's%_ID..*%%g')
   if [[ ! -d ${runName}/${dataset} ]]; then
-    mkdir ${runName}/${dataset}
+    mkdir ${dout_f}/${runName}/${dataset}
   fi
   linexsec=$(grep $dataset $fxsec)
   nowe=$(echo $linexsec | awk '{print $3}')
