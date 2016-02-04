@@ -8,7 +8,7 @@ echo "Don't forget to update the lumi and the maximum number of events to run on
 isdata=0
 lumi=2260
 
-cp /tmp/x509up_u8148 /home-pbs/nchanon/proxy/.
+cp /tmp/x509up_u6155 /home-pbs/lebihan/someone/proxy/.
 
 jName=${1}
 if [[ ${jName} == "" ]]; then
@@ -20,14 +20,14 @@ que="sbg_local"
 
 export HOME=$(pwd)
 
-dout="/home-pbs/nchanon/CMSSW_7_4_12_patch4/src/IPHCNtuple/NtupleAnalyzer/test/"
-dout_f="/home-pbs/nchanon/CMSSW_7_4_12_patch4/src/IPHCNtuple/NtupleAnalyzer/test/"
+dout="/home-pbs/lebihan/someone/clean/ttH/NtupleAnalyzer/test/"
+dout_f="/opt/sbg/scratch1/cms/lebihan/toto/"
 
 runName="toy_${jName}"
 logName="log_${jName}"
 
-rm -rf $dout_f}/${runName}
-mkdir $dout_f}/${runName}
+rm -rf ${dout_f}/${runName}
+mkdir ${dout_f}/${runName}
 rm -rf ${logName}
 mkdir ${logName}
 
@@ -77,13 +77,15 @@ do
   
   
   fout=`echo ${runName}/${dataset}/${line}_${jidx} | sed 's%.txt%%g'`
-  lout=$(echo ${line}_${jidx} | sed 's%.txt%%g')
+  lout=`echo ${line}_${jidx} | sed 's%.txt%%g'`
+  #fout=$(echo ${runName}/${dataset}/${line}_${jidx} | sed 's%.txt%%g')
+  #lout=$(echo ${line}_${jidx} | sed 's%.txt%%g')
 
   echo "${dataset}: $nowe $xsec $lumi"
   #echo "${fpath}${line}"
  
   qsub -N ${dir} -q ${que} -o ${logName}/${sample}.log -j oe single_batch_job.sh \
--v dout=${dout},line2=${fpath}${line},dout_f=$dout_f$,fout=${fout},nowe=${nowe},xsec=${xsec},lumi=${lumi},isdata=${isdata},dataset=${dataset},nmax=${nmax}
+-v dout=${dout},line2=${fpath}${line},dout_f=${dout_f},fout=${fout},nowe=${nowe},xsec=${xsec},lumi=${lumi},isdata=${isdata},dataset=${dataset},nmax=${nmax}
 done
 
 echo "going to sleep 2700 s (45 mn)"
