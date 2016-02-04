@@ -19,8 +19,6 @@ dout_f="/opt/sbg/scratch1/cms/lebihan/trees_Analyzer_akoula_patch2_01022016_pbs/
 runName="toy${jName}"
 logName="log${jName}"
 
-rm -rf ${runName}
-mkdir ${runName}
 rm -rf ${logName}
 mkdir ${logName}
 rm -rf ${dout_f}/${runName}
