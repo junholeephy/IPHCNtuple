@@ -173,6 +173,11 @@ void Tree::Init(TChain *ch)
     el_dB3D = 0;
     el_edB3D = 0;
     el_hasMatchedConversion = 0;
+    el_sigmaIetaIeta = 0;
+    el_superCluster_eta = 0;
+    el_correctedEcalEnergy = 0;
+    el_eSuperClusterOverP = 0;
+
 
    // ####################################
    // #   __  __                         #
@@ -941,6 +946,10 @@ void Tree::Init(TChain *ch)
     //fChain->SetBranchAddress("el_dB3D", &el_dB3D, &b_el_dB3D);
     //fChain->SetBranchAddress("el_edB3D", &el_edB3D, &b_el_edB3D);
     fChain->SetBranchAddress("el_hasMatchedConversion", &el_hasMatchedConversion, &b_el_hasMatchedConversion);
+    fChain->SetBranchAddress("el_sigmaIetaIeta", &el_sigmaIetaIeta, &b_el_sigmaIetaIeta);
+    fChain->SetBranchAddress("el_superCluster_eta", &el_superCluster_eta, &b_el_superCluster_eta);
+    fChain->SetBranchAddress("el_correctedEcalEnergy", &el_correctedEcalEnergy, &b_el_correctedEcalEnergy);
+    fChain->SetBranchAddress("el_eSuperClusterOverP", &el_eSuperClusterOverP, &b_el_eSuperClusterOverP);
 
    // ####################################
    // #   __  __                         #

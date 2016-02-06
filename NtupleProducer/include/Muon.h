@@ -60,10 +60,10 @@ class Muon : public Base
         float lepMVA_dxy()         {return _lepMVA_dxy;};
         float lepMVA_dz()          {return _lepMVA_dz;};
         float lepMVA_mvaId()       {return _lepMVA_mvaId;};
-        float lepMVA_eta()                  {return _lepMVA_eta;};		 
+        float lepMVA_eta()                  {return _lepMVA_eta;};
         float lepMVA_jetNDauChargedMVASel() {return _lepMVA_jetNDauChargedMVASel;};
-        float lepMVA_Moriond16()            {return _lepMVA_Moriond16;};	 
-      
+        float lepMVA_Moriond16()            {return _lepMVA_Moriond16;};
+
         // Other variables
         bool passChargeFlip()      {return _passChargeFlip;};
         bool hasInnerTrack()       {return _hasInnerTrack;};
@@ -73,8 +73,6 @@ class Muon : public Base
 
         float dB3D()               {return _dB3D;};
         float edB3D()              {return _edB3D;};
-
-        float effectiveArea(int dr,float eta);
 
     protected:
 
@@ -119,11 +117,11 @@ class Muon : public Base
         float _lepMVA_dxy;
         float _lepMVA_dz;
         float _lepMVA_mvaId;
-	
+
         float _lepMVA_eta;
         float _lepMVA_jetNDauChargedMVASel;
         float _lepMVA_Moriond16;
-      
+
         // Other variables
         bool _passChargeFlip;
         bool _hasInnerTrack;
