@@ -34,16 +34,21 @@ class TTbarHiggsMultileptonAnalysis
         void createHistograms();
         void writeHistograms();
 
+        void TwoLeptonsSameSignSelection_TTH2l(int evt);
+
+        void TwoLeptonsSameSignSelection_LepMVA_sideband(int evt);
+        void TwoLeptonsSameSignSelection_JetMultiplicity_sideband(int evt);
+        void TwoLeptonsSameSignSelection_TT_CR(int evt);
 
         void ThreeLeptonSelection_TTH3l(int evt);
-        bool ThreeLeptonSelection_TTH3l_MC();
 
         void ThreeLeptonSelection_CR_WZ(int evt);
         void ThreeLeptonSelection_CR_WZrelaxed(int evt);
-        void ThreeLeptonSelection_CR_TTl(int evt);
+        void ThreeLeptonSelection_TTZ(int evt);
+
         void ThreeLeptonSelection_CR_Zl(int evt);
 
-        void ThreeLeptonSelection_TTZ(int evt);
+        bool ThreeLeptonSelection_TTH3l_MC();
 
 
         TChain *fChain;   //!pointer to the analyzed TTree or TChain
@@ -71,12 +76,17 @@ class TTbarHiggsMultileptonAnalysis
         int nLooseBJets;
         int nMediumBJets;
 
-        bool is_TTH3l;    // TTH 3l analysis
-        bool is_CR_TTl;   // TTbar CR w/ 3l (one fake lepton)
-        bool is_CR_WZ;    // WZ CR w/ 3l (selected) or more, no b-jets, Z peak
-        bool is_CR_WZrel; // WZ CR w/ 3l (loose) or more, no medium b-jets, Z peak
-        bool is_CR_Zl;    // Drell-Yan CR w/ 3l (one fake lepton)
-        bool is_TTZ;      // TTZ 3l analysis (for the future..)
+        bool is_2lss_TTH_SR;
+        bool is_2lss_JM_SB;
+        bool is_2lss_LepMVA_SB;
+        bool is_2lss_TT_CR;
+
+        bool is_3l_TTH_SR;    // TTH 3l analysis
+        bool is_3l_WZ_CR;     // WZ CR w/ 3l (selected) or more, no b-jets, Z peak
+        bool is_3l_WZrel_CR;  // WZ CR w/ 3l (loose) or more, no medium b-jets, Z peak
+        bool is_3l_TTZ_CR;    // TTZ 3l analysis (for the future..)
+
+        bool is_CR_Zl;
 
         bool is_trigger;
 

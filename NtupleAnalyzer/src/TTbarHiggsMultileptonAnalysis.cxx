@@ -105,6 +105,65 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("JetCSVv2",                                    "noSel",        "",   "",   20,   0,     1);
     theHistoManager->addHisto("MET",                                         "noSel",        "",   "",   50,   0,   200);
 
+    // Signal Region Two Leptons
+
+    theHistoManager->addHisto2D("SelectedLeptonsVsJets",           "noSel",   "ttH2lss",   "",    8,    0,    7,    8,    0,    7);
+    theHistoManager->addHisto2D("SelectedLeptonsVsBJets",          "noSel",   "ttH2lss",   "",    8,    0,    7,    8,    0,    7);
+
+    theHistoManager->addHisto("CutFlow",                          "FullThreeLeptons",   "ttH2lss",   "",    10,   -1,    9);
+
+    theHistoManager->addHisto("CutFlow",                          "FullThreeLeptons",   "ttH2lee",   "",    10,   -1,    9);
+    theHistoManager->addHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "ttH2lee",   "",    20,    0,  200);
+    theHistoManager->addHisto("SubLeadingLeptonPt",               "FullThreeLeptons",   "ttH2lee",   "",    20,    0,  200);
+    theHistoManager->addHisto("MET",                              "FullThreeLeptons",   "ttH2lee",   "",    20,    0,  200);
+    theHistoManager->addHisto("MHT",                              "FullThreeLeptons",   "ttH2lee",   "",    20,    0,  200);
+    theHistoManager->addHisto("MetLD",                            "FullThreeLeptons",   "ttH2lee",   "",    15, -0.2,  1.4);
+    theHistoManager->addHisto("TauMultiplicity",                  "FullThreeLeptons",   "ttH2lee",   "",    10,   -1,    9);
+    theHistoManager->addHisto("JetMultiplicity",                  "FullThreeLeptons",   "ttH2lee",   "",    10,   -1,    9);
+    theHistoManager->addHisto("LooseBJetMultiplicity",            "FullThreeLeptons",   "ttH2lee",   "",    10,   -1,    9);
+    theHistoManager->addHisto("MediumBJetMultiplicity",           "FullThreeLeptons",   "ttH2lee",   "",    10,   -1,    9);
+    theHistoManager->addHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "ttH2lee",   "",    10,   -1,    9);
+
+    theHistoManager->addHisto("CutFlow",                          "FullThreeLeptons",   "ttH2lem",   "",    10,   -1,    9);
+    theHistoManager->addHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "ttH2lem",   "",    20,    0,  200);
+    theHistoManager->addHisto("SubLeadingLeptonPt",               "FullThreeLeptons",   "ttH2lem",   "",    20,    0,  200);
+    theHistoManager->addHisto("MET",                              "FullThreeLeptons",   "ttH2lem",   "",    20,    0,  200);
+    theHistoManager->addHisto("MHT",                              "FullThreeLeptons",   "ttH2lem",   "",    20,    0,  200);
+    theHistoManager->addHisto("MetLD",                            "FullThreeLeptons",   "ttH2lem",   "",    15, -0.2,  1.4);
+    theHistoManager->addHisto("TauMultiplicity",                  "FullThreeLeptons",   "ttH2lem",   "",    10,   -1,    9);
+    theHistoManager->addHisto("JetMultiplicity",                  "FullThreeLeptons",   "ttH2lem",   "",    10,   -1,    9);
+    theHistoManager->addHisto("LooseBJetMultiplicity",            "FullThreeLeptons",   "ttH2lem",   "",    10,   -1,    9);
+    theHistoManager->addHisto("MediumBJetMultiplicity",           "FullThreeLeptons",   "ttH2lem",   "",    10,   -1,    9);
+    theHistoManager->addHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "ttH2lem",   "",    10,   -1,    9);
+
+    theHistoManager->addHisto("CutFlow",                          "FullThreeLeptons",   "ttH2lmm",   "",    10,   -1,    9);
+    theHistoManager->addHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "ttH2lmm",   "",    20,    0,  200);
+    theHistoManager->addHisto("SubLeadingLeptonPt",               "FullThreeLeptons",   "ttH2lmm",   "",    20,    0,  200);
+    theHistoManager->addHisto("MET",                              "FullThreeLeptons",   "ttH2lmm",   "",    20,    0,  200);
+    theHistoManager->addHisto("MHT",                              "FullThreeLeptons",   "ttH2lmm",   "",    20,    0,  200);
+    theHistoManager->addHisto("MetLD",                            "FullThreeLeptons",   "ttH2lmm",   "",    15, -0.2,  1.4);
+    theHistoManager->addHisto("TauMultiplicity",                  "FullThreeLeptons",   "ttH2lmm",   "",    10,   -1,    9);
+    theHistoManager->addHisto("JetMultiplicity",                  "FullThreeLeptons",   "ttH2lmm",   "",    10,   -1,    9);
+    theHistoManager->addHisto("LooseBJetMultiplicity",            "FullThreeLeptons",   "ttH2lmm",   "",    10,   -1,    9);
+    theHistoManager->addHisto("MediumBJetMultiplicity",           "FullThreeLeptons",   "ttH2lmm",   "",    10,   -1,    9);
+    theHistoManager->addHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "ttH2lmm",   "",    10,   -1,    9);
+
+    // TT variables
+
+    theHistoManager->addHisto2D("SelectedLeptonsVsJets",           "noSel",   "TT_2l_CR",   "",    8,    0,    7,    8,    0,    7);
+    theHistoManager->addHisto2D("SelectedLeptonsVsBJets",          "noSel",   "TT_2l_CR",   "",    8,    0,    7,    8,    0,    7);
+
+    theHistoManager->addHisto("CutFlow",                          "FullThreeLeptons",   "TT_2l_CR",   "",    10,   -1,    9);
+    theHistoManager->addHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "TT_2l_CR",   "",    20,    0,  200);
+    theHistoManager->addHisto("SubLeadingLeptonPt",               "FullThreeLeptons",   "TT_2l_CR",   "",    20,    0,  200);
+    theHistoManager->addHisto("MET",                              "FullThreeLeptons",   "TT_2l_CR",   "",    20,    0,  200);
+    theHistoManager->addHisto("MetLD",                            "FullThreeLeptons",   "TT_2l_SB",   "",    15, -0.2,  1.4);
+    theHistoManager->addHisto("TauMultiplicity",                  "FullThreeLeptons",   "TT_2l_CR",   "",    10,   -1,    9);
+    theHistoManager->addHisto("JetMultiplicity",                  "FullThreeLeptons",   "TT_2l_CR",   "",    10,   -1,    9);
+    theHistoManager->addHisto("LooseBJetMultiplicity",            "FullThreeLeptons",   "TT_2l_CR",   "",    10,   -1,    9);
+    theHistoManager->addHisto("MediumBJetMultiplicity",           "FullThreeLeptons",   "TT_2l_CR",   "",    10,   -1,    9);
+    theHistoManager->addHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "TT_2l_CR",   "",    10,   -1,    9);
+
     // Signal Region Three Leptons
 
     theHistoManager->addHisto("CutFlow",                          "FullThreeLeptons",   "ttH3l",   "",   10,   -1,    9);
@@ -402,12 +461,15 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         vSelectedMediumBTagJets.clear();
         vSelectedJets.clear();
 
-        is_CR_TTl   = false;
-        is_CR_WZ    = false; 
-        is_CR_WZrel = false;
-        is_CR_Zl    = false;
-        is_TTZ      = false;
-        is_TTH3l    = false;
+        is_2lss_TTH_SR    = false;
+        is_2lss_JM_SB     = false;
+        is_2lss_LepMVA_SB = false;
+        is_2lss_TT_CR     = false;
+
+        is_3l_TTH_SR      = false;
+        is_3l_WZ_CR       = false; 
+        is_3l_WZrel_CR    = false;
+        is_3l_TTZ_CR      = false;
 
         //---------------------------
         //trigger
@@ -516,17 +578,21 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         //---------------------------
         //Selection for signal and control regions
         //---------------------------
-        
+       
+        TwoLeptonsSameSignSelection_TTH2l(jentry);
+        //TwoLeptonsSameSignSelection_LepMVA_sideband(jentry);
+        //TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
+        TwoLeptonsSameSignSelection_TT_CR(jentry);
+
         ThreeLeptonSelection_TTH3l(jentry);
         ThreeLeptonSelection_CR_WZ(jentry);
         ThreeLeptonSelection_CR_WZrelaxed(jentry);
         ThreeLeptonSelection_CR_Zl(jentry);
-        ThreeLeptonSelection_CR_TTl(jentry);
         ThreeLeptonSelection_TTZ(jentry);
 
         //std::cout <<is_CR_TTl<<" "<< is_CR_Zl <<" " << is_CR_WZ<<" " << is_TTH3l<< std::endl;
         //if (is_TTH3l==true ) std::cout <<"is_TTH3l" << std::endl;
-        if ( is_CR_TTl || is_CR_Zl || is_TTH3l || is_TTZ ) fillOutputTree();
+        if ( is_3l_TTH_SR || is_3l_WZ_CR || is_3l_WZrel_CR || is_3l_TTZ_CR ) fillOutputTree();
 
         //---------------------------
         //Madweight LHCO stuff
@@ -535,6 +601,528 @@ void TTbarHiggsMultileptonAnalysis::Loop()
     }
 
 }
+
+void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
+{
+
+    theHistoManager->fillHisto2D("SelectedLeptonsVsJets",           "noSel",   "ttH2lss",   "",    vSelectedLeptons.size(),   vSelectedJets.size(),      weight);
+    theHistoManager->fillHisto2D("SelectedLeptonsVsBJets",          "noSel",   "ttH2lss",   "",    vSelectedLeptons.size(),   vSelectedBTagJets.size(),  weight);
+
+    if(weight==0)         return; // For data not passing the relevant trigger, clean up the histograms from events with weight 0)
+
+    // ####################
+    // # Common selection #
+    // ####################
+
+    bool nLep               = ( vSelectedLeptons.size()                   == 2 );
+    if(!nLep)               return;
+
+    bool leading_lep_pt     = ( vSelectedLeptons.at(0).pt()               > 20 );
+    if(!leading_lep_pt)     return;
+
+    //bool following_lep_pt   = ( vSelectedLeptons.at(1).pt()               > 10 );
+    bool following_lep_pt   = (  ( (abs(vSelectedLeptons.at(1).id()) == 11) && (vSelectedLeptons.at(1).pt() > 15) )
+                              || ( (abs(vSelectedLeptons.at(1).id()) == 13) && (vSelectedLeptons.at(1).pt() > 10) ) );
+    if(!following_lep_pt)   return;
+
+    bool passMll12Gt12      = ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M()  > 12);
+    if(!passMll12Gt12)      return;
+
+    bool nJets              = ( vSelectedJets.size()                      >= 4 );
+    if(!nJets)              return;
+
+    bool nLooseBtag         = ( nLooseBJets                               >= 2 );
+    bool nMediumBtag        = ( nMediumBJets                              >= 1 );
+    if(!nLooseBtag && !nMediumBtag)      return;
+
+
+    // ###############################
+    // # Two leptons event selection #
+    // ###############################
+
+    // ##########
+    // # Z veto #
+    // ##########
+
+    bool pass_Zveto = true;
+    for(int i=0; i<vSelectedLeptons.size(); i++)
+    {
+        for(int j=0; j<vSelectedLeptons.size(); j++)
+        {
+            if (  ( i                           != j                                                       )
+               && ( vSelectedLeptons.at(i).id() == -vSelectedLeptons.at(j).id()                            )
+               && ( fabs( ( vSelectedLeptons.at(i).p4() + vSelectedLeptons.at(j).p4() ).M() - 91.188) < 10 ) )
+                { pass_Zveto = false ;}
+        }
+    }
+    
+    theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH2lss",   "",   2, weight);
+
+    // ##########
+    // # MET LD #
+    // ##########
+
+    float jet_px = 0, jet_py = 0, lepton_px = 0, lepton_py = 0, MHT = 0, met_ld = 0;
+
+    TLorentzVector jetp4;
+    for(int i=0; i<vSelectedJets.size(); i++)
+    {
+        jetp4.SetPtEtaPhiE(vSelectedJets.at(i).pt(), vSelectedJets.at(i).eta(), vSelectedJets.at(i).phi(), vSelectedJets.at(i).E());
+        jet_px = jet_px + jetp4.Px();
+        jet_py = jet_py + jetp4.Py();
+    }
+
+    for(int i=0; i<vSelectedLeptons.size(); i++)
+    {
+        lepton_px = lepton_px + vSelectedLeptons.at(i).p4().Px();
+        lepton_py = lepton_py + vSelectedLeptons.at(i).p4().Py();
+    }
+
+    MHT = sqrt( (jet_px + lepton_px) * (jet_px + lepton_px) + (jet_py + lepton_py) * (jet_py + lepton_py) );
+
+    met_ld = 0.00397 * vEvent->at(0).metpt() + 0.00265 * MHT;
+
+    if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH2lss", _sampleName.Data(),   3, weight);
+
+    if(  (abs(vSelectedLeptons.at(0).id()) == 11)
+      && (abs(vSelectedLeptons.at(1).id()) == 11)
+      && (pass_Zveto                            )
+      && (met_ld                           > 0.2) // remaining conditions for ee       
+      )
+    {
+        theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "ttH2lee",   "", 8                              , weight);
+
+        theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "ttH2lee",   "", vSelectedLeptons.at(0).pt()    , weight);
+        theHistoManager->fillHisto("SubLeadingLeptonPt",               "FullThreeLeptons",   "ttH2lee",   "", vSelectedLeptons.at(1).pt()    , weight);
+        theHistoManager->fillHisto("MET",                              "FullThreeLeptons",   "ttH2lee",   "", vEvent->at(0).metpt()          , weight);
+        theHistoManager->fillHisto("MHT",                              "FullThreeLeptons",   "ttH2lee",   "", MHT                            , weight);
+        theHistoManager->fillHisto("MetLD",                            "FullThreeLeptons",   "ttH2lee",   "", met_ld                         , weight);
+        theHistoManager->fillHisto("TauMultiplicity",                  "FullThreeLeptons",   "ttH2lee",   "", vSelectedTaus.size()           , weight);
+        theHistoManager->fillHisto("JetMultiplicity",                  "FullThreeLeptons",   "ttH2lee",   "", vSelectedJets.size()           , weight);
+        theHistoManager->fillHisto("LooseBJetMultiplicity",            "FullThreeLeptons",   "ttH2lee",   "", vSelectedBTagJets.size()       , weight);
+        theHistoManager->fillHisto("MediumBJetMultiplicity",           "FullThreeLeptons",   "ttH2lee",   "", vSelectedMediumBTagJets.size() , weight);
+        theHistoManager->fillHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "ttH2lee",   "", vSelectedLeptons.size()        , weight);
+    }
+
+    if(  ( (abs(vSelectedLeptons.at(0).id()) == 11) && (abs(vSelectedLeptons.at(1).id()) == 13) )
+      || ( (abs(vSelectedLeptons.at(0).id()) == 13) && (abs(vSelectedLeptons.at(1).id()) == 11) ) // smarter way to do is probably exists
+      && true                                      // remaining conditions for ee       
+      )
+    {
+        theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "ttH2lem",   "", 8                              , weight);
+
+        theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "ttH2lem",   "", vSelectedLeptons.at(0).pt()    , weight);
+        theHistoManager->fillHisto("SubLeadingLeptonPt",               "FullThreeLeptons",   "ttH2lem",   "", vSelectedLeptons.at(1).pt()    , weight);
+        theHistoManager->fillHisto("MET",                              "FullThreeLeptons",   "ttH2lem",   "", vEvent->at(0).metpt()          , weight);
+        theHistoManager->fillHisto("MHT",                              "FullThreeLeptons",   "ttH2lem",   "", MHT                            , weight);
+        theHistoManager->fillHisto("MetLD",                            "FullThreeLeptons",   "ttH2lem",   "", met_ld                         , weight);
+        theHistoManager->fillHisto("TauMultiplicity",                  "FullThreeLeptons",   "ttH2lem",   "", vSelectedTaus.size()           , weight);
+        theHistoManager->fillHisto("JetMultiplicity",                  "FullThreeLeptons",   "ttH2lem",   "", vSelectedJets.size()           , weight);
+        theHistoManager->fillHisto("LooseBJetMultiplicity",            "FullThreeLeptons",   "ttH2lem",   "", vSelectedBTagJets.size()       , weight);
+        theHistoManager->fillHisto("MediumBJetMultiplicity",           "FullThreeLeptons",   "ttH2lem",   "", vSelectedMediumBTagJets.size() , weight);
+        theHistoManager->fillHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "ttH2lem",   "", vSelectedLeptons.size()        , weight);
+    }
+
+    if(  (abs(vSelectedLeptons.at(0).id()) == 13)
+      && (abs(vSelectedLeptons.at(1).id()) == 13)
+      && true                                      // remaining conditions for ee       
+      )
+    {
+        theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "ttH2lmm",   "", 8                              , weight);
+
+        theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "ttH2lmm",   "", vSelectedLeptons.at(0).pt()    , weight);
+        theHistoManager->fillHisto("SubLeadingLeptonPt",               "FullThreeLeptons",   "ttH2lmm",   "", vSelectedLeptons.at(1).pt()    , weight);
+        theHistoManager->fillHisto("MET",                              "FullThreeLeptons",   "ttH2lmm",   "", vEvent->at(0).metpt()          , weight);
+        theHistoManager->fillHisto("MHT",                              "FullThreeLeptons",   "ttH2lmm",   "", MHT                            , weight);
+        theHistoManager->fillHisto("MetLD",                            "FullThreeLeptons",   "ttH2lmm",   "", met_ld                         , weight);
+        theHistoManager->fillHisto("TauMultiplicity",                  "FullThreeLeptons",   "ttH2lmm",   "", vSelectedTaus.size()           , weight);
+        theHistoManager->fillHisto("JetMultiplicity",                  "FullThreeLeptons",   "ttH2lmm",   "", vSelectedJets.size()           , weight);
+        theHistoManager->fillHisto("LooseBJetMultiplicity",            "FullThreeLeptons",   "ttH2lmm",   "", vSelectedBTagJets.size()       , weight);
+        theHistoManager->fillHisto("MediumBJetMultiplicity",           "FullThreeLeptons",   "ttH2lmm",   "", vSelectedMediumBTagJets.size() , weight);
+        theHistoManager->fillHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "ttH2lmm",   "", vSelectedLeptons.size()        , weight);
+    }
+
+    is_2lss_TTH_SR = true;   
+
+    //fillOutputTree();
+
+    if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
+}
+
+void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_LepMVA_sideband(int evt)
+{
+
+    theHistoManager->fillHisto2D("SelectedLeptonsVsJets",           "noSel",   "LepMVA_2l_SB",   "",    vSelectedLeptons.size(),   vSelectedJets.size(),      weight);
+    theHistoManager->fillHisto2D("SelectedLeptonsVsBJets",          "noSel",   "LepMVA_2l_SB",   "",    vSelectedLeptons.size(),   vSelectedBTagJets.size(),  weight);
+
+    if(weight==0)         return; // For data not passing the relevant trigger, clean up the histograms from events with weight 0)
+
+    // ####################
+    // # Common selection #
+    // ####################
+
+    bool nLep               = ( vSelectedLeptons.size()                   == 2 );
+    if(!nLep)               return;
+
+    bool leading_lep_pt     = ( vSelectedLeptons.at(0).pt()               > 20 );
+    if(!leading_lep_pt)     return;
+
+    //bool following_lep_pt   = ( vSelectedLeptons.at(1).pt()               > 10 );
+    bool following_lep_pt   = (  ( (abs(vSelectedLeptons.at(1).id()) == 11) && (vSelectedLeptons.at(1).pt() > 15) )
+                              || ( (abs(vSelectedLeptons.at(1).id()) == 13) && (vSelectedLeptons.at(1).pt() > 10) ) );
+    if(!following_lep_pt)   return;
+
+    bool passMll12Gt12      = ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M()  > 12);
+    if(!passMll12Gt12)      return;
+
+    bool nJets              = ( vSelectedJets.size()                      >= 4 );
+    if(!nJets)              return;
+
+    bool nLooseBtag         = ( nLooseBJets                               >= 2 );
+    bool nMediumBtag        = ( nMediumBJets                              >= 1 );
+    if(!nLooseBtag && !nMediumBtag)      return;
+
+
+    // ###############################
+    // # Two leptons event selection #
+    // ###############################
+
+    // ##########
+    // # Z veto #
+    // ##########
+
+    bool pass_Zveto = true;
+    for(int i=0; i<vSelectedLeptons.size(); i++)
+    {
+        for(int j=0; j<vSelectedLeptons.size(); j++)
+        {
+            if (  ( i                           != j                                                       )
+               && ( vSelectedLeptons.at(i).id() == -vSelectedLeptons.at(j).id()                            )
+               && ( fabs( ( vSelectedLeptons.at(i).p4() + vSelectedLeptons.at(j).p4() ).M() - 91.188) < 10 ) )
+                { pass_Zveto = false ;}
+        }
+    }
+    
+    theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "LepMVA_2l_SB",   "",   2, weight);
+
+    // ##########
+    // # MET LD #
+    // ##########
+
+    float jet_px = 0, jet_py = 0, lepton_px = 0, lepton_py = 0, MHT = 0, met_ld = 0;
+
+    TLorentzVector jetp4;
+    for(int i=0; i<vSelectedJets.size(); i++)
+    {
+        jetp4.SetPtEtaPhiE(vSelectedJets.at(i).pt(), vSelectedJets.at(i).eta(), vSelectedJets.at(i).phi(), vSelectedJets.at(i).E());
+        jet_px = jet_px + jetp4.Px();
+        jet_py = jet_py + jetp4.Py();
+    }
+
+    for(int i=0; i<vSelectedLeptons.size(); i++)
+    {
+        lepton_px = lepton_px + vSelectedLeptons.at(i).p4().Px();
+        lepton_py = lepton_py + vSelectedLeptons.at(i).p4().Py();
+    }
+
+    MHT = sqrt( (jet_px + lepton_px) * (jet_px + lepton_px) + (jet_py + lepton_py) * (jet_py + lepton_py) );
+
+    met_ld = 0.00397 * vEvent->at(0).metpt() + 0.00265 * MHT;
+
+    if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "LepMVA_2l_SB", _sampleName.Data(),   3, weight);
+
+    if(  (abs(vSelectedLeptons.at(0).id()) == 11)
+      && (abs(vSelectedLeptons.at(1).id()) == 11)
+      && (pass_Zveto                            )
+      && (met_ld                           > 0.2) // remaining conditions for ee       
+      )
+    {
+        theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "LepMVA_2l_SB",   "", 8                              , weight);
+
+        theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedLeptons.at(0).pt()    , weight);
+        theHistoManager->fillHisto("SubLeadingLeptonPt",               "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedLeptons.at(1).pt()    , weight);
+        theHistoManager->fillHisto("MET",                              "FullThreeLeptons",   "LepMVA_2l_SB",   "", vEvent->at(0).metpt()          , weight);
+        theHistoManager->fillHisto("MHT",                              "FullThreeLeptons",   "LepMVA_2l_SB",   "", MHT                            , weight);
+        theHistoManager->fillHisto("MetLD",                            "FullThreeLeptons",   "LepMVA_2l_SB",   "", met_ld                         , weight);
+        theHistoManager->fillHisto("TauMultiplicity",                  "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedTaus.size()           , weight);
+        theHistoManager->fillHisto("JetMultiplicity",                  "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedJets.size()           , weight);
+        theHistoManager->fillHisto("LooseBJetMultiplicity",            "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedBTagJets.size()       , weight);
+        theHistoManager->fillHisto("MediumBJetMultiplicity",           "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedMediumBTagJets.size() , weight);
+        theHistoManager->fillHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedLeptons.size()        , weight);
+    }
+
+    if(  ( (abs(vSelectedLeptons.at(0).id()) == 11) && (abs(vSelectedLeptons.at(1).id()) == 13) )
+      || ( (abs(vSelectedLeptons.at(0).id()) == 13) && (abs(vSelectedLeptons.at(1).id()) == 11) ) // smarter way to do is probably exists
+      && true                                      // remaining conditions for ee       
+      )
+    {
+        theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "LepMVA_2l_SB",   "", 8                              , weight);
+
+        theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedLeptons.at(0).pt()    , weight);
+        theHistoManager->fillHisto("SubLeadingLeptonPt",               "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedLeptons.at(1).pt()    , weight);
+        theHistoManager->fillHisto("MET",                              "FullThreeLeptons",   "LepMVA_2l_SB",   "", vEvent->at(0).metpt()          , weight);
+        theHistoManager->fillHisto("MHT",                              "FullThreeLeptons",   "LepMVA_2l_SB",   "", MHT                            , weight);
+        theHistoManager->fillHisto("MetLD",                            "FullThreeLeptons",   "LepMVA_2l_SB",   "", met_ld                         , weight);
+        theHistoManager->fillHisto("TauMultiplicity",                  "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedTaus.size()           , weight);
+        theHistoManager->fillHisto("JetMultiplicity",                  "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedJets.size()           , weight);
+        theHistoManager->fillHisto("LooseBJetMultiplicity",            "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedBTagJets.size()       , weight);
+        theHistoManager->fillHisto("MediumBJetMultiplicity",           "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedMediumBTagJets.size() , weight);
+        theHistoManager->fillHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedLeptons.size()        , weight);
+    }
+
+    if(  (abs(vSelectedLeptons.at(0).id()) == 13)
+      && (abs(vSelectedLeptons.at(1).id()) == 13)
+      && true                                      // remaining conditions for ee       
+      )
+    {
+        theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "LepMVA_2l_SB",   "", 8                              , weight);
+
+        theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedLeptons.at(0).pt()    , weight);
+        theHistoManager->fillHisto("SubLeadingLeptonPt",               "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedLeptons.at(1).pt()    , weight);
+        theHistoManager->fillHisto("MET",                              "FullThreeLeptons",   "LepMVA_2l_SB",   "", vEvent->at(0).metpt()          , weight);
+        theHistoManager->fillHisto("MHT",                              "FullThreeLeptons",   "LepMVA_2l_SB",   "", MHT                            , weight);
+        theHistoManager->fillHisto("MetLD",                            "FullThreeLeptons",   "LepMVA_2l_SB",   "", met_ld                         , weight);
+        theHistoManager->fillHisto("TauMultiplicity",                  "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedTaus.size()           , weight);
+        theHistoManager->fillHisto("JetMultiplicity",                  "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedJets.size()           , weight);
+        theHistoManager->fillHisto("LooseBJetMultiplicity",            "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedBTagJets.size()       , weight);
+        theHistoManager->fillHisto("MediumBJetMultiplicity",           "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedMediumBTagJets.size() , weight);
+        theHistoManager->fillHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "LepMVA_2l_SB",   "", vSelectedLeptons.size()        , weight);
+    }
+
+    is_2lss_LepMVA_SB = true;   
+
+    //fillOutputTree();
+
+    if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
+}
+
+void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_JetMultiplicity_sideband(int evt)
+{
+
+    theHistoManager->fillHisto2D("SelectedLeptonsVsJets",           "noSel",   "JM_2l_SB",   "",    vSelectedLeptons.size(),   vSelectedJets.size(),      weight);
+    theHistoManager->fillHisto2D("SelectedLeptonsVsBJets",          "noSel",   "JM_2l_SB",   "",    vSelectedLeptons.size(),   vSelectedBTagJets.size(),  weight);
+
+    if(weight==0)         return; // For data not passing the relevant trigger, clean up the histograms from events with weight 0)
+
+    // ####################
+    // # Common selection #
+    // ####################
+
+    bool nLep               = ( vSelectedLeptons.size()                   == 2 );
+    if(!nLep)               return;
+
+    bool leading_lep_pt     = ( vSelectedLeptons.at(0).pt()               > 20 );
+    if(!leading_lep_pt)     return;
+
+    bool following_lep_pt   = (  ( (abs(vSelectedLeptons.at(1).id()) == 11) && (vSelectedLeptons.at(1).pt() > 15) )
+                         || ( (abs(vSelectedLeptons.at(1).id()) == 13) && (vSelectedLeptons.at(1).pt() > 10) ) );
+    if(!following_lep_pt)   return;
+
+    bool passMll12Gt12      = ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M()  > 12);
+    if(!passMll12Gt12)      return;
+
+    bool nJets              = ( vSelectedJets.size()                      == 3 );
+    if(!nJets)              return;
+
+    bool nLooseBtag         = ( nLooseBJets                               >= 2 );
+    bool nMediumBtag        = ( nMediumBJets                              >= 1 );
+    if(!nLooseBtag && !nMediumBtag)      return;
+
+
+    // ###############################
+    // # Two leptons event selection #
+    // ###############################
+
+    // ##########
+    // # Z veto #
+    // ##########
+
+    bool pass_Zveto = true;
+    for(int i=0; i<vSelectedLeptons.size(); i++)
+    {
+        for(int j=0; j<vSelectedLeptons.size(); j++)
+        {
+            if (  ( i                           != j                                                       )
+               && ( vSelectedLeptons.at(i).id() == -vSelectedLeptons.at(j).id()                            )
+               && ( fabs( ( vSelectedLeptons.at(i).p4() + vSelectedLeptons.at(j).p4() ).M() - 91.188) < 10 ) )
+                { pass_Zveto = false ;}
+        }
+    }
+    
+    theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "JM_2l_SB",   "",   2, weight);
+
+    // ##########
+    // # MET LD #
+    // ##########
+
+    float jet_px = 0, jet_py = 0, lepton_px = 0, lepton_py = 0, MHT = 0, met_ld = 0;
+
+    TLorentzVector jetp4;
+    for(int i=0; i<vSelectedJets.size(); i++)
+    {
+        jetp4.SetPtEtaPhiE(vSelectedJets.at(i).pt(), vSelectedJets.at(i).eta(), vSelectedJets.at(i).phi(), vSelectedJets.at(i).E());
+        jet_px = jet_px + jetp4.Px();
+        jet_py = jet_py + jetp4.Py();
+    }
+
+    for(int i=0; i<vSelectedLeptons.size(); i++)
+    {
+        lepton_px = lepton_px + vSelectedLeptons.at(i).p4().Px();
+        lepton_py = lepton_py + vSelectedLeptons.at(i).p4().Py();
+    }
+
+    MHT = sqrt( (jet_px + lepton_px) * (jet_px + lepton_px) + (jet_py + lepton_py) * (jet_py + lepton_py) );
+
+    met_ld = 0.00397 * vEvent->at(0).metpt() + 0.00265 * MHT;
+
+    if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "JM_2l_SB", _sampleName.Data(),   3, weight);
+
+    if(  (abs(vSelectedLeptons.at(0).id()) == 11)
+      && (abs(vSelectedLeptons.at(1).id()) == 11)
+      && (pass_Zveto                            )
+      && (met_ld                           > 0.2) // remaining conditions for ee       
+      )
+    {
+        theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "JM_2l_SB",   "", 8                              , weight);
+
+        theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedLeptons.at(0).pt()    , weight);
+        theHistoManager->fillHisto("SubLeadingLeptonPt",               "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedLeptons.at(1).pt()    , weight);
+        theHistoManager->fillHisto("MET",                              "FullThreeLeptons",   "JM_2l_SB",   "", vEvent->at(0).metpt()          , weight);
+        theHistoManager->fillHisto("MHT",                              "FullThreeLeptons",   "JM_2l_SB",   "", MHT                            , weight);
+        theHistoManager->fillHisto("MetLD",                            "FullThreeLeptons",   "JM_2l_SB",   "", met_ld                         , weight);
+        theHistoManager->fillHisto("TauMultiplicity",                  "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedTaus.size()           , weight);
+        theHistoManager->fillHisto("JetMultiplicity",                  "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedJets.size()           , weight);
+        theHistoManager->fillHisto("LooseBJetMultiplicity",            "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedBTagJets.size()       , weight);
+        theHistoManager->fillHisto("MediumBJetMultiplicity",           "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedMediumBTagJets.size() , weight);
+        theHistoManager->fillHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedLeptons.size()        , weight);
+    }
+
+    if(  ( (abs(vSelectedLeptons.at(0).id()) == 11) && (abs(vSelectedLeptons.at(1).id()) == 13) )
+      || ( (abs(vSelectedLeptons.at(0).id()) == 13) && (abs(vSelectedLeptons.at(1).id()) == 11) ) // smarter way to do is probably exists
+      && true                                      // remaining conditions for ee       
+      )
+    {
+        theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "JM_2l_SB",   "", 8                              , weight);
+
+        theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedLeptons.at(0).pt()    , weight);
+        theHistoManager->fillHisto("SubLeadingLeptonPt",               "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedLeptons.at(1).pt()    , weight);
+        theHistoManager->fillHisto("MET",                              "FullThreeLeptons",   "JM_2l_SB",   "", vEvent->at(0).metpt()          , weight);
+        theHistoManager->fillHisto("MHT",                              "FullThreeLeptons",   "JM_2l_SB",   "", MHT                            , weight);
+        theHistoManager->fillHisto("MetLD",                            "FullThreeLeptons",   "JM_2l_SB",   "", met_ld                         , weight);
+        theHistoManager->fillHisto("TauMultiplicity",                  "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedTaus.size()           , weight);
+        theHistoManager->fillHisto("JetMultiplicity",                  "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedJets.size()           , weight);
+        theHistoManager->fillHisto("LooseBJetMultiplicity",            "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedBTagJets.size()       , weight);
+        theHistoManager->fillHisto("MediumBJetMultiplicity",           "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedMediumBTagJets.size() , weight);
+        theHistoManager->fillHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedLeptons.size()        , weight);
+    }
+
+    if(  (abs(vSelectedLeptons.at(0).id()) == 13)
+      && (abs(vSelectedLeptons.at(1).id()) == 13)
+      && true                                      // remaining conditions for ee       
+      )
+    {
+        theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "JM_2l_SB",   "", 8                              , weight);
+
+        theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedLeptons.at(0).pt()    , weight);
+        theHistoManager->fillHisto("SubLeadingLeptonPt",               "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedLeptons.at(1).pt()    , weight);
+        theHistoManager->fillHisto("MET",                              "FullThreeLeptons",   "JM_2l_SB",   "", vEvent->at(0).metpt()          , weight);
+        theHistoManager->fillHisto("MHT",                              "FullThreeLeptons",   "JM_2l_SB",   "", MHT                            , weight);
+        theHistoManager->fillHisto("MetLD",                            "FullThreeLeptons",   "JM_2l_SB",   "", met_ld                         , weight);
+        theHistoManager->fillHisto("TauMultiplicity",                  "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedTaus.size()           , weight);
+        theHistoManager->fillHisto("JetMultiplicity",                  "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedJets.size()           , weight);
+        theHistoManager->fillHisto("LooseBJetMultiplicity",            "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedBTagJets.size()       , weight);
+        theHistoManager->fillHisto("MediumBJetMultiplicity",           "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedMediumBTagJets.size() , weight);
+        theHistoManager->fillHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "JM_2l_SB",   "", vSelectedLeptons.size()        , weight);
+    }
+
+    is_2lss_JM_SB = true;   
+
+    //fillOutputTree();
+
+    if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
+}
+
+void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TT_CR(int evt)
+{
+
+    theHistoManager->fillHisto2D("SelectedLeptonsVsJets",           "noSel",   "TT_2l_CR",   "",    vSelectedLeptons.size(),   vSelectedJets.size(),      weight);
+    theHistoManager->fillHisto2D("SelectedLeptonsVsBJets",          "noSel",   "TT_2l_CR",   "",    vSelectedLeptons.size(),   vSelectedBTagJets.size(),  weight);
+
+    if(weight==0)         return; // For data not passing the relevant trigger, clean up the histograms from events with weight 0)
+
+    // ####################
+    // # Common selection #
+    // ####################
+
+    bool nLep               = ( vSelectedLeptons.size()                   == 2 );
+    if(!nLep)               return;
+
+    bool leading_lep_pt     = ( vSelectedLeptons.at(0).pt()               > 20 );
+    if(!leading_lep_pt)     return;
+
+    bool following_lep_pt   = (  ( (abs(vSelectedLeptons.at(1).id()) == 11) && (vSelectedLeptons.at(1).pt() > 15) )
+                              || ( (abs(vSelectedLeptons.at(1).id()) == 13) && (vSelectedLeptons.at(1).pt() > 10) ) );
+    if(!following_lep_pt)   return;
+
+    bool passMll12Gt12      = ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M()  > 12);
+    if(!passMll12Gt12)      return;
+
+    bool nJets              = ( vSelectedJets.size()                      >= 2 );
+    if(!nJets)              return;
+
+    bool nMediumBtag        = ( nMediumBJets                              >= 1 );
+    if(!nMediumBtag)      return;
+
+    // ##########
+    // # MET LD #
+    // ##########
+
+    float jet_px = 0, jet_py = 0, lepton_px = 0, lepton_py = 0, MHT = 0, met_ld = 0;
+
+    TLorentzVector jetp4;
+    for(int i=0; i<vSelectedJets.size(); i++)
+    {
+        jetp4.SetPtEtaPhiE(vSelectedJets.at(i).pt(), vSelectedJets.at(i).eta(), vSelectedJets.at(i).phi(), vSelectedJets.at(i).E());
+        jet_px = jet_px + jetp4.Px();
+        jet_py = jet_py + jetp4.Py();
+    }
+
+    for(int i=0; i<vSelectedLeptons.size(); i++)
+    {
+        lepton_px = lepton_px + vSelectedLeptons.at(i).p4().Px();
+        lepton_py = lepton_py + vSelectedLeptons.at(i).p4().Py();
+    }
+
+    MHT = sqrt( (jet_px + lepton_px) * (jet_px + lepton_px) + (jet_py + lepton_py) * (jet_py + lepton_py) );
+
+    met_ld = 0.00397 * vEvent->at(0).metpt() + 0.00265 * MHT;
+
+    if(  ( (abs(vSelectedLeptons.at(0).id()) == 11) && (abs(vSelectedLeptons.at(1).id()) == 13) )
+      || ( (abs(vSelectedLeptons.at(0).id()) == 13) && (abs(vSelectedLeptons.at(1).id()) == 11) ) // smarter way to do this probably exists
+      && (  vSelectedLeptons.at(0).charge()         == -vSelectedLeptons.at(1).charge()         )
+      )
+    {
+        theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "TT_2l_CR",   "", 8                              , weight);
+
+        theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "TT_2l_CR",   "", vSelectedLeptons.at(0).pt()    , weight);
+        theHistoManager->fillHisto("SubLeadingLeptonPt",               "FullThreeLeptons",   "TT_2l_CR",   "", vSelectedLeptons.at(1).pt()    , weight);
+        theHistoManager->fillHisto("MET",                              "FullThreeLeptons",   "TT_2l_CR",   "", vEvent->at(0).metpt()          , weight);
+        theHistoManager->fillHisto("MetLD",                            "FullThreeLeptons",   "TT_2l_SB",   "", met_ld                         , weight);
+        theHistoManager->fillHisto("TauMultiplicity",                  "FullThreeLeptons",   "TT_2l_CR",   "", vSelectedTaus.size()           , weight);
+        theHistoManager->fillHisto("JetMultiplicity",                  "FullThreeLeptons",   "TT_2l_CR",   "", vSelectedJets.size()           , weight);
+        theHistoManager->fillHisto("LooseBJetMultiplicity",            "FullThreeLeptons",   "TT_2l_CR",   "", vSelectedBTagJets.size()       , weight);
+        theHistoManager->fillHisto("MediumBJetMultiplicity",           "FullThreeLeptons",   "TT_2l_CR",   "", vSelectedMediumBTagJets.size() , weight);
+        theHistoManager->fillHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "TT_2l_CR",   "", vSelectedLeptons.size()        , weight);
+    }
+
+    is_2lss_TT_CR = true;   
+
+    //fillOutputTree();
+
+    if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
+}
+
+
 
 void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
 {
@@ -680,59 +1268,11 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     theHistoManager->fillHisto("SumOfThreeLeptonsCharges",         "FullThreeLeptons",   "ttH3l",   "", sum_charges_3l                 , weight);
     theHistoManager->fillHisto("NumberOfSelectedLeptons",          "FullThreeLeptons",   "ttH3l",   "", vSelectedLeptons.size()        , weight);
 
-    is_TTH3l = true;   
+    is_3l_TTH_SR = true;   
 
     //fillOutputTree();
 
     if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
-}
-
-void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_TTl(int evt)
-{
-    bool nLep     = ( vSelectedLeptons.size() == 2 ); 
-    bool nLepFake = ( vFakeLeptons.size() == 1 );
-    bool nJets    = ( vSelectedNonBTagJets.size() + vSelectedBTagJets.size() >= 2 );
-
-    float Mll = -1.;
-
-    bool pass_OSOF = false;
-    if ( nLep && vSelectedLeptons.at(0).charge() == -vSelectedLeptons.at(1).charge() && 
-            fabs(vSelectedLeptons.at(0).id()) != fabs(vSelectedLeptons.at(1).id()) &&  
-            fabs( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M() - 91.188 ) > 15  )
-    {
-        Mll = ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M();
-        pass_OSOF = true;
-    }
-
-    // common selection
-    bool leading_lep_pt = 0;
-    if (nLep) leading_lep_pt = ( vSelectedLeptons.at(0).pt() > 20 );
-    bool following_lep_pt = 0;
-    if (nLep) following_lep_pt = ( vSelectedLeptons.at(1).pt() > 10 );
-
-    bool passMll12Gt12 = 0;
-    if (nLep) passMll12Gt12  = ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M()  > 12 );
-
-    bool nLooseBtag  = ( nLooseBJets  >= 2 );
-
-    /*
-       std::cout << "nLep: "              << nLep 
-       << " nJets: "            << nJets 
-       << " pass_OSSF: "        << pass_OSSF 
-       << " leading_lep_pt: "   << leading_lep_pt 
-       << " following_lep_pt: " << following_lep_pt
-       << " passMll12Gt12: "    << passMll12Gt12 
-       << " nLooseBtag: "       << nLooseBtag 
-       << " nMediumBtag: "      << nMediumBtag << std::endl; 
-       */
-
-
-    if ( nLep && nLepFake && nJets && pass_OSOF && leading_lep_pt && following_lep_pt && passMll12Gt12 && nLooseBtag)
-    {
-        is_CR_TTl = true;
-        //fillOutputTree();
-    }
-
 }
 
 void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
@@ -948,7 +1488,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto2D("SumPtLepVSZMass",              "FinalCut", "WZZZ_CR",   "",   rem_lep_sumofpt,    ZM, weight);
     theHistoManager->fillHisto2D("METLDVSZMass",                 "FinalCut", "WZZZ_CR",   "",   met_ld,             ZM, weight);
 
-    is_CR_WZ = true;
+    is_3l_WZ_CR = true;
 }
 
 void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZrelaxed(int evt)
@@ -1155,7 +1695,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZrelaxed(int evt)
     theHistoManager->fillHisto2D("SumPtLepVSZMass",              "FinalCut", "WZrel_CR",   "",   rem_lep_sumofpt,    ZM, weight);
     theHistoManager->fillHisto2D("METLDVSZMass",                 "FinalCut", "WZrel_CR",   "",   met_ld,             ZM, weight);
 
-    is_CR_WZ = true;
+    is_3l_WZrel_CR = true;
 }
 
 void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
@@ -1376,7 +1916,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
         theHistoManager->fillHisto("ZCandidateInvariantMass",        "FinalCut4j", "TTZ_CR",   "",   ZM                    , weight);
     }
 
-    is_TTZ = true;
+    is_3l_TTZ_CR = true;
 }
 
 void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_Zl(int evt)
@@ -1507,11 +2047,14 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
 
     tOutput->Branch("catJets",&catJets,"catJets/I");
 
-    tOutput->Branch("is_TTH3l",&is_TTH3l,"is_TTH3l/B");
-    tOutput->Branch("is_CR_TTl",&is_CR_TTl,"is_CR_TTl/B");
-    //tOutput->Branch("is_CR_WZ",&is_CR_WZ,"is_CR_WZ/B");
+    //tOutput->Branch("is_2lss_TTH_SR",&is_2lss_TTH_SR,"is_2lss_TTH_SR/B");
+    //tOutput->Branch("is_2lss_JM_SB",&is_2lss_JM_SB,"is_2lss_JM_SB/B");
+    //tOutput->Branch("is_2lss_LepMVA_SB",&is_2lss_LepMVA_SB,"is_2lss_LepMVA_SB/B");
+    tOutput->Branch("is_2lss_TT_CR",&is_2lss_TT_CR,"is_2lss_TT_CR/B");
+    tOutput->Branch("is_3l_TTH_SR",&is_3l_TTH_SR,"is_3l_TTH_SR/B");
+    //tOutput->Branch("is_3l_WZ_CR",&is_3l_WZ_CR,"is_3l_WZ_CR/B");
+    tOutput->Branch("is_3l_TTZ_CR",&is_3l_TTZ_CR,"is_3l_TTZ_CR/B");
     tOutput->Branch("is_CR_Zl",&is_CR_Zl,"is_CR_Zl/B");
-    tOutput->Branch("is_TTZ",&is_TTZ,"is_TTZ/B");
 
     tOutput->Branch("is_trigger",&is_trigger,"is_trigger/B");
 
