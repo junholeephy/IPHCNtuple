@@ -34,17 +34,17 @@ Int_t Tree::GetEntry(Long64_t entry)
 }
 
 /*Long64_t Tree::LoadTree(Long64_t entry)
-{
-   if (!fChain) return -5;
-   Long64_t centry = fChain->LoadTree(entry);
-   if (centry < 0) return centry;
-   if (!fChain->InheritsFrom(TChain::Class()))  return centry;
-   TChain *chain = (TChain*)fChain;
-   if (chain->GetTreeNumber() != fCurrent) {
-      fCurrent = chain->GetTreeNumber();
-   }
-   return centry;
-}*/
+  {
+  if (!fChain) return -5;
+  Long64_t centry = fChain->LoadTree(entry);
+  if (centry < 0) return centry;
+  if (!fChain->InheritsFrom(TChain::Class()))  return centry;
+  TChain *chain = (TChain*)fChain;
+  if (chain->GetTreeNumber() != fCurrent) {
+  fCurrent = chain->GetTreeNumber();
+  }
+  return centry;
+  }*/
 
 void Tree::registerInputBranches(TChain *ch)
 {
@@ -73,16 +73,16 @@ void Tree::Init(TChain *ch)
     pv_z = 0;
     pv_zError = 0;
 
-   // ####################################
-   // #   ____  _ _                      #
-   // #  |  _ \(_) | ___   _   _ _ __    #
-   // #  | |_) | | |/ _ \ | | | | '_ \   #
-   // #  |  __/| | |  __/ | |_| | |_) |  #
-   // #  |_|   |_|_|\___|  \__,_| .__/   #
-   // #                         |_|      #
-   // #                                  #                      
-   // ####################################
- 
+    // ####################################
+    // #   ____  _ _                      #
+    // #  |  _ \(_) | ___   _   _ _ __    #
+    // #  | |_) | | |/ _ \ | | | | '_ \   #
+    // #  |  __/| | |  __/ | |_| | |_) |  #
+    // #  |_|   |_|_|\___|  \__,_| .__/   #
+    // #                         |_|      #
+    // #                                  #                      
+    // ####################################
+
     mc_pu_Nzpositions = 0;
     mc_pu_BunchCrossing = 0;
     mc_pu_zpositions = 0;
@@ -91,14 +91,14 @@ void Tree::Init(TChain *ch)
     mc_pu_ntrks_lowpT = 0;
     mc_pu_ntrks_highpT = 0;
 
-   // #################################################
-   // #   _____ _           _                         #
-   // #  | ____| | ___  ___| |_ _ __ ___  _ __  ___   #
-   // #  |  _| | |/ _ \/ __| __| '__/ _ \| '_ \/ __|  #
-   // #  | |___| |  __/ (__| |_| | | (_) | | | \__ \  #
-   // #  |_____|_|\___|\___|\__|_|  \___/|_| |_|___/  #
-   // #                                               #
-   // #################################################
+    // #################################################
+    // #   _____ _           _                         #
+    // #  | ____| | ___  ___| |_ _ __ ___  _ __  ___   #
+    // #  |  _| | |/ _ \/ __| __| '__/ _ \| '_ \/ __|  #
+    // #  | |___| |  __/ (__| |_| | | (_) | | | \__ \  #
+    // #  |_____|_|\___|\___|\__|_|  \___/|_| |_|___/  #
+    // #                                               #
+    // #################################################
 
     el_pt = 0;
     el_eta = 0;
@@ -179,14 +179,14 @@ void Tree::Init(TChain *ch)
     el_eSuperClusterOverP = 0;
 
 
-   // ####################################
-   // #   __  __                         #
-   // #  |  \/  |_   _  ___  _ __  ___   #
-   // #  | |\/| | | | |/ _ \| '_ \/ __|  #
-   // #  | |  | | |_| | (_) | | | \__ \  #
-   // #  |_|  |_|\__,_|\___/|_| |_|___/  #
-   // #                                  #                                     
-   // ####################################
+    // ####################################
+    // #   __  __                         #
+    // #  |  \/  |_   _  ___  _ __  ___   #
+    // #  | |\/| | | | |/ _ \| '_ \/ __|  #
+    // #  | |  | | |_| | (_) | | | \__ \  #
+    // #  |_|  |_|\__,_|\___/|_| |_|___/  #
+    // #                                  #                                     
+    // ####################################
 
     mu_pt = 0;
     mu_eta = 0;
@@ -378,12 +378,12 @@ void Tree::Init(TChain *ch)
     // #                                       #            
     // #########################################
 
-     genJet_n = 0;
-     genJet_pt = 0;
-     genJet_eta = 0;
-     genJet_phi = 0;
-     genJet_m = 0;
-     genJet_E = 0;
+    genJet_n = 0;
+    genJet_pt = 0;
+    genJet_eta = 0;
+    genJet_phi = 0;
+    genJet_m = 0;
+    genJet_E = 0;
 
     metGen_px = 0;
     metGen_py = 0;
@@ -392,14 +392,14 @@ void Tree::Init(TChain *ch)
     metGen_sumet = 0;
     metGen_MuonEt = 0;
 
-   // #####################
-   // #   __  __  ____    #
-   // #  |  \/  |/ ___|   #
-   // #  | |\/| | |       #
-   // #  | |  | | |___    #
-   // #  |_|  |_|\____|   #
-   // #                   #
-   // #####################
+    // #####################
+    // #   __  __  ____    #
+    // #  |  \/  |/ ___|   #
+    // #  | |\/| | |       #
+    // #  | |  | | |___    #
+    // #  |_|  |_|\____|   #
+    // #                   #
+    // #####################
     gen_n = 0;
     gen_pt = 0;
     gen_eta = 0;
@@ -410,15 +410,15 @@ void Tree::Init(TChain *ch)
     gen_index = 0;
     gen_mother_index = 0;
     gen_PVz = 0;
-    
-   // ##################################################
-   // #   __  __  ____     _____           _   _       #
-   // #  |  \/  |/ ___|   |_   _| __ _   _| |_| |__    #
-   // #  | |\/| | |         | || '__| | | | __| '_ \   #
-   // #  | |  | | |___      | || |  | |_| | |_| | | |  #
-   // #  |_|  |_|\____|     |_||_|   \__,_|\__|_| |_|  #
-   // #                                                #
-   // ##################################################
+
+    // ##################################################
+    // #   __  __  ____     _____           _   _       #
+    // #  |  \/  |/ ___|   |_   _| __ _   _| |_| |__    #
+    // #  | |\/| | |         | || '__| | | | __| '_ \   #
+    // #  | |  | | |___      | || |  | |_| | |_| | | |  #
+    // #  |_|  |_|\____|     |_||_|   \__,_|\__|_| |_|  #
+    // #                                                #
+    // ##################################################
 
     mc_truth_h0_id = 0;
     mc_truth_h0W1_id = 0;
@@ -545,7 +545,7 @@ void Tree::Init(TChain *ch)
     mc_truth_h0tau2_pt = 0;
     mc_truth_h0b1_pt = 0;
     mc_truth_h0b2_pt = 0;
-    
+
     mc_truth_W_pt = 0;  
     mc_truth_Wl_pt = 0;  
     mc_truth_Wtau_pt = 0; 
@@ -568,7 +568,7 @@ void Tree::Init(TChain *ch)
     mc_truth_gammataul1_pt = 0;
     mc_truth_gammataul2_pt= 0;
     mc_truth_gamma_pt= 0;
-   
+
     mc_truth_t1_eta = 0;
     mc_truth_t2_eta = 0;
     mc_truth_tb1_eta = 0;
@@ -620,7 +620,7 @@ void Tree::Init(TChain *ch)
     mc_truth_h0tau2_eta = 0;
     mc_truth_h0b1_eta = 0;
     mc_truth_h0b2_eta = 0;
-    
+
     mc_truth_W_eta = 0;
     mc_truth_Wl_eta = 0;   
     mc_truth_Wtau_eta = 0; 
@@ -695,7 +695,7 @@ void Tree::Init(TChain *ch)
     mc_truth_h0tau2_phi = 0;
     mc_truth_h0b1_phi = 0;
     mc_truth_h0b2_phi = 0;
-    
+
     mc_truth_W_phi = 0;
     mc_truth_Wl_phi = 0; 
     mc_truth_Wtau_phi = 0;
@@ -770,7 +770,7 @@ void Tree::Init(TChain *ch)
     mc_truth_h0tau2_E = 0;
     mc_truth_h0b1_E = 0;
     mc_truth_h0b2_E = 0;
-    
+
     mc_truth_W_E = 0;
     mc_truth_Wl_E = 0;  
     mc_truth_Wtau_E = 0;
@@ -793,7 +793,7 @@ void Tree::Init(TChain *ch)
     mc_truth_gammataul1_E = 0;
     mc_truth_gammataul2_E = 0;
     mc_truth_gamma_E = 0;
-    
+
     triggerobject_n = 0;
     triggerobject_pt = 0;
     triggerobject_eta = 0;
@@ -802,7 +802,7 @@ void Tree::Init(TChain *ch)
     triggerobject_filterIds_n = 0;
     triggerobject_filterLabels_n = 0;
     triggerobject_pathNamesAll_n = 0;
-	
+
     triggerobject_pathNamesAll = 0;
     triggerobject_pathNamesAll_isL3 = 0;
     triggerobject_pathNamesAll_isLF = 0;
@@ -811,8 +811,8 @@ void Tree::Init(TChain *ch)
 
     triggerobject_filterIds = 0;
     triggerobject_filterLabels = 0;
-	
-	
+
+
     // Set branch addresses and branch pointers
     if (!ch) return;
     fChain = ch;
@@ -823,7 +823,7 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("ev_id", &ev_id, &b_ev_id);
     fChain->SetBranchAddress("ev_lumi", &ev_lumi, &b_ev_lumi);
     fChain->SetBranchAddress("ev_rho", &ev_rho, &b_ev_rho);
-    
+
     fChain->SetBranchAddress("trigger",      &trigger,      &b_trigger     );
     fChain->SetBranchAddress("trigger_pass", &trigger_pass, &b_trigger_pass);
     fChain->SetBranchAddress("trigger_name", &trigger_name, &b_trigger_name);
@@ -835,13 +835,17 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("metNoHF_pt",    &metNoHF_pt,    &b_metNoHF_pt);
     fChain->SetBranchAddress("metNoHF_phi",   &metNoHF_phi,   &b_metNoHF_phi);
     fChain->SetBranchAddress("metNoHF_sumet", &metNoHF_sumet, &b_metNoHF_sumet);
-    
+
     fChain->SetBranchAddress("nvertex", &nvertex, &b_nvertex);
     fChain->SetBranchAddress("pv_x", &pv_x, &b_pv_x);
     fChain->SetBranchAddress("pv_y", &pv_y, &b_pv_y);
     fChain->SetBranchAddress("pv_z", &pv_z, &b_pv_z);
     fChain->SetBranchAddress("pv_zError", &pv_zError, &b_pv_zError);
-    
+
+    fChain->SetBranchAddress("weight_scale_muF0p5", &weight_scale_muF0p5, &b_weight_scale_muF0p5);
+    fChain->SetBranchAddress("weight_scale_muF2",   &weight_scale_muF2,   &b_weight_scale_muF2  );
+    fChain->SetBranchAddress("weight_scale_muR0p5", &weight_scale_muR0p5, &b_weight_scale_muR0p5);
+    fChain->SetBranchAddress("weight_scale_muR2",   &weight_scale_muR2,   &b_weight_scale_muR2  );
     fChain->SetBranchAddress("mc_id", &mc_id, &b_mc_id);
     fChain->SetBranchAddress("mc_f1", &mc_f1, &b_mc_f1);
     fChain->SetBranchAddress("mc_f2", &mc_f2, &b_mc_f2);
@@ -863,14 +867,14 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("mc_pu_ntrks_lowpT", &mc_pu_ntrks_lowpT, &b_mc_pu_ntrks_lowpT);
     fChain->SetBranchAddress("mc_pu_ntrks_highpT", &mc_pu_ntrks_highpT, &b_mc_pu_ntrks_highpT);
 
-   // #################################################
-   // #   _____ _           _                         #
-   // #  | ____| | ___  ___| |_ _ __ ___  _ __  ___   #
-   // #  |  _| | |/ _ \/ __| __| '__/ _ \| '_ \/ __|  #
-   // #  | |___| |  __/ (__| |_| | | (_) | | | \__ \  #
-   // #  |_____|_|\___|\___|\__|_|  \___/|_| |_|___/  #
-   // #                                               #
-   // #################################################
+    // #################################################
+    // #   _____ _           _                         #
+    // #  | ____| | ___  ___| |_ _ __ ___  _ __  ___   #
+    // #  |  _| | |/ _ \/ __| __| '__/ _ \| '_ \/ __|  #
+    // #  | |___| |  __/ (__| |_| | | (_) | | | \__ \  #
+    // #  |_____|_|\___|\___|\__|_|  \___/|_| |_|___/  #
+    // #                                               #
+    // #################################################
 
     fChain->SetBranchAddress("el_n", &el_n, &b_el_n);
     fChain->SetBranchAddress("el_pt", &el_pt, &b_el_pt);
@@ -951,14 +955,14 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("el_correctedEcalEnergy", &el_correctedEcalEnergy, &b_el_correctedEcalEnergy);
     fChain->SetBranchAddress("el_eSuperClusterOverP", &el_eSuperClusterOverP, &b_el_eSuperClusterOverP);
 
-   // ####################################
-   // #   __  __                         #
-   // #  |  \/  |_   _  ___  _ __  ___   #
-   // #  | |\/| | | | |/ _ \| '_ \/ __|  #
-   // #  | |  | | |_| | (_) | | | \__ \  #
-   // #  |_|  |_|\__,_|\___/|_| |_|___/  #
-   // #                                  #                                     
-   // ####################################
+    // ####################################
+    // #   __  __                         #
+    // #  |  \/  |_   _  ___  _ __  ___   #
+    // #  | |\/| | | | |/ _ \| '_ \/ __|  #
+    // #  | |  | | |_| | (_) | | | \__ \  #
+    // #  |_|  |_|\__,_|\___/|_| |_|___/  #
+    // #                                  #                                     
+    // ####################################
 
     fChain->SetBranchAddress("mu_n", &mu_n, &b_mu_n);
     fChain->SetBranchAddress("mu_pt", &mu_pt, &b_mu_pt);
@@ -1039,7 +1043,7 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("mu_lepMVA_Moriond16", &mu_lepMVA_Moriond16, &b_mu_lepMVA_Moriond16);
     fChain->SetBranchAddress("mu_lepMVA_eta", &mu_lepMVA_eta, &b_mu_lepMVA_eta);
     fChain->SetBranchAddress("mu_lepMVA_jetNDauChargedMVASel", &mu_lepMVA_jetNDauChargedMVASel, &b_mu_lepMVA_jetNDauChargedMVASel);   
-  
+
     // #########################
     // #  _____                #
     // # |_   _|_ _ _   _ ___  #
@@ -1100,13 +1104,13 @@ void Tree::Init(TChain *ch)
     //fChain->SetBranchAddress("tau_pfEssential_dxy_Sig", &tau_pfEssential_dxy_Sig, &b_tau_pfEssential_dxy_Sig);
 
     // ##########################
-   // #       _      _         #
-   // #      | | ___| |_ ___   #
-   // #   _  | |/ _ \ __/ __|  #
-   // #  | |_| |  __/ |_\__ \  #
-   // #   \___/ \___|\__|___/  #
-   // #                        #                        
-   // ##########################
+    // #       _      _         #
+    // #      | | ___| |_ ___   #
+    // #   _  | |/ _ \ __/ __|  #
+    // #  | |_| |  __/ |_\__ \  #
+    // #   \___/ \___|\__|___/  #
+    // #                        #                        
+    // ##########################
 
     fChain->SetBranchAddress("jet_n", &jet_n, &b_jet_n);
     fChain->SetBranchAddress("jet_pt", &jet_pt, &b_jet_pt);
@@ -1148,7 +1152,7 @@ void Tree::Init(TChain *ch)
     if( fChain->GetBranch("gen_index") ) fChain->SetBranchAddress("gen_index", &gen_index, &b_gen_index);
     if( fChain->GetBranch("gen_mother_index") ) fChain->SetBranchAddress("gen_mother_index", &gen_mother_index, &b_gen_mother_index);
     if( fChain->GetBranch("gen_PVz") ) fChain->SetBranchAddress("gen_PVz", &gen_PVz, &b_gen_PVz);
-   
+
     // #########################################
     // #                                       #
     // #   __ _  ___ _ __     (_) ___| |_ ___  #
@@ -1159,49 +1163,49 @@ void Tree::Init(TChain *ch)
     // #                                       #            
     // #########################################
 
-   if( fChain->GetBranch("genJet_n") ) fChain->SetBranchAddress("genJet_n", &genJet_n, &b_genJet_n);
-   if( fChain->GetBranch("genJet_pt") ) fChain->SetBranchAddress("genJet_pt", &genJet_pt, &b_genJet_pt);
-   if( fChain->GetBranch("genJet_eta") ) fChain->SetBranchAddress("genJet_eta", &genJet_eta, &b_genJet_eta);
-   if( fChain->GetBranch("genJet_phi") ) fChain->SetBranchAddress("genJet_phi", &genJet_phi, &b_genJet_phi);
-   if( fChain->GetBranch("genJet_E") ) fChain->SetBranchAddress("genJet_E", &genJet_E, &b_genJet_E);
-   if( fChain->GetBranch("genJet_m") ) fChain->SetBranchAddress("genJet_m", &genJet_m, &b_genJet_m);
+    if( fChain->GetBranch("genJet_n") ) fChain->SetBranchAddress("genJet_n", &genJet_n, &b_genJet_n);
+    if( fChain->GetBranch("genJet_pt") ) fChain->SetBranchAddress("genJet_pt", &genJet_pt, &b_genJet_pt);
+    if( fChain->GetBranch("genJet_eta") ) fChain->SetBranchAddress("genJet_eta", &genJet_eta, &b_genJet_eta);
+    if( fChain->GetBranch("genJet_phi") ) fChain->SetBranchAddress("genJet_phi", &genJet_phi, &b_genJet_phi);
+    if( fChain->GetBranch("genJet_E") ) fChain->SetBranchAddress("genJet_E", &genJet_E, &b_genJet_E);
+    if( fChain->GetBranch("genJet_m") ) fChain->SetBranchAddress("genJet_m", &genJet_m, &b_genJet_m);
 
-   if( fChain->GetBranch("metGen_px") ) fChain->SetBranchAddress("metGen_px", &metGen_px, &b_metGen_px);
-   if( fChain->GetBranch("metGen_py") ) fChain->SetBranchAddress("metGen_py", &metGen_py, &b_metGen_py);
-   if( fChain->GetBranch("metGen_pt") ) fChain->SetBranchAddress("metGen_pt", &metGen_pt, &b_metGen_pt);
-   if( fChain->GetBranch("metGen_phi") ) fChain->SetBranchAddress("metGen_phi", &metGen_phi, &b_metGen_phi);
-   if( fChain->GetBranch("metGen_sumet") ) fChain->SetBranchAddress("metGen_sumet", &metGen_sumet, &b_metGen_sumet);
-   if( fChain->GetBranch("metGen_MuonEt") ) fChain->SetBranchAddress("metGen_MuonEt", &metGen_MuonEt, &b_metGen_MuonEt);
-   
-   if( fChain->GetBranch("triggerobject_n") ) fChain->SetBranchAddress("triggerobject_n", &triggerobject_n, &b_triggerobject_n);
-   if( fChain->GetBranch("triggerobject_pt") ) fChain->SetBranchAddress("triggerobject_pt", &triggerobject_pt, &b_triggerobject_pt);
-   if( fChain->GetBranch("triggerobject_eta") ) fChain->SetBranchAddress("triggerobject_eta", &triggerobject_eta, &b_triggerobject_eta);
-   if( fChain->GetBranch("triggerobject_phi") ) fChain->SetBranchAddress("triggerobject_phi", &triggerobject_phi, &b_triggerobject_phi);
-   if( fChain->GetBranch("triggerobject_collection") ) fChain->SetBranchAddress("triggerobject_collection", &triggerobject_collection, &b_triggerobject_collection);
-   
-   if( fChain->GetBranch("triggerobject_filterIds_n") ) fChain->SetBranchAddress("triggerobject_filterIds_n", &triggerobject_filterIds_n, &b_triggerobject_filterIds_n);
-   if( fChain->GetBranch("triggerobject_filterLabels_n") ) fChain->SetBranchAddress("triggerobject_filterLabels_n", &triggerobject_filterLabels_n, &b_triggerobject_filterLabels_n);
-   if( fChain->GetBranch("triggerobject_pathNamesAll_n") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_n", &triggerobject_pathNamesAll_n, &b_triggerobject_pathNamesAll_n);
-   
-   if( fChain->GetBranch("triggerobject_pathNamesAll") ) fChain->SetBranchAddress("triggerobject_pathNamesAll", &triggerobject_pathNamesAll, &b_triggerobject_pathNamesAll);
-   if( fChain->GetBranch("triggerobject_pathNamesAll_isL3") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_isL3", &triggerobject_pathNamesAll_isL3, &b_triggerobject_pathNamesAll_isL3);
-   if( fChain->GetBranch("triggerobject_pathNamesAll_isLF") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_isLF", &triggerobject_pathNamesAll_isLF, &b_triggerobject_pathNamesAll_isLF);
-   if( fChain->GetBranch("triggerobject_pathNamesAll_isBoth") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_isBoth", &triggerobject_pathNamesAll_isBoth, &b_triggerobject_pathNamesAll_isBoth);
-   if( fChain->GetBranch("triggerobject_pathNamesAll_isNone") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_isNone", &triggerobject_pathNamesAll_isNone, &b_triggerobject_pathNamesAll_isNone);
+    if( fChain->GetBranch("metGen_px") ) fChain->SetBranchAddress("metGen_px", &metGen_px, &b_metGen_px);
+    if( fChain->GetBranch("metGen_py") ) fChain->SetBranchAddress("metGen_py", &metGen_py, &b_metGen_py);
+    if( fChain->GetBranch("metGen_pt") ) fChain->SetBranchAddress("metGen_pt", &metGen_pt, &b_metGen_pt);
+    if( fChain->GetBranch("metGen_phi") ) fChain->SetBranchAddress("metGen_phi", &metGen_phi, &b_metGen_phi);
+    if( fChain->GetBranch("metGen_sumet") ) fChain->SetBranchAddress("metGen_sumet", &metGen_sumet, &b_metGen_sumet);
+    if( fChain->GetBranch("metGen_MuonEt") ) fChain->SetBranchAddress("metGen_MuonEt", &metGen_MuonEt, &b_metGen_MuonEt);
 
-   if( fChain->GetBranch("triggerobject_filterIds") ) fChain->SetBranchAddress("triggerobject_filterIds", &triggerobject_filterIds, &b_triggerobject_filterIds);
-   if( fChain->GetBranch("triggerobject_filterLabels") ) fChain->SetBranchAddress("triggerobject_filterLabels", &triggerobject_filterLabels, &b_triggerobject_filterLabels);
-    
-    
-    
-   // ##################################################
-   // #   __  __  ____     _____           _   _       #
-   // #  |  \/  |/ ___|   |_   _| __ _   _| |_| |__    #
-   // #  | |\/| | |         | || '__| | | | __| '_ \   #
-   // #  | |  | | |___      | || |  | |_| | |_| | | |  #
-   // #  |_|  |_|\____|     |_||_|   \__,_|\__|_| |_|  #
-   // #                                                #
-   // ##################################################
+    if( fChain->GetBranch("triggerobject_n") ) fChain->SetBranchAddress("triggerobject_n", &triggerobject_n, &b_triggerobject_n);
+    if( fChain->GetBranch("triggerobject_pt") ) fChain->SetBranchAddress("triggerobject_pt", &triggerobject_pt, &b_triggerobject_pt);
+    if( fChain->GetBranch("triggerobject_eta") ) fChain->SetBranchAddress("triggerobject_eta", &triggerobject_eta, &b_triggerobject_eta);
+    if( fChain->GetBranch("triggerobject_phi") ) fChain->SetBranchAddress("triggerobject_phi", &triggerobject_phi, &b_triggerobject_phi);
+    if( fChain->GetBranch("triggerobject_collection") ) fChain->SetBranchAddress("triggerobject_collection", &triggerobject_collection, &b_triggerobject_collection);
+
+    if( fChain->GetBranch("triggerobject_filterIds_n") ) fChain->SetBranchAddress("triggerobject_filterIds_n", &triggerobject_filterIds_n, &b_triggerobject_filterIds_n);
+    if( fChain->GetBranch("triggerobject_filterLabels_n") ) fChain->SetBranchAddress("triggerobject_filterLabels_n", &triggerobject_filterLabels_n, &b_triggerobject_filterLabels_n);
+    if( fChain->GetBranch("triggerobject_pathNamesAll_n") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_n", &triggerobject_pathNamesAll_n, &b_triggerobject_pathNamesAll_n);
+
+    if( fChain->GetBranch("triggerobject_pathNamesAll") ) fChain->SetBranchAddress("triggerobject_pathNamesAll", &triggerobject_pathNamesAll, &b_triggerobject_pathNamesAll);
+    if( fChain->GetBranch("triggerobject_pathNamesAll_isL3") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_isL3", &triggerobject_pathNamesAll_isL3, &b_triggerobject_pathNamesAll_isL3);
+    if( fChain->GetBranch("triggerobject_pathNamesAll_isLF") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_isLF", &triggerobject_pathNamesAll_isLF, &b_triggerobject_pathNamesAll_isLF);
+    if( fChain->GetBranch("triggerobject_pathNamesAll_isBoth") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_isBoth", &triggerobject_pathNamesAll_isBoth, &b_triggerobject_pathNamesAll_isBoth);
+    if( fChain->GetBranch("triggerobject_pathNamesAll_isNone") ) fChain->SetBranchAddress("triggerobject_pathNamesAll_isNone", &triggerobject_pathNamesAll_isNone, &b_triggerobject_pathNamesAll_isNone);
+
+    if( fChain->GetBranch("triggerobject_filterIds") ) fChain->SetBranchAddress("triggerobject_filterIds", &triggerobject_filterIds, &b_triggerobject_filterIds);
+    if( fChain->GetBranch("triggerobject_filterLabels") ) fChain->SetBranchAddress("triggerobject_filterLabels", &triggerobject_filterLabels, &b_triggerobject_filterLabels);
+
+
+
+    // ##################################################
+    // #   __  __  ____     _____           _   _       #
+    // #  |  \/  |/ ___|   |_   _| __ _   _| |_| |__    #
+    // #  | |\/| | |         | || '__| | | | __| '_ \   #
+    // #  | |  | | |___      | || |  | |_| | |_| | | |  #
+    // #  |_|  |_|\____|     |_||_|   \__,_|\__|_| |_|  #
+    // #                                                #
+    // ##################################################
 
     if( fChain->GetBranch("mc_truth_h0_id") ) fChain->SetBranchAddress("mc_truth_h0_id", &mc_truth_h0_id, &b_mc_truth_h0_id);
     if( fChain->GetBranch("mc_truth_h0W1_id") ) fChain->SetBranchAddress("mc_truth_h0W1_id", &mc_truth_h0W1_id, &b_mc_truth_h0W1_id);
@@ -1279,7 +1283,7 @@ void Tree::Init(TChain *ch)
     if( fChain->GetBranch("mc_truth_gammataul1_id") ) fChain->SetBranchAddress("mc_truth_gammataul1_id", &mc_truth_gammataul1_id, &b_mc_truth_gammataul1_id);
     if( fChain->GetBranch("mc_truth_gammataul2_id") ) fChain->SetBranchAddress("mc_truth_gammataul2_id", &mc_truth_gammataul2_id, &b_mc_truth_gammataul2_id);
     if( fChain->GetBranch("mc_truth_gamma_id") ) fChain->SetBranchAddress("mc_truth_gamma_id", &mc_truth_gamma_id, &b_mc_truth_gamma_id);
-  
+
     if( fChain->GetBranch("mc_truth_h0_pt") ) fChain->SetBranchAddress("mc_truth_h0_pt", &mc_truth_h0_pt, &b_mc_truth_h0_pt);
     if( fChain->GetBranch("mc_truth_h0W1_pt") ) fChain->SetBranchAddress("mc_truth_h0W1_pt", &mc_truth_h0W1_pt, &b_mc_truth_h0W1_pt);
     if( fChain->GetBranch("mc_truth_h0Wl1_pt") ) fChain->SetBranchAddress("mc_truth_h0Wl1_pt", &mc_truth_h0Wl1_pt, &b_mc_truth_h0Wl1_pt);
@@ -1356,7 +1360,7 @@ void Tree::Init(TChain *ch)
     if( fChain->GetBranch("mc_truth_gammataul1_pt") ) fChain->SetBranchAddress("mc_truth_gammataul1_pt", &mc_truth_gammataul1_pt, &b_mc_truth_gammataul1_pt);
     if( fChain->GetBranch("mc_truth_gammataul2_pt") ) fChain->SetBranchAddress("mc_truth_gammataul2_pt", &mc_truth_gammataul2_pt, &b_mc_truth_gammataul2_pt);
     if( fChain->GetBranch("mc_truth_gamma_pt") ) fChain->SetBranchAddress("mc_truth_gamma_pt", &mc_truth_gamma_pt, &b_mc_truth_gamma_pt);
-  
+
     if( fChain->GetBranch("mc_truth_h0_eta") ) fChain->SetBranchAddress("mc_truth_h0_eta", &mc_truth_h0_eta, &b_mc_truth_h0_eta);
     if( fChain->GetBranch("mc_truth_h0W1_eta") ) fChain->SetBranchAddress("mc_truth_h0W1_eta", &mc_truth_h0W1_eta, &b_mc_truth_h0W1_eta);
     if( fChain->GetBranch("mc_truth_h0Wl1_eta") ) fChain->SetBranchAddress("mc_truth_h0Wl1_eta", &mc_truth_h0Wl1_eta, &b_mc_truth_h0Wl1_eta);
@@ -1433,7 +1437,7 @@ void Tree::Init(TChain *ch)
     if( fChain->GetBranch("mc_truth_gammataul1_eta") ) fChain->SetBranchAddress("mc_truth_gammataul1_eta", &mc_truth_gammataul1_eta, &b_mc_truth_gammataul1_eta);
     if( fChain->GetBranch("mc_truth_gammataul2_eta") ) fChain->SetBranchAddress("mc_truth_gammataul2_eta", &mc_truth_gammataul2_eta, &b_mc_truth_gammataul2_eta);
     if( fChain->GetBranch("mc_truth_gamma_eta") ) fChain->SetBranchAddress("mc_truth_gamma_eta", &mc_truth_gamma_eta, &b_mc_truth_gamma_eta);
-  
+
     if( fChain->GetBranch("mc_truth_h0_phi") ) fChain->SetBranchAddress("mc_truth_h0_phi", &mc_truth_h0_phi, &b_mc_truth_h0_phi);
     if( fChain->GetBranch("mc_truth_h0W1_phi") ) fChain->SetBranchAddress("mc_truth_h0W1_phi", &mc_truth_h0W1_phi, &b_mc_truth_h0W1_phi);
     if( fChain->GetBranch("mc_truth_h0Wl1_phi") ) fChain->SetBranchAddress("mc_truth_h0Wl1_phi", &mc_truth_h0Wl1_phi, &b_mc_truth_h0Wl1_phi);
@@ -1507,7 +1511,7 @@ void Tree::Init(TChain *ch)
     if( fChain->GetBranch("mc_truth_gammataul1_phi") ) fChain->SetBranchAddress("mc_truth_gammataul1_phi", &mc_truth_gammataul1_phi, &b_mc_truth_gammataul1_phi);
     if( fChain->GetBranch("mc_truth_gammataul2_phi") ) fChain->SetBranchAddress("mc_truth_gammataul2_phi", &mc_truth_gammataul2_phi, &b_mc_truth_gammataul2_phi);
     if( fChain->GetBranch("mc_truth_gamma_phi") ) fChain->SetBranchAddress("mc_truth_gamma_phi", &mc_truth_gamma_phi, &b_mc_truth_gamma_phi);
-  
+
     if( fChain->GetBranch("mc_truth_h0_E") ) fChain->SetBranchAddress("mc_truth_h0_E", &mc_truth_h0_E, &b_mc_truth_h0_E);
     if( fChain->GetBranch("mc_truth_h0W1_E") ) fChain->SetBranchAddress("mc_truth_h0W1_E", &mc_truth_h0W1_E, &b_mc_truth_h0W1_E);
     if( fChain->GetBranch("mc_truth_h0Wl1_E") ) fChain->SetBranchAddress("mc_truth_h0Wl1_E", &mc_truth_h0Wl1_E, &b_mc_truth_h0Wl1_E);
@@ -1584,6 +1588,4 @@ void Tree::Init(TChain *ch)
     if( fChain->GetBranch("mc_truth_gammataul1_E") ) fChain->SetBranchAddress("mc_truth_gammataul1_E", &mc_truth_gammataul1_E, &b_mc_truth_gammataul1_E);
     if( fChain->GetBranch("mc_truth_gammataul2_E") ) fChain->SetBranchAddress("mc_truth_gammataul2_E", &mc_truth_gammataul2_E, &b_mc_truth_gammataul2_E);
     if( fChain->GetBranch("mc_truth_gamma_E") ) fChain->SetBranchAddress("mc_truth_gamma_E", &mc_truth_gamma_E, &b_mc_truth_gamma_E);
-  
-
 }

@@ -53,6 +53,10 @@ class Tree {
         Float_t         pv_z;
         Float_t         pv_zError;
 
+        Float_t         weight_scale_muF0p5;
+        Float_t         weight_scale_muF2;
+        Float_t         weight_scale_muR0p5;
+        Float_t         weight_scale_muR2;
         Int_t           mc_id;
         Int_t           mc_f1;
         Int_t           mc_f2;
@@ -72,18 +76,18 @@ class Tree {
         // #                                  #
         // ####################################
 
-        Int_t           mc_pu_intime_NumInt;
-        Int_t           mc_pu_trueNumInt;
-        Int_t           mc_pu_before_npu;
-        Int_t           mc_pu_after_npu;
-        Int_t           mc_pu_Npvi;
-        vector<int>     *mc_pu_Nzpositions;
-        vector<int>     *mc_pu_BunchCrossing;
-        vector<vector<float> > *mc_pu_zpositions;
-        vector<vector<float> > *mc_pu_sumpT_lowpT;
-        vector<vector<float> > *mc_pu_sumpT_highpT;
-        vector<vector<int> > *mc_pu_ntrks_lowpT;
-        vector<vector<int> > *mc_pu_ntrks_highpT;
+        Int_t                 mc_pu_intime_NumInt;
+        Int_t                 mc_pu_trueNumInt;
+        Int_t                 mc_pu_before_npu;
+        Int_t                 mc_pu_after_npu;
+        Int_t                 mc_pu_Npvi;
+        vector<int>           *mc_pu_Nzpositions;
+        vector<int>           *mc_pu_BunchCrossing;
+        vector<vector<float>> *mc_pu_zpositions;
+        vector<vector<float>> *mc_pu_sumpT_lowpT;
+        vector<vector<float>> *mc_pu_sumpT_highpT;
+        vector<vector<int>>   *mc_pu_ntrks_lowpT;
+        vector<vector<int>>   *mc_pu_ntrks_highpT;
 
         // #################################################
         // #   _____ _           _                         #
@@ -900,6 +904,10 @@ class Tree {
         TBranch        *b_pv_z;   //!
         TBranch        *b_pv_zError;   //!
 
+        TBranch        *b_weight_scale_muF0p5;
+        TBranch        *b_weight_scale_muF2;
+        TBranch        *b_weight_scale_muR0p5;
+        TBranch        *b_weight_scale_muR2;
         TBranch        *b_mc_weight;   //!
         TBranch        *b_mc_id;   //!
         TBranch        *b_mc_f1;   //!
