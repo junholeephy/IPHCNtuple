@@ -34,6 +34,9 @@ class Electron : public Base
         bool isTight()                       {return _isTight;};
         bool isLooseMVA()                    {return _isLooseMVA;};
         bool isTightMVA()                    {return _isTightMVA;};
+        bool isLooseTTH()                    {return _isLooseTTH;};
+        bool isFakeableTTH()                 {return _isFakeableTTH;};
+        bool isTightTTH()                    {return _isTightTTH;};
 
         // Variables for Id
         float dxy()                          {return _dxy;};
@@ -52,10 +55,10 @@ class Electron : public Base
         float lepMVA_dxy()                   {return _lepMVA_dxy;};
         float lepMVA_dz()                    {return _lepMVA_dz;};
         float lepMVA_mvaId()                 {return _lepMVA_mvaId;};
-	float lepMVA_eta()		     {return _lepMVA_eta;};    
-        float lepMVA_jetNDauChargedMVASel()  {return _lepMVA_jetNDauChargedMVASel;}; 
-        float lepMVA_Moriond16()	     {return _lepMVA_Moriond16;}; 
-  
+    	float lepMVA_eta()		     {return _lepMVA_eta;};
+        float lepMVA_jetNDauChargedMVASel()  {return _lepMVA_jetNDauChargedMVASel;};
+        float lepMVA_Moriond16()	     {return _lepMVA_Moriond16;};
+
         // Other variables
         bool passChargeFlip()                  {return _passChargeFlip;};
         bool hasMatchedConversion()            {return _hasMatchedConversion;};
@@ -70,8 +73,6 @@ class Electron : public Base
 
         float dB3D()                           {return _dB3D;};
         float edB3D()                          {return _edB3D;};
-
-        float effectiveArea(int dr,float eta);
 
         void read();
         void init();
@@ -98,6 +99,9 @@ class Electron : public Base
         bool _isTight;
         bool _isLooseMVA;
         bool _isTightMVA;
+        bool _isLooseTTH;
+        bool _isFakeableTTH;
+        bool _isTightTTH;
 
         // Variables for Id
         float _dxy;
@@ -124,11 +128,11 @@ class Electron : public Base
         float _lepMVA_dxy;
         float _lepMVA_dz;
         float _lepMVA_mvaId;
-        
+
 	float _lepMVA_eta;
         float _lepMVA_jetNDauChargedMVASel;
         float _lepMVA_Moriond16;
-      
+
         // Other variables
         bool _passChargeFlip;
         bool _hasMatchedConversion;

@@ -83,6 +83,9 @@ void Muon::init()
     _isTight           = 0;
     _isLooseMVA        = 0;
     _isTightMVA        = 0;
+    _isLooseTTH        = -888;
+    _isFakeableTTH     = -888;
+    _isTightTTH        = -888;
 
     // variables for Id
     _dxy                = -666;
@@ -96,16 +99,16 @@ void Muon::init()
     _lepMVA            = -888; 
     _lepMVA_Moriond16  = -888; 
     
-    _lepMVA_neuRelIso = -666;
-    _lepMVA_chRelIso = -666;
-    _lepMVA_jetDR = -666;
-    _lepMVA_jetPtRatio = -666;
-    _lepMVA_jetBTagCSV = -666;
-    _lepMVA_sip3d = -666;
-    _lepMVA_dxy = -666;
-    _lepMVA_dz = -666;
-    _lepMVA_mvaId = -666;
-    _lepMVA_eta = -666;
+    _lepMVA_neuRelIso            = -666;
+    _lepMVA_chRelIso             = -666;
+    _lepMVA_jetDR                = -666;
+    _lepMVA_jetPtRatio           = -666;
+    _lepMVA_jetBTagCSV           = -666;
+    _lepMVA_sip3d                = -666;
+    _lepMVA_dxy                  = -666;
+    _lepMVA_dz                   = -666;
+    _lepMVA_mvaId                = -666;
+    _lepMVA_eta                  = -666;
     _lepMVA_jetNDauChargedMVASel = -666;
            
 }
@@ -117,7 +120,7 @@ bool Muon::sel()
     float sip3d              = ntP->mu_ip3d->at(idx) / ntP->mu_ip3dErr->at(idx);
     bool  isLoose            = ntP->mu_isLooseMuon->at(idx);
 
-    // preselection
+    // Loose
     bool pass_pt      = (_pt         >  5    );
     bool pass_eta     = (fabs(_eta)  <  2.4  );
     bool pass_dxy     = (fabs(_dxy)  <  0.05 );
@@ -126,22 +129,23 @@ bool Muon::sel()
     bool pass_SIP     = (fabs(sip3d) <  8    );
     bool pass_isLoose = (isLoose             );
 
-    bool isPreselectionMuon = ( pass_pt      &&
-                                pass_eta     &&
-                                pass_dxy     &&
-                                pass_dz      &&
-                                pass_miniIso &&
-                                pass_SIP     &&
-                                pass_isLoose );
+    bool isLooseTTH = ( pass_pt      &&
+                        pass_eta     &&
+                        pass_dxy     &&
+                        pass_dz      &&
+                        pass_miniIso &&
+                        pass_SIP     &&
+                        pass_isLoose );
 
-    // mva-based selection
-    //bool pass_mva      = (_mva       > 0.65);
-    //bool pass_isMedium = (_isMedium        );
+    _isLooseTTH = isLooseTTH;
 
-    //bool isSelectionElectron        = ( isPreselectionElectron &&
-                                        //pass_mva               &&
-                                        //pass_isMedium          &&
-    //                                  )
+    // Fakeable
+
+    _isFakeableTTH = isLooseTTH;
+
+    // Tight
+
+    _isTightTTH = isLooseTTH;
 
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     // synchronization printout
@@ -165,6 +169,6 @@ bool Muon::sel()
                                        << _dz                                       << std::setw(21)
                                        << ntP->mu_segmentCompatibility->at(idx)     << std::endl;
     */
-    return isPreselectionMuon;
+    return isLooseTTH;
 }
 

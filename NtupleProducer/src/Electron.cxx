@@ -74,21 +74,25 @@ void Electron::init()
 {
 
     // general informations
-    _E                              = -666;
-    _pt                             = -666;
-    _eta                            = -666;
-    _phi                            = -666;
-    _m                              = -666;
+    _E                              = -888;
+    _pt                             = -888;
+    _eta                            = -888;
+    _phi                            = -888;
+    _m                              = -888;
     _charge                         = 0;
     _id                             = 0;
 
     // Id
-    _isLoose                        = -666;
-    _isMedium                       = -666;
+    _isLoose                        = -888;
+    _isMedium                       = -888;
+    _isLooseTTH                     = -888;
+    _isFakeableTTH                  = -888;
+    _isTightTTH                     = -888;
+
 
     // variables for Id
-    _dxy                            = -666;
-    _dz                             = -666;
+    _dxy                            = -888;
+    _dz                             = -888;
     _passCV                         = -888;
     _isPCC                          = -888;
 
@@ -96,17 +100,17 @@ void Electron::init()
     _lepMVA                         = -888; 
     _lepMVA_Moriond16               = -888;  
     
-    _lepMVA_neuRelIso               = -666;
-    _lepMVA_chRelIso                = -666;
-    _lepMVA_jetDR                   = -666;
-    _lepMVA_jetPtRatio              = -666;
-    _lepMVA_jetBTagCSV              = -666;
-    _lepMVA_sip3d                   = -666;
-    _lepMVA_dxy                     = -666;
-    _lepMVA_dz                      = -666;
-    _lepMVA_mvaId                   = -666;
-    _lepMVA_eta                     = -666;
-    _lepMVA_jetNDauChargedMVASel    = -666;
+    _lepMVA_neuRelIso               = -888;
+    _lepMVA_chRelIso                = -888;
+    _lepMVA_jetDR                   = -888;
+    _lepMVA_jetPtRatio              = -888;
+    _lepMVA_jetBTagCSV              = -888;
+    _lepMVA_sip3d                   = -888;
+    _lepMVA_dxy                     = -888;
+    _lepMVA_dz                      = -888;
+    _lepMVA_mvaId                   = -888;
+    _lepMVA_eta                     = -888;
+    _lepMVA_jetNDauChargedMVASel    = -888;
 
     //_full5x5_sigmaIetaIeta          = -1000;
     //_superCluster_eta               = -1000;
@@ -128,7 +132,7 @@ bool Electron::sel()
     else if (fabs(_eta) < 1.479) { isLoose = ( ntP->el_mvaNonTrigV0->at(idx) > -0.83 ); }
     else                         { isLoose = ( ntP->el_mvaNonTrigV0->at(idx) > -0.92 ); }  
 
-    // preselection
+    // Loose
     bool pass_pt       = (_pt        > 7   );
     bool pass_eta      = (fabs(_eta) < 2.5 );
     bool pass_dxy      = (fabs(_dxy) < 0.05);
@@ -137,7 +141,6 @@ bool Electron::sel()
     bool pass_SIP      = (SIP        < 8   );
     bool pass_isLoose  = (isLoose          );
     bool pass_losthits = (_nlosthits < 2   );
-    bool pass_CV       = (_passCV          );
 
     bool pass_muOverlap = 1;
     int nMuon = nt->NtMuon->size();
@@ -146,6 +149,18 @@ bool Electron::sel()
         float dr = GetDeltaR(_eta,_phi,nt->NtMuon->at(im).eta(),nt->NtMuon->at(im).phi());
         if( dr < 0.05 ) pass_muOverlap = 0; //&& nt->NtMuon->at(im).isLoose() ) pass_muOverlap = 0;
     }
+
+    bool isLooseTTH     = ( pass_pt          &&
+                            pass_eta         &&
+                            pass_dxy         &&
+                            pass_dz          &&
+                            pass_miniIso     &&
+                            pass_SIP         &&
+                            pass_isLoose     &&
+                            pass_losthits    &&
+                            pass_muOverlap   );
+
+    _isLooseTTH = isLooseTTH; // OK
 
     // preselection electron for pt > 30 (aiming at closure for the fake rate method whatever)
     // from https://github.com/peruzzim/cmg-cmssw/blob/works_260116/CMGTools/TTHAnalysis/python/tools/emulateElectronTriggerCuts.py#L1-L8
@@ -157,43 +172,62 @@ bool Electron::sel()
     //if (abs(lep.deltaPhiSuperClusterTrackAtVtx())>=(0.04 if abs(lep.superCluster().eta())<1.479 else 0.08)): return False
     //if (abs((1.0/lep.ecalEnergy() - lep.eSuperClusterOverP()/lep.ecalEnergy()) if lep.ecalEnergy()>0. else 9e9)>=0.01): return False
     //return True
-    
+
     bool cond_closuretest = true;
-    //if ( _pt > 30 )
-    //{
-    //    if (  ( (ntP->el_sigmaIetaIeta->at(idx) >= 0.011) && (abs(ntP->el_superCluster_eta->at(idx)) <  1.479) )
-    //       || ( (ntP->el_sigmaIetaIeta->at(idx) >= 0.031) && (abs(ntP->el_superCluster_eta->at(idx)) >= 1.479) )                                       ) cond_closuretest = false;
-        
-    //    if (  ntP->el_hadronicOverEm->at(idx)                                                                                                 >= 0.08  ) cond_closuretest = false;
-        
-    //    if (  abs( ntP->el_deltaEtaSuperClusterTrackAtVtx->at(idx) )                                                                          >= 0.01  ) cond_closuretest = false;
-        
-    //    if (  ( (abs( ntP->el_deltaPhiSuperClusterTrackAtVtx->at(idx)) >= 0.04) && (abs(ntP->el_superCluster_eta->at(idx) <  1.479) ) )
-    //       || ( (abs( ntP->el_deltaPhiSuperClusterTrackAtVtx->at(idx)) >= 0.08) && (abs(ntP->el_superCluster_eta->at(idx) >= 1.479) ) )                ) cond_closuretest = false;
-       
-        //if (ntP->el_correctedEcalEnergy->at(idx) == 0.)
-        //    {
-        //        cond_closuretest = false;
-        //    }
-        //else
-        //    {
-        //        if( abs( 1. / ntP->el_correctedEcalEnergy->at(idx) - ntP->el_eSuperClusterOverP->at(idx) / ntP->el_correctedEcalEnergy->at(idx) ) >= 0.01)
-        //            {cond_closuretest = false;}
-        //    }
-    //}
+    if ( _pt > 30 )
+    {
+        if (  ( (ntP->el_sigmaIetaIeta->at(idx) >= 0.011) && (abs(ntP->el_superCluster_eta->at(idx)) <  1.479) )
+                || ( (ntP->el_sigmaIetaIeta->at(idx) >= 0.031) && (abs(ntP->el_superCluster_eta->at(idx)) >= 1.479) )                                       ) cond_closuretest = false;
+        if (  ntP->el_hadronicOverEm->at(idx)                                                                                                 >= 0.08  ) cond_closuretest = false;
+        if (  abs( ntP->el_deltaEtaSuperClusterTrackAtVtx->at(idx) )                                                                          >= 0.01  ) cond_closuretest = false;
+        if (  ( (abs( ntP->el_deltaPhiSuperClusterTrackAtVtx->at(idx)) >= 0.04) && (abs(ntP->el_superCluster_eta->at(idx) <  1.479) ) )
+                || ( (abs( ntP->el_deltaPhiSuperClusterTrackAtVtx->at(idx)) >= 0.08) && (abs(ntP->el_superCluster_eta->at(idx) >= 1.479) ) )                ) cond_closuretest = false;
+        if (ntP->el_correctedEcalEnergy->at(idx) == 0.)
+        {
+            cond_closuretest = false;
+        }
+        else
+        {
+            if( abs( 1. / ntP->el_correctedEcalEnergy->at(idx) - ntP->el_eSuperClusterOverP->at(idx) / ntP->el_correctedEcalEnergy->at(idx) ) >= 0.01)
+            {cond_closuretest = false;}
+        }
+    }
 
-    bool isPreselectionElectron     = ( pass_pt          &&
-                                        pass_eta         &&
-                                        pass_dxy         &&
-                                        pass_dz          &&
-                                        pass_miniIso     &&
-                                        pass_SIP         &&
-                                        pass_isLoose     &&
-                                        pass_losthits    &&
-                                        pass_CV          &&
-                                        cond_closuretest &&
-                                        pass_muOverlap   );
+    // Fakeable
 
+    pass_losthits = (_nlosthits == 0 );
+    pass_pt       = (_pt        >  10);
+
+    bool isFakeableTTH     = ( pass_pt          &&
+                               pass_eta         &&
+                               pass_dxy         &&
+                               pass_dz          &&
+                               pass_miniIso     &&
+                               pass_SIP         &&
+                               pass_isLoose     &&
+                               pass_losthits    &&
+                               cond_closuretest &&
+                               pass_muOverlap   );
+    
+    _isFakeableTTH = isFakeableTTH;
+
+    // Tight
+
+    bool pass_CV       = (_passCV          );
+
+    bool isTightTTH     = ( pass_pt          &&
+                            pass_eta         &&
+                            pass_dxy         &&
+                            pass_dz          &&
+                            pass_miniIso     &&
+                            pass_SIP         &&
+                            pass_isLoose     &&
+                            pass_losthits    &&
+                            pass_CV          &&
+                            cond_closuretest &&
+                            pass_muOverlap   );
+
+    _isTightTTH = isTightTTH;
 
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     // synchronization printout
@@ -231,5 +265,5 @@ bool Electron::sel()
                << " pass_CV:        " << pass_CV
                << " pass_muOverlap: " << pass_muOverlap << std::endl;*/
 
-    return isPreselectionElectron;
+    return isLooseTTH;
 }

@@ -41,6 +41,9 @@ class Muon : public Base
         bool isTightMuonOld()      {return _isTightMuonOld;};
         bool isMediumMuon()        {return _isMedium;};
         bool isTightMuon()         {return _isTightMuon;};
+        bool isLooseTTH()          {return _isLooseTTH;};
+        bool isFakeableTTH()       {return _isFakeableTTH;};
+        bool isTightTTH()          {return _isTightTTH;};
 
         // Variables for Id
         float dxy()                {return _dxy;};
@@ -98,6 +101,10 @@ class Muon : public Base
         bool _isMedium;
         bool _isTightMuon;
         bool _isTightMuonOld;
+        bool _isLooseTTH;
+        bool _isFakeableTTH;
+        bool _isTightTTH;
+
 
         // Variables for Id
         float _dxy;
