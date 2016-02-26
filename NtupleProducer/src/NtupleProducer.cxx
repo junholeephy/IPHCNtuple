@@ -121,7 +121,9 @@ int main(int argc, char *argv[])
              el_presel  = false,
              tau_presel = false,
              jet_presel = false;
-
+        
+	int n_el_evt = 0;
+ 
          // electrons
         for(int j=0;j<ntP->el_n;j++)
         {
@@ -135,11 +137,14 @@ int main(int argc, char *argv[])
             {    
                 nt->NtElectron->push_back(el);
                 el_presel = true;
+		n_el_evt++;
             }
         }
         if(el_presel) n_el++;
-
-        // muons
+	
+        int n_mu_evt = 0;
+        
+	// muons
         for(int j=0;j<ntP->mu_n;j++)
         {
             idx = j;
@@ -151,9 +156,14 @@ int main(int argc, char *argv[])
             {
                 nt->NtMuon->push_back(mu);
                 mu_presel = true;
+		n_mu_evt ++;
             }
         }
         if(mu_presel) n_mu++;
+	
+	// preselection
+	if ( (n_mu_evt + n_el_evt) < 2 ) continue; 
+
 
         // taus 
         for(int j=0;j<ntP->tau_n;j++)
@@ -188,7 +198,7 @@ int main(int argc, char *argv[])
         if(jet_presel) n_jet++;
 	
 	//trigger objects
-	for(int j=0;j<ntP->triggerobject_n;j++)
+	/*for(int j=0;j<ntP->triggerobject_n;j++)
         {
             idx = j;
             
@@ -196,7 +206,7 @@ int main(int argc, char *argv[])
             trigObj.read();
           
             if (trigObj.sel()) nt->NtTriggerObj->push_back(trigObj);
-        }
+        }*/
 	
 	if (!isdata)
 	{
