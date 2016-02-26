@@ -198,6 +198,15 @@ bool Electron::sel()
     pass_losthits = (_nlosthits == 0 );
     pass_pt       = (_pt        >  10);
 
+    bool pass_lepMVA_Moriond16  = _lepMVA_Moriond16 > 0.75 ;
+    
+    bool pass_lepMVA_jetBTagCSV089 = _lepMVA_jetBTagCSV < 0.89;
+    
+    bool pass_lepMVA_jetBtagCSVPtRatio = false;
+    
+    if (!pass_lepMVA_Moriond16 && _lepMVA_jetPtRatio > 0.3 && _lepMVA_jetBTagCSV < 0.605) pass_lepMVA_jetBtagCSVPtRatio = true;
+    if (pass_lepMVA_Moriond16 && pass_lepMVA_jetBTagCSV089) pass_lepMVA_jetBtagCSVPtRatio = true;
+    
     bool isFakeableTTH     = ( pass_pt          &&
                                pass_eta         &&
                                pass_dxy         &&
@@ -207,7 +216,9 @@ bool Electron::sel()
                                pass_isLoose     &&
                                pass_losthits    &&
                                cond_closuretest &&
-                               pass_muOverlap   );
+                               pass_muOverlap   && 
+			       pass_lepMVA_jetBtagCSVPtRatio
+			       );
     
     _isFakeableTTH = isFakeableTTH;
 
@@ -215,17 +226,19 @@ bool Electron::sel()
 
     bool pass_CV       = (_passCV          );
 
-    bool isTightTTH     = ( pass_pt          &&
-                            pass_eta         &&
-                            pass_dxy         &&
-                            pass_dz          &&
-                            pass_miniIso     &&
-                            pass_SIP         &&
-                            pass_isLoose     &&
-                            pass_losthits    &&
-                            pass_CV          &&
-                            cond_closuretest &&
-                            pass_muOverlap   );
+    bool isTightTTH     = ( pass_pt               &&
+                            pass_eta              &&
+                            pass_dxy              &&
+                            pass_dz               &&
+                            pass_miniIso          &&
+                            pass_SIP              &&
+                            pass_isLoose          &&
+                            pass_losthits         &&
+                            pass_CV               &&
+                            cond_closuretest      &&
+                            pass_muOverlap        && 
+			    pass_lepMVA_Moriond16 &&
+			    pass_lepMVA_jetBTagCSV089);
 
     _isTightTTH = isTightTTH;
 
