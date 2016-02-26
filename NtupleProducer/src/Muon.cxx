@@ -139,13 +139,23 @@ bool Muon::sel()
 
     _isLooseTTH = isLooseTTH;
 
+    
     // Fakeable
-
-    _isFakeableTTH = isLooseTTH;
+    
+  
+    bool pass_lepMVA_Moriond16  = _lepMVA_Moriond16 > 0.75 ;
+    bool pass_lepMVA_jetBTagCSV089 = _lepMVA_jetBTagCSV < 0.89;
+    
+    bool pass_lepMVA_jetBtagCSVPtRatio = false;
+    
+    if (!pass_lepMVA_Moriond16 && _lepMVA_jetPtRatio > 0.3 && _lepMVA_jetBTagCSV < 0.605) pass_lepMVA_jetBtagCSVPtRatio = true;
+    if (pass_lepMVA_Moriond16 && pass_lepMVA_jetBTagCSV089) pass_lepMVA_jetBtagCSVPtRatio = true;
+    
+    _isFakeableTTH = isLooseTTH && pass_lepMVA_jetBtagCSVPtRatio;
 
     // Tight
-
-    _isTightTTH = isLooseTTH;
+  
+    _isTightTTH = isLooseTTH && pass_lepMVA_Moriond16 && _isMedium && pass_lepMVA_jetBTagCSV089;
 
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     // synchronization printout
