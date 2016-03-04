@@ -229,10 +229,10 @@ int main(int argc, char *argv[])
           nt->NtTruth->push_back(truth);
 	}
 
-        std::cout << " n_mu :  " << n_mu  << std::endl
+        /*std::cout << " n_mu :  " << n_mu  << std::endl
                   << " n_el :  " << n_el  << std::endl
                   << " n_tau:  " << n_tau << std::endl
-                  << " n_jet:  " << n_jet << std::endl;
+                  << " n_jet:  " << n_jet << std::endl;*/
 
         nt->fill();
     }  
