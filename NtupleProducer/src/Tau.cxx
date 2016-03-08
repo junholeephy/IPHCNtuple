@@ -32,53 +32,55 @@ void Tau::read()
 
     // selection variables
     
-    
+   
     // more variables
-    //_decayMode = ntP->tau_decayMode->at(idx);
-    //_hasLeadChargedHadrCand = ntP->tau_hasLeadChargedHadrCand->at(idx);
-    //_leadingTrackPt = ntP->tau_leadingTrackPt->at(idx);
-    //_leadingTrackCharge = ntP->tau_leadingTrackCharge->at(idx);
+    _decayMode = ntP->tau_decayMode->at(idx); std::cout <<"crash -1"<<std::endl;
+    _hasLeadChargedHadrCand = ntP->tau_hasLeadChargedHadrCand->at(idx); std::cout <<"crash -1"<<std::endl;
+    _leadingTrackPt = ntP->tau_leadingTrackPt->at(idx); std::cout <<"crash -1"<<std::endl;
+    _leadingTrackCharge = ntP->tau_leadingTrackCharge->at(idx); std::cout <<"crash -1"<<std::endl;
+    
+    
 
-    //_decayModeFindingOldDMs = ntP->tau_decayModeFindingOldDMs->at(idx);
-    //_decayModeFindingOldDMs = ntP->tau_decayModeFindingOldDMs->at(idx);
+    _decayModeFindingOldDMs = ntP->tau_decayModeFindingOldDMs->at(idx);
+    _decayModeFindingOldDMs = ntP->tau_decayModeFindingOldDMs->at(idx);
 
-    //_byLooseCombinedIsolationDeltaBetaCorr3Hits = ntP->tau_byLooseCombinedIsolationDeltaBetaCorr3Hits->at(idx);
-    //_byMediumCombinedIsolationDeltaBetaCorr3Hits = ntP->tau_byMediumCombinedIsolationDeltaBetaCorr3Hits->at(idx);
-    //_byTightCombinedIsolationDeltaBetaCorr3Hits = ntP->tau_byTightCombinedIsolationDeltaBetaCorr3Hits->at(idx);
-
+    _byLooseCombinedIsolationDeltaBetaCorr3Hits = ntP->tau_byLooseCombinedIsolationDeltaBetaCorr3Hits->at(idx);
+    _byMediumCombinedIsolationDeltaBetaCorr3Hits = ntP->tau_byMediumCombinedIsolationDeltaBetaCorr3Hits->at(idx);
+    _byTightCombinedIsolationDeltaBetaCorr3Hits = ntP->tau_byTightCombinedIsolationDeltaBetaCorr3Hits->at(idx);
+  
     //_byLooseIsolationMVA3newDMwLT = ntP->tau_byLooseIsolationMVA3newDMwLT->at(idx);
-    //_byMediumIsolationMVA3newDMwLT = ntP->tau_byMediumIsolationMVA3newDMwLT->at(idx);
+   // _byMediumIsolationMVA3newDMwLT = ntP->tau_byMediumIsolationMVA3newDMwLT->at(idx);
     //_byTightIsolationMVA3newDMwLT = ntP->tau_byTightIsolationMVA3newDMwLT->at(idx);
 
-    //_byCombinedIsolationDeltaBetaCorrRaw3Hits = ntP->tau_byCombinedIsolationDeltaBetaCorrRaw3Hits->at(idx);
-    //_chargedIsoPtSum = ntP->tau_chargedIsoPtSum->at(idx);
-    //_neutralIsoPtSum = ntP->tau_neutralIsoPtSum->at(idx);
-    //_puCorrPtSum = ntP->tau_puCorrPtSum->at(idx);
+    _byCombinedIsolationDeltaBetaCorrRaw3Hits = ntP->tau_byCombinedIsolationDeltaBetaCorrRaw3Hits->at(idx);
+    _chargedIsoPtSum = ntP->tau_chargedIsoPtSum->at(idx);
+    _neutralIsoPtSum = ntP->tau_neutralIsoPtSum->at(idx);
+    _puCorrPtSum = ntP->tau_puCorrPtSum->at(idx);
+ 
+    _againstMuonLoose3 = ntP->tau_againstMuonLoose3->at(idx);
+    _againstMuonTight3 = ntP->tau_againstMuonTight3->at(idx);
 
-    //_againstMuonLoose3 = ntP->tau_againstMuonLoose3->at(idx);
-    //_againstMuonTight3 = ntP->tau_againstMuonTight3->at(idx);
-
-    //_againstElectronVLooseMVA5 = ntP->tau_againstElectronVLooseMVA5->at(idx);
-    //_againstElectronLooseMVA5 = ntP->tau_againstElectronLooseMVA5->at(idx);
-    //_againstElectronMediumMVA5 = ntP->tau_againstElectronMediumMVA5->at(idx);
-
-    //_pfEssential_jet_pt          = ntP->tau_pfEssential_jet_pt->at(idx);
-    //_pfEssential_jet_eta         = ntP->tau_pfEssential_jet_eta->at(idx);
-    //_pfEssential_jet_phi         = ntP->tau_pfEssential_jet_phi->at(idx);
-    //_pfEssential_jet_m           = ntP->tau_pfEssential_jet_m->at(idx);
-    //_pfEssential_jetCorr_pt      = ntP->tau_pfEssential_jetCorr_pt->at(idx);
-    //_pfEssential_jetCorr_eta     = ntP->tau_pfEssential_jetCorr_eta->at(idx);
-    //_pfEssential_jetCorr_phi     = ntP->tau_pfEssential_jetCorr_phi->at(idx);
-    //_pfEssential_jetCorr_m       = ntP->tau_pfEssential_jetCorr_m->at(idx);
-    //_pfEssential_hasSV           = ntP->tau_pfEssential_hasSV->at(idx);
-    //_pfEssential_sv_x            = ntP->tau_pfEssential_sv_x->at(idx);
-    //_pfEssential_sv_y            = ntP->tau_pfEssential_sv_y->at(idx);
-    //_pfEssential_sv_z            = ntP->tau_pfEssential_sv_z->at(idx);
-    //_pfEssential_flightLengthSig = ntP->tau_pfEssential_flightLengthSig->at(idx);
-    //_pfEssential_dxy             = ntP->tau_pfEssential_dxy->at(idx);
-    //_pfEssential_dxy_error       = ntP->tau_pfEssential_dxy_error->at(idx);
-    //_pfEssential_dxy_Sig         = ntP->tau_pfEssential_dxy_Sig->at(idx);
-
+    _againstElectronVLooseMVA5 = ntP->tau_againstElectronVLooseMVA5->at(idx);
+    _againstElectronLooseMVA5 = ntP->tau_againstElectronLooseMVA5->at(idx);
+    _againstElectronMediumMVA5 = ntP->tau_againstElectronMediumMVA5->at(idx);
+ 
+    _pfEssential_jet_pt 	 = ntP->tau_pfEssential_jet_pt->at(idx);
+    _pfEssential_jet_eta	 = ntP->tau_pfEssential_jet_eta->at(idx);
+    _pfEssential_jet_phi	 = ntP->tau_pfEssential_jet_phi->at(idx);
+    _pfEssential_jet_m  	 = ntP->tau_pfEssential_jet_m->at(idx);
+    _pfEssential_jetCorr_pt	 = ntP->tau_pfEssential_jetCorr_pt->at(idx);
+    _pfEssential_jetCorr_eta	 = ntP->tau_pfEssential_jetCorr_eta->at(idx);
+    _pfEssential_jetCorr_phi	 = ntP->tau_pfEssential_jetCorr_phi->at(idx);
+    _pfEssential_jetCorr_m	 = ntP->tau_pfEssential_jetCorr_m->at(idx);
+    _pfEssential_hasSV  	 = ntP->tau_pfEssential_hasSV->at(idx);
+    _pfEssential_sv_x		 = ntP->tau_pfEssential_sv_x->at(idx);
+    _pfEssential_sv_y		 = ntP->tau_pfEssential_sv_y->at(idx);
+    _pfEssential_sv_z		 = ntP->tau_pfEssential_sv_z->at(idx);
+    _pfEssential_flightLengthSig = ntP->tau_pfEssential_flightLengthSig->at(idx);
+    _pfEssential_dxy		 = ntP->tau_pfEssential_dxy->at(idx);
+    _pfEssential_dxy_error	 = ntP->tau_pfEssential_dxy_error->at(idx);
+    _pfEssential_dxy_Sig	 = ntP->tau_pfEssential_dxy_Sig->at(idx);
+    
 }
 
 void Tau::init()
