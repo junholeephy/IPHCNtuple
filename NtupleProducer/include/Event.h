@@ -76,6 +76,8 @@ class Event : public Base
         float _weight_scale_muF2;
         float _weight_scale_muR0p5;
         float _weight_scale_muR2;
+	
+        std::vector<float> _pdf_weights;
 
         float _mc_weight;
         float _mc_ptHat;
