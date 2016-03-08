@@ -43,7 +43,11 @@ void Event::read(bool isdata)
 
         _mc_weight           = ntP->mc_weight;
         _mc_ptHat            = ntP->mc_ptHat;
-        _mc_pu_trueNumInt    = ntP->mc_pu_trueNumInt;}
+        _mc_pu_trueNumInt    = ntP->mc_pu_trueNumInt;
+	
+        _pdf_weights = *ntP->mc_pdfweights;
+	
+	}
 
         // trigger
 
@@ -213,4 +217,6 @@ void Event::init()
     _tth_channel           = -888;
 
     _disc_TT               = -888;
+    
+    _pdf_weights.clear();
 }
