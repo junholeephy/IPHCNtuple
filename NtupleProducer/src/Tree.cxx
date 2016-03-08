@@ -72,6 +72,8 @@ void Tree::Init(TChain *ch)
     pv_y = 0;
     pv_z = 0;
     pv_zError = 0;
+    
+    mc_pdfweights = 0;
 
     // ####################################
     // #   ____  _ _                      #
@@ -853,7 +855,9 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("mc_x2", &mc_x2, &b_mc_x2);
     fChain->SetBranchAddress("mc_scale", &mc_scale, &b_mc_scale);
     fChain->SetBranchAddress("mc_ptHat", &mc_ptHat, &b_mc_ptHat);
-    fChain->SetBranchAddress("mc_weight", &mc_weight, &b_mc_weight);
+    fChain->SetBranchAddress("mc_weight", &mc_weight, &b_mc_weight); 
+    fChain->SetBranchAddress("mc_pdfweights", &mc_pdfweights, &b_mc_pdfweights);
+   
     fChain->SetBranchAddress("mc_pu_intime_NumInt", &mc_pu_intime_NumInt, &b_mc_pu_intime_NumInt);
     fChain->SetBranchAddress("mc_pu_trueNumInt", &mc_pu_trueNumInt, &b_mc_pu_trueNumInt);
     fChain->SetBranchAddress("mc_pu_before_npu", &mc_pu_before_npu, &b_mc_pu_before_npu);
@@ -1059,49 +1063,49 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("tau_eta", &tau_eta,  &b_tau_eta);
     fChain->SetBranchAddress("tau_phi", &tau_phi,  &b_tau_phi);
     fChain->SetBranchAddress("tau_m", &tau_m,  &b_tau_m);
-    //fChain->SetBranchAddress("tau_dxy", &tau_dxy,  &b_tau_dxy);
-    //fChain->SetBranchAddress("tau_dz", &tau_dz,  &b_tau_dz);
+    fChain->SetBranchAddress("tau_dxy", &tau_dxy,  &b_tau_dxy);
+    fChain->SetBranchAddress("tau_dz", &tau_dz,  &b_tau_dz);
     fChain->SetBranchAddress("tau_leadingTrackDxy", &tau_leadingTrackDxy, &b_tau_leadingTrackDxy);
     fChain->SetBranchAddress("tau_leadingTrackDz", & tau_leadingTrackDz, &b_tau_leadingTrackDz);
     fChain->SetBranchAddress("tau_charge", &tau_charge,  &b_tau_charge);
     fChain->SetBranchAddress("tau_id", &tau_id,  &b_tau_id);
     fChain->SetBranchAddress("tau_decayMode", &tau_decayMode, &b_tau_decayMode);
-    //fChain->SetBranchAddress("tau_hasLeadChargedHadrCand", &tau_hasLeadChargedHadrCand,  &b_tau_hasLeadChargedHadrCand);
-    //fChain->SetBranchAddress("tau_leadingTrackPt", &tau_leadingTrackPt,  &b_tau_leadingTrackPt);
-    //fChain->SetBranchAddress("tau_leadingTrackCharge", &tau_leadingTrackCharge,  &b_tau_leadingTrackCharge);
+    fChain->SetBranchAddress("tau_hasLeadChargedHadrCand", &tau_hasLeadChargedHadrCand,  &b_tau_hasLeadChargedHadrCand);
+    fChain->SetBranchAddress("tau_leadingTrackPt", &tau_leadingTrackPt,  &b_tau_leadingTrackPt);
+    fChain->SetBranchAddress("tau_leadingTrackCharge", &tau_leadingTrackCharge,  &b_tau_leadingTrackCharge);
     fChain->SetBranchAddress("tau_decayModeFindingOldDMs", &tau_decayModeFindingOldDMs, &b_tau_decayModeFindingOldDMs);
     fChain->SetBranchAddress("tau_decayModeFindingNewDMs", &tau_decayModeFindingNewDMs, &b_tau_decayModeFindingNewDMs);
     fChain->SetBranchAddress("tau_byLooseCombinedIsolationDeltaBetaCorr3Hits", &tau_byLooseCombinedIsolationDeltaBetaCorr3Hits,&b_tau_byLooseCombinedIsolationDeltaBetaCorr3Hits);
-    //fChain->SetBranchAddress("tau_byMediumCombinedIsolationDeltaBetaCorr3Hits", &tau_byMediumCombinedIsolationDeltaBetaCorr3Hits, &b_tau_byMediumCombinedIsolationDeltaBetaCorr3Hits);
-    //fChain->SetBranchAddress("tau_byTightCombinedIsolationDeltaBetaCorr3Hits", &tau_byTightCombinedIsolationDeltaBetaCorr3Hits, &b_tau_byTightCombinedIsolationDeltaBetaCorr3Hits);
+    fChain->SetBranchAddress("tau_byMediumCombinedIsolationDeltaBetaCorr3Hits", &tau_byMediumCombinedIsolationDeltaBetaCorr3Hits, &b_tau_byMediumCombinedIsolationDeltaBetaCorr3Hits);
+    fChain->SetBranchAddress("tau_byTightCombinedIsolationDeltaBetaCorr3Hits", &tau_byTightCombinedIsolationDeltaBetaCorr3Hits, &b_tau_byTightCombinedIsolationDeltaBetaCorr3Hits);
     //fChain->SetBranchAddress("tau_byLooseIsolationMVA3newDMwLT", &tau_byLooseIsolationMVA3newDMwLT, &b_tau_byLooseIsolationMVA3newDMwLT);
     //fChain->SetBranchAddress("tau_byMediumIsolationMVA3newDMwLT", &tau_byMediumIsolationMVA3newDMwLT, &b_tau_byMediumIsolationMVA3newDMwLT);
     //fChain->SetBranchAddress("tau_byTightIsolationMVA3newDMwLT", &tau_byTightIsolationMVA3newDMwLT, &b_tau_byTightIsolationMVA3newDMwLT);
-    //fChain->SetBranchAddress("tau_byCombinedIsolationDeltaBetaCorrRaw3Hits", &tau_byCombinedIsolationDeltaBetaCorrRaw3Hits, &b_tau_byCombinedIsolationDeltaBetaCorrRaw3Hits);
-    //fChain->SetBranchAddress("tau_chargedIsoPtSum", &tau_chargedIsoPtSum, &b_tau_chargedIsoPtSum);
-    //fChain->SetBranchAddress("tau_neutralIsoPtSum", &tau_neutralIsoPtSum, &b_tau_neutralIsoPtSum);
-    //fChain->SetBranchAddress("tau_puCorrPtSum", &tau_puCorrPtSum, &b_tau_puCorrPtSum);
-    //fChain->SetBranchAddress("tau_againstMuonLoose3", &tau_againstMuonLoose3, &b_tau_againstMuonLoose3);
-    //fChain->SetBranchAddress("tau_againstMuonTight3", &tau_againstMuonTight3, &b_tau_againstMuonTight3);
-    //fChain->SetBranchAddress("tau_againstElectronVLooseMVA5", &tau_againstElectronVLooseMVA5, &b_tau_againstElectronVLooseMVA5);
-    //fChain->SetBranchAddress("tau_againstElectronLooseMVA5", &tau_againstElectronLooseMVA5, &b_tau_againstElectronLooseMVA5);
-    //fChain->SetBranchAddress("tau_againstElectronMediumMVA5", &tau_againstElectronMediumMVA5, &b_tau_againstElectronMediumMVA5);
-    //fChain->SetBranchAddress("tau_pfEssential_jet_pt", &tau_pfEssential_jet_pt, &b_tau_pfEssential_jet_pt);
-    //fChain->SetBranchAddress("tau_pfEssential_jet_eta", &tau_pfEssential_jet_eta, &b_tau_pfEssential_jet_eta);
-    //fChain->SetBranchAddress("tau_pfEssential_jet_phi", &tau_pfEssential_jet_phi, &b_tau_pfEssential_jet_phi);
-    //fChain->SetBranchAddress("tau_pfEssential_jet_m", &tau_pfEssential_jet_m, &b_tau_pfEssential_jet_m);
-    //fChain->SetBranchAddress("tau_pfEssential_jetCorr_pt", &tau_pfEssential_jetCorr_pt, &b_tau_pfEssential_jetCorr_pt);
-    //fChain->SetBranchAddress("tau_pfEssential_jetCorr_eta", &tau_pfEssential_jetCorr_eta, &b_tau_pfEssential_jetCorr_eta);
-    //fChain->SetBranchAddress("tau_pfEssential_jetCorr_phi", &tau_pfEssential_jetCorr_phi, &b_tau_pfEssential_jetCorr_phi);
-    //fChain->SetBranchAddress("tau_pfEssential_jetCorr_m", &tau_pfEssential_jetCorr_m, &b_tau_pfEssential_jetCorr_m);
-    //fChain->SetBranchAddress("tau_pfEssential_hasSV", &tau_pfEssential_hasSV, &b_tau_pfEssential_hasSV);
-    //fChain->SetBranchAddress("tau_pfEssential_sv_x", &tau_pfEssential_sv_x, &b_tau_pfEssential_sv_x);
-    //fChain->SetBranchAddress("tau_pfEssential_sv_y", &tau_pfEssential_sv_y, &b_tau_pfEssential_sv_y);
-    //fChain->SetBranchAddress("tau_pfEssential_sv_z", &tau_pfEssential_sv_z, &b_tau_pfEssential_sv_z);
-    //fChain->SetBranchAddress("tau_pfEssential_flightLengthSig", &tau_pfEssential_flightLengthSig, &b_tau_pfEssential_flightLengthSig);
-    //fChain->SetBranchAddress("tau_pfEssential_dxy", &tau_pfEssential_dxy, &b_tau_pfEssential_dxy);
-    //fChain->SetBranchAddress("tau_pfEssential_dxy_error", &tau_pfEssential_dxy_error, &b_tau_pfEssential_dxy_error);
-    //fChain->SetBranchAddress("tau_pfEssential_dxy_Sig", &tau_pfEssential_dxy_Sig, &b_tau_pfEssential_dxy_Sig);
+    fChain->SetBranchAddress("tau_byCombinedIsolationDeltaBetaCorrRaw3Hits", &tau_byCombinedIsolationDeltaBetaCorrRaw3Hits, &b_tau_byCombinedIsolationDeltaBetaCorrRaw3Hits);
+    fChain->SetBranchAddress("tau_chargedIsoPtSum", &tau_chargedIsoPtSum, &b_tau_chargedIsoPtSum);
+    fChain->SetBranchAddress("tau_neutralIsoPtSum", &tau_neutralIsoPtSum, &b_tau_neutralIsoPtSum);
+    fChain->SetBranchAddress("tau_puCorrPtSum", &tau_puCorrPtSum, &b_tau_puCorrPtSum);
+    fChain->SetBranchAddress("tau_againstMuonLoose3", &tau_againstMuonLoose3, &b_tau_againstMuonLoose3);
+    fChain->SetBranchAddress("tau_againstMuonTight3", &tau_againstMuonTight3, &b_tau_againstMuonTight3);
+    fChain->SetBranchAddress("tau_againstElectronVLooseMVA5", &tau_againstElectronVLooseMVA5, &b_tau_againstElectronVLooseMVA5);
+    fChain->SetBranchAddress("tau_againstElectronLooseMVA5", &tau_againstElectronLooseMVA5, &b_tau_againstElectronLooseMVA5);
+    fChain->SetBranchAddress("tau_againstElectronMediumMVA5", &tau_againstElectronMediumMVA5, &b_tau_againstElectronMediumMVA5);
+    fChain->SetBranchAddress("tau_pfEssential_jet_pt", &tau_pfEssential_jet_pt, &b_tau_pfEssential_jet_pt);
+    fChain->SetBranchAddress("tau_pfEssential_jet_eta", &tau_pfEssential_jet_eta, &b_tau_pfEssential_jet_eta);
+    fChain->SetBranchAddress("tau_pfEssential_jet_phi", &tau_pfEssential_jet_phi, &b_tau_pfEssential_jet_phi);
+    fChain->SetBranchAddress("tau_pfEssential_jet_m", &tau_pfEssential_jet_m, &b_tau_pfEssential_jet_m);
+    fChain->SetBranchAddress("tau_pfEssential_jetCorr_pt", &tau_pfEssential_jetCorr_pt, &b_tau_pfEssential_jetCorr_pt);
+    fChain->SetBranchAddress("tau_pfEssential_jetCorr_eta", &tau_pfEssential_jetCorr_eta, &b_tau_pfEssential_jetCorr_eta);
+    fChain->SetBranchAddress("tau_pfEssential_jetCorr_phi", &tau_pfEssential_jetCorr_phi, &b_tau_pfEssential_jetCorr_phi);
+    fChain->SetBranchAddress("tau_pfEssential_jetCorr_m", &tau_pfEssential_jetCorr_m, &b_tau_pfEssential_jetCorr_m);
+    fChain->SetBranchAddress("tau_pfEssential_hasSV", &tau_pfEssential_hasSV, &b_tau_pfEssential_hasSV);
+    fChain->SetBranchAddress("tau_pfEssential_sv_x", &tau_pfEssential_sv_x, &b_tau_pfEssential_sv_x);
+    fChain->SetBranchAddress("tau_pfEssential_sv_y", &tau_pfEssential_sv_y, &b_tau_pfEssential_sv_y);
+    fChain->SetBranchAddress("tau_pfEssential_sv_z", &tau_pfEssential_sv_z, &b_tau_pfEssential_sv_z);
+    fChain->SetBranchAddress("tau_pfEssential_flightLengthSig", &tau_pfEssential_flightLengthSig, &b_tau_pfEssential_flightLengthSig);
+    fChain->SetBranchAddress("tau_pfEssential_dxy", &tau_pfEssential_dxy, &b_tau_pfEssential_dxy);
+    fChain->SetBranchAddress("tau_pfEssential_dxy_error", &tau_pfEssential_dxy_error, &b_tau_pfEssential_dxy_error);
+    fChain->SetBranchAddress("tau_pfEssential_dxy_Sig", &tau_pfEssential_dxy_Sig, &b_tau_pfEssential_dxy_Sig);
 
     // ##########################
     // #       _      _         #
