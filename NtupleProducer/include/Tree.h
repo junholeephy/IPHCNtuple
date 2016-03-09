@@ -177,7 +177,9 @@ class Tree {
         vector<float>   *el_sigmaIetaIeta;
         vector<float>   *el_superCluster_eta;
         vector<float>   *el_correctedEcalEnergy;
+	vector<float>   *el_ecalEnergy;
         vector<float>   *el_eSuperClusterOverP;
+        vector<float>   *el_trackMomentumError;
 
 
         // ####################################
@@ -1029,7 +1031,9 @@ class Tree {
         TBranch        *b_el_sigmaIetaIeta;
         TBranch        *b_el_superCluster_eta;
         TBranch        *b_el_correctedEcalEnergy;
+	TBranch        *b_el_ecalEnergy;
         TBranch        *b_el_eSuperClusterOverP;
+        TBranch        *b_el_trackMomentumError;
 
         // ####################################
         // #   __  __                         #
