@@ -14,60 +14,62 @@ Electron::~Electron()
 
 void Electron::read()
 {
-    _ID = idx;
-
-    // general informations
-    if( CHECK(ntP->el_E)                             ) _E         = ntP->el_E->at(idx);
-    if( CHECK(ntP->el_pt)                            ) _pt        = ntP->el_pt->at(idx);
-    if( CHECK(ntP->el_eta)                           ) _eta       = ntP->el_eta->at(idx);
-    if( CHECK(ntP->el_phi)                           ) _phi       = ntP->el_phi->at(idx);
-    if( CHECK(ntP->el_m)                             ) _m         = ntP->el_m->at(idx);
-    if( CHECK(ntP->el_charge)                        ) _charge    = ntP->el_charge->at(idx);
-    if( CHECK(ntP->el_id)                            ) _id        = ntP->el_id->at(idx);
-
-    // preselection variables
-    if( CHECK(ntP->el_gsfTrack_PV_dxy)               ) _dxy       = ntP->el_gsfTrack_PV_dxy->at(idx);
-    if( CHECK(ntP->el_gsfTrack_PV_dz)                ) _dz        = ntP->el_gsfTrack_PV_dz->at(idx);
-    // placeholder miniIso
-    // placeholder SIP
-    if( CHECK(ntP->el_looseCBId)                     ) _isLoose   = ntP->el_looseCBId->at(idx);
-    if( CHECK(ntP->el_numberOfLostHits)              ) _nlosthits = ntP->el_numberOfLostHits->at(idx);
-
-    // cut-based selection additionnal variables
-    if( CHECK(ntP->el_lepMVA_sip3d)                  ) _sip3d     = ntP->el_lepMVA_sip3d->at(idx);
-    if( CHECK(ntP->el_mediumCBId)                    ) _isMedium  = ntP->el_mediumCBId->at(idx);
-    if( CHECK(ntP->el_passConversionVeto)            ) _passCV    = ntP->el_passConversionVeto->at(idx);
-    if( CHECK(ntP->el_isGsfCtfScPixChargeConsistent) ) _isPCC     = ntP->el_isGsfCtfScPixChargeConsistent->at(idx);
-
-    // mva-based selection additionnal variables
-    if( CHECK(ntP->el_lepMVA)                        ) _lepMVA           = ntP->el_lepMVA->at(idx);
-    if( CHECK(ntP->el_lepMVA_Moriond16)              ) _lepMVA_Moriond16 = ntP->el_lepMVA_Moriond16->at(idx);
-   
-    if( CHECK(ntP->el_lepMVA_neuRelIso)	             ) _lepMVA_neuRelIso = ntP->el_lepMVA_neuRelIso->at(idx);
-    if( CHECK(ntP->el_lepMVA_chRelIso) 	             ) _lepMVA_chRelIso = ntP->el_lepMVA_chRelIso->at(idx);
-    if( CHECK(ntP->el_lepMVA_jetDR)		             ) _lepMVA_jetDR = ntP->el_lepMVA_jetDR->at(idx);
-    if( CHECK(ntP->el_lepMVA_jetPtRatio) 	         ) _lepMVA_jetPtRatio = ntP->el_lepMVA_jetPtRatio->at(idx);
-    if( CHECK(ntP->el_lepMVA_jetBTagCSV)	         ) _lepMVA_jetBTagCSV = ntP->el_lepMVA_jetBTagCSV->at(idx);
-    if( CHECK(ntP->el_lepMVA_sip3d) 	             ) _lepMVA_sip3d = ntP->el_lepMVA_sip3d->at(idx);
-    if( CHECK(ntP->el_lepMVA_dxy)		             ) _lepMVA_dxy = ntP->el_lepMVA_dxy->at(idx);
-    if( CHECK(ntP->el_lepMVA_dz) 	                 ) _lepMVA_dz = ntP->el_lepMVA_dz->at(idx);
-    if( CHECK(ntP->el_lepMVA_mvaId)		             ) _lepMVA_mvaId = ntP->el_lepMVA_mvaId->at(idx);
-    if( CHECK(ntP->el_lepMVA_eta) 	                 ) _lepMVA_eta = ntP->el_lepMVA_eta->at(idx);
-    if( CHECK(ntP->el_lepMVA_jetNDauChargedMVASel)   ) _lepMVA_jetNDauChargedMVASel = ntP->el_lepMVA_jetNDauChargedMVASel->at(idx);
+     _ID = idx;
+    
+     _E 	= ntP->el_E->at(idx);
+     _pt	= ntP->el_pt->at(idx);
+     _eta	= ntP->el_eta->at(idx);
+     _phi	= ntP->el_phi->at(idx);
+     _m 	= ntP->el_m->at(idx);
+     _charge	= ntP->el_charge->at(idx);
+     _id	= ntP->el_id->at(idx);
  
-    // more variables
-    if( CHECK(ntP->el_ip3d)                          ) _ip3d      = ntP->el_ip3d->at(idx);
-    if( CHECK(ntP->el_ip3dErr)                       ) _ip3dErr   = ntP->el_ip3dErr->at(idx);
+   
+     _dxy	= ntP->el_gsfTrack_PV_dxy->at(idx);
+     _dz	= ntP->el_gsfTrack_PV_dz->at(idx);
+     _nlosthits = ntP->el_numberOfLostHits->at(idx);
+     _ip3d	= ntP->el_ip3d->at(idx);
+     _ip3dErr	= ntP->el_ip3dErr->at(idx);
 
-    // fake rate related closure test variables
-    //if( CHECK(                                          _full5x5_sigmaIetaIeta
-    //if( CHECK(                                          _superCluster_eta
-    //if( CHECK(                                          _hadronicOverEm
-    //if( CHECK(                                          _deltaEtaSuperClusterTrackAtVtx
-    //if( CHECK(                                          _deltaPhiSuperClusterTrackAtVtx
-    //if( CHECK(                                          _ecalEnergy
-    //if( CHECK(                                          _eSuperClusterOverP
 
+     _isLoose	= ntP->el_looseCBId->at(idx);
+     _isMedium  = ntP->el_mediumCBId->at(idx);
+     _passCV	= ntP->el_passConversionVeto->at(idx);
+     _isPCC	= ntP->el_isGsfCtfScPixChargeConsistent->at(idx);
+
+   
+     _lepMVA	       = ntP->el_lepMVA->at(idx);
+     _lepMVA_Moriond16 = ntP->el_lepMVA_Moriond16->at(idx);
+     _mvaNonTrigV0     = ntP->el_mvaNonTrigV0->at(idx);
+ 
+     _lepMVA_miniRelIsoCharged    = ntP->el_lepMVA_miniRelIsoCharged->at(idx);
+     _lepMVA_miniRelIsoNeutral    = ntP->el_lepMVA_miniRelIsoNeutral->at(idx);
+     _lepMVA_jetPtRelv2           = ntP->el_lepMVA_jetPtRelv2->at(idx);  
+     _lepMVA_jetDR                = ntP->el_lepMVA_jetDR->at(idx);
+     _lepMVA_jetPtRatio           = ntP->el_lepMVA_jetPtRatio->at(idx);
+     _lepMVA_jetBTagCSV           = ntP->el_lepMVA_jetBTagCSV->at(idx);
+     _lepMVA_sip3d                = ntP->el_lepMVA_sip3d->at(idx);
+     _lepMVA_dxy                  = ntP->el_lepMVA_dxy->at(idx);
+     _lepMVA_dz                   = ntP->el_lepMVA_dz->at(idx);
+     _lepMVA_mvaId                = ntP->el_lepMVA_mvaId->at(idx);
+     _lepMVA_eta                  = ntP->el_lepMVA_eta->at(idx);
+     _lepMVA_jetNDauChargedMVASel = ntP->el_lepMVA_jetNDauChargedMVASel->at(idx);
+
+ 
+     _miniIso			     = ntP->el_miniIsoTTH->at(idx);
+  
+     _sigmaIetaIeta		     = ntP->el_sigmaIetaIeta->at(idx);    
+     _superCluster_eta  	     = ntP->el_superCluster_eta->at(idx);     
+     _hadronicOverEm		     = ntP->el_hadronicOverEm->at(idx);    
+     _deltaEtaSuperClusterTrackAtVtx = ntP->el_deltaEtaSuperClusterTrackAtVtx->at(idx);
+     _deltaPhiSuperClusterTrackAtVtx = ntP->el_deltaPhiSuperClusterTrackAtVtx->at(idx);
+     _eSuperClusterOverP	     = ntP->el_eSuperClusterOverP->at(idx);	
+     _correctedEcalEnergy	     = ntP->el_correctedEcalEnergy->at(idx);
+     _ecalEnergy	             = ntP->el_ecalEnergy->at(idx);
+    
+     _trackMomentumError	     = ntP->el_trackMomentumError->at(idx);
+ 
+    
 }
 
 void Electron::init()
@@ -83,65 +85,93 @@ void Electron::init()
     _id                             = 0;
 
     // Id
-    _isLoose                        = -888;
-    _isMedium                       = -888;
-    _isLooseTTH                     = -888;
-    _isFakeableTTH                  = -888;
-    _isTightTTH                     = -888;
+    _isLooseCBId           	    = 0;
+    _isMediumCBId          	    = 0;
+    _isLoose               	    = 0;
+    _isMedium              	    = 0;
+    _isTight               	    = 0;
+    _isLooseMVA            	    = 0;
+    _isTightMVA            	    = 0;
+    _isLooseTTH            	    = 0;
+    _isFakeableTTH         	    = 0;
+    _isTightTTH            	    = 0;
 
 
     // variables for Id
     _dxy                            = -888;
-    _dz                             = -888;
-    _passCV                         = -888;
-    _isPCC                          = -888;
+    _dz                             = -888; 
+    _miniIso                        = -888;
+    _nlosthits                      = -888;
+   
+    _passCV                         = 0;
+    _isPCC                          = 0;
+    _passPtEta                      = 0;
+    _ip3d                           = -888.;
+    _ip3dErr                        = -888.;
 
     // more variables
     _lepMVA                         = -888; 
     _lepMVA_Moriond16               = -888;  
     
-    _lepMVA_neuRelIso               = -888;
-    _lepMVA_chRelIso                = -888;
-    _lepMVA_jetDR                   = -888;
-    _lepMVA_jetPtRatio              = -888;
-    _lepMVA_jetBTagCSV              = -888;
-    _lepMVA_sip3d                   = -888;
-    _lepMVA_dxy                     = -888;
-    _lepMVA_dz                      = -888;
-    _lepMVA_mvaId                   = -888;
-    _lepMVA_eta                     = -888;
-    _lepMVA_jetNDauChargedMVASel    = -888;
-
-    //_full5x5_sigmaIetaIeta          = -1000;
-    //_superCluster_eta               = -1000;
-    //_hadronicOverEm                 = -1000;
-    //_deltaEtaSuperClusterTrackAtVtx = -1000;
-    //_deltaPhiSuperClusterTrackAtVtx = -1000;
-    //_ecalEnergy                     = -1000;
-    //_eSuperClusterOverP             = -1000;
+    
+    _lepMVA_miniRelIsoCharged       = -888.;
+    _lepMVA_miniRelIsoNeutral       = -888.;
+    _lepMVA_jetPtRelv2              = -888.;  
+    _lepMVA_jetDR                   = -888.;
+    _lepMVA_jetPtRatio              = -888.;
+    _lepMVA_jetBTagCSV              = -888.;
+    _lepMVA_sip3d                   = -888.;
+    _lepMVA_dxy                     = -888.;
+    _lepMVA_dz                      = -888.;
+    _lepMVA_mvaId                   = -888.;
+    
+    _lepMVA_eta                     = -888.;
+    _lepMVA_jetNDauChargedMVASel    = -888.;
+    
+    _passChargeFlip                 = 0;
+    _hasMatchedConversion           = 0;
+    _isGsfCtfScPixChargeConsistent  = 0;
+   
+    _sigmaIetaIeta                  = -888.;
+    _hadronicOverEm                 = -888.;
+    _correctedEcalEnergy            = -888.; 
+    _ecalEnergy                     = -888.;
+    _eSuperClusterOverP             = -888.;
+    _deltaEtaSuperClusterTrackAtVtx = -888.;
+    _deltaPhiSuperClusterTrackAtVtx = -888.;
+    _see                            = -888.;
+    _superCluster_eta               = -888.;
+	
+    _trackMomentumError             = -888;                
+    _mvaNonTrigV0                   = -888;
+    
+    
 }
 
 bool Electron::sel()
 {
 
-    float miniIso            = ntP->el_miniIsoTTH->at(idx);
-    float SIP                = fabs(_ip3d/_ip3dErr);
-    bool  isLoose            = false;
+    float SIP     = fabs(_ip3d/_ip3dErr);
+    
+    //MVA ID
+    bool  isLoose = false;
+    
+    if      (fabs(_eta) < 0.8  ) { isLoose = ( _mvaNonTrigV0 > -0.70 ); }
+    else if (fabs(_eta) < 1.479) { isLoose = ( _mvaNonTrigV0 > -0.83 ); }
+    else                         { isLoose = ( _mvaNonTrigV0 > -0.92 ); }  
 
-    if      (fabs(_eta) < 0.8  ) { isLoose = ( ntP->el_mvaNonTrigV0->at(idx) > -0.70 ); }
-    else if (fabs(_eta) < 1.479) { isLoose = ( ntP->el_mvaNonTrigV0->at(idx) > -0.83 ); }
-    else                         { isLoose = ( ntP->el_mvaNonTrigV0->at(idx) > -0.92 ); }  
 
     // Loose
     bool pass_pt       = (_pt        > 7   );
     bool pass_eta      = (fabs(_eta) < 2.5 );
     bool pass_dxy      = (fabs(_dxy) < 0.05);
     bool pass_dz       = (fabs(_dz)  < 0.1 );
-    bool pass_miniIso  = (miniIso    < 0.4 );
+    bool pass_miniIso  = (_miniIso    < 0.4 );
     bool pass_SIP      = (SIP        < 8   );
     bool pass_isLoose  = (isLoose          );
     bool pass_losthits = (_nlosthits < 2   );
-
+    
+    //
     bool pass_muOverlap = 1;
     int nMuon = nt->NtMuon->size();
     for(int im=0;im<nMuon;im++)
@@ -173,22 +203,33 @@ bool Electron::sel()
     //if (abs((1.0/lep.ecalEnergy() - lep.eSuperClusterOverP()/lep.ecalEnergy()) if lep.ecalEnergy()>0. else 9e9)>=0.01): return False
     //return True
 
+   
+
     bool cond_closuretest = true;
     if ( _pt > 30 )
     {
-        if (  ( (ntP->el_sigmaIetaIeta->at(idx) >= 0.011) && (abs(ntP->el_superCluster_eta->at(idx)) <  1.479) )
-                || ( (ntP->el_sigmaIetaIeta->at(idx) >= 0.031) && (abs(ntP->el_superCluster_eta->at(idx)) >= 1.479) )                                       ) cond_closuretest = false;
-        if (  ntP->el_hadronicOverEm->at(idx)                                                                                                 >= 0.08  ) cond_closuretest = false;
-        if (  abs( ntP->el_deltaEtaSuperClusterTrackAtVtx->at(idx) )                                                                          >= 0.01  ) cond_closuretest = false;
-        if (  ( (abs( ntP->el_deltaPhiSuperClusterTrackAtVtx->at(idx)) >= 0.04) && (abs(ntP->el_superCluster_eta->at(idx) <  1.479) ) )
-                || ( (abs( ntP->el_deltaPhiSuperClusterTrackAtVtx->at(idx)) >= 0.08) && (abs(ntP->el_superCluster_eta->at(idx) >= 1.479) ) )                ) cond_closuretest = false;
-        if (ntP->el_correctedEcalEnergy->at(idx) == 0.)
+        if (  ( _sigmaIetaIeta >= 0.011 && fabs(_superCluster_eta) <  1.479 )
+           || ( _sigmaIetaIeta >= 0.030 && fabs(_superCluster_eta) >= 1.479 )  ) cond_closuretest = false;
+
+        if (  ( ntP->el_hadronicOverEm->at(idx) >= 0.10 && fabs(_superCluster_eta) <  1.479 )
+           || ( ntP->el_hadronicOverEm->at(idx) >= 0.07 && fabs(_superCluster_eta) >= 1.479 )  ) cond_closuretest = false;
+
+        if (  ( fabs(_deltaEtaSuperClusterTrackAtVtx) >= 0.010 && fabs(_superCluster_eta) <  1.479 ) 
+           || ( fabs(_deltaEtaSuperClusterTrackAtVtx) >= 0.008 && fabs(_superCluster_eta) >= 1.479 )  ) cond_closuretest = false;
+        if (  ( fabs(_deltaPhiSuperClusterTrackAtVtx) >= 0.04  && fabs(_superCluster_eta) <  1.479 ) 
+           || ( fabs(_deltaPhiSuperClusterTrackAtVtx) >= 0.07  && fabs(_superCluster_eta) >= 1.479 )  ) cond_closuretest = false;
+
+        if (_ecalEnergy == 0.)
         {
             cond_closuretest = false;
         }
         else
         {
-            if( abs( 1. / ntP->el_correctedEcalEnergy->at(idx) - ntP->el_eSuperClusterOverP->at(idx) / ntP->el_correctedEcalEnergy->at(idx) ) >= 0.01)
+            if ( ( 1. / _ecalEnergy - _eSuperClusterOverP / _ecalEnergy ) < -0.005 )
+            {cond_closuretest = false;}
+            if ( ( 1. / _ecalEnergy - _eSuperClusterOverP / _ecalEnergy ) >= 0.010 && fabs(_superCluster_eta) <  1.479)
+            {cond_closuretest = false;}
+            if ( ( 1. / _ecalEnergy - _eSuperClusterOverP / _ecalEnergy ) >= 0.005 && fabs(_superCluster_eta) >= 1.479)
             {cond_closuretest = false;}
         }
     }
@@ -196,7 +237,7 @@ bool Electron::sel()
     // Fakeable
 
     pass_losthits = (_nlosthits == 0 );
-    pass_pt       = (_pt        >  10);
+    pass_pt       = (_pt        >  10); // should be 0.85 * pt(jet) for fakeable object cf v4 of note
 
     bool pass_lepMVA_Moriond16  = _lepMVA_Moriond16 > 0.75 ;
     
@@ -205,7 +246,7 @@ bool Electron::sel()
     bool pass_lepMVA_jetBtagCSVPtRatio = false;
     
     if (!pass_lepMVA_Moriond16 && _lepMVA_jetPtRatio > 0.3 && _lepMVA_jetBTagCSV < 0.605) pass_lepMVA_jetBtagCSVPtRatio = true;
-    if (pass_lepMVA_Moriond16 && pass_lepMVA_jetBTagCSV089) pass_lepMVA_jetBtagCSVPtRatio = true;
+    if ( pass_lepMVA_Moriond16 && pass_lepMVA_jetBTagCSV089) pass_lepMVA_jetBtagCSVPtRatio = true;
     
     bool isFakeableTTH     = ( pass_pt          &&
                                pass_eta         &&
@@ -243,6 +284,7 @@ bool Electron::sel()
     _isTightTTH = isTightTTH;
 
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
+    
     // synchronization printout
     //if( isPreselectionElectron ) 
     /*std::cout                                                     << std::setw(10)

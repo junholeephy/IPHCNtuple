@@ -178,7 +178,9 @@ void Tree::Init(TChain *ch)
     el_sigmaIetaIeta = 0;
     el_superCluster_eta = 0;
     el_correctedEcalEnergy = 0;
+    el_ecalEnergy = 0;
     el_eSuperClusterOverP = 0;
+    el_trackMomentumError = 0;
 
 
     // ####################################
@@ -932,9 +934,9 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("el_lepMVA_miniRelIsoCharged", &el_lepMVA_miniRelIsoCharged, &b_el_lepMVA_miniRelIsoCharged);
     fChain->SetBranchAddress("el_lepMVA_miniRelIsoNeutral", &el_lepMVA_miniRelIsoNeutral, &b_el_lepMVA_miniRelIsoNeutral);
     fChain->SetBranchAddress("el_lepMVA_jetPtRelv2", &el_lepMVA_jetPtRelv2, &b_el_lepMVA_jetPtRelv2);
-    //fChain->SetBranchAddress("el_lepMVA_neuRelIso", &el_lepMVA_neuRelIso, &b_el_lepMVA_neuRelIso);
-    //fChain->SetBranchAddress("el_lepMVA_chRelIso", &el_lepMVA_chRelIso, &b_el_lepMVA_chRelIso);
-    //fChain->SetBranchAddress("el_lepMVA_jetDR", &el_lepMVA_jetDR, &b_el_lepMVA_jetDR);
+    fChain->SetBranchAddress("el_lepMVA_neuRelIso", &el_lepMVA_neuRelIso, &b_el_lepMVA_neuRelIso);
+    fChain->SetBranchAddress("el_lepMVA_chRelIso", &el_lepMVA_chRelIso, &b_el_lepMVA_chRelIso);
+    fChain->SetBranchAddress("el_lepMVA_jetDR", &el_lepMVA_jetDR, &b_el_lepMVA_jetDR);
     fChain->SetBranchAddress("el_lepMVA_jetPtRatio", &el_lepMVA_jetPtRatio, &b_el_lepMVA_jetPtRatio);
     fChain->SetBranchAddress("el_lepMVA_jetBTagCSV", &el_lepMVA_jetBTagCSV, &b_el_lepMVA_jetBTagCSV);
     fChain->SetBranchAddress("el_lepMVA_sip3d", &el_lepMVA_sip3d, &b_el_lepMVA_sip3d);
@@ -948,16 +950,18 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("el_passConversionVeto", &el_passConversionVeto, &b_el_passConversionVeto);
     fChain->SetBranchAddress("el_deltaEtaSuperClusterTrackAtVtx", &el_deltaEtaSuperClusterTrackAtVtx, &b_el_deltaEtaSuperClusterTrackAtVtx);
     fChain->SetBranchAddress("el_deltaPhiSuperClusterTrackAtVtx", &el_deltaPhiSuperClusterTrackAtVtx, &b_el_deltaPhiSuperClusterTrackAtVtx);
-    //fChain->SetBranchAddress("el_see", &el_see, &b_el_see);
+    fChain->SetBranchAddress("el_see", &el_see, &b_el_see);
     fChain->SetBranchAddress("el_hadronicOverEm", &el_hadronicOverEm, &b_el_hadronicOverEm);
     //fChain->SetBranchAddress("el_scleta", &el_scleta, &b_el_scleta);
-    //fChain->SetBranchAddress("el_dB3D", &el_dB3D, &b_el_dB3D);
-    //fChain->SetBranchAddress("el_edB3D", &el_edB3D, &b_el_edB3D);
+    fChain->SetBranchAddress("el_dB3D", &el_dB3D, &b_el_dB3D);
+    fChain->SetBranchAddress("el_edB3D", &el_edB3D, &b_el_edB3D);
     fChain->SetBranchAddress("el_hasMatchedConversion", &el_hasMatchedConversion, &b_el_hasMatchedConversion);
     fChain->SetBranchAddress("el_sigmaIetaIeta", &el_sigmaIetaIeta, &b_el_sigmaIetaIeta);
     fChain->SetBranchAddress("el_superCluster_eta", &el_superCluster_eta, &b_el_superCluster_eta);
     fChain->SetBranchAddress("el_correctedEcalEnergy", &el_correctedEcalEnergy, &b_el_correctedEcalEnergy);
+    fChain->SetBranchAddress("el_ecalEnergy", &el_ecalEnergy, &b_el_ecalEnergy);
     fChain->SetBranchAddress("el_eSuperClusterOverP", &el_eSuperClusterOverP, &b_el_eSuperClusterOverP);
+    fChain->SetBranchAddress("el_trackMomentumError", &el_trackMomentumError, &b_el_trackMomentumError);
 
     // ####################################
     // #   __  __                         #
@@ -1033,17 +1037,17 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("mu_lepMVA_jetPtRelv2", &mu_lepMVA_jetPtRelv2, &b_mu_lepMVA_jetPtRelv2);
     //fChain->SetBranchAddress("mu_lepMVA_neuRelIso", &mu_lepMVA_neuRelIso, &b_mu_lepMVA_neuRelIso);
     //fChain->SetBranchAddress("mu_lepMVA_chRelIso", &mu_lepMVA_chRelIso, &b_mu_lepMVA_chRelIso);
-    //fChain->SetBranchAddress("mu_lepMVA_jetDR", &mu_lepMVA_jetDR, &b_mu_lepMVA_jetDR);
+    fChain->SetBranchAddress("mu_lepMVA_jetDR", &mu_lepMVA_jetDR, &b_mu_lepMVA_jetDR);
     fChain->SetBranchAddress("mu_lepMVA_jetPtRatio", &mu_lepMVA_jetPtRatio, &b_mu_lepMVA_jetPtRatio);
     fChain->SetBranchAddress("mu_lepMVA_jetBTagCSV", &mu_lepMVA_jetBTagCSV, &b_mu_lepMVA_jetBTagCSV);
-    //fChain->SetBranchAddress("mu_lepMVA_sip3d", &mu_lepMVA_sip3d, &b_mu_lepMVA_sip3d);
-    //fChain->SetBranchAddress("mu_lepMVA_dxy", &mu_lepMVA_dxy, &b_mu_lepMVA_dxy);
-    //fChain->SetBranchAddress("mu_lepMVA_dz", &mu_lepMVA_dz, &b_mu_lepMVA_dz);
-    //fChain->SetBranchAddress("mu_lepMVA_mvaId", &mu_lepMVA_mvaId, &b_mu_lepMVA_mvaId);
-    //fChain->SetBranchAddress("mu_innerTrack_pt", &mu_innerTrack_pt, &b_mu_innerTrack_pt);
-    //fChain->SetBranchAddress("mu_innerTrack_ptError", &mu_innerTrack_ptError, &b_mu_innerTrack_ptError);
-    //fChain->SetBranchAddress("mu_dB3D", &mu_dB3D, &b_mu_dB3D);
-    //fChain->SetBranchAddress("mu_edB3D", &mu_edB3D, &b_mu_edB3D);
+    fChain->SetBranchAddress("mu_lepMVA_sip3d", &mu_lepMVA_sip3d, &b_mu_lepMVA_sip3d);
+    fChain->SetBranchAddress("mu_lepMVA_dxy", &mu_lepMVA_dxy, &b_mu_lepMVA_dxy);
+    fChain->SetBranchAddress("mu_lepMVA_dz", &mu_lepMVA_dz, &b_mu_lepMVA_dz);
+    fChain->SetBranchAddress("mu_lepMVA_mvaId", &mu_lepMVA_mvaId, &b_mu_lepMVA_mvaId);
+    fChain->SetBranchAddress("mu_innerTrack_pt", &mu_innerTrack_pt, &b_mu_innerTrack_pt);
+    fChain->SetBranchAddress("mu_innerTrack_ptError", &mu_innerTrack_ptError, &b_mu_innerTrack_ptError);
+    fChain->SetBranchAddress("mu_dB3D", &mu_dB3D, &b_mu_dB3D);
+    fChain->SetBranchAddress("mu_edB3D", &mu_edB3D, &b_mu_edB3D);
     fChain->SetBranchAddress("mu_lepMVA_Moriond16", &mu_lepMVA_Moriond16, &b_mu_lepMVA_Moriond16);
     fChain->SetBranchAddress("mu_lepMVA_eta", &mu_lepMVA_eta, &b_mu_lepMVA_eta);
     fChain->SetBranchAddress("mu_lepMVA_jetNDauChargedMVASel", &mu_lepMVA_jetNDauChargedMVASel, &b_mu_lepMVA_jetNDauChargedMVASel);   
