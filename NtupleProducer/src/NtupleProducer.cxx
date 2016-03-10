@@ -101,6 +101,7 @@ int main(int argc, char *argv[])
         //std::cout << "i:" << i << std::endl;
         ch->GetEntry(i);
    
+   
  
         nt->clearVar();	
 
@@ -116,7 +117,7 @@ int main(int argc, char *argv[])
         //	else if( isHtoTT ) ev._tth_channel = 2;
 
         nt->NtEvent->push_back(ev);
-
+   
         bool mu_presel  = false,
              el_presel  = false,
              tau_presel = false,

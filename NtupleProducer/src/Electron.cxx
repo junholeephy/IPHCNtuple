@@ -45,7 +45,7 @@ void Electron::read()
      _lepMVA_miniRelIsoCharged    = ntP->el_lepMVA_miniRelIsoCharged->at(idx);
      _lepMVA_miniRelIsoNeutral    = ntP->el_lepMVA_miniRelIsoNeutral->at(idx);
      _lepMVA_jetPtRelv2           = ntP->el_lepMVA_jetPtRelv2->at(idx);  
-     _lepMVA_jetDR                = ntP->el_lepMVA_jetDR->at(idx);
+     //_lepMVA_jetDR                = ntP->el_lepMVA_jetDR->at(idx);
      _lepMVA_jetPtRatio           = ntP->el_lepMVA_jetPtRatio->at(idx);
      _lepMVA_jetBTagCSV           = ntP->el_lepMVA_jetBTagCSV->at(idx);
      _lepMVA_sip3d                = ntP->el_lepMVA_sip3d->at(idx);
@@ -117,7 +117,7 @@ void Electron::init()
     _lepMVA_miniRelIsoCharged       = -888.;
     _lepMVA_miniRelIsoNeutral       = -888.;
     _lepMVA_jetPtRelv2              = -888.;  
-    _lepMVA_jetDR                   = -888.;
+    //_lepMVA_jetDR                   = -888.;
     _lepMVA_jetPtRatio              = -888.;
     _lepMVA_jetBTagCSV              = -888.;
     _lepMVA_sip3d                   = -888.;

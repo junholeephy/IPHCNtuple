@@ -38,8 +38,8 @@ void Muon::read()
     _sip3d             = ntP->mu_ip3d->at(idx) / ntP->mu_ip3dErr->at(idx);
     _bestTrack_pt      = ntP->mu_bestTrack_pt->at(idx);
     _bestTrack_ptError = ntP->mu_bestTrack_ptError->at(idx);
-    _dB3D	       = ntP->mu_dB3D->at(idx);
-    _edB3D	       = ntP->mu_edB3D->at(idx);
+    //_dB3D	       = ntP->mu_dB3D->at(idx);
+    //_edB3D	       = ntP->mu_edB3D->at(idx);
    
     // mva-based selection additionnal variables
     _lepMVA	      = ntP->mu_lepMVA->at(idx);
@@ -48,7 +48,7 @@ void Muon::read()
     _lepMVA_miniRelIsoCharged    = ntP->mu_lepMVA_miniRelIsoCharged->at(idx);
     _lepMVA_miniRelIsoNeutral    = ntP->mu_lepMVA_miniRelIsoNeutral->at(idx);
     _lepMVA_jetPtRelv2           = ntP->mu_lepMVA_jetPtRelv2->at(idx);  
-    _lepMVA_jetDR                = ntP->mu_lepMVA_jetDR->at(idx);
+    //_lepMVA_jetDR                = ntP->mu_lepMVA_jetDR->at(idx); // branch not available in FlatTree
     _lepMVA_jetPtRatio           = ntP->mu_lepMVA_jetPtRatio->at(idx);
     _lepMVA_jetBTagCSV           = ntP->mu_lepMVA_jetBTagCSV->at(idx);
     _lepMVA_sip3d                = ntP->mu_lepMVA_sip3d->at(idx);
@@ -94,8 +94,8 @@ void Muon::init()
     _sip3d              = -666.;   
     _bestTrack_pt       = -666.;
     _bestTrack_ptError  = -666.;
-    _dB3D               = -666.;
-    _edB3D              = -666.;
+    //_dB3D               = -666.;
+    //_edB3D              = -666.;
     
     // more variables
    
@@ -106,7 +106,7 @@ void Muon::init()
     _lepMVA_miniRelIsoCharged    = -666.;
     _lepMVA_miniRelIsoNeutral    = -666.;
     _lepMVA_jetPtRelv2           = -666.;
-    _lepMVA_jetDR                = -666.;
+    //_lepMVA_jetDR                = -666.;
     _lepMVA_jetPtRatio           = -666.;
     _lepMVA_jetBTagCSV           = -666.;
     _lepMVA_sip3d                = -666.;
