@@ -49,8 +49,8 @@ class Muon : public Base
         float sip3d()              {return _sip3d;};
         float bestTrackpt()        {return _bestTrack_pt;};
         float bestTrackptError()   {return _bestTrack_ptError;};
-        float dB3D()               {return _dB3D;};
-        float edB3D()              {return _edB3D;};
+        //float dB3D()               {return _dB3D;};
+        //float edB3D()              {return _edB3D;};
 	
         // MVA
         float lepMVA()             {return _lepMVA;};
@@ -59,7 +59,7 @@ class Muon : public Base
 	float lepMVA_miniRelIsoCharged()    {return _lepMVA_miniRelIsoCharged;};
         float lepMVA_miniRelIsoNeutral()    {return _lepMVA_miniRelIsoNeutral;};
         float lepMVA_jetPtRelv2()           {return _lepMVA_jetPtRelv2;};
-        float lepMVA_jetDR()         	    {return _lepMVA_jetDR;};
+        //float lepMVA_jetDR()         	    {return _lepMVA_jetDR;};
         float lepMVA_jetPtRatio()    	    {return _lepMVA_jetPtRatio;};
         float lepMVA_jetBTagCSV()    	    {return _lepMVA_jetBTagCSV;};
         float lepMVA_sip3d()         	    {return _lepMVA_sip3d;};
@@ -103,8 +103,8 @@ class Muon : public Base
         float _sip3d;
         float _bestTrack_pt;
         float _bestTrack_ptError;
-        float _dB3D;
-        float _edB3D;
+        //float _dB3D;
+        //float _edB3D;
 
        
         // MVA
@@ -114,7 +114,7 @@ class Muon : public Base
         float _lepMVA_miniRelIsoCharged;
         float _lepMVA_miniRelIsoNeutral;
         float _lepMVA_jetPtRelv2;
-        float _lepMVA_jetDR;
+        //float _lepMVA_jetDR;
         float _lepMVA_jetPtRatio;
 	float _lepMVA_jetBTagCSV;
         float _lepMVA_sip3d;

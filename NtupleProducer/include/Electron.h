@@ -50,7 +50,7 @@ class Electron : public Base
         float lepMVA_miniRelIsoCharged()     {return _lepMVA_miniRelIsoCharged;};
         float lepMVA_miniRelIsoNeutral()     {return _lepMVA_miniRelIsoNeutral;};
         float lepMVA_jetPtRelv2()            {return _lepMVA_jetPtRelv2;};
-        float lepMVA_jetDR()                 {return _lepMVA_jetDR;};
+        //float lepMVA_jetDR()                 {return _lepMVA_jetDR;};
         float lepMVA_jetPtRatio()            {return _lepMVA_jetPtRatio;};
         float lepMVA_jetBTagCSV()            {return _lepMVA_jetBTagCSV;};
         float lepMVA_sip3d()                 {return _lepMVA_sip3d;};
@@ -66,8 +66,8 @@ class Electron : public Base
 
         bool isGsfCtfScPixChargeConsistent()   {return _isGsfCtfScPixChargeConsistent;};
        
-        float dB3D()                           {return _dB3D;};
-        float edB3D()                          {return _edB3D;};
+        //float dB3D()                           {return _dB3D;};
+        //float edB3D()                          {return _edB3D;};
 	
         float miniIso()                        {return _miniIso;};
         int   nlosthits()                      {return _nlosthits;};
@@ -131,7 +131,7 @@ class Electron : public Base
         float _lepMVA_miniRelIsoCharged;
         float _lepMVA_miniRelIsoNeutral;
         float _lepMVA_jetPtRelv2;
-        float _lepMVA_jetDR;
+        //float _lepMVA_jetDR;
         float _lepMVA_jetPtRatio;
         float _lepMVA_jetBTagCSV;
         float _lepMVA_sip3d;
@@ -148,8 +148,8 @@ class Electron : public Base
         bool _isGsfCtfScPixChargeConsistent;
 
      
-        float _dB3D;
-        float _edB3D;
+        //float _dB3D;
+        //float _edB3D;
 	
         float _sigmaIetaIeta;
 	float _hadronicOverEm;
