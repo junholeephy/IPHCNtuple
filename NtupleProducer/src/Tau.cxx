@@ -34,11 +34,10 @@ void Tau::read()
     
    
     // more variables
-    _decayMode = ntP->tau_decayMode->at(idx); std::cout <<"crash -1"<<std::endl;
-    _hasLeadChargedHadrCand = ntP->tau_hasLeadChargedHadrCand->at(idx); std::cout <<"crash -1"<<std::endl;
-    _leadingTrackPt = ntP->tau_leadingTrackPt->at(idx); std::cout <<"crash -1"<<std::endl;
-    _leadingTrackCharge = ntP->tau_leadingTrackCharge->at(idx); std::cout <<"crash -1"<<std::endl;
-    
+    _decayMode = ntP->tau_decayMode->at(idx); 
+    _hasLeadChargedHadrCand = ntP->tau_hasLeadChargedHadrCand->at(idx); 
+    _leadingTrackPt = ntP->tau_leadingTrackPt->at(idx); 
+    _leadingTrackCharge = ntP->tau_leadingTrackCharge->at(idx); 
     
 
     _decayModeFindingOldDMs = ntP->tau_decayModeFindingOldDMs->at(idx);
