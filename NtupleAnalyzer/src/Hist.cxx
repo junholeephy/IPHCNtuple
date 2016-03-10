@@ -216,7 +216,7 @@ bool Hist::printout(bool doPrint)
 
     for(int i=0;i<_v_Muon->size();i++)
     {
-        if( !_v_Muon->at(i).passPtEta() ) continue;
+        //if( !_v_Muon->at(i).passPtEta() ) continue;
         if( _v_Muon->at(i).isLoose() )
             _v_MuonTight->push_back(_v_Muon->at(i));
     }      
@@ -299,7 +299,7 @@ bool Hist::printout(bool doPrint)
             l1_isLoose = _v_ElectronTight->at(lidx1).isLoose();
             l1_isTight = _v_ElectronTight->at(lidx1).isTight();
             l1_isTightMVA = _v_ElectronTight->at(lidx1).isTightMVA();
-            l1_passCF = _v_ElectronTight->at(lidx1).passChargeFlip();
+            //l1_passCF = _v_ElectronTight->at(lidx1).passChargeFlip();
             if( l2ise == 1 ) 
             {
                 l2id = _v_ElectronTight->at(lidx2).id();
@@ -311,7 +311,7 @@ bool Hist::printout(bool doPrint)
                 l2_isLoose = _v_ElectronTight->at(lidx2).isLoose();
                 l2_isTight = _v_ElectronTight->at(lidx2).isTight();
                 l2_isTightMVA = _v_ElectronTight->at(lidx2).isTightMVA();
-                l2_passCF = _v_ElectronTight->at(lidx2).passChargeFlip();
+                //l2_passCF = _v_ElectronTight->at(lidx2).passChargeFlip();
             }
             else
             {
@@ -323,8 +323,8 @@ bool Hist::printout(bool doPrint)
                 l2m = _v_MuonTight->at(lidx2).m();
                 l2_isLoose = _v_MuonTight->at(lidx2).isLoose();
                 l2_isTight = _v_MuonTight->at(lidx2).isTight();
-                l2_isTightMVA = _v_MuonTight->at(lidx2).isTightMVA();
-                l2_passCF = _v_MuonTight->at(lidx2).passChargeFlip();
+                //l2_isTightMVA = _v_MuonTight->at(lidx2).isTightMVA();
+                //l2_passCF = _v_MuonTight->at(lidx2).passChargeFlip();
             }	     
         }	
         else 
@@ -337,8 +337,8 @@ bool Hist::printout(bool doPrint)
             l1m = _v_MuonTight->at(lidx1).m();
             l1_isLoose = _v_MuonTight->at(lidx1).isLoose();
             l1_isTight = _v_MuonTight->at(lidx1).isTight();
-            l1_isTightMVA = _v_MuonTight->at(lidx1).isTightMVA();
-            l1_passCF = _v_MuonTight->at(lidx1).passChargeFlip();
+            //l1_isTightMVA = _v_MuonTight->at(lidx1).isTightMVA();
+            //l1_passCF = _v_MuonTight->at(lidx1).passChargeFlip();
             if( l2ise == 1 ) 
             {
                 l2id = _v_ElectronTight->at(lidx2).id();
@@ -349,8 +349,8 @@ bool Hist::printout(bool doPrint)
                 l2m = _v_ElectronTight->at(lidx2).m();
                 l2_isLoose = _v_ElectronTight->at(lidx2).isLoose();
                 l2_isTight = _v_ElectronTight->at(lidx2).isTight();
-                l2_isTightMVA = _v_ElectronTight->at(lidx2).isTightMVA();
-                l2_passCF = _v_ElectronTight->at(lidx2).passChargeFlip();
+                //l2_isTightMVA = _v_ElectronTight->at(lidx2).isTightMVA();
+                //l2_passCF = _v_ElectronTight->at(lidx2).passChargeFlip();
             }
             else
             {
@@ -362,8 +362,8 @@ bool Hist::printout(bool doPrint)
                 l2m = _v_MuonTight->at(lidx2).m();
                 l2_isLoose = _v_MuonTight->at(lidx2).isLoose();
                 l2_isTight = _v_MuonTight->at(lidx2).isTight();
-                l2_isTightMVA = _v_MuonTight->at(lidx2).isTightMVA();
-                l2_passCF = _v_MuonTight->at(lidx2).passChargeFlip();
+                //l2_isTightMVA = _v_MuonTight->at(lidx2).isTightMVA();
+                //l2_passCF = _v_MuonTight->at(lidx2).passChargeFlip();
             }
         }
 

@@ -491,7 +491,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         {   
             Lepton l; l.setLepton(&vMuon->at(imuon),imuon,0);
 
-            if ( vMuon->at(imuon).lepMVA_Moriond16() > 0.6 && vMuon->at(imuon).isMediumMuon() == true )
+            if ( vMuon->at(imuon).lepMVA_Moriond16() > 0.6 && vMuon->at(imuon).isMedium() == true )
             {
                 vSelectedMuons.push_back(vMuon->at(imuon));
                 vSelectedLeptons.push_back(l);

@@ -118,7 +118,7 @@ void TTbarDileptonAnalysis::Loop(){
       //selection muons
       //-------------------------------------------
       for(unsigned int imuon=0; imuon < vMuon->size() ; imuon++){
-        if( !vMuon->at(imuon).passPtEta() ) continue;
+        //if( !vMuon->at(imuon).passPtEta() ) continue;
         if(  vMuon->at(imuon).pt() < 20 )   continue;
 	if( !vMuon->at(imuon).isLoose() )   continue;
 	
@@ -133,7 +133,7 @@ void TTbarDileptonAnalysis::Loop(){
       //selection electrons
       //-------------------------------------------
      for(unsigned int ielectron=0; ielectron < vElectron->size() ; ielectron++){
-        if( !vElectron->at(ielectron).passPtEta() ) continue;
+        //if( !vElectron->at(ielectron).passPtEta() ) continue;
         if(  vElectron->at(ielectron).pt() < 20 )   continue;
 	if( !vElectron->at(ielectron).isLoose() )   continue;
 	
