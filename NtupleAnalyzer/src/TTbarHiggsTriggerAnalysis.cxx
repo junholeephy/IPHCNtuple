@@ -215,7 +215,7 @@ void TTbarHiggsTriggerAnalysis::Loop()
 	  
 	for(unsigned int imuon=0; imuon < vMuon->size() ; imuon++)
         {             
-	    if ( vMuon->at(imuon).lepMVA() > 0.65 && vMuon->at(imuon).isMediumMuon() == true )
+	    if ( vMuon->at(imuon).lepMVA() > 0.65 && vMuon->at(imuon).isMedium() == true )
 	    { 
 	      Lepton l; l.setLepton(&vMuon->at(imuon),imuon,1);
               vSelectedMuons.push_back(vMuon->at(imuon));    
