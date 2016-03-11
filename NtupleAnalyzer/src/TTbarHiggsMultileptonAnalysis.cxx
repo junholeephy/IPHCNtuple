@@ -420,7 +420,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         bool mmdataset = _sampleName.Contains("DoubleMuon");
         bool eedataset = _sampleName.Contains("DoubleEG");
         bool mdataset  = _sampleName.Contains("SingleMuon");
-        bool edataset  = _sampleName.Contains("SingleEG");
+        bool edataset  = _sampleName.Contains("SingleElectron");
 
         if ( EM  &&                               (emdataset) ) result_trigger = 1;
         if ( !EM && MM  &&                        (mmdataset) ) result_trigger = 1;
@@ -477,8 +477,9 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         is_3l_WZ_CR       = false; 
         is_3l_WZrel_CR    = false;
         is_3l_TTZ_CR      = false;
-
-        //---------------------------
+        is_CR_Zl          = false;
+        
+	//---------------------------
         //trigger
         //---------------------------
         is_trigger = false;
@@ -491,12 +492,12 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         {   
             Lepton l; l.setLepton(&vMuon->at(imuon),imuon,0);
 
-            if ( vMuon->at(imuon).lepMVA_Moriond16() > 0.6 && vMuon->at(imuon).isMedium() == true )
+            if ( vMuon->at(imuon).isTightTTH() )
             {
                 vSelectedMuons.push_back(vMuon->at(imuon));
                 vSelectedLeptons.push_back(l);
             }
-            else 
+            else if ( vMuon->at(imuon).isFakeableTTH() )
             {
                 vFakeMuons.push_back(vMuon->at(imuon));
                 vFakeLeptons.push_back(l);
@@ -516,12 +517,12 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         {   
             Lepton l; l.setLepton(&vElectron->at(ielectron),ielectron,1);
 
-            if ( vElectron->at(ielectron).lepMVA_Moriond16() > 0.6 )
+            if ( vElectron->at(ielectron).isTightTTH() )
             {
                 vSelectedElectrons.push_back(vElectron->at(ielectron));	     
                 vSelectedLeptons.push_back(l);
             }
-            else
+            else if ( vElectron->at(ielectron).isFakeableTTH() )
             {
                 vFakeElectrons.push_back(vElectron->at(ielectron));	     
                 vFakeLeptons.push_back(l);
