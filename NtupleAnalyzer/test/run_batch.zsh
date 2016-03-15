@@ -6,7 +6,7 @@
 echo "Don't forget to update the lumi and the maximum number of events to run on in this script if needed !"
 
 isdata=0
-lumi=2260
+lumi=2320
 
 cp /tmp/x509up_u6155 /home-pbs/lebihan/someone/proxy/.
 
