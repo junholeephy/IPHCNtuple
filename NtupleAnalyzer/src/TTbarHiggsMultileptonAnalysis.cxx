@@ -604,6 +604,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         //std::cout <<is_CR_TTl<<" "<< is_CR_Zl <<" " << is_CR_WZ<<" " << is_TTH3l<< std::endl;
         //if (is_TTH3l==true ) std::cout <<"is_TTH3l" << std::endl;
         if ( is_3l_TTH_SR || is_3l_TTZ_CR ) fillOutputTree();
+	//if (is_2lss_TTH_SR) fillOutputTree();
 
         //---------------------------
         //Madweight LHCO stuff
@@ -2127,11 +2128,12 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     if ( vSelectedLeptons.size()>=4 ) is4l = true;
     if ( vSelectedLeptons.size()==3 || (vSelectedLeptons.size() == 2 &&  vFakeLeptons.size() == 1 )) is3l = true;
     if ( vSelectedLeptons.size()==2 ) is2lss = true;
-    if (!is2lss || !is3l || !is4l) return;
+    if (!is2lss && !is3l && !is4l) return;
 
     if (vSelectedJets.size()<2) return;
     if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return; 
     
+    //if (vSelectedLeptons.size()<2) return; // 2lss only at the moment
     if (vSelectedLeptons.size()<4) return; // 4l only at the moment
 
     //std::cout << "lept="<<vSelectedLeptons.size()<<" fake="<<vFakeLeptons.size()<<std::endl;
