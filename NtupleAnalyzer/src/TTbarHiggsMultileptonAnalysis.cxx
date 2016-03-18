@@ -2125,16 +2125,22 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
 
     bool is2lss=false, is3l=false, is4l=false;
 
-    if ( vSelectedLeptons.size()>=4 ) is4l = true;
-    if ( vSelectedLeptons.size()==3 || (vSelectedLeptons.size() == 2 &&  vFakeLeptons.size() == 1 )) is3l = true;
-    if ( vSelectedLeptons.size()==2 ) is2lss = true;
+    int tot_charge = 0;
+    if (vSelectedLeptons.size()>=4) {
+      for (unsigned int i=0; i<4; i++) {
+        tot_charge += vSelectedLeptons.at(i).charge();
+      }
+    }
+    if (vSelectedLeptons.size()>=4 && tot_charge==0) is4l = true;
+    if ( vSelectedLeptons.size()==3 || (vSelectedLeptons.size() == 2 &&  vFakeLeptons.size() == 1 ) || (vSelectedLeptons.size()>=4 && tot_charge!=0)) is3l = true;
+    if ( vSelectedLeptons.size()==2 && vSelectedLeptons.at(0).charge()==vSelectedLeptons.at(1).charge()) is2lss = true;
     if (!is2lss && !is3l && !is4l) return;
 
     if (vSelectedJets.size()<2) return;
     if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return; 
     
     //if (vSelectedLeptons.size()<2) return; // 2lss only at the moment
-    if (vSelectedLeptons.size()<4) return; // 4l only at the moment
+    if (!is4l) return; // 4l only at the moment
 
     //std::cout << "lept="<<vSelectedLeptons.size()<<" fake="<<vFakeLeptons.size()<<std::endl;
     //std::cout << "btag="<<vSelectedBTagJets.size()<<" nonbtag="<<vSelectedNonBTagJets.size()<<std::endl;
@@ -2181,7 +2187,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
        multilepton_Lepton3_Id = vFakeLeptons.at(0).id();
     }
 
-    if (vSelectedLeptons.size()>=4)
+    if (vSelectedLeptons.size()>=4 && tot_charge==0)
     {
         multilepton_Lepton4_P4 = vSelectedLeptons.at(3).p4();
         multilepton_Lepton4_Id = vSelectedLeptons.at(3).id();
