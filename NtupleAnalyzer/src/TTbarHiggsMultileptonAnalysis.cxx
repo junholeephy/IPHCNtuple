@@ -1,5 +1,6 @@
 #include "../include/TTbarHiggsMultileptonAnalysis.h"
 #include "TSystem.h"
+#include "Helper.cxx"
 
 #define kCat_3l_2b_2j 0
 #define kCat_3l_1b_2j 1
@@ -550,6 +551,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             theHistoManager->fillHisto("TauPt",                             "noSel",        "",   "",  vTau->at(itau).pt(),               weight);
             theHistoManager->fillHisto("TauEta",                            "noSel",        "",   "",  vTau->at(itau).eta(),              weight);
         }
+
+        std::sort(vSelectedLeptons.begin(), vSelectedLeptons.end(), SortingLeptonPt);
 
         //---------------------------
         // b-jets
