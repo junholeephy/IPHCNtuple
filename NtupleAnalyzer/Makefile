@@ -6,6 +6,10 @@ NTUPLEINC    = -I../NtupleProducer/include
 NTUPLELIB    = -L../NtupleProducer \
               -lNtuple
 
+KINFITINC    = -I../KinFit
+KINFITLIB    = -L../KinFit \
+              -lKinFit
+
 SOVERSION               = $(shell echo $(VERSION) | \
                                sed 's/\(.*\)\.\(.*\)\.\(.*\)/\1:\2:0/')
 ROOTCONF                = root-config
@@ -17,9 +21,9 @@ INCLUDES                = $(shell $(ROOTCONF) --incdir) $(ROOTCFLAGS)
 CINTINCLUDES            = $(shell $(ROOTCONF) --incdir)
 LIBS                    = $(ROOTLIBS)
 
-LDLIBS  = $(ROOTLIBS) $(NTUPLELIB)
+LDLIBS  = $(ROOTLIBS) $(NTUPLELIB) $(KINFITLIB)
 
-ADDINC = $(NTUPLEINC)
+ADDINC = $(NTUPLEINC) $(KINFITINC)
 
 SRC = src/Analyzer.cxx  src/Hist.cxx \
 src/TTbarDileptonAnalysis.cxx src/HistoManager.cxx \
