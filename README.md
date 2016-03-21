@@ -5,11 +5,6 @@ Install
 -------
 
 ```
-# get the code from GIT
-git clone https://github.com/IPHC/IPHCNtuple
-
-cd IPHCNtuple/
-
 # The code is based on ROOT6, setup it manually or via CMSSW:
 
 mkdir MyAnalysis/; cd MyAnalysis/
@@ -18,6 +13,11 @@ source /cvmfs/cms.cern.ch/cmsset_default.sh
 cmsrel CMSSW_7_4_12_patch4
 cd CMSSW_7_4_12_patch4/src/
 cmsenv
+
+# get the code from GIT
+git clone https://github.com/IPHC/IPHCNtuple
+
+cd IPHCNtuple/
 
 # NtupleProducer: produce Ntuples from FlatTrees
 
