@@ -6,8 +6,8 @@ NTUPLEINC    = -I../NtupleProducer/include
 NTUPLELIB    = -L../NtupleProducer \
               -lNtuple
 
-KINFITINC    = -I../KinFit
-KINFITLIB    = -L../KinFit \
+KINFITINC    = -I../../KinFit
+KINFITLIB    = -L../../KinFit \
               -lKinFit
 
 SOVERSION               = $(shell echo $(VERSION) | \
