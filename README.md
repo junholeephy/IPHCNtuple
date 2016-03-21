@@ -23,16 +23,14 @@ cmsenv
 
 cd NtupleProducer/
 make
-cd test/
-./run.zsh
+cd ../../
 
 # NtupleAnalyzer: create histograms, TTrees, ASCII, etc output from Ntuples
 
 git clone https://github.com/kskovpen/KinFit
 cd KinFit/
-make; cd -
-
-cd NtupleAnalyzer/
 make
-cd test/
-./run.zsh
+cd ../
+
+cd IPHCNtuple/NtupleAnalyzer/
+make
