@@ -38,7 +38,7 @@ class TTbarHiggsMultileptonAnalysis
 
         void TwoLeptonsSameSignSelection_LepMVA_sideband(int evt);
         void TwoLeptonsSameSignSelection_JetMultiplicity_sideband(int evt);
-        void TwoLeptonsSameSignSelection_TT_CR(int evt);
+        void DiLeptonSelection_TT_CR(int evt);
 
         void ThreeLeptonSelection_TTH3l(int evt);
 
@@ -79,14 +79,14 @@ class TTbarHiggsMultileptonAnalysis
         bool is_2lss_TTH_SR;
         bool is_2lss_JM_SB;
         bool is_2lss_LepMVA_SB;
-        bool is_2lss_TT_CR;
+        bool is_emu_TT_CR;
 
         bool is_3l_TTH_SR;    // TTH 3l analysis
         bool is_3l_WZ_CR;     // WZ CR w/ 3l (selected) or more, no b-jets, Z peak
         bool is_3l_WZrel_CR;  // WZ CR w/ 3l (loose) or more, no medium b-jets, Z peak
         bool is_3l_TTZ_CR;    // TTZ 3l analysis (for the future..)
 
-        bool is_CR_Zl;
+        bool is_Zl_CR;
 
         bool is_trigger;
 
@@ -101,7 +101,9 @@ class TTbarHiggsMultileptonAnalysis
         void InitLHCO(int process_MC, int process_RECO);
         void PrintLHCOforMadweight_MC(int evt);
         void PrintLHCOforMadweight_RECO(int evt);
+
         float Phi_0_2Pi(float phi);
+        float GetDeltaR(float eta1,float phi1,float eta2,float phi2);
 
         TTree* tOutput;
         Int_t mc_event;
