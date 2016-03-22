@@ -82,6 +82,10 @@ class Electron : public Base
 	float eSuperClusterOverP()             {return _eSuperClusterOverP;};
 	float trackMomentumError()             {return _trackMomentumError;};
         float mvaNonTrigV0()                   {return _mvaNonTrigV0;};
+
+        bool  passCV()                         {return _passCV;};
+        float ip3d()                           {return _ip3d;};
+        float ip3dErr()                        {return _ip3dErr;};
 	
         void read();
         void init();
