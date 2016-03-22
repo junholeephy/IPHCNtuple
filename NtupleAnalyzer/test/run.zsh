@@ -2,7 +2,8 @@
 
 cdir=$(pwd)/../
 NtupleDir=$(pwd)/../../NtupleProducer/
-export LD_LIBRARY_PATH=${cdir}:${NtupleDir}:${NtupleDir}/obj:$LD_LIBRARY_PATH
+KinFitDir=$(pwd)/../../../KinFit/
+export LD_LIBRARY_PATH=${cdir}:${NtupleDir}:${KinFitDir}:${NtupleDir}/obj:$LD_LIBRARY_PATH
 
 # tools: plot, tran
 
