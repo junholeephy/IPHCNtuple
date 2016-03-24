@@ -1,6 +1,6 @@
 # Makefile
 
-CC = g++ -g -Wno-writable-strings -Wno-write-strings -fsanitize=address
+CC = g++ -g -Wno-writable-strings -Wno-write-strings -fsanitize=address -lTMVA
 
 NTUPLEINC    = -I../NtupleProducer/include
 NTUPLELIB    = -L../NtupleProducer \
