@@ -1,33 +1,34 @@
 #!/bin/bash
 
-opt=x3_LargeRange_FullStat
+#Suffix of the subdirectory: jobs will be created in Jobs_${opt}, that should contain the config.cfg file 
+opt=test_AllCat
 
-for i in `seq 0 179`
-do
-  if [ ! -e Jobs_${opt}/output_TTW_x3_LargeRange_FullStat_${i}.root ] ; then echo bsub -q 2nd RunBatchMEM_TTW_${i} ; fi
-done
+#nEv events are run per job. Recommended nEv=6. If running also TTWJJ hyp, use nEv=1 (very slow).
+nEv=10
 
-for i in `seq 0 165`
-do
-  if [ ! -e Jobs_${opt}/output_TTZ_x3_LargeRange_FullStat_${i}.root ] ; then echo bsub -q 2nd RunBatchMEM_TTZandGstar_${i} ; fi
-done
+#LSF queue
+queue=1nd
 
-for i in `seq 0 221`
+while read line
 do
-  if [ ! -e Jobs_${opt}/output_TTG_x3_LargeRange_FullStat_${i}.root ] ; then echo bsub -q 2nd RunBatchMEM_TTG_${i} ; fi
-done
 
-for i in `seq 0 166`
-do
-  if [ ! -e Jobs_${opt}/output_TT_x3_LargeRange_FullStat_${i}.root ] ; then echo bsub -q 2nd RunBatchMEM_TT_${i} ; fi
-done
+  echo $line > tmp
+  proc=`awk '{print $1}' tmp`
+  inputfile=`awk '{print $2}' tmp`
+#  echo $proc $inputfile
 
-for i in `seq 0 75`
-do
-  if [ ! -e Jobs_${opt}/output_WZ_x3_LargeRange_FullStat_${i}.root ] ; then echo bsub -q 2nd RunBatchMEM_WZ_${i} ; fi
-done
+  root -l -q 'ReadEntries.C("'${inputfile}'")' | awk 'NR==3' > tmp
+  nEntries=`cat tmp`
 
-for i in `seq 0 1880`
-do
-  if [ ! -e Jobs_${opt}/output_TTH_x3_LargeRange_FullStat_${i}.root ] ; then echo bsub -q 2nd RunBatchMEM_TTHflsl_${i} ; fi
-done
+  nJobs=$(($nEntries / $nEv ))
+#  echo nEntries=$nEntries nJobs=$nJobs
+
+  for i in `seq 0 $nJobs` #$nJobs 
+  do
+    if [ ! -e Jobs_${opt}/output_${proc}_${opt}_${i}.root ] ; then echo bsub -q ${queue} RunBatchMEM_${proc}_${i} ; fi
+  done
+
+done < FileList.txt
+
+
+

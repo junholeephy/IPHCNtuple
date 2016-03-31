@@ -25,6 +25,8 @@ class ReadGenFlatTree {
   void ReadMultilepton(Long64_t, MultiLepton*);
 
   Float_t mc_weight;
+  Float_t weight;
+  Float_t PV_weight;
   Int_t mc_truth_h0_id;
   TLorentzVector* mc_truth_h0_p4;
   Int_t mc_truth_h0Wl1_id;
@@ -85,6 +87,8 @@ class ReadGenFlatTree {
 
   TBranch* b_mc_event;
   TBranch* b_mc_weight;
+  TBranch* b_weight;
+  TBranch* b_PV_weight;
   TBranch* b_mc_truth_h0_id;
   TBranch* b_mc_truth_h0_p4;
   TBranch* b_mc_truth_h0Wl1_id;
@@ -192,6 +196,13 @@ class ReadGenFlatTree {
   Int_t mc_passLepPresel;
   Int_t mc_passJetPresel25;
   Int_t mc_passBjetPresel25;
+  
+  Int_t catJets;
+  Char_t is_2lss_TTH_SR;
+  Char_t is_3l_TTH_SR;
+  Char_t is_2lss_TT_CR;
+  Char_t is_CR_Zl;
+  Char_t is_3l_TTZ_CR;
 
   Int_t multilepton_Bjet1_Id;
   TLorentzVector multilepton_Bjet1_P4;
@@ -203,6 +214,8 @@ class ReadGenFlatTree {
   TLorentzVector multilepton_Lepton2_P4;
   Int_t multilepton_Lepton3_Id;
   TLorentzVector multilepton_Lepton3_P4;
+  Int_t multilepton_Lepton4_Id;
+  TLorentzVector multilepton_Lepton4_P4;
   Int_t multilepton_JetHighestPt1_Id;
   TLorentzVector multilepton_JetHighestPt1_P4;
   Int_t multilepton_JetHighestPt2_Id;
@@ -218,6 +231,8 @@ class ReadGenFlatTree {
   Int_t multilepton_JetLowestMjj2_Id;
   TLorentzVector multilepton_JetLowestMjj2_P4;
   Float_t multilepton_JetLowestMjj_Mjj;
+  Int_t multilepton_JetHighestPt1_2ndPair_Id, multilepton_JetHighestPt2_2ndPair_Id, multilepton_JetClosestMw1_2ndPair_Id, multilepton_JetClosestMw2_2ndPair_Id, multilepton_JetLowestMjj1_2ndPair_Id, multilepton_JetLowestMjj2_2ndPair_Id;
+  TLorentzVector  multilepton_JetHighestPt1_2ndPair_P4, multilepton_JetHighestPt2_2ndPair_P4, multilepton_JetClosestMw1_2ndPair_P4, multilepton_JetClosestMw2_2ndPair_P4, multilepton_JetLowestMjj1_2ndPair_P4, multilepton_JetLowestMjj2_2ndPair_P4;
   TLorentzVector multilepton_mET;
   TLorentzVector multilepton_Ptot;
 
@@ -226,12 +241,19 @@ class ReadGenFlatTree {
   TLorentzVector* multilepton_Lepton1_P4_ptr;
   TLorentzVector* multilepton_Lepton2_P4_ptr;
   TLorentzVector* multilepton_Lepton3_P4_ptr;
+  TLorentzVector* multilepton_Lepton4_P4_ptr;
   TLorentzVector* multilepton_JetHighestPt1_P4_ptr;
   TLorentzVector* multilepton_JetHighestPt2_P4_ptr;
   TLorentzVector* multilepton_JetClosestMw1_P4_ptr;
   TLorentzVector* multilepton_JetClosestMw2_P4_ptr;
   TLorentzVector* multilepton_JetLowestMjj1_P4_ptr;
   TLorentzVector* multilepton_JetLowestMjj2_P4_ptr;
+  TLorentzVector* multilepton_JetHighestPt1_2ndPair_P4_ptr;
+  TLorentzVector* multilepton_JetHighestPt2_2ndPair_P4_ptr;
+  TLorentzVector* multilepton_JetClosestMw1_2ndPair_P4_ptr;
+  TLorentzVector* multilepton_JetClosestMw2_2ndPair_P4_ptr;
+  TLorentzVector* multilepton_JetLowestMjj1_2ndPair_P4_ptr;
+  TLorentzVector* multilepton_JetLowestMjj2_2ndPair_P4_ptr;
 
   TLorentzVector* multilepton_mET_ptr;
   TLorentzVector* multilepton_Ptot_ptr;
@@ -243,6 +265,7 @@ class ReadGenFlatTree {
   Float_t mc_mem_tthfl_weight_time;
   Double_t mc_mem_tthfl_weight_max;
   Double_t mc_mem_tthfl_weight_avg;
+  Double_t mc_mem_tthfl_weight_logmean;
 
   Double_t mc_mem_tthsl_weight;
   Double_t mc_mem_tthsl_weight_log;
@@ -251,6 +274,7 @@ class ReadGenFlatTree {
   Float_t mc_mem_tthsl_weight_time;
   Double_t mc_mem_tthsl_weight_max;
   Double_t mc_mem_tthsl_weight_avg;
+  Double_t mc_mem_tthsl_weight_logmean;
 
   Double_t mc_mem_tth_weight;
   Double_t mc_mem_tth_weight_log;
@@ -259,6 +283,7 @@ class ReadGenFlatTree {
   Float_t mc_mem_tth_weight_time;
   Double_t mc_mem_tth_weight_max;
   Double_t mc_mem_tth_weight_avg;
+  Double_t mc_mem_tth_weight_logmean;
 
   Double_t mc_mem_ttz_weight;
   Double_t mc_mem_ttz_weight_log;
@@ -267,6 +292,7 @@ class ReadGenFlatTree {
   Float_t mc_mem_ttz_weight_time;
   Double_t mc_mem_ttz_weight_max;
   Double_t mc_mem_ttz_weight_avg;
+  Double_t mc_mem_ttz_weight_logmean;
 
   Double_t mc_mem_ttw_weight;
   Double_t mc_mem_ttw_weight_log;
@@ -275,6 +301,7 @@ class ReadGenFlatTree {
   Float_t mc_mem_ttw_weight_time;
   Double_t mc_mem_ttw_weight_max;
   Double_t mc_mem_ttw_weight_avg;
+  Double_t mc_mem_ttw_weight_logmean;
 
   Double_t mc_mem_ttwjj_weight;
   Double_t mc_mem_ttwjj_weight_log;
@@ -283,6 +310,34 @@ class ReadGenFlatTree {
   Float_t mc_mem_ttwjj_weight_time;
   Double_t mc_mem_ttwjj_weight_max;
   Double_t mc_mem_ttwjj_weight_avg;
+  Double_t mc_mem_ttwjj_weight_logmean;
+
+  Double_t mc_mem_ttbarfl_weight;
+  Double_t mc_mem_ttbarfl_weight_log;
+  Double_t mc_mem_ttbarfl_weight_err;
+  Float_t mc_mem_ttbarfl_weight_chi2;
+  Float_t mc_mem_ttbarfl_weight_time;
+  Double_t mc_mem_ttbarfl_weight_max;
+  Double_t mc_mem_ttbarfl_weight_avg;
+  Double_t mc_mem_ttbarfl_weight_logmean;
+
+  Double_t mc_mem_ttbarsl_weight;
+  Double_t mc_mem_ttbarsl_weight_log;
+  Double_t mc_mem_ttbarsl_weight_err;
+  Float_t mc_mem_ttbarsl_weight_chi2;
+  Float_t mc_mem_ttbarsl_weight_time;
+  Double_t mc_mem_ttbarsl_weight_max;
+  Double_t mc_mem_ttbarsl_weight_avg;
+  Double_t mc_mem_ttbarsl_weight_logmean;
+
+  Double_t mc_mem_ttbar_weight;
+  Double_t mc_mem_ttbar_weight_log;
+  Double_t mc_mem_ttbar_weight_err;
+  Float_t mc_mem_ttbar_weight_chi2;
+  Float_t mc_mem_ttbar_weight_time;
+  Double_t mc_mem_ttbar_weight_max;
+  Double_t mc_mem_ttbar_weight_avg;
+  Double_t mc_mem_ttbar_weight_logmean;
 
   //Double_t mc_mem_ttz_tthfl_likelihood;
   //Double_t mc_mem_ttz_tthsl_likelihood;  
@@ -303,6 +358,12 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttwjj_tth_likelihood_max;
   Double_t mc_mem_ttwjj_tth_likelihood_avg;
 
+  Double_t mc_mem_ttbar_tth_likelihood;
+  Double_t mc_mem_ttbar_tth_likelihood_nlog;
+  Double_t mc_mem_ttbar_tth_likelihood_max;
+  Double_t mc_mem_ttbar_tth_likelihood_avg;
+
+
   Double_t mc_mem_ttv_tth_likelihood;
   Double_t mc_mem_ttv_tth_likelihood_nlog;
   Double_t mc_mem_ttv_tth_likelihood_max;
@@ -313,6 +374,12 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttvjj_tth_likelihood_max;
   Double_t mc_mem_ttvjj_tth_likelihood_avg;
 
+  TBranch* b_catJets;
+  TBranch* b_is_2lss_TTH_SR;
+  TBranch* b_is_3l_TTH_SR;
+  TBranch* b_is_2lss_TT_CR;
+  TBranch* b_is_CR_Zl;
+  TBranch* b_is_3l_TTZ_CR;
   TBranch* b_mc_3l_category;
   TBranch* b_mc_ttbar_decay;
   TBranch* b_mc_boson_decay;
@@ -327,6 +394,8 @@ class ReadGenFlatTree {
   TBranch* b_multilepton_Lepton2_P4;
   TBranch* b_multilepton_Lepton3_Id;
   TBranch* b_multilepton_Lepton3_P4;
+  TBranch* b_multilepton_Lepton4_Id;
+  TBranch* b_multilepton_Lepton4_P4;
   TBranch* b_multilepton_JetHighestPt1_Id;
   TBranch* b_multilepton_JetHighestPt1_P4;
   TBranch* b_multilepton_JetHighestPt2_Id;
@@ -342,6 +411,18 @@ class ReadGenFlatTree {
   TBranch* b_multilepton_JetHighestPt_Mjj;
   TBranch* b_multilepton_JetClosestMw_Mjj;
   TBranch* b_multilepton_JetLowestMjj_Mjj;
+  TBranch* b_multilepton_JetHighestPt1_2ndPair_Id; 
+  TBranch* b_multilepton_JetHighestPt2_2ndPair_Id;
+  TBranch* b_multilepton_JetClosestMw1_2ndPair_Id;
+  TBranch* b_multilepton_JetClosestMw2_2ndPair_Id;
+  TBranch* b_multilepton_JetLowestMjj1_2ndPair_Id;
+  TBranch* b_multilepton_JetLowestMjj2_2ndPair_Id;
+  TBranch* b_multilepton_JetHighestPt1_2ndPair_P4;
+  TBranch* b_multilepton_JetHighestPt2_2ndPair_P4;
+  TBranch* b_multilepton_JetClosestMw1_2ndPair_P4;
+  TBranch* b_multilepton_JetClosestMw2_2ndPair_P4;
+  TBranch* b_multilepton_JetLowestMjj1_2ndPair_P4;
+  TBranch* b_multilepton_JetLowestMjj2_2ndPair_P4;
   TBranch* b_multilepton_mET;
   TBranch* b_multilepton_Ptot;
 
@@ -528,6 +609,8 @@ void ReadGenFlatTree::InitializeDryRun(string InputFileName){
   tOutput->Branch("multilepton_Lepton2_P4","TLorentzVector",&multilepton_Lepton2_P4);
   tOutput->Branch("multilepton_Lepton3_Id",&multilepton_Lepton3_Id,"multilepton_Lepton3_Id/I");
   tOutput->Branch("multilepton_Lepton3_P4","TLorentzVector",&multilepton_Lepton3_P4);
+  tOutput->Branch("multilepton_Lepton4_Id",&multilepton_Lepton4_Id,"multilepton_Lepton4_Id/I");
+  tOutput->Branch("multilepton_Lepton4_P4","TLorentzVector",&multilepton_Lepton4_P4);
   tOutput->Branch("multilepton_JetHighestPt1_Id",&multilepton_JetHighestPt1_Id,"multilepton_JetHighestPt1_Id/I");
   tOutput->Branch("multilepton_JetHighestPt1_P4","TLorentzVector",&multilepton_JetHighestPt1_P4);
   tOutput->Branch("multilepton_JetHighestPt2_Id",&multilepton_JetHighestPt2_Id,"multilepton_JetHighestPt2_Id/I");
@@ -562,17 +645,34 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
    multilepton_Lepton1_P4_ptr = 0;
    multilepton_Lepton2_P4_ptr = 0;
    multilepton_Lepton3_P4_ptr = 0;
+   multilepton_Lepton4_P4_ptr = 0;
    multilepton_JetHighestPt1_P4_ptr = 0;
    multilepton_JetHighestPt2_P4_ptr = 0;
    multilepton_JetClosestMw1_P4_ptr = 0;
    multilepton_JetClosestMw2_P4_ptr = 0;
    multilepton_JetLowestMjj1_P4_ptr = 0;
    multilepton_JetLowestMjj2_P4_ptr = 0;
+   multilepton_JetHighestPt1_2ndPair_P4_ptr = 0;
+   multilepton_JetHighestPt2_2ndPair_P4_ptr = 0;
+   multilepton_JetClosestMw1_2ndPair_P4_ptr = 0;
+   multilepton_JetClosestMw2_2ndPair_P4_ptr = 0;
+   multilepton_JetLowestMjj1_2ndPair_P4_ptr = 0;
+   multilepton_JetLowestMjj2_2ndPair_P4_ptr = 0;
    multilepton_mET_ptr = 0;
    multilepton_Ptot_ptr = 0;
 
   tInput->SetBranchAddress("mc_event",&mc_event,&b_mc_event);
   tInput->SetBranchAddress("mc_weight",&mc_weight,&b_mc_weight);
+  tInput->SetBranchAddress("weight",&weight,&b_weight);
+  tInput->SetBranchAddress("PV_weight",&PV_weight,&b_PV_weight);
+  tInput->SetBranchAddress("catJets",&catJets,&b_catJets);
+
+  tInput->SetBranchAddress("is_2lss_TTH_SR",&is_2lss_TTH_SR,&b_is_2lss_TTH_SR);
+  tInput->SetBranchAddress("is_3l_TTH_SR",&is_3l_TTH_SR,&b_is_3l_TTH_SR);
+  tInput->SetBranchAddress("is_2lss_TT_CR",&is_2lss_TT_CR,&b_is_2lss_TT_CR);
+  tInput->SetBranchAddress("is_CR_Zl",&is_CR_Zl,&b_is_CR_Zl);
+  tInput->SetBranchAddress("is_3l_TTZ_CR",&is_3l_TTZ_CR,&b_is_3l_TTZ_CR);
+
   tInput->SetBranchAddress("mc_3l_category",&mc_3l_category,&b_mc_3l_category);
   tInput->SetBranchAddress("mc_ttbar_decay",&mc_ttbar_decay,&b_mc_ttbar_decay);
   tInput->SetBranchAddress("mc_boson_decay",&mc_boson_decay,&b_mc_boson_decay);
@@ -588,6 +688,8 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tInput->SetBranchAddress("multilepton_Lepton2_P4",&multilepton_Lepton2_P4_ptr,&b_multilepton_Lepton2_P4);
   tInput->SetBranchAddress("multilepton_Lepton3_Id",&multilepton_Lepton3_Id,&b_multilepton_Lepton3_Id);
   tInput->SetBranchAddress("multilepton_Lepton3_P4",&multilepton_Lepton3_P4_ptr,&b_multilepton_Lepton3_P4);
+  tInput->SetBranchAddress("multilepton_Lepton4_Id",&multilepton_Lepton4_Id,&b_multilepton_Lepton4_Id);
+  tInput->SetBranchAddress("multilepton_Lepton4_P4",&multilepton_Lepton4_P4_ptr,&b_multilepton_Lepton4_P4);
   tInput->SetBranchAddress("multilepton_JetHighestPt1_Id",&multilepton_JetHighestPt1_Id,&b_multilepton_JetHighestPt1_Id);
   tInput->SetBranchAddress("multilepton_JetHighestPt1_P4",&multilepton_JetHighestPt1_P4_ptr,&b_multilepton_JetHighestPt1_P4);
   tInput->SetBranchAddress("multilepton_JetHighestPt2_Id",&multilepton_JetHighestPt2_Id,&b_multilepton_JetHighestPt2_Id);
@@ -600,6 +702,20 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tInput->SetBranchAddress("multilepton_JetLowestMjj1_P4",&multilepton_JetLowestMjj1_P4_ptr,&b_multilepton_JetLowestMjj1_P4);
   tInput->SetBranchAddress("multilepton_JetLowestMjj2_Id",&multilepton_JetLowestMjj2_Id,&b_multilepton_JetLowestMjj2_Id);
   tInput->SetBranchAddress("multilepton_JetLowestMjj2_P4",&multilepton_JetLowestMjj2_P4_ptr,&b_multilepton_JetLowestMjj2_P4);
+
+  tInput->SetBranchAddress("multilepton_JetHighestPt1_2ndPair_Id",&multilepton_JetHighestPt1_2ndPair_Id,&b_multilepton_JetHighestPt1_2ndPair_Id);
+  tInput->SetBranchAddress("multilepton_JetHighestPt1_2ndPair_P4",&multilepton_JetHighestPt1_2ndPair_P4_ptr,&b_multilepton_JetHighestPt1_2ndPair_P4);
+  tInput->SetBranchAddress("multilepton_JetHighestPt2_2ndPair_Id",&multilepton_JetHighestPt2_2ndPair_Id,&b_multilepton_JetHighestPt2_2ndPair_Id);
+  tInput->SetBranchAddress("multilepton_JetHighestPt2_2ndPair_P4",&multilepton_JetHighestPt2_2ndPair_P4_ptr,&b_multilepton_JetHighestPt2_2ndPair_P4);
+  tInput->SetBranchAddress("multilepton_JetClosestMw1_2ndPair_Id",&multilepton_JetClosestMw1_2ndPair_Id,&b_multilepton_JetClosestMw1_2ndPair_Id);
+  tInput->SetBranchAddress("multilepton_JetClosestMw1_2ndPair_P4",&multilepton_JetClosestMw1_2ndPair_P4_ptr,&b_multilepton_JetClosestMw1_2ndPair_P4);
+  tInput->SetBranchAddress("multilepton_JetClosestMw2_2ndPair_Id",&multilepton_JetClosestMw2_2ndPair_Id,&b_multilepton_JetClosestMw2_2ndPair_Id);
+  tInput->SetBranchAddress("multilepton_JetClosestMw2_2ndPair_P4",&multilepton_JetClosestMw2_2ndPair_P4_ptr,&b_multilepton_JetClosestMw2_2ndPair_P4);
+  tInput->SetBranchAddress("multilepton_JetLowestMjj1_2ndPair_Id",&multilepton_JetLowestMjj1_2ndPair_Id,&b_multilepton_JetLowestMjj1_2ndPair_Id);
+  tInput->SetBranchAddress("multilepton_JetLowestMjj1_2ndPair_P4",&multilepton_JetLowestMjj1_2ndPair_P4_ptr,&b_multilepton_JetLowestMjj1_2ndPair_P4);
+  tInput->SetBranchAddress("multilepton_JetLowestMjj2_2ndPair_Id",&multilepton_JetLowestMjj2_2ndPair_Id,&b_multilepton_JetLowestMjj2_2ndPair_Id);
+  tInput->SetBranchAddress("multilepton_JetLowestMjj2_2ndPair_P4",&multilepton_JetLowestMjj2_2ndPair_P4_ptr,&b_multilepton_JetLowestMjj2_2ndPair_P4);
+
   tInput->SetBranchAddress("multilepton_mET",&multilepton_mET_ptr,&b_multilepton_mET);
   tInput->SetBranchAddress("multilepton_Ptot",&multilepton_Ptot_ptr,&b_multilepton_Ptot);
 
@@ -610,6 +726,16 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
 
   tOutput->Branch("mc_event",&mc_event,"mc_event/I");
   tOutput->Branch("mc_weight",&mc_weight,"mc_weight/F");
+  tOutput->Branch("weight",&weight,"weight/F");
+  tOutput->Branch("PV_weight",&PV_weight,"PV_weight/F");
+  tOutput->Branch("catJets",&catJets,"catJets/I");
+
+  tOutput->Branch("is_2lss_TTH_SR",&is_2lss_TTH_SR,"is_2lss_TTH_SR/B");
+  tOutput->Branch("is_3l_TTH_SR",&is_3l_TTH_SR,"is_3l_TTH_SR/B");
+  tOutput->Branch("is_2lss_TT_CR",&is_2lss_TT_CR,"is_2lss_TT_CR/B");
+  tOutput->Branch("is_CR_Zl",&is_CR_Zl,"is_CR_Zl/B");
+  tOutput->Branch("is_3l_TTZ_CR",&is_3l_TTZ_CR,"is_3l_TTZ_CR/B");
+
   tOutput->Branch("mc_3l_category",&mc_3l_category,"mc_3l_category/I");
   tOutput->Branch("mc_ttbar_decay",&mc_ttbar_decay,"mc_ttbar_decay/I");
   tOutput->Branch("mc_boson_decay",&mc_boson_decay,"mc_boson_decay/I");
@@ -625,6 +751,8 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("multilepton_Lepton2_P4","TLorentzVector",&multilepton_Lepton2_P4);
   tOutput->Branch("multilepton_Lepton3_Id",&multilepton_Lepton3_Id,"multilepton_Lepton3_Id/I");
   tOutput->Branch("multilepton_Lepton3_P4","TLorentzVector",&multilepton_Lepton3_P4);
+  tOutput->Branch("multilepton_Lepton4_Id",&multilepton_Lepton4_Id,"multilepton_Lepton4_Id/I");
+  tOutput->Branch("multilepton_Lepton4_P4","TLorentzVector",&multilepton_Lepton4_P4);
   tOutput->Branch("multilepton_JetHighestPt1_Id",&multilepton_JetHighestPt1_Id,"multilepton_JetHighestPt1_Id/I");
   tOutput->Branch("multilepton_JetHighestPt1_P4","TLorentzVector",&multilepton_JetHighestPt1_P4);
   tOutput->Branch("multilepton_JetHighestPt2_Id",&multilepton_JetHighestPt2_Id,"multilepton_JetHighestPt2_Id/I");
@@ -637,6 +765,20 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("multilepton_JetLowestMjj1_P4","TLorentzVector",&multilepton_JetLowestMjj1_P4);
   tOutput->Branch("multilepton_JetLowestMjj2_Id",&multilepton_JetLowestMjj2_Id,"multilepton_JetLowestMjj2_Id/I");
   tOutput->Branch("multilepton_JetLowestMjj2_P4","TLorentzVector",&multilepton_JetLowestMjj2_P4);
+
+  tOutput->Branch("multilepton_JetHighestPt1_2ndPair_Id",&multilepton_JetHighestPt1_2ndPair_Id,"multilepton_JetHighestPt1_2ndPair_Id/I");
+  tOutput->Branch("multilepton_JetHighestPt1_2ndPair_P4","TLorentzVector",&multilepton_JetHighestPt1_2ndPair_P4); 
+  tOutput->Branch("multilepton_JetHighestPt2_2ndPair_Id",&multilepton_JetHighestPt2_2ndPair_Id,"multilepton_JetHighestPt2_2ndPair_Id/I");
+  tOutput->Branch("multilepton_JetHighestPt2_2ndPair_P4","TLorentzVector",&multilepton_JetHighestPt2_2ndPair_P4);
+  tOutput->Branch("multilepton_JetClosestMw1_2ndPair_Id",&multilepton_JetClosestMw1_2ndPair_Id,"multilepton_JetClosestMw1_2ndPair_Id/I");
+  tOutput->Branch("multilepton_JetClosestMw1_2ndPair_P4","TLorentzVector",&multilepton_JetClosestMw1_2ndPair_P4);
+  tOutput->Branch("multilepton_JetClosestMw2_2ndPair_Id",&multilepton_JetClosestMw2_2ndPair_Id,"multilepton_JetClosestMw2_2ndPair_Id/I");
+  tOutput->Branch("multilepton_JetClosestMw2_2ndPair_P4","TLorentzVector",&multilepton_JetClosestMw2_2ndPair_P4);
+  tOutput->Branch("multilepton_JetLowestMjj1_2ndPair_Id",&multilepton_JetLowestMjj1_2ndPair_Id,"multilepton_JetLowestMjj1_2ndPair_Id/I");
+  tOutput->Branch("multilepton_JetLowestMjj1_2ndPair_P4","TLorentzVector",&multilepton_JetLowestMjj1_2ndPair_P4);
+  tOutput->Branch("multilepton_JetLowestMjj2_2ndPair_Id",&multilepton_JetLowestMjj2_2ndPair_Id,"multilepton_JetLowestMjj2_2ndPair_Id/I");
+  tOutput->Branch("multilepton_JetLowestMjj2_2ndPair_P4","TLorentzVector",&multilepton_JetLowestMjj2_2ndPair_P4);
+
   tOutput->Branch("multilepton_mET","TLorentzVector",&multilepton_mET);
   tOutput->Branch("multilepton_Ptot","TLorentzVector",&multilepton_Ptot);
 
@@ -647,6 +789,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_tthfl_weight_time",&mc_mem_tthfl_weight_time,"mc_mem_tthfl_weight_time/F");
   tOutput->Branch("mc_mem_tthfl_weight_max",&mc_mem_tthfl_weight_max,"mc_mem_tthfl_weight_max/D");
   tOutput->Branch("mc_mem_tthfl_weight_avg",&mc_mem_tthfl_weight_avg,"mc_mem_tthfl_weight_avg/D");
+  tOutput->Branch("mc_mem_tthfl_weight_logmean",&mc_mem_tthfl_weight_logmean,"mc_mem_tthfl_weight_logmean/D");
 
   tOutput->Branch("mc_mem_tthsl_weight",&mc_mem_tthsl_weight,"mc_mem_tthsl_weight/D");
   tOutput->Branch("mc_mem_tthsl_weight_log",&mc_mem_tthsl_weight_log,"mc_mem_tthsl_weight_log/D");
@@ -655,6 +798,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_tthsl_weight_time",&mc_mem_tthsl_weight_time,"mc_mem_tthsl_weight_time/F");
   tOutput->Branch("mc_mem_tthsl_weight_max",&mc_mem_tthsl_weight_max,"mc_mem_tthsl_weight_max/D");
   tOutput->Branch("mc_mem_tthsl_weight_avg",&mc_mem_tthsl_weight_avg,"mc_mem_tthsl_weight_avg/D");
+  tOutput->Branch("mc_mem_tthsl_weight_logmean",&mc_mem_tthsl_weight_logmean,"mc_mem_tthsl_weight_logmean/D");
 
   tOutput->Branch("mc_mem_tth_weight",&mc_mem_tth_weight,"mc_mem_tth_weight/D");
   tOutput->Branch("mc_mem_tth_weight_log",&mc_mem_tth_weight_log,"mc_mem_tth_weight_log/D");
@@ -663,6 +807,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_tth_weight_time",&mc_mem_tth_weight_time,"mc_mem_tth_weight_time/F");
   tOutput->Branch("mc_mem_tth_weight_max",&mc_mem_tth_weight_max,"mc_mem_tth_weight_max/D");
   tOutput->Branch("mc_mem_tth_weight_avg",&mc_mem_tth_weight_avg,"mc_mem_tth_weight_avg/D");
+  tOutput->Branch("mc_mem_tth_weight_logmean",&mc_mem_tth_weight_logmean,"mc_mem_tth_weight_logmean/D");
 
   tOutput->Branch("mc_mem_ttz_weight",&mc_mem_ttz_weight,"mc_mem_ttz_weight/D");
   tOutput->Branch("mc_mem_ttz_weight_log",&mc_mem_ttz_weight_log,"mc_mem_ttz_weight_log/D");
@@ -671,6 +816,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_ttz_weight_time",&mc_mem_ttz_weight_time,"mc_mem_ttz_weight_time/F");
   tOutput->Branch("mc_mem_ttz_weight_max",&mc_mem_ttz_weight_max,"mc_mem_ttz_weight_max/D");
   tOutput->Branch("mc_mem_ttz_weight_avg",&mc_mem_ttz_weight_avg,"mc_mem_ttz_weight_avg/D");
+  tOutput->Branch("mc_mem_ttz_weight_logmean",&mc_mem_ttz_weight_logmean,"mc_mem_ttz_weight_logmean/D");
 
   tOutput->Branch("mc_mem_ttw_weight",&mc_mem_ttw_weight,"mc_mem_ttw_weight/D");
   tOutput->Branch("mc_mem_ttw_weight_log",&mc_mem_ttw_weight_log,"mc_mem_ttw_weight_log/D");
@@ -679,6 +825,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_ttw_weight_time",&mc_mem_ttw_weight_time,"mc_mem_ttw_weight_time/F");
   tOutput->Branch("mc_mem_ttw_weight_max",&mc_mem_ttw_weight_max,"mc_mem_ttw_weight_max/D");
   tOutput->Branch("mc_mem_ttw_weight_avg",&mc_mem_ttw_weight_avg,"mc_mem_ttw_weight_avg/D");
+  tOutput->Branch("mc_mem_ttw_weight_logmean",&mc_mem_ttw_weight_logmean,"mc_mem_ttw_weight_logmean/D");
 
   tOutput->Branch("mc_mem_ttwjj_weight",&mc_mem_ttwjj_weight,"mc_mem_ttwjj_weight/D");
   tOutput->Branch("mc_mem_ttwjj_weight_log",&mc_mem_ttwjj_weight_log,"mc_mem_ttwjj_weight_log/D");
@@ -687,6 +834,34 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_ttwjj_weight_time",&mc_mem_ttwjj_weight_time,"mc_mem_ttwjj_weight_time/F");
   tOutput->Branch("mc_mem_ttwjj_weight_max",&mc_mem_ttwjj_weight_max,"mc_mem_ttwjj_weight_max/D");
   tOutput->Branch("mc_mem_ttwjj_weight_avg",&mc_mem_ttwjj_weight_avg,"mc_mem_ttwjj_weight_avg/D");
+  tOutput->Branch("mc_mem_ttwjj_weight_logmean",&mc_mem_ttwjj_weight_logmean,"mc_mem_ttwjj_weight_logmean/D");
+
+  tOutput->Branch("mc_mem_ttbarfl_weight",&mc_mem_ttbarfl_weight,"mc_mem_ttbarfl_weight/D");
+  tOutput->Branch("mc_mem_ttbarfl_weight_log",&mc_mem_ttbarfl_weight_log,"mc_mem_ttbarfl_weight_log/D");
+  tOutput->Branch("mc_mem_ttbarfl_weight_err",&mc_mem_ttbarfl_weight_err,"mc_mem_ttbarfl_weight_err/D");
+  tOutput->Branch("mc_mem_ttbarfl_weight_chi2",&mc_mem_ttbarfl_weight_chi2,"mc_mem_ttbarfl_weight_chi2/F");
+  tOutput->Branch("mc_mem_ttbarfl_weight_time",&mc_mem_ttbarfl_weight_time,"mc_mem_ttbarfl_weight_time/F");
+  tOutput->Branch("mc_mem_ttbarfl_weight_max",&mc_mem_ttbarfl_weight_max,"mc_mem_ttbarfl_weight_max/D");
+  tOutput->Branch("mc_mem_ttbarfl_weight_avg",&mc_mem_ttbarfl_weight_avg,"mc_mem_ttbarfl_weight_avg/D");
+  tOutput->Branch("mc_mem_ttbarfl_weight_logmean",&mc_mem_ttbarfl_weight_logmean,"mc_mem_ttbarfl_weight_logmean/D");
+
+  tOutput->Branch("mc_mem_ttbarsl_weight",&mc_mem_ttbarsl_weight,"mc_mem_ttbarsl_weight/D");
+  tOutput->Branch("mc_mem_ttbarsl_weight_log",&mc_mem_ttbarsl_weight_log,"mc_mem_ttbarsl_weight_log/D");
+  tOutput->Branch("mc_mem_ttbarsl_weight_err",&mc_mem_ttbarsl_weight_err,"mc_mem_ttbarsl_weight_err/D");
+  tOutput->Branch("mc_mem_ttbarsl_weight_chi2",&mc_mem_ttbarsl_weight_chi2,"mc_mem_ttbarsl_weight_chi2/F");
+  tOutput->Branch("mc_mem_ttbarsl_weight_time",&mc_mem_ttbarsl_weight_time,"mc_mem_ttbarsl_weight_time/F");
+  tOutput->Branch("mc_mem_ttbarsl_weight_max",&mc_mem_ttbarsl_weight_max,"mc_mem_ttbarsl_weight_max/D");
+  tOutput->Branch("mc_mem_ttbarsl_weight_avg",&mc_mem_ttbarsl_weight_avg,"mc_mem_ttbarsl_weight_avg/D");
+  tOutput->Branch("mc_mem_ttbarsl_weight_logmean",&mc_mem_ttbarsl_weight_logmean,"mc_mem_ttbarsl_weight_logmean/D");
+
+  tOutput->Branch("mc_mem_ttbar_weight",&mc_mem_ttbar_weight,"mc_mem_ttbar_weight/D");
+  tOutput->Branch("mc_mem_ttbar_weight_log",&mc_mem_ttbar_weight_log,"mc_mem_ttbar_weight_log/D");
+  tOutput->Branch("mc_mem_ttbar_weight_err",&mc_mem_ttbar_weight_err,"mc_mem_ttbar_weight_err/D");
+  tOutput->Branch("mc_mem_ttbar_weight_chi2",&mc_mem_ttbar_weight_chi2,"mc_mem_ttbar_weight_chi2/F");
+  tOutput->Branch("mc_mem_ttbar_weight_time",&mc_mem_ttbar_weight_time,"mc_mem_ttbar_weight_time/F");
+  tOutput->Branch("mc_mem_ttbar_weight_max",&mc_mem_ttbar_weight_max,"mc_mem_ttbar_weight_max/D");
+  tOutput->Branch("mc_mem_ttbar_weight_avg",&mc_mem_ttbar_weight_avg,"mc_mem_ttbar_weight_avg/D");
+  tOutput->Branch("mc_mem_ttbar_weight_logmean",&mc_mem_ttbar_weight_logmean,"mc_mem_ttbar_weight_logmean/D");
 
   tOutput->Branch("mc_mem_ttz_tth_likelihood",&mc_mem_ttz_tth_likelihood,"mc_mem_ttz_tth_likelihood/D");
   tOutput->Branch("mc_mem_ttz_tth_likelihood_nlog",&mc_mem_ttz_tth_likelihood_nlog,"mc_mem_ttz_tth_likelihood_nlog/D");
@@ -702,6 +877,11 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_ttwjj_tth_likelihood_nlog",&mc_mem_ttwjj_tth_likelihood_nlog,"mc_mem_ttwjj_tth_likelihood_nlog/D");
   tOutput->Branch("mc_mem_ttwjj_tth_likelihood_max",&mc_mem_ttwjj_tth_likelihood_max,"mc_mem_ttwjj_tth_likelihood_max/D");
   tOutput->Branch("mc_mem_ttwjj_tth_likelihood_avg",&mc_mem_ttwjj_tth_likelihood_avg,"mc_mem_ttwjj_tth_likelihood_avg/D");
+
+  tOutput->Branch("mc_mem_ttbar_tth_likelihood",&mc_mem_ttbar_tth_likelihood,"mc_mem_ttbar_tth_likelihood/D");
+  tOutput->Branch("mc_mem_ttbar_tth_likelihood_nlog",&mc_mem_ttbar_tth_likelihood_nlog,"mc_mem_ttbar_tth_likelihood_nlog/D");
+  tOutput->Branch("mc_mem_ttbar_tth_likelihood_max",&mc_mem_ttbar_tth_likelihood_max,"mc_mem_ttbar_tth_likelihood_max/D");
+  tOutput->Branch("mc_mem_ttbar_tth_likelihood_avg",&mc_mem_ttbar_tth_likelihood_avg,"mc_mem_ttbar_tth_likelihood_avg/D");
 
   tOutput->Branch("mc_mem_ttv_tth_likelihood",&mc_mem_ttv_tth_likelihood,"mc_mem_ttv_tth_likelihood/D");
   tOutput->Branch("mc_mem_ttv_tth_likelihood_nlog",&mc_mem_ttv_tth_likelihood_nlog,"mc_mem_ttv_tth_likelihood_nlog/D");
@@ -1091,26 +1271,36 @@ void ReadGenFlatTree::ReadMultilepton(Long64_t iEvent, MultiLepton* multiLepton)
   tInput->LoadTree(iEvent);
   tInput->GetEntry(iEvent);
 
+  (*multiLepton).kCatJets = catJets;
+
   (*multiLepton).Leptons.clear();
-  (*multiLepton).FillParticle("lepton", multilepton_Lepton1_Id, *multilepton_Lepton1_P4_ptr);
-  (*multiLepton).FillParticle("lepton", multilepton_Lepton2_Id, *multilepton_Lepton2_P4_ptr);
-  (*multiLepton).FillParticle("lepton", multilepton_Lepton3_Id, *multilepton_Lepton3_P4_ptr);
+  if (multilepton_Lepton1_Id!=-999) (*multiLepton).FillParticle("lepton", multilepton_Lepton1_Id, *multilepton_Lepton1_P4_ptr);
+  if (multilepton_Lepton2_Id!=-999) (*multiLepton).FillParticle("lepton", multilepton_Lepton2_Id, *multilepton_Lepton2_P4_ptr);
+  if (multilepton_Lepton3_Id!=-999) (*multiLepton).FillParticle("lepton", multilepton_Lepton3_Id, *multilepton_Lepton3_P4_ptr);
+  if (multilepton_Lepton4_Id!=-999) (*multiLepton).FillParticle("lepton", multilepton_Lepton4_Id, *multilepton_Lepton4_P4_ptr);
 
+  (*multiLepton).Jets.clear();
   (*multiLepton).JetsHighestPt.clear();
-  (*multiLepton).FillParticle("jetHighestPt", multilepton_JetHighestPt1_Id, *multilepton_JetHighestPt1_P4_ptr);
-  (*multiLepton).FillParticle("jetHighestPt", multilepton_JetHighestPt2_Id, *multilepton_JetHighestPt2_P4_ptr);
-
   (*multiLepton).JetsClosestMw.clear();
-  (*multiLepton).FillParticle("jetClosestMw", multilepton_JetClosestMw1_Id, *multilepton_JetClosestMw1_P4_ptr);
-  (*multiLepton).FillParticle("jetClosestMw", multilepton_JetClosestMw2_Id, *multilepton_JetClosestMw2_P4_ptr);
-
   (*multiLepton).JetsLowestMjj.clear();
-  (*multiLepton).FillParticle("jetLowestMjj", multilepton_JetLowestMjj1_Id, *multilepton_JetLowestMjj1_P4_ptr);
-  (*multiLepton).FillParticle("jetLowestMjj", multilepton_JetLowestMjj2_Id, *multilepton_JetLowestMjj2_P4_ptr);
+
+  if (multilepton_JetHighestPt1_Id!=-999) (*multiLepton).FillParticle("jetHighestPt", multilepton_JetHighestPt1_Id, *multilepton_JetHighestPt1_P4_ptr);
+  if (multilepton_JetHighestPt2_Id!=-999) (*multiLepton).FillParticle("jetHighestPt", multilepton_JetHighestPt2_Id, *multilepton_JetHighestPt2_P4_ptr);
+  if (multilepton_JetClosestMw1_Id!=-999) (*multiLepton).FillParticle("jetClosestMw", multilepton_JetClosestMw1_Id, *multilepton_JetClosestMw1_P4_ptr);
+  if (multilepton_JetClosestMw2_Id!=-999) (*multiLepton).FillParticle("jetClosestMw", multilepton_JetClosestMw2_Id, *multilepton_JetClosestMw2_P4_ptr);
+  if (multilepton_JetLowestMjj1_Id!=-999) (*multiLepton).FillParticle("jetLowestMjj", multilepton_JetLowestMjj1_Id, *multilepton_JetLowestMjj1_P4_ptr);
+  if (multilepton_JetLowestMjj2_Id!=-999) (*multiLepton).FillParticle("jetLowestMjj", multilepton_JetLowestMjj2_Id, *multilepton_JetLowestMjj2_P4_ptr);
+  if (multilepton_JetHighestPt1_2ndPair_Id!=-999) (*multiLepton).FillParticle("jetHighestPt", multilepton_JetHighestPt1_2ndPair_Id, *multilepton_JetHighestPt1_2ndPair_P4_ptr);
+  if (multilepton_JetHighestPt2_2ndPair_Id!=-999) (*multiLepton).FillParticle("jetHighestPt", multilepton_JetHighestPt2_2ndPair_Id, *multilepton_JetHighestPt2_2ndPair_P4_ptr);
+  if (multilepton_JetClosestMw1_2ndPair_Id!=-999) (*multiLepton).FillParticle("jetClosestMw", multilepton_JetClosestMw1_2ndPair_Id, *multilepton_JetClosestMw1_2ndPair_P4_ptr);
+  if (multilepton_JetClosestMw2_2ndPair_Id!=-999) (*multiLepton).FillParticle("jetClosestMw", multilepton_JetClosestMw2_2ndPair_Id, *multilepton_JetClosestMw2_2ndPair_P4_ptr);
+  if (multilepton_JetLowestMjj1_2ndPair_Id!=-999) (*multiLepton).FillParticle("jetLowestMjj", multilepton_JetLowestMjj1_2ndPair_Id, *multilepton_JetLowestMjj1_2ndPair_P4_ptr);
+  if (multilepton_JetLowestMjj2_2ndPair_Id!=-999) (*multiLepton).FillParticle("jetLowestMjj", multilepton_JetLowestMjj2_2ndPair_Id, *multilepton_JetLowestMjj2_2ndPair_P4_ptr);
 
   (*multiLepton).Bjets.clear();
-  (*multiLepton).FillParticle("bjet", multilepton_Bjet1_Id, *multilepton_Bjet1_P4_ptr);
-  (*multiLepton).FillParticle("bjet", multilepton_Bjet2_Id, *multilepton_Bjet2_P4_ptr);
+  if (multilepton_Bjet1_Id!=-999) (*multiLepton).FillParticle("bjet", multilepton_Bjet1_Id, *multilepton_Bjet1_P4_ptr);
+  if (multilepton_Bjet2_Id!=-999) (*multiLepton).FillParticle("bjet", multilepton_Bjet2_Id, *multilepton_Bjet2_P4_ptr); 
+  //if (catJets!=kCat_3l_1b_2j && catJets!=kCat_3l_1b_1j && catJets!=kCat_4l_1b) (*multiLepton).FillParticle("bjet", multilepton_Bjet2_Id, *multilepton_Bjet2_P4_ptr);
 
   (*multiLepton).Ptot = *multilepton_Ptot_ptr;
   (*multiLepton).mET = *multilepton_mET_ptr;

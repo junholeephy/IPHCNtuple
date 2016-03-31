@@ -1,84 +1,57 @@
 #!/bin/bash
 
-for opt in x3_LargeRange_FullStat
+#Automatically creates jobs, given the processes and files listed in FileList.txt
+#Environment variables LHAPDF and MEMEXECDIR (containing the executable) must be set
+
+#Suffix of the subdirectory: jobs will be created in Jobs_${opt}, that should contain the config.cfg file 
+opt=test_AllCat_BugFix
+
+#nEv events are run per job. Recommended nEv=6. If running also TTWJJ hyp, use nEv=1 (very slow).
+nEv=10
+
+#LSF queue
+queue=1nd
+
+mkdir Jobs_${opt}
+cp config.cfg Jobs_${opt}/config.cfg
+
+while read line
 do
 
-  for i in `seq 0 179` # 147 885
-  do
-    i1=$((i*6))
-    i2=$((i*6+6))
-    cp RunBatchMEM_template Jobs_${opt}/RunBatchMEM_TTW_$i 
-    sed -i s/NMIN/$i1/g Jobs_${opt}/RunBatchMEM_TTW_$i
-    sed -i s/NMAX/$i2/g Jobs_${opt}/RunBatchMEM_TTW_$i
-    sed -i s/NUM/$i/g Jobs_${opt}/RunBatchMEM_TTW_$i
-    sed -i s/OPTION/${opt}/g Jobs_${opt}/RunBatchMEM_TTW_$i
-    sed -i s/PROC/TTW/g Jobs_${opt}/RunBatchMEM_TTW_$i
-    echo bsub -q 2nd RunBatchMEM_TTW_$i
-  done
+  echo $line > tmp
+  proc=`awk '{print $1}' tmp`
+  inputfile=`awk '{print $2}' tmp`
+  echo $proc $inputfile
 
-  for i in `seq 0 165` #142 856
-  do
-    i1=$((i*6))
-    i2=$((i*6+6))
-    cp RunBatchMEM_template Jobs_${opt}/RunBatchMEM_TTZandGstar_$i        
-    sed -i s/NMIN/$i1/g Jobs_${opt}/RunBatchMEM_TTZandGstar_$i
-    sed -i s/NMAX/$i2/g Jobs_${opt}/RunBatchMEM_TTZandGstar_$i
-    sed -i s/NUM/$i/g Jobs_${opt}/RunBatchMEM_TTZandGstar_$i
-    sed -i s/OPTION/${opt}/g Jobs_${opt}/RunBatchMEM_TTZandGstar_$i
-    sed -i s/PROC/TTZ/g Jobs_${opt}/RunBatchMEM_TTZandGstar_$i
-    echo bsub -q 2nd RunBatchMEM_TTZandGstar_$i
-  done
+  root -l -q 'ReadEntries.C("'${inputfile}'")' | awk 'NR==3' > tmp
+  nEntries=`cat tmp`
 
-  for i in `seq 0 221` 
-  do
-    i1=$((i*6))
-    i2=$((i*6+6))
-    cp RunBatchMEM_template Jobs_${opt}/RunBatchMEM_TTG_$i
-    sed -i s/NMIN/$i1/g Jobs_${opt}/RunBatchMEM_TTG_$i
-    sed -i s/NMAX/$i2/g Jobs_${opt}/RunBatchMEM_TTG_$i
-    sed -i s/NUM/$i/g Jobs_${opt}/RunBatchMEM_TTG_$i
-    sed -i s/OPTION/${opt}/g Jobs_${opt}/RunBatchMEM_TTG_$i
-    sed -i s/PROC/TTG/g Jobs_${opt}/RunBatchMEM_TTG_$i
-    echo bsub -q 2nd RunBatchMEM_TTG_$i
-  done
+  nJobs=$(($nEntries / $nEv ))
+  echo nEntries=$nEntries nJobs=$nJobs
 
-  for i in `seq 0 166` 
-  do
-    i1=$((i*6))
-    i2=$((i*6+6))
-    cp RunBatchMEM_template Jobs_${opt}/RunBatchMEM_TT_$i
-    sed -i s/NMIN/$i1/g Jobs_${opt}/RunBatchMEM_TT_$i
-    sed -i s/NMAX/$i2/g Jobs_${opt}/RunBatchMEM_TT_$i
-    sed -i s/NUM/$i/g Jobs_${opt}/RunBatchMEM_TT_$i
-    sed -i s/OPTION/${opt}/g Jobs_${opt}/RunBatchMEM_TT_$i
-    sed -i s/PROC/TT/g Jobs_${opt}/RunBatchMEM_TT_$i
-    echo bsub -q 2nd RunBatchMEM_TT_$i
-  done
+  #nJobsMax=$((2000/$nEv))
+  #echo nJobsMax=$nJobsMax
 
-  for i in `seq 0 75`
-  do
-    i1=$((i*6))
-    i2=$((i*6+6))
-    cp RunBatchMEM_template Jobs_${opt}/RunBatchMEM_WZ_$i
-    sed -i s/NMIN/$i1/g Jobs_${opt}/RunBatchMEM_WZ_$i
-    sed -i s/NMAX/$i2/g Jobs_${opt}/RunBatchMEM_WZ_$i
-    sed -i s/NUM/$i/g Jobs_${opt}/RunBatchMEM_WZ_$i
-    sed -i s/OPTION/${opt}/g Jobs_${opt}/RunBatchMEM_WZ_$i
-    sed -i s/PROC/WZ/g Jobs_${opt}/RunBatchMEM_WZ_$i
-    echo bsub -q 2nd RunBatchMEM_TT_$i
-  done
+  cp RunBatchMEM_template Jobs_${opt}/RunBatchMEM_${proc}_template
+  sed -i s/OPTION/${opt}/g Jobs_${opt}/RunBatchMEM_${proc}_template
+  sed -i s/PROC/${proc}/g Jobs_${opt}/RunBatchMEM_${proc}_template
+  sed -i s,INPUTFILE,${inputfile},g Jobs_${opt}/RunBatchMEM_${proc}_template
+  sed -i s,DIR_JOBS,`pwd`,g Jobs_${opt}/RunBatchMEM_${proc}_template
+  sed -i s,DIR_LHAPDF,${LHAPDF},g Jobs_${opt}/RunBatchMEM_${proc}_template
+  sed -i s,DIR_MEMEXEC,${MEMEXECDIR},g Jobs_${opt}/RunBatchMEM_${proc}_template #MEMEXECDIR must be defined!
 
-  for i in `seq 0 1880` #`seq 0 333`
+  for i in `seq 0 $nJobs` #$nJobs 
   do
-    i1=$((i*6)) #20, 6
-    i2=$((i*6+6))
-    cp RunBatchMEM_template Jobs_${opt}/RunBatchMEM_TTHflsl_${i}
-    sed -i s/NMIN/$i1/g Jobs_${opt}/RunBatchMEM_TTHflsl_$i
-    sed -i s/NMAX/$i2/g Jobs_${opt}/RunBatchMEM_TTHflsl_$i
-    sed -i s/NUM/$i/g Jobs_${opt}/RunBatchMEM_TTHflsl_$i
-    sed -i s/OPTION/${opt}/g Jobs_${opt}/RunBatchMEM_TTHflsl_$i
-    sed -i s/PROC/TTH/g Jobs_${opt}/RunBatchMEM_TTHflsl_$i
-    echo bsub -q 2nd RunBatchMEM_TTHflsl_$i
-  done
+    #if [[ $i -ge $nJobsMax ]]; then break; fi
 
-done 
+    i1=$(($i*$nEv))
+    i2=$(($i*$nEv+$nEv))
+    cp Jobs_${opt}/RunBatchMEM_${proc}_template Jobs_${opt}/RunBatchMEM_${proc}_$i 
+    sed -i s/NMIN/$i1/g Jobs_${opt}/RunBatchMEM_${proc}_$i
+    sed -i s/NMAX/$i2/g Jobs_${opt}/RunBatchMEM_${proc}_$i
+    sed -i s/NUM/$i/g Jobs_${opt}/RunBatchMEM_${proc}_$i
+    echo bsub -q ${queue} -N RunBatchMEM_${proc}_$i
+  done
+done < FileList.txt
+
+chmod +x Jobs_${opt}/RunBatchMEM_*

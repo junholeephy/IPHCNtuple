@@ -1,16 +1,26 @@
 #!/bin/csh
 
-setenv LOCALDIR `pwd`
-setenv EXECDIR "/afs/cern.ch/work/c/chanon/MEM/test/"
+setenv LSB_JOB_REPORT_MAIL N
 
-source /afs/cern.ch/user/c/chanon/setupMEM.csh 
+setenv LOCALDIR `pwd`
+setenv EXECDIR DIR_MEMEXEC
+
+setenv LC_ALL "en_US.UTF-8"
+
+setenv LHAPDF DIR_LHAPDF
+setenv LHAPATH $LHAPDF/share/LHAPDF/
+setenv LHAPDF_BIN $LHAPDF/bin
+setenv PATH ${PATH}:${LHAPDF_BIN}
+setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:$LHAPDF/lib
+
+setenv ROOTSYS /usr/bin/root
+rehash
 
 cd ${LOCALDIR}
 
-${EXECDIR}/./test root://eoscms//eos/cms/store/user/chanon/TTH/FlatTree/MantaRay-patch9_ter/Analyzed_Reco_2b_1b/outputAnalyzer_Reco_PROC.root  NMIN NMAX --MEMRun /afs/cern.ch/work/c/chanon/MEM/test/JobsReco/Jobs_OPTION/config.cfg > log_PROC_OPTION_NUM
+${EXECDIR}/./test INPUTFILE NMIN NMAX --MEMRun DIR_JOBS/Jobs_OPTION/config.cfg > log_PROC_OPTION_NUM
 
 ls 
 
-cp log_PROC_OPTION_NUM ${EXECDIR}/JobsReco/Jobs_OPTION/
-cp output.root ${EXECDIR}/JobsReco/Jobs_OPTION/output_PROC_OPTION_NUM.root
-
+cp log_PROC_OPTION_NUM DIR_JOBS/Jobs_OPTION/
+cp output.root DIR_JOBS/Jobs_OPTION/output_PROC_OPTION_NUM.root

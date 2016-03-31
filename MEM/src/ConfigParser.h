@@ -17,6 +17,8 @@ class ConfigParser
   void LoadHypotheses(int*, string**, int**, int**); 
   void LoadIntegrationRange(double*, double*, double*);
   void LoadJetChoice(string*);
+  void LoadOptim(int*);
+  void LoadOptim(int*,int*,int*,int*);
 
   ifstream fconf;
 
@@ -24,10 +26,12 @@ class ConfigParser
   string* sHyp;
   int* Hyp;
 
-  int doTTLL, doTTHfl, doTTHsl, doTTW, doTTWJJ;
-  int nPointsHypTTLL, nPointsHypTTHsl, nPointsHypTTHfl, nPointsHypTTW, nPointsHypTTWJJ;
+  int doTTLL, doTTHfl, doTTHsl, doTTW, doTTWJJ, doTTbarfl, doTTbarsl;
+  int nPointsHypTTLL, nPointsHypTTHsl, nPointsHypTTHfl, nPointsHypTTW, nPointsHypTTWJJ, nPointsHypTTbarfl, nPointsHypTTbarsl;
   double valJetTFfracmin, valJetTFfracmax, valNeutMaxE;
   string valJetChoice;
+  int valOptim, valOptimTopLep, valOptimTopHad, valOptimHiggs, valOptimW;
+  string valMadgraphDir, valTFfile;
 
   void ReadOptionValue(string*, int*);
   void ReadOptionValue(string*, double*);
@@ -58,6 +62,10 @@ void ConfigParser::GetConfigFromFile(string InputFile){
   ReadOptionValue(&option, &nPointsHypTTW);
   ReadOptionValue(&option, &doTTWJJ);
   ReadOptionValue(&option, &nPointsHypTTWJJ);
+  ReadOptionValue(&option, &doTTbarfl);
+  ReadOptionValue(&option, &nPointsHypTTbarfl);
+  ReadOptionValue(&option, &doTTbarsl);
+  ReadOptionValue(&option, &nPointsHypTTbarsl);
 
   getline(fconf, line);
   getline(fconf, line);
@@ -70,6 +78,17 @@ void ConfigParser::GetConfigFromFile(string InputFile){
   getline(fconf, line);
   getline(fconf, line);
   ReadOptionValue(&option, &valJetChoice);
+  ReadOptionValue(&option, &valOptim);
+  ReadOptionValue(&option, &valOptimTopHad);
+  ReadOptionValue(&option, &valOptimTopLep);
+  ReadOptionValue(&option, &valOptimHiggs);
+  ReadOptionValue(&option, &valOptimW);
+
+  getline(fconf, line);
+  getline(fconf, line);
+  getline(fconf, line);
+  ReadOptionValue(&option, &valMadgraphDir);
+  ReadOptionValue(&option, &valTFfile);
 
   fconf.close();
   return;
@@ -114,6 +133,8 @@ void ConfigParser::LoadHypotheses(int* nhyp, string** shyp, int** hyp, int** nPo
   if (doTTHfl) (*nhyp)++;
   if (doTTW) (*nhyp)++;
   if (doTTWJJ) (*nhyp)++;
+  if (doTTbarfl) (*nhyp)++;
+  if (doTTbarsl) (*nhyp)++;
 
   (*shyp) = new string[(*nhyp)];
   (*hyp) = new int[(*nhyp)];
@@ -150,6 +171,18 @@ void ConfigParser::LoadHypotheses(int* nhyp, string** shyp, int** hyp, int** nPo
     (*nPointsHyp)[ih] = nPointsHypTTWJJ;
     ih++;
   }
+  if (doTTbarfl){
+    (*shyp)[ih] = "TTbarfl";
+    (*hyp)[ih] = kMEM_TTbar_TopAntitopFullyLepDecay;
+    (*nPointsHyp)[ih] = nPointsHypTTbarfl;
+    ih++;
+  }
+  if (doTTbarsl){
+    (*shyp)[ih] = "TTbarsl";
+    (*hyp)[ih] = kMEM_TTbar_TopAntitopSemiLepDecay;
+    (*nPointsHyp)[ih] = nPointsHypTTbarsl;
+    ih++;
+  }
 
   for (int ih=0; ih<(*nhyp); ih++) cout << "Will run hyp "<<(*shyp)[ih]<<" code "<<(*hyp)[ih]<<" with "<<(*nPointsHyp)[ih]<<" iterations"<<endl;
 
@@ -173,6 +206,22 @@ void ConfigParser::LoadJetChoice(string* jetChoice){
   cout << "In 2j categories, choose 2 jets with option "<< (*jetChoice) << endl;
 
   return;
+}
+
+void ConfigParser::LoadOptim(int* doOptim){
+
+  *doOptim = valOptim;
+  cout << "Optimizing phase space with option: "<< (*doOptim) <<endl;
+}
+
+void ConfigParser::LoadOptim(int* doOptimTopHad, int* doOptimTopLep, int* doOptimHiggs, int* doOptimW){
+
+  *doOptimTopHad = valOptimTopHad;
+  *doOptimTopLep = valOptimTopLep;
+  *doOptimHiggs = valOptimHiggs;
+  *doOptimW = valOptimW;
+
+  cout << "Optimizing phase space with option: TopHad "<< (*doOptimTopHad)<<", TopLep "<< (*doOptimTopLep)<< ", Higgs "<< (*doOptimHiggs)<< ", Woffshell "<< (*doOptimW)<<endl;
 }
 
 
