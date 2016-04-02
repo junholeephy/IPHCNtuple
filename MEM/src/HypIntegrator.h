@@ -180,8 +180,8 @@ void HypIntegrator::SetupIntegrationHypothesis(int kMode, int kCat, int stageVal
     }
   }
   else if (meIntegrator->iNleptons==4){
-    if (kCat==kCat_4l_2b) SetNCalls(nPoints*10);   
-    if (kCat==kCat_4l_1b) SetNCalls(nPoints*50); 
+    if (kCat==kCat_4l_2b) SetNCalls(nPoints*3);   
+    if (kCat==kCat_4l_1b) SetNCalls(nPoints*30); 
   }
   else if (meIntegrator->iNleptons==2){
     if (kMode!=kMEM_TTW_TopAntitopDecay && kMode!=kMEM_TTbar_TopAntitopSemiLepDecay){

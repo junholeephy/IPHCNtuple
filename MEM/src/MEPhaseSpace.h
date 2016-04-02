@@ -4912,8 +4912,7 @@ double MEPhaseSpace::ComputeTFProduct() const {
   }
 
   //Jets
-  if (iMode==kMEM_TTW_TopAntitopDecay || iMode==kMEM_TTbar_TopAntitopFullyLepDecay) { weightTF_Jet1 = 1; weightTF_Jet2 = 1; }
-  else if (iTF == kTFGaussian){
+  if (iTF == kTFGaussian){
     if (MeasuredVarForTF.doJet1TF) weightTF_Jet1 = ComputeSingleTF_Gaus(ComputedVarForTF.Jet1_E, MeasuredVarForTF.Jet1_E, 0.2);
     else if (TMath::Abs(ComputedVarForTF.Jet1_Eta)<2.4 && (ComputedVarForTF.Jet1_E / TMath::CosH(ComputedVarForTF.Jet1_Eta))>25) weightTF_Jet1 = 0;
     if (MeasuredVarForTF.doJet2TF) weightTF_Jet2 = ComputeSingleTF_Gaus(ComputedVarForTF.Jet2_E, MeasuredVarForTF.Jet2_E, 0.2);
@@ -4926,10 +4925,12 @@ double MEPhaseSpace::ComputeTFProduct() const {
     }
   }
   else if (iTF == kTFHistoBnonB_GausRecoil || iTF == kTFHistoBnonBmET){
-    if (MeasuredVarForTF.doJet1TF) weightTF_Jet1 = ComputeSingleTF_Histo("Jet", ComputedVarForTF.Jet1_E, MeasuredVarForTF.Jet1_E, MeasuredVarForTF.Jet1_Eta);
-    else if (TMath::Abs(ComputedVarForTF.Jet1_Eta)<2.4 && (ComputedVarForTF.Jet1_E / TMath::CosH(ComputedVarForTF.Jet1_Eta))>25) weightTF_Jet1 = 0;
-    if (MeasuredVarForTF.doJet2TF) weightTF_Jet2 = ComputeSingleTF_Histo("Jet", ComputedVarForTF.Jet2_E, MeasuredVarForTF.Jet2_E, MeasuredVarForTF.Jet2_Eta);
-    else if (TMath::Abs(ComputedVarForTF.Jet2_Eta)<2.4 && (ComputedVarForTF.Jet2_E / TMath::CosH(ComputedVarForTF.Jet2_Eta))>25) weightTF_Jet2 = 0;
+    if (FinalStateTTV.Top1_Decay == kTopHadDecay || FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep){
+      if (MeasuredVarForTF.doJet1TF) weightTF_Jet1 = ComputeSingleTF_Histo("Jet", ComputedVarForTF.Jet1_E, MeasuredVarForTF.Jet1_E, MeasuredVarForTF.Jet1_Eta);
+      else if (TMath::Abs(ComputedVarForTF.Jet1_Eta)<2.4 && (ComputedVarForTF.Jet1_E / TMath::CosH(ComputedVarForTF.Jet1_Eta))>25) weightTF_Jet1 = 0;
+      if (MeasuredVarForTF.doJet2TF) weightTF_Jet2 = ComputeSingleTF_Histo("Jet", ComputedVarForTF.Jet2_E, MeasuredVarForTF.Jet2_E, MeasuredVarForTF.Jet2_Eta);
+      else if (TMath::Abs(ComputedVarForTF.Jet2_Eta)<2.4 && (ComputedVarForTF.Jet2_E / TMath::CosH(ComputedVarForTF.Jet2_Eta))>25) weightTF_Jet2 = 0;
+    }
     if (FinalStateTTV.Top1_Decay == kTopHadDecay && (FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep)) {
       if (MeasuredVarForTF.doJet3TF) weightTF_Jet3 = ComputeSingleTF_Histo("Jet", ComputedVarForTF.Jet3_E, MeasuredVarForTF.Jet3_E, MeasuredVarForTF.Jet3_Eta);
       else if (TMath::Abs(ComputedVarForTF.Jet3_Eta)<2.4 && (ComputedVarForTF.Jet3_E / TMath::CosH(ComputedVarForTF.Jet3_Eta))>25) weightTF_Jet3 = 0;
