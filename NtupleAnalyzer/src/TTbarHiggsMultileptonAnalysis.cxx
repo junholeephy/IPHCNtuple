@@ -1007,8 +1007,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         //std::cout <<is_CR_TTl<<" "<< is_Zl_CR <<" " << is_CR_WZ<<" " << is_TTH3l<< std::endl;
         //if (is_TTH3l==true ) std::cout <<"is_TTH3l" << std::endl;
-        if ( is_3l_TTH_SR || is_3l_TTZ_CR ) fillOutputTree();
-        //if (is_2lss_TTH_SR) fillOutputTree();
+        if ( is_2lss_TTH_SR || is_3l_TTH_SR ) fillOutputTree();
 
         //---------------------------
         //Madweight LHCO stuff
@@ -3063,6 +3062,7 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("multilepton_JetLowestMjj2_2ndPair_P4","TLorentzVector",&multilepton_JetLowestMjj2_2ndPair_P4);
 
     tOutput->Branch("multilepton_mET","TLorentzVector",&multilepton_mET);
+    tOutput->Branch("multilepton_mHT",&multilepton_mHT,"multilepton_mHT/F");
     tOutput->Branch("multilepton_Ptot","TLorentzVector",&multilepton_Ptot);
 
     return;
@@ -3088,7 +3088,6 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return; 
 
     //if (vSelectedLeptons.size()<2) return; // 2lss only at the moment
-    if (!is4l) return; // 4l only at the moment
 
     //std::cout << "lept="<<vSelectedLeptons.size()<<" fake="<<vFakeLeptons.size()<<std::endl;
     //std::cout << "btag="<<vSelectedBTagJets.size()<<" nonbtag="<<vSelectedNonBTagJets.size()<<std::endl;
@@ -3291,6 +3290,8 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     }
 
     multilepton_mET.SetPtEtaPhiE(vEvent->at(0).metpt(), 0, vEvent->at(0).metphi(), vEvent->at(0).metpt());
+
+    multilepton_mHT = vEvent->at(0).metsumet();
 
     mc_ttZhypAllowed = 0;
 
