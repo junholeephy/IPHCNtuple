@@ -625,6 +625,8 @@ void TTbarHiggsMultileptonAnalysis::Init(TChain *tree)
     fChain->SetBranchAddress("Tau",      &vTau     );
     fChain->SetBranchAddress("Jet",      &vJet     );
     fChain->SetBranchAddress("Truth",    &vTruth   );
+
+    Load_MVA();
 }
 
 
@@ -977,7 +979,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // MVA
         //------
 
-        Load_MVA();
+        //Load_MVA();
 
         max_Lep_eta     = 0. ;
         numJets_float   = 0. ;
@@ -1652,8 +1654,8 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
     signal_2lss_TT_MVA  = mva_2lss_tt->EvaluateMVA("BDTG method");
     signal_2lss_TTV_MVA = mva_2lss_ttV->EvaluateMVA("BDTG method");
 
-    std::cout << " signal 2lss TT MVA: "  << signal_2lss_TT_MVA
-              << " signal 2lss TTV MVA: " << signal_2lss_TTV_MVA << std::endl;
+    //std::cout << " signal 2lss TT MVA: "  << signal_2lss_TT_MVA
+    //          << " signal 2lss TTV MVA: " << signal_2lss_TTV_MVA << std::endl;
 
     theHistoManager->fillHisto("Signal_2lss_TT_MVA",                       "FinalCut", "ttH2lss",   "",  signal_2lss_TT_MVA,   weight);
     theHistoManager->fillHisto("Signal_2lss_TTV_MVA",                      "FinalCut", "ttH2lss",   "",  signal_2lss_TTV_MVA,  weight);
@@ -2228,8 +2230,8 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     signal_3l_TT_MVA    = mva_3l_tt->EvaluateMVA("BDTG method");
     signal_3l_TTV_MVA   = mva_3l_ttV->EvaluateMVA("BDTG method");
 
-    std::cout << " signal 3l   TT MVA: "  << signal_3l_TT_MVA
-              << " signal 3l   TTV MVA: " << signal_3l_TTV_MVA << std::endl;
+    //std::cout << " signal 3l   TT MVA: "  << signal_3l_TT_MVA
+    //          << " signal 3l   TTV MVA: " << signal_3l_TTV_MVA << std::endl;
 
     theHistoManager->fillHisto("Signal_3l_TT_MVA",                         "FinalCut",   "ttH3l",   "",  signal_3l_TT_MVA,   weight);
     theHistoManager->fillHisto("Signal_3l_TTV_MVA",                        "FinalCut",   "ttH3l",   "",  signal_3l_TTV_MVA,  weight);
