@@ -625,6 +625,8 @@ void TTbarHiggsMultileptonAnalysis::Init(TChain *tree)
     fChain->SetBranchAddress("Tau",      &vTau     );
     fChain->SetBranchAddress("Jet",      &vJet     );
     fChain->SetBranchAddress("Truth",    &vTruth   );
+
+    Load_MVA();
 }
 
 
@@ -977,7 +979,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // MVA
         //------
 
-        Load_MVA();
+        //Load_MVA();
 
         max_Lep_eta     = 0. ;
         numJets_float   = 0. ;
@@ -1007,8 +1009,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         //std::cout <<is_CR_TTl<<" "<< is_Zl_CR <<" " << is_CR_WZ<<" " << is_TTH3l<< std::endl;
         //if (is_TTH3l==true ) std::cout <<"is_TTH3l" << std::endl;
-        if ( is_3l_TTH_SR || is_3l_TTZ_CR ) fillOutputTree();
-        //if (is_2lss_TTH_SR) fillOutputTree();
+        if ( is_2lss_TTH_SR || is_3l_TTH_SR ) fillOutputTree();
 
         //---------------------------
         //Madweight LHCO stuff
@@ -1653,8 +1654,8 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
     signal_2lss_TT_MVA  = mva_2lss_tt->EvaluateMVA("BDTG method");
     signal_2lss_TTV_MVA = mva_2lss_ttV->EvaluateMVA("BDTG method");
 
-    std::cout << " signal 2lss TT MVA: "  << signal_2lss_TT_MVA
-              << " signal 2lss TTV MVA: " << signal_2lss_TTV_MVA << std::endl;
+    //std::cout << " signal 2lss TT MVA: "  << signal_2lss_TT_MVA
+    //          << " signal 2lss TTV MVA: " << signal_2lss_TTV_MVA << std::endl;
 
     theHistoManager->fillHisto("Signal_2lss_TT_MVA",                       "FinalCut", "ttH2lss",   "",  signal_2lss_TT_MVA,   weight);
     theHistoManager->fillHisto("Signal_2lss_TTV_MVA",                      "FinalCut", "ttH2lss",   "",  signal_2lss_TTV_MVA,  weight);
@@ -2229,8 +2230,8 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     signal_3l_TT_MVA    = mva_3l_tt->EvaluateMVA("BDTG method");
     signal_3l_TTV_MVA   = mva_3l_ttV->EvaluateMVA("BDTG method");
 
-    std::cout << " signal 3l   TT MVA: "  << signal_3l_TT_MVA
-              << " signal 3l   TTV MVA: " << signal_3l_TTV_MVA << std::endl;
+    //std::cout << " signal 3l   TT MVA: "  << signal_3l_TT_MVA
+    //          << " signal 3l   TTV MVA: " << signal_3l_TTV_MVA << std::endl;
 
     theHistoManager->fillHisto("Signal_3l_TT_MVA",                         "FinalCut",   "ttH3l",   "",  signal_3l_TT_MVA,   weight);
     theHistoManager->fillHisto("Signal_3l_TTV_MVA",                        "FinalCut",   "ttH3l",   "",  signal_3l_TTV_MVA,  weight);
@@ -3024,6 +3025,11 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
 
     tOutput->Branch("is_trigger",&is_trigger,"is_trigger/B");
 
+    tOutput->Branch("signal_2lss_TT_MVA",&signal_2lss_TT_MVA,"signal_2lss_TT_MVA/F");
+    tOutput->Branch("signal_2lss_TTV_MVA",&signal_2lss_TTV_MVA,"signal_2lss_TTV_MVA/F");
+    tOutput->Branch("signal_3l_TT_MVA",&signal_3l_TT_MVA,"signal_3l_TT_MVA/F");
+    tOutput->Branch("signal_3l_TTV_MVA",&signal_3l_TTV_MVA,"signal_3l_TTV_MVA/F");
+
     tOutput->Branch("multilepton_Bjet1_Id",&multilepton_Bjet1_Id,"multilepton_Bjet1_Id/I");
     tOutput->Branch("multilepton_Bjet1_P4","TLorentzVector",&multilepton_Bjet1_P4);
     tOutput->Branch("multilepton_Bjet2_Id",&multilepton_Bjet2_Id,"multilepton_Bjet2_Id/I");
@@ -3063,6 +3069,7 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("multilepton_JetLowestMjj2_2ndPair_P4","TLorentzVector",&multilepton_JetLowestMjj2_2ndPair_P4);
 
     tOutput->Branch("multilepton_mET","TLorentzVector",&multilepton_mET);
+    tOutput->Branch("multilepton_mHT",&multilepton_mHT,"multilepton_mHT/F");
     tOutput->Branch("multilepton_Ptot","TLorentzVector",&multilepton_Ptot);
 
     return;
@@ -3088,7 +3095,6 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return; 
 
     //if (vSelectedLeptons.size()<2) return; // 2lss only at the moment
-    if (!is4l) return; // 4l only at the moment
 
     //std::cout << "lept="<<vSelectedLeptons.size()<<" fake="<<vFakeLeptons.size()<<std::endl;
     //std::cout << "btag="<<vSelectedBTagJets.size()<<" nonbtag="<<vSelectedNonBTagJets.size()<<std::endl;
@@ -3291,6 +3297,8 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     }
 
     multilepton_mET.SetPtEtaPhiE(vEvent->at(0).metpt(), 0, vEvent->at(0).metphi(), vEvent->at(0).metpt());
+
+    multilepton_mHT = vEvent->at(0).metsumet();
 
     mc_ttZhypAllowed = 0;
 

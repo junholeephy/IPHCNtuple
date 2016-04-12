@@ -116,7 +116,7 @@ void Load_MVA()
     std::stringstream tmpBuffer;
     std::streambuf* oldStdout = std::cout.rdbuf(tmpBuffer.rdbuf());
 
-    std::string NtupleAnalyzerMVAPath = std::string("/home-pbs/xcoubez/ttHAnalysis_Git/ttHGitNew/IPHCNtuple/NtupleAnalyzer/src/");
+    std::string NtupleAnalyzerMVAPath = std::string("/opt/sbg/scratch1/cms/TTH/");
     mva_2lss_tt  = Book_2LSS_TT_MVAReader(  NtupleAnalyzerMVAPath, "weight/2lss_ttbar_BDTG.weights.xml", "test");
     mva_2lss_ttV = Book_2LSS_TTV_MVAReader( NtupleAnalyzerMVAPath, "weight/2lss_ttV_BDTG.weights.xml",   "test");
     mva_3l_tt    = Book_3L_TT_MVAReader(    NtupleAnalyzerMVAPath, "weight/3l_ttbar_BDTG.weights.xml",   "test");
