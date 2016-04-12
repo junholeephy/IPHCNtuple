@@ -45,6 +45,7 @@ class MultiLepton
 
   TLorentzVector Ptot;
   TLorentzVector mET;
+  float mHT;
 
   double *xL;
   double *xU;
@@ -218,6 +219,7 @@ void MultiLepton::FillParticlesHypothesis(int kMode, MEPhaseSpace** meIntegrator
   (*meIntegrator)->MeasuredVarForTF.Recoil_Py = -Ptot.Py();
   (*meIntegrator)->MeasuredVarForTF.mET_Px = mET.Px();
   (*meIntegrator)->MeasuredVarForTF.mET_Py = mET.Py();
+  (*meIntegrator)->MeasuredVarForTF.mHT = mHT;
 
   ReadIntegrationBoundaries(kMode, meIntegrator);
 

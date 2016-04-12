@@ -115,12 +115,15 @@ void HypIntegrator::InitializeIntegrator(double comEnergy, int kGenerator, int k
   meIntegrator->SetComEnergy(comEnergy);
   meIntegrator->SetGenerator(kGenerator);
   meIntegrator->SetTFChoice(kTFChoice);
-  meIntegrator->SetTFOption(kTFOption);
+
+  meIntegrator->SetTFOption(cfgParser->valTFOption);
   meIntegrator->SetOptimization(cfgParser->valOptim);
   meIntegrator->SetOptimization(cfgParser->valOptimTopHad, cfgParser->valOptimTopLep, cfgParser->valOptimHiggs, cfgParser->valOptimW);
 
   meIntegrator->InitializeMadgraphProcesses(cfgParser->valMadgraphDir);
   meIntegrator->LoadTFfromHisto(cfgParser->valTFfile);
+
+  meIntegrator->SetVerbosity(cfgParser->valVerbosity);
 
   SetNCalls(nPoints);
 

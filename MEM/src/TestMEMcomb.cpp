@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
 
 
     //hypIntegrator.meIntegrator->SetVerbosity(2);
-    hypIntegrator.meIntegrator->SetVerbosity(1);
+    //hypIntegrator.meIntegrator->SetVerbosity(1);
 
     string JetChoice;
     cfgParser.LoadJetChoice(&JetChoice);

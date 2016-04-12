@@ -234,6 +234,7 @@ class ReadGenFlatTree {
   Int_t multilepton_JetHighestPt1_2ndPair_Id, multilepton_JetHighestPt2_2ndPair_Id, multilepton_JetClosestMw1_2ndPair_Id, multilepton_JetClosestMw2_2ndPair_Id, multilepton_JetLowestMjj1_2ndPair_Id, multilepton_JetLowestMjj2_2ndPair_Id;
   TLorentzVector  multilepton_JetHighestPt1_2ndPair_P4, multilepton_JetHighestPt2_2ndPair_P4, multilepton_JetClosestMw1_2ndPair_P4, multilepton_JetClosestMw2_2ndPair_P4, multilepton_JetLowestMjj1_2ndPair_P4, multilepton_JetLowestMjj2_2ndPair_P4;
   TLorentzVector multilepton_mET;
+  Float_t multilepton_mHT;
   TLorentzVector multilepton_Ptot;
 
   TLorentzVector* multilepton_Bjet1_P4_ptr;
@@ -424,6 +425,7 @@ class ReadGenFlatTree {
   TBranch* b_multilepton_JetLowestMjj1_2ndPair_P4;
   TBranch* b_multilepton_JetLowestMjj2_2ndPair_P4;
   TBranch* b_multilepton_mET;
+  TBranch* b_multilepton_mHT;
   TBranch* b_multilepton_Ptot;
 
 
@@ -717,6 +719,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tInput->SetBranchAddress("multilepton_JetLowestMjj2_2ndPair_P4",&multilepton_JetLowestMjj2_2ndPair_P4_ptr,&b_multilepton_JetLowestMjj2_2ndPair_P4);
 
   tInput->SetBranchAddress("multilepton_mET",&multilepton_mET_ptr,&b_multilepton_mET);
+  tInput->SetBranchAddress("multilepton_mHT",&multilepton_mHT,&b_multilepton_mHT);
   tInput->SetBranchAddress("multilepton_Ptot",&multilepton_Ptot_ptr,&b_multilepton_Ptot);
 
   cout << "Creating output tree"<<endl;
@@ -780,6 +783,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("multilepton_JetLowestMjj2_2ndPair_P4","TLorentzVector",&multilepton_JetLowestMjj2_2ndPair_P4);
 
   tOutput->Branch("multilepton_mET","TLorentzVector",&multilepton_mET);
+  tOutput->Branch("multilepton_mHT",&multilepton_mHT,"multilepton_mHT/F");
   tOutput->Branch("multilepton_Ptot","TLorentzVector",&multilepton_Ptot);
 
   tOutput->Branch("mc_mem_tthfl_weight",&mc_mem_tthfl_weight,"mc_mem_tthfl_weight/D");
@@ -1154,7 +1158,7 @@ void ReadGenFlatTree::FillGenMultilepton(Long64_t iEvent, MultiLepton* multiLept
 
    (*multiLepton).Ptot = Ptot;
    (*multiLepton).mET = PtotNeut;
-
+   
 }
 
 int ReadGenFlatTree::ApplyGenSelection(Long64_t iEvent, MultiLepton* multiLepton){
@@ -1304,6 +1308,7 @@ void ReadGenFlatTree::ReadMultilepton(Long64_t iEvent, MultiLepton* multiLepton)
 
   (*multiLepton).Ptot = *multilepton_Ptot_ptr;
   (*multiLepton).mET = *multilepton_mET_ptr;
+  (*multiLepton).mHT = multilepton_mHT;
 
   //cout << "Lepton0Pt="<<(*multiLepton).Leptons.at(0).P4.Pt()<<" Lepton1Pt="<<(*multiLepton).Leptons.at(1).P4.Pt() << " Lepton2Pt="<<(*multiLepton).Leptons.at(2).P4.Pt()<<endl;  
   //cout << "Bjet0Pt="<<(*multiLepton).Bjets.at(0).P4.Pt()<<" Bjet1Pt="<<(*multiLepton).Bjets.at(1).P4.Pt() << endl;

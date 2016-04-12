@@ -100,6 +100,7 @@
 
 #define kTFRecoilPtot 0
 #define kTFRecoilmET 1
+#define kTFRecoilmETphi 2
 
 //#define kErr_PS_Top 0
 //#define kErr_PS_Boson 1
@@ -144,8 +145,11 @@ const string EtaRangeLabel[] = {"00eta08", "08eta16", "16eta24"};
 const string EnergyRangeLabel[] = {"25E50", "50E80", "80E120", "120E200", "200E300", "EGT300"};
 const float EtaRange[] = {0.0, 0.8, 1.6, 2.4};
 const float EnergyRange[] = {25, 50, 80, 120, 200, 300, 7000};
-const string MetRangeLabel[] = {"0E100","100E150","EGT150"};
-const float MetRange[] = {0, 100, 150, 7000};
+//const string MetRangeLabel[] = {"0E100","100E150","EGT150"};
+//const float MetRange[] = {0, 100, 150, 7000};
+const string MetRangeLabel[] = {"mET0E100Sum0E1200", "mET0E100Sum1200E1600", "mET0E100SumEGT1600", "mETGT100Sum0E1200", "mETGT100Sum1200E1600", "mETGT100SumEGT1600"};
+const float MetRange[] = {0, 100, 7000};
+const float MetSumRange[] = {0, 1200, 1600, 7000};
 
 class MEPhaseSpace 
 {
@@ -325,6 +329,8 @@ class MEPhaseSpace
     TH1F*** TF_B;
     TH1F** TF_MetPx;
     TH1F** TF_MetPy;
+    TH1F** TF_MetPt;
+    TH1F** TF_MetPhi;
 
     struct FinalStateTTV {
       int Boson_Type;
@@ -351,6 +357,7 @@ class MEPhaseSpace
       double Recoil_Py;
       double mET_Px;
       double mET_Py;
+      double mHT;
       bool doBjet1TF;
       bool doBjet2TF;
       bool doJet1TF;
@@ -565,8 +572,10 @@ if (verbosity>=1) cout << "TTbar Process nexternal=" << process_P0_Sigma_sm_gg_t
   TF_B = new TH1F**[3];
   for (int iEta=0; iEta<3; iEta++) TF_nonB[iEta] = new TH1F*[6];
   for (int iEta=0; iEta<3; iEta++) TF_B[iEta] = new TH1F*[6];
-  TF_MetPx = new TH1F*[3];
-  TF_MetPy = new TH1F*[3];
+  TF_MetPx = new TH1F*[6];
+  TF_MetPy = new TH1F*[6];
+  TF_MetPt = new TH1F*[6];
+  TF_MetPhi = new TH1F*[6];
   //LoadTFfromHisto("/afs/cern.ch/work/c/chanon/MEM/data/TF_Daniel_05112015.root");
 
   //set constants from madgraph
@@ -4887,7 +4896,6 @@ void MEPhaseSpace::UpdateComputedVarForTF() const{
   return;
 }
 
-//double MEPhaseSpace::ComputeTFProduct(double Gen_Bjet1_E, double Gen_Bjet2_E, double Gen_Jet_E, double Gen_Jet2_E, double Gen_Recoil_Px, double Gen_Recoil_Py) const {
 double MEPhaseSpace::ComputeTFProduct() const {
 
   double weightTF_Bjet1 = 1;
@@ -4954,8 +4962,18 @@ double MEPhaseSpace::ComputeTFProduct() const {
   }
   else if (iTF == kTFHistoBnonBmET){
     if (iTFOption==kTFRecoilmET){
-      weightTF_Recoil_Px = ComputeSingleTF_Histo("mET_Px", ComputedVarForTF.mET_Px, MeasuredVarForTF.mET_Px, 0);
-      weightTF_Recoil_Py = ComputeSingleTF_Histo("mET_Py", ComputedVarForTF.mET_Py, MeasuredVarForTF.mET_Py, 0);
+      weightTF_Recoil_Px = ComputeSingleTF_Histo("mET_Px", ComputedVarForTF.mET_Px, MeasuredVarForTF.mET_Px, MeasuredVarForTF.mHT);
+      weightTF_Recoil_Py = ComputeSingleTF_Histo("mET_Py", ComputedVarForTF.mET_Py, MeasuredVarForTF.mET_Py, MeasuredVarForTF.mHT);
+    }
+    else if (iTFOption==kTFRecoilmETphi){
+      double Computed_mET_Pt = sqrt(ComputedVarForTF.mET_Px*ComputedVarForTF.mET_Px+ComputedVarForTF.mET_Py*ComputedVarForTF.mET_Py);
+      double Measured_mET_Pt = sqrt(MeasuredVarForTF.mET_Px*MeasuredVarForTF.mET_Px+MeasuredVarForTF.mET_Py*MeasuredVarForTF.mET_Py); 
+      TVector3 met_tmp; met_tmp.SetXYZ(ComputedVarForTF.mET_Px, ComputedVarForTF.mET_Py, 0);
+      double Computed_mET_Phi = met_tmp.Phi();
+      met_tmp.SetXYZ(MeasuredVarForTF.mET_Px, MeasuredVarForTF.mET_Py, 0);
+      double Measured_mET_Phi = met_tmp.Phi();
+      weightTF_Recoil_Px = ComputeSingleTF_Histo("mET_Pt", Computed_mET_Pt, Measured_mET_Pt, MeasuredVarForTF.mHT);
+      weightTF_Recoil_Py = ComputeSingleTF_Histo("mET_Phi", Computed_mET_Phi, Measured_mET_Phi, MeasuredVarForTF.mHT);
     }
   }
 
@@ -4980,7 +4998,7 @@ double MEPhaseSpace::ComputeSingleTF_Histo(string Part, double Gen_E, double Rec
 
   float Jet_Pt = Reco_E / TMath::CosH(Reco_Eta);
   if ((Part=="Bjet" || Part=="Jet") && Jet_Pt<25) {
-    if (verbosity>=2) cout << "TF Histo JetPt="<<Jet_Pt<<"<20, set weightTF=1"<<endl;
+    if (verbosity>=2) cout << "TF Histo JetPt="<<Jet_Pt<<"<25, set weightTF=1"<<endl;
     return 1;
   }
 
@@ -5000,10 +5018,14 @@ double MEPhaseSpace::ComputeSingleTF_Histo(string Part, double Gen_E, double Rec
   //cout << "ComputeSingleTF_Histo iEta="<<iEta<<" iEnergy="<<iEnergy<<endl;
 
   int iMet = -1;
-  for (int iBin=0; iBin<3; iBin++){
+  //Reco_E=MET, Reco_Eta=MHT
+  for (int iBin=0; iBin<2; iBin++){ //MET
     if (fabs(Reco_E) > MetRange[iBin] && fabs(Reco_E)<MetRange[iBin+1]) iMet = iBin;
   }
-  if ((Part=="mET_Px" || Part=="mET_Py") && iMet==-1){
+  for (int iBin=0; iBin<3; iBin++){ //MHT
+    if (Reco_Eta > MetSumRange[iBin] && Reco_Eta<MetSumRange[iBin+1]) iMet = iMet*3 + iBin;
+  }
+  if ((Part=="mET_Px" || Part=="mET_Py") && (iMet<0 || iMet>5)){
     if (verbosity>=2) cout << "TF Histo mET component = "<<Reco_E<<" out of range, set weightTF=1"<<endl;
     return 1;
   }
@@ -5028,6 +5050,16 @@ double MEPhaseSpace::ComputeSingleTF_Histo(string Part, double Gen_E, double Rec
     iTFbin = TF_MetPy[iMet]->FindBin(Gen_E-Reco_E);
     if (iTFbin >= TF_MetPy[iMet]->GetNbinsX() || iTFbin==0) weightTF = 0;
     weightTF = TF_MetPy[iMet]->GetBinContent(iTFbin);
+  }
+  if (Part=="mET_Pt") {
+    iTFbin = TF_MetPt[iMet]->FindBin(Gen_E-Reco_E);
+    if (iTFbin >= TF_MetPt[iMet]->GetNbinsX() || iTFbin==0) weightTF = 0;
+    weightTF = TF_MetPt[iMet]->GetBinContent(iTFbin);
+  }
+  if (Part=="mET_Phi") {
+    iTFbin = TF_MetPhi[iMet]->FindBin(Gen_E-Reco_E);
+    if (iTFbin >= TF_MetPhi[iMet]->GetNbinsX() || iTFbin==0) weightTF = 0;
+    weightTF = TF_MetPhi[iMet]->GetBinContent(iTFbin);
   }
 
   if (verbosity>=2) cout << "TF Histo "<<Part<< " Gen="<<Gen_E<<" Reco="<<Reco_E<<" weightTF="<<weightTF<<endl;
@@ -5074,7 +5106,7 @@ void MEPhaseSpace::LoadTFfromHisto(string FileName) const {
     }
   }
 
-  for (int iMet=0; iMet<3; iMet++){
+  for (int iMet=0; iMet<6; iMet++){
     histoname = "TF_mET_Px_" + MetRangeLabel[iMet];
     Histo_tmp = (TH1F*) fTF->Get(histoname.c_str());
     TF_MetPx[iMet] = (TH1F*) Histo_tmp->Clone();
@@ -5082,6 +5114,14 @@ void MEPhaseSpace::LoadTFfromHisto(string FileName) const {
     histoname = "TF_mET_Py_" + MetRangeLabel[iMet];
     Histo_tmp = (TH1F*) fTF->Get(histoname.c_str());
     TF_MetPy[iMet] = (TH1F*) Histo_tmp->Clone();
+
+    histoname = "TF_mET_Pt_" + MetRangeLabel[iMet];
+    Histo_tmp = (TH1F*) fTF->Get(histoname.c_str());
+    TF_MetPt[iMet] = (TH1F*) Histo_tmp->Clone();
+
+    histoname = "TF_mET_Phi_" + MetRangeLabel[iMet];
+    Histo_tmp = (TH1F*) fTF->Get(histoname.c_str());
+    TF_MetPhi[iMet] = (TH1F*) Histo_tmp->Clone();
   }
 
 

@@ -32,6 +32,8 @@ class ConfigParser
   string valJetChoice;
   int valOptim, valOptimTopLep, valOptimTopHad, valOptimHiggs, valOptimW;
   string valMadgraphDir, valTFfile;
+  int valVerbosity;
+  int valTFOption;
 
   void ReadOptionValue(string*, int*);
   void ReadOptionValue(string*, double*);
@@ -48,6 +50,11 @@ void ConfigParser::GetConfigFromFile(string InputFile){
   fconf.open(InputFile.c_str());
   string line;
   string option;
+
+  getline(fconf, line);
+  getline(fconf, line);
+  getline(fconf, line);
+  ReadOptionValue(&option, &valVerbosity);
 
   getline(fconf, line); 
   getline(fconf, line);
@@ -66,18 +73,6 @@ void ConfigParser::GetConfigFromFile(string InputFile){
   ReadOptionValue(&option, &nPointsHypTTbarfl);
   ReadOptionValue(&option, &doTTbarsl);
   ReadOptionValue(&option, &nPointsHypTTbarsl);
-
-  getline(fconf, line);
-  getline(fconf, line);
-  getline(fconf, line);
-  ReadOptionValue(&option, &valJetTFfracmin);
-  ReadOptionValue(&option, &valJetTFfracmax);
-  ReadOptionValue(&option, &valNeutMaxE);
-
-  getline(fconf, line);
-  getline(fconf, line);
-  getline(fconf, line);
-  ReadOptionValue(&option, &valJetChoice);
   ReadOptionValue(&option, &valOptim);
   ReadOptionValue(&option, &valOptimTopHad);
   ReadOptionValue(&option, &valOptimTopLep);
@@ -87,8 +82,21 @@ void ConfigParser::GetConfigFromFile(string InputFile){
   getline(fconf, line);
   getline(fconf, line);
   getline(fconf, line);
+  ReadOptionValue(&option, &valJetTFfracmin);
+  ReadOptionValue(&option, &valJetTFfracmax);
+  ReadOptionValue(&option, &valNeutMaxE);
+  ReadOptionValue(&option, &valJetChoice);
+
+  getline(fconf, line);
+  getline(fconf, line);
+  getline(fconf, line);
   ReadOptionValue(&option, &valMadgraphDir);
+
+  getline(fconf, line);
+  getline(fconf, line);
+  getline(fconf, line);
   ReadOptionValue(&option, &valTFfile);
+  ReadOptionValue(&option, &valTFOption);
 
   fconf.close();
   return;
