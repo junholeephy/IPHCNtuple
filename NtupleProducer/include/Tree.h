@@ -42,6 +42,10 @@ class Tree {
         Float_t         met_pt;
         Float_t         met_phi;
         Float_t         met_sumet;
+        Float_t         met_cov00;
+        Float_t         met_cov01;
+        Float_t         met_cov10;
+        Float_t         met_cov11;
 
         Float_t         metNoHF_pt;
         Float_t         metNoHF_phi;
@@ -897,6 +901,10 @@ class Tree {
         TBranch        *b_met_pt;   //!
         TBranch        *b_met_phi;   //!
         TBranch        *b_met_sumet;   //!
+        TBranch        *b_met_cov00;   //!
+        TBranch        *b_met_cov01;   //!
+        TBranch        *b_met_cov10;   //!
+        TBranch        *b_met_cov11;   //!
 
         TBranch        *b_metNoHF_pt;   //!
         TBranch        *b_metNoHF_phi;   //!

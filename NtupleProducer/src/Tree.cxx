@@ -835,6 +835,10 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("met_pt", &met_pt, &b_met_pt);
     fChain->SetBranchAddress("met_phi", &met_phi, &b_met_phi);
     fChain->SetBranchAddress("met_sumet", &met_sumet, &b_met_sumet);
+    fChain->SetBranchAddress("met_cov00", &met_cov00, &b_met_cov00);
+    fChain->SetBranchAddress("met_cov01", &met_cov01, &b_met_cov01);
+    fChain->SetBranchAddress("met_cov10", &met_cov10, &b_met_cov10);
+    fChain->SetBranchAddress("met_cov11", &met_cov11, &b_met_cov11);
 
     fChain->SetBranchAddress("metNoHF_pt",    &metNoHF_pt,    &b_metNoHF_pt);
     fChain->SetBranchAddress("metNoHF_phi",   &metNoHF_phi,   &b_metNoHF_phi);

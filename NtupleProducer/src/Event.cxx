@@ -28,6 +28,10 @@ void Event::read(bool isdata)
     _metpt            = ntP->met_pt;
     _metphi           = ntP->met_phi;
     _metsumet         = ntP->met_sumet;
+    _metcov00	      = ntP->met_cov00;
+    _metcov01         = ntP->met_cov01;
+    _metcov10         = ntP->met_cov10;
+    _metcov11         = ntP->met_cov11;
 
     _metNoHF_pt        = ntP->metNoHF_pt;
     _metNoHF_phi       = ntP->metNoHF_phi;
@@ -196,6 +200,10 @@ void Event::init()
     _metpt                 = -888;
     _metphi                = -888;
     _metsumet              = -888;
+    _metcov00              = -888;
+    _metcov01              = -888;
+    _metcov10              = -888;
+    _metcov11              = -888;
 
     _metNoHF_pt            = -888;
     _metNoHF_phi           = -888;
