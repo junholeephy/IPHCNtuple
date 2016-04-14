@@ -42,10 +42,10 @@ class Tree {
         Float_t         met_pt;
         Float_t         met_phi;
         Float_t         met_sumet;
-        Float_t         met_cov00;
-        Float_t         met_cov01;
-        Float_t         met_cov10;
-        Float_t         met_cov11;
+        Double_t         met_cov00;
+        Double_t         met_cov01;
+        Double_t         met_cov10;
+        Double_t         met_cov11;
 
         Float_t         metNoHF_pt;
         Float_t         metNoHF_phi;
