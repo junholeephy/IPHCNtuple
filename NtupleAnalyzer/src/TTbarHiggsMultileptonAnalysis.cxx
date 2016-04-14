@@ -3069,6 +3069,10 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("multilepton_JetLowestMjj2_2ndPair_P4","TLorentzVector",&multilepton_JetLowestMjj2_2ndPair_P4);
 
     tOutput->Branch("multilepton_mET","TLorentzVector",&multilepton_mET);
+    tOutput->Branch("multilepton_mETcov00",&multilepton_mETcov00,"multilepton_mETcov00/D");
+    tOutput->Branch("multilepton_mETcov01",&multilepton_mETcov01,"multilepton_mETcov01/D");
+    tOutput->Branch("multilepton_mETcov10",&multilepton_mETcov10,"multilepton_mETcov10/D");
+    tOutput->Branch("multilepton_mETcov11",&multilepton_mETcov11,"multilepton_mETcov11/D");
     tOutput->Branch("multilepton_mHT",&multilepton_mHT,"multilepton_mHT/F");
     tOutput->Branch("multilepton_Ptot","TLorentzVector",&multilepton_Ptot);
 
@@ -3297,7 +3301,10 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     }
 
     multilepton_mET.SetPtEtaPhiE(vEvent->at(0).metpt(), 0, vEvent->at(0).metphi(), vEvent->at(0).metpt());
-
+    multilepton_mETcov00 = vEvent->at(0).metcov00();
+    multilepton_mETcov01 = vEvent->at(0).metcov01();
+    multilepton_mETcov10 = vEvent->at(0).metcov10();
+    multilepton_mETcov11 = vEvent->at(0).metcov11();
     multilepton_mHT = vEvent->at(0).metsumet();
 
     mc_ttZhypAllowed = 0;

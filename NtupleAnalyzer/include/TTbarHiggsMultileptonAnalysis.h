@@ -122,6 +122,10 @@ class TTbarHiggsMultileptonAnalysis
         TLorentzVector  multilepton_JetHighestPt1_2ndPair_P4, multilepton_JetHighestPt2_2ndPair_P4, multilepton_JetClosestMw1_2ndPair_P4, multilepton_JetClosestMw2_2ndPair_P4, multilepton_JetLowestMjj1_2ndPair_P4, multilepton_JetLowestMjj2_2ndPair_P4;
         TLorentzVector multilepton_mET, multilepton_Ptot;
 	Float_t multilepton_mHT;
+	Double_t multilepton_mETcov00;
+        Double_t multilepton_mETcov01;
+        Double_t multilepton_mETcov10;
+        Double_t multilepton_mETcov11;
 
     private:
 
