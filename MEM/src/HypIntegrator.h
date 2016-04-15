@@ -11,6 +11,8 @@
 #include "Math/IntegratorOptions.h"
 #include "Math/AllIntegrationTypes.h"
 #include "Math/AdaptiveIntegratorMultiDim.h"
+#include "Minuit2/Minuit2Minimizer.h"
+#include "TRandom2.h"
 
 #include "MEPhaseSpace.h"
 #include "ConfigParser.h"
@@ -35,27 +37,12 @@ class HypIntegrator
 
   MEPhaseSpace* meIntegrator;
 
-/*
-  ROOT::Math::Functor* toIntegrateTTHhyp;
-  ROOT::Math::Functor* toIntegrateTTLLhyp;
-  ROOT::Math::Functor* toIntegrateTTWhyp;
-  ROOT::Math::Functor* toIntegrateTTWJJhyp;
-  ROOT::Math::Functor* toIntegrateTTbarflhyp;
-  ROOT::Math::Functor* toIntegrateTTbarslhyp;
-  ROOT::Math::Functor* toIntegrateTTHhyp_miss1j;
-  ROOT::Math::Functor* toIntegrateTTLLhyp_miss1j;
-  ROOT::Math::Functor* toIntegrateTTbarslhyp_miss1j;
-  ROOT::Math::Functor* toIntegrateTTWhyp_miss1j;
-  ROOT::Math::Functor* toIntegrateTTbarflhyp_miss1j;
-  ROOT::Math::Functor* toIntegrateTTHhyp_miss2j;
-  ROOT::Math::Functor* toIntegrateTTLLhyp_miss2j;
-  ROOT::Math::Functor* toIntegrateTTbarslhyp_miss2j;
-*/
   ROOT::Math::Functor** toIntegrate;
-
 
   ROOT::Math::GSLMCIntegrator* ig2;
   ROOT::Math::VegasParameters* param;
+
+  ROOT::Minuit2::Minuit2Minimizer* minimizer;
 
   int intPoints;
 
@@ -66,6 +53,10 @@ class HypIntegrator
   IntegrationResult DoIntegration(double* , double*);
   void FillErrHist(TH1F**);
 
+  void SetupMinimizerHypothesis(int , int , int , int );
+  double* FindMinimizationiInitialValues(double*, double*);
+  IntegrationResult DoMinimization(double*, double*,double*);
+
   private:  
 };
 
@@ -74,25 +65,6 @@ HypIntegrator::HypIntegrator(){
 
   meIntegrator = new MEPhaseSpace();
 
-/*
-  toIntegrateTTHhyp = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, 10);
-  toIntegrateTTLLhyp = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, 5);
-  toIntegrateTTWhyp = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, 9);
-  toIntegrateTTWJJhyp = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, 11);
-  toIntegrateTTbarslhyp = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, 5); 
-  toIntegrateTTbarflhyp = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, 6);
-
-  toIntegrateTTHhyp_miss1j = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, 12);
-  toIntegrateTTWhyp_miss1j = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, 11);
-  toIntegrateTTLLhyp_miss1j = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, 7);
-  toIntegrateTTbarslhyp_miss1j = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, 7);
-  toIntegrateTTbarflhyp_miss1j = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, 8);
-
-  toIntegrateTTHhyp_miss2j = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, 14);
-  toIntegrateTTLLhyp_miss2j = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, 9);
-  toIntegrateTTbarslhyp_miss2j = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, 9);
-*/
-
   toIntegrate = new ROOT::Math::Functor*[15];
   for (int i=0; i<15; i++){
     toIntegrate[i] = new ROOT::Math::Functor(meIntegrator, &MEPhaseSpace::Eval, i);
@@ -100,8 +72,9 @@ HypIntegrator::HypIntegrator(){
 
   intPoints = 10000; 
   ig2 = new ROOT::Math::GSLMCIntegrator( ROOT::Math::IntegrationMultiDim::kVEGAS, 1.e-12, 1.e-5, intPoints);
- 
   param = new ROOT::Math::VegasParameters( *(ig2->ExtraOptions()) );
+
+  minimizer = new ROOT::Minuit2::Minuit2Minimizer( ROOT::Minuit2::kMigrad );
 
 }
 
@@ -147,25 +120,6 @@ void HypIntegrator::SetupIntegrationHypothesis(int kMode, int kCat, int stageVal
 
   ROOT::Math::Functor* FunctorHyp = NULL;
   FunctorHyp = toIntegrate[nparam];
-/*
-  //2b_2j
-  if (kCat==kCat_3l_2b_2j && kMode==kMEM_TTLL_TopAntitopDecay) FunctorHyp = toIntegrateTTLLhyp;
-  if (kCat==kCat_3l_2b_2j && (kMode==kMEM_TTH_TopAntitopHiggsDecay || kMode==kMEM_TTH_TopAntitopHiggsSemiLepDecay)) FunctorHyp = toIntegrateTTHhyp;
-  if (kMode==kMEM_TTW_TopAntitopDecay) FunctorHyp = toIntegrateTTWhyp;
-  if (kCat==kCat_3l_2b_2j && kMode==kMEM_TTWJJ_TopAntitopDecay) FunctorHyp = toIntegrateTTWJJhyp;
-  if (kMode==kMEM_TTbar_TopAntitopFullyLepDecay) FunctorHyp = toIntegrateTTbarflhyp;
-  if (kCat==kCat_3l_2b_2j && kMode==kMEM_TTbar_TopAntitopSemiLepDecay) FunctorHyp = toIntegrateTTbarslhyp;
-  //miss1j
-  if ((kCat==kCat_3l_1b_2j || kCat==kCat_3l_2b_1j) && kMode==kMEM_TTLL_TopAntitopDecay) FunctorHyp = toIntegrateTTLLhyp_miss1j;
-  if ((kCat==kCat_3l_1b_2j || kCat==kCat_3l_2b_1j) && (kMode==kMEM_TTH_TopAntitopHiggsDecay || kMode==kMEM_TTH_TopAntitopHiggsSemiLepDecay)) FunctorHyp = toIntegrateTTHhyp_miss1j;
-  if ((kCat==kCat_3l_1b_2j || kCat==kCat_3l_2b_1j) && kMode==kMEM_TTbar_TopAntitopSemiLepDecay) FunctorHyp = toIntegrateTTbarslhyp_miss1j;
-  if ((kCat==kCat_3l_1b_2j || kCat==kCat_3l_1b_1j) && kMode==kMEM_TTW_TopAntitopDecay) FunctorHyp = toIntegrateTTWhyp_miss1j;
-  if ((kCat==kCat_3l_1b_2j || kCat==kCat_3l_1b_1j) && kMode==kMEM_TTbar_TopAntitopFullyLepDecay) FunctorHyp = toIntegrateTTbarflhyp_miss1j;
-  //miss2j
-  if ((kCat==kCat_3l_1b_1j || kCat==kCat_3l_2b_0j) && kMode==kMEM_TTLL_TopAntitopDecay) FunctorHyp = toIntegrateTTLLhyp_miss2j;
-  if ((kCat==kCat_3l_1b_1j || kCat==kCat_3l_2b_0j) && (kMode==kMEM_TTH_TopAntitopHiggsDecay || kMode==kMEM_TTH_TopAntitopHiggsSemiLepDecay)) FunctorHyp = toIntegrateTTHhyp_miss2j;
-  if ((kCat==kCat_3l_1b_1j || kCat==kCat_3l_2b_0j) && kMode==kMEM_TTbar_TopAntitopSemiLepDecay) FunctorHyp = toIntegrateTTbarslhyp_miss2j;
-*/
 
   ig2->SetFunction(*FunctorHyp);
 
@@ -200,6 +154,23 @@ void HypIntegrator::SetupIntegrationHypothesis(int kMode, int kCat, int stageVal
   return;
 }
 
+void HypIntegrator::SetupMinimizerHypothesis(int kMode, int kCat, int stageValue, int nPoints){
+
+  meIntegrator->SetIntegrationMode(kMode);
+
+  int nparam = meIntegrator->GetNumberIntegrationVar(kMode, kCat);
+
+  ROOT::Math::Functor* FunctorHyp = NULL;
+  FunctorHyp = toIntegrate[nparam];
+
+  minimizer->SetFunction(*FunctorHyp);
+
+  minimizer->SetMaxFunctionCalls(100000);
+  minimizer->SetPrintLevel(1);
+
+  return;
+}
+
 void HypIntegrator::ResetCounters(){
 
   meIntegrator->iIteration = 0;
@@ -225,6 +196,67 @@ IntegrationResult HypIntegrator::DoIntegration(double* xL, double* xU)
   return res;
 }
 
+double* HypIntegrator::FindMinimizationiInitialValues(double* xL, double* xU)
+{
+
+  ResetCounters();
+
+  TRandom2 rnd;
+
+  double* varbest = new double[minimizer->NDim()];
+  double* var = new double[minimizer->NDim()];
+
+  double val = 1000;
+  double valmin = 1000;
+  int ival=0;
+  for (int i=0; i<10000; i++){
+    for (unsigned int ivar=0; ivar<minimizer->NDim(); ivar++){
+      var[ivar] = xL[ivar] + rnd.Uniform()*(xU[ivar]-xL[ivar]);
+    }
+    val = meIntegrator->Eval(var);
+    //cout << "val=" << val<< endl;
+    if (val<valmin) { valmin = val; ival=i; for (unsigned int ivarb=0; ivarb<minimizer->NDim(); ivarb++) varbest[ivarb] = var[ivarb];}; 
+  }
+
+    if (valmin!=1000) {
+      cout << "Found initial point for minimization, at iteration "<< ival<<"; -log(Integrand)="<<valmin<<endl;
+    }
+    if (valmin==1000){
+      for (unsigned int ivar=0; ivar<minimizer->NDim(); ivar++){
+        varbest[ivar] = 0.5*(xL[ivar]+xU[ivar]);
+      }
+    }
+
+  return varbest;
+}
+
+IntegrationResult HypIntegrator::DoMinimization(double* xL, double* xU, double* xInit)
+{
+
+  ResetCounters();
+
+  IntegrationResult res;
+
+  string si;
+  stringstream* ss = new stringstream[minimizer->NDim()];
+  for (unsigned int i=0; i<minimizer->NDim(); i++){ 
+    ss[i] << i;
+    ss[i] >> si;
+    minimizer->SetLimitedVariable(i, si, xInit[i], 0.01, xL[i], xU[i]); 
+  }
+
+  double click1 = std::clock();
+
+  minimizer->Minimize();
+
+  res.time = ( std::clock() - click1 ) / (double) CLOCKS_PER_SEC;
+
+  const double *xs = minimizer->X();
+  res.weight = meIntegrator->Eval(xs);
+
+  return res;  
+}
+
 void HypIntegrator::FillErrHist(TH1F** h){
  
   //cout << "FillErrHist nIteration="<<meIntegrator->iIteration<<endl;
@@ -237,26 +269,4 @@ void HypIntegrator::FillErrHist(TH1F** h){
 
   return;
 }
-/*
-int HypIntegrator::GetNumberIntegrationVar(int kMode, int kCatJet){
-
-  int nparam=5;
-  if (kMode==kMEM_TTLL_TopAntitopDecay) nparam = 5;
-  if (kMode==kMEM_TTH_TopAntitopHiggsDecay || kMode==kMEM_TTH_TopAntitopHiggsSemiLepDecay) nparam = 10;
-  if (kMode==kMEM_TTW_TopAntitopDecay) nparam = 9;
-  if (kMode==kMEM_TTWJJ_TopAntitopDecay) nparam = 11;
-  if (kMode==kMEM_TTbar_TopAntitopSemiLepDecay) nparam = 5;
-  if (kMode==kMEM_TTbar_TopAntitopFullyLepDecay) nparam = 6;
-
-  if (kMode!=kMEM_TTW_TopAntitopDecay && kMode!=kMEM_TTbar_TopAntitopFullyLepDecay){
-    if (kCatJets==kCat_3l_2b_1j || kCatJets==kCat_3l_1b_2j) nparam += 2;
-    else if (kCatJets==kCat_3l_2b_0j || kCatJets==kCat_3l_1b_1j) nparam += 4;
-  }
-  if (kMode==kMEM_TTW_TopAntitopDecay || kMode==kMEM_TTbar_TopAntitopFullyLepDecay){
-    if (kCatJets==kCat_3l_1b_1j || kCatJets==kCat_3l_1b_2j) nparam += 2;
-  }
-
-  return nparam;
-}
-*/
 #endif

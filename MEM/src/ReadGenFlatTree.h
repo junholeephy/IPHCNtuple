@@ -234,6 +234,7 @@ class ReadGenFlatTree {
   Int_t multilepton_JetHighestPt1_2ndPair_Id, multilepton_JetHighestPt2_2ndPair_Id, multilepton_JetClosestMw1_2ndPair_Id, multilepton_JetClosestMw2_2ndPair_Id, multilepton_JetLowestMjj1_2ndPair_Id, multilepton_JetLowestMjj2_2ndPair_Id;
   TLorentzVector  multilepton_JetHighestPt1_2ndPair_P4, multilepton_JetHighestPt2_2ndPair_P4, multilepton_JetClosestMw1_2ndPair_P4, multilepton_JetClosestMw2_2ndPair_P4, multilepton_JetLowestMjj1_2ndPair_P4, multilepton_JetLowestMjj2_2ndPair_P4;
   TLorentzVector multilepton_mET;
+  Double_t multilepton_mETcov00, multilepton_mETcov01, multilepton_mETcov10, multilepton_mETcov11;
   Float_t multilepton_mHT;
   TLorentzVector multilepton_Ptot;
 
@@ -425,6 +426,10 @@ class ReadGenFlatTree {
   TBranch* b_multilepton_JetLowestMjj1_2ndPair_P4;
   TBranch* b_multilepton_JetLowestMjj2_2ndPair_P4;
   TBranch* b_multilepton_mET;
+  TBranch* b_multilepton_mETcov00;
+  TBranch* b_multilepton_mETcov01;
+  TBranch* b_multilepton_mETcov10;
+  TBranch* b_multilepton_mETcov11;
   TBranch* b_multilepton_mHT;
   TBranch* b_multilepton_Ptot;
 
@@ -720,6 +725,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
 
   tInput->SetBranchAddress("multilepton_mET",&multilepton_mET_ptr,&b_multilepton_mET);
   tInput->SetBranchAddress("multilepton_mHT",&multilepton_mHT,&b_multilepton_mHT);
+  tInput->SetBranchAddress("multilepton_mETcov00",&multilepton_mETcov00,&b_multilepton_mETcov00);
+  tInput->SetBranchAddress("multilepton_mETcov01",&multilepton_mETcov01,&b_multilepton_mETcov01);
+  tInput->SetBranchAddress("multilepton_mETcov10",&multilepton_mETcov10,&b_multilepton_mETcov10);
+  tInput->SetBranchAddress("multilepton_mETcov11",&multilepton_mETcov11,&b_multilepton_mETcov11);
   tInput->SetBranchAddress("multilepton_Ptot",&multilepton_Ptot_ptr,&b_multilepton_Ptot);
 
   cout << "Creating output tree"<<endl;
@@ -1308,6 +1317,10 @@ void ReadGenFlatTree::ReadMultilepton(Long64_t iEvent, MultiLepton* multiLepton)
 
   (*multiLepton).Ptot = *multilepton_Ptot_ptr;
   (*multiLepton).mET = *multilepton_mET_ptr;
+  (*multiLepton).mET_cov00 = multilepton_mETcov00;
+  (*multiLepton).mET_cov01 = multilepton_mETcov01;
+  (*multiLepton).mET_cov10 = multilepton_mETcov10;
+  (*multiLepton).mET_cov11 = multilepton_mETcov11;
   (*multiLepton).mHT = multilepton_mHT;
 
   //cout << "Lepton0Pt="<<(*multiLepton).Leptons.at(0).P4.Pt()<<" Lepton1Pt="<<(*multiLepton).Leptons.at(1).P4.Pt() << " Lepton2Pt="<<(*multiLepton).Leptons.at(2).P4.Pt()<<endl;  

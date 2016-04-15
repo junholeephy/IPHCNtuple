@@ -6,6 +6,8 @@
 
 #include "TLorentzVector.h"
 #include "TMath.h"
+#include "TMatrixDSym.h"
+#include "TMatrix.h"
 
 #include "LHAPDF/LHAPDF.h"
 //#include "/grid_mnt/home/nchanon/LHAPDF-6.1.5-install/include/LHAPDF/LHAPDF.h"
@@ -101,6 +103,7 @@
 #define kTFRecoilPtot 0
 #define kTFRecoilmET 1
 #define kTFRecoilmETphi 2
+#define kTFRecoilmETcov 3
 
 //#define kErr_PS_Top 0
 //#define kErr_PS_Boson 1
@@ -205,6 +208,9 @@ class MEPhaseSpace
     int iTF;
     int iTFOption;
     int iOptim, iOptimTopLep, iOptimTopHad, iOptimHiggs, iOptimW;
+    int iMinimize;
+
+    double MEMZEROWEIGHT = 0;
 
     mutable int isTopAntitop;
 
@@ -262,6 +268,7 @@ class MEPhaseSpace
     void SetTFOption(int);
     void SetOptimization(int);
     void SetOptimization(int,int,int,int);
+    void SetMinimization(int);
 
     int GetNumberIntegrationVar(int, int);
 
@@ -320,7 +327,8 @@ class MEPhaseSpace
 
     //double ComputeTFProduct(double, double, double, double, double, double) const;
     double ComputeTFProduct() const;
-    double ComputeSingleTF_Gaus(double, double, double) const; 
+    double ComputeSingleTF_Gaus(double, double, double) const;
+    double ComputeDoubleTF_MetCov(double, double, double, double, double, double, double, double) const; 
     double ComputeSingleTF_Histo(string, double, double, double) const;
     void LoadTFfromHisto(string) const;
     void UpdateComputedVarForTF() const;
@@ -357,6 +365,10 @@ class MEPhaseSpace
       double Recoil_Py;
       double mET_Px;
       double mET_Py;
+      double mET_cov00;
+      double mET_cov01;
+      double mET_cov10;
+      double mET_cov11;
       double mHT;
       bool doBjet1TF;
       bool doBjet2TF;
@@ -788,6 +800,15 @@ void MEPhaseSpace::SetOptimization(int iOptionTopLep, int iOptionTopHad, int iOp
   iOptimW = iOptionW;
 
   return;
+}
+
+void MEPhaseSpace::SetMinimization(int iMin){
+
+  iMinimize = iMin;
+ 
+  if (iMin==1) MEMZEROWEIGHT = 1000;
+  if (iMin==0) MEMZEROWEIGHT = 0;
+  
 }
 
 void MEPhaseSpace::SetIntegrationMode(int imode){
@@ -1605,22 +1626,22 @@ double MEPhaseSpace::Eval(const double* x) const {
     if (verbosity>=2) cout << "weightPS="<<weightPS<<endl;
     if (weightPS==0) {
       errorCounter[kErr_PS_Product]++;
-      return 0;
+      return MEMZEROWEIGHT;
     }
 
     double weightTF = ComputeTFProduct();
-    if (weightTF==0) { errorCounter[kErr_TF_Product]++; return 0; }
+    if (weightTF==0) { errorCounter[kErr_TF_Product]++; return MEMZEROWEIGHT; }
 
     ApplyTotalTransverseBoost();
     double weightME = ComputeMatrixElement() * GeV2barn;
-    if (weightME==0) { errorCounter[kErr_ME]++; return 0; }
+    if (weightME==0) { errorCounter[kErr_ME]++; return MEMZEROWEIGHT; }
 
     muF = (2*mTop+mHiggs)/2.;
     double weightPDF = ComputePDF(pCore->at(0)[0]*2/comEnergy, pCore->at(1)[0]*2/comEnergy, muF);
-    if (weightPDF==0) { errorCounter[kErr_PDF]++; return 0; }
+    if (weightPDF==0) { errorCounter[kErr_PDF]++; return MEMZEROWEIGHT; }
 
     weight = weightME * weightPDF * weightPS * weightTF;
-    if (weight==0) { errorCounter[kErr_Weight_Product]++; return 0;}
+    if (weight==0) { errorCounter[kErr_Weight_Product]++; return MEMZEROWEIGHT;}
 
   }
   if (iMode==kMEM_TTW_TopAntitopDecay){
@@ -1640,18 +1661,18 @@ double MEPhaseSpace::Eval(const double* x) const {
 
     double weightPS = SetupKinematicsTTW_NoBjorken_TopAntitopDecay(xMEM);
     if (verbosity>=2) cout << "weightPS="<<weightPS<<endl;
-    if (weightPS==0) { errorCounter[kErr_PS_Product]++; return 0; }
+    if (weightPS==0) { errorCounter[kErr_PS_Product]++; return MEMZEROWEIGHT; }
 
     double weightTF = ComputeTFProduct();
-    if (weightTF==0) { errorCounter[kErr_TF_Product]++; return 0; }
+    if (weightTF==0) { errorCounter[kErr_TF_Product]++; return MEMZEROWEIGHT; }
 
     ApplyTotalTransverseBoost();
     muF = (2*mTop+mW)/2.;
     double weightMEPDF = ConvolvePdfCrossSection(pCore->at(0)[0]*2/comEnergy, pCore->at(1)[0]*2/comEnergy, muF) * GeV2barn;
-    if (weightMEPDF==0) { errorCounter[kErr_ME]++; errorCounter[kErr_PDF]++; return 0; }
+    if (weightMEPDF==0) { errorCounter[kErr_ME]++; errorCounter[kErr_PDF]++; return MEMZEROWEIGHT; }
 
     weight = weightMEPDF * weightPS * weightTF;
-    if (weight==0) { errorCounter[kErr_Weight_Product]++; return 0;}
+    if (weight==0) { errorCounter[kErr_Weight_Product]++; return MEMZEROWEIGHT;}
 
   }
   if (iMode==kMEM_TTWJJ_TopAntitopDecay){
@@ -1674,7 +1695,7 @@ double MEPhaseSpace::Eval(const double* x) const {
 
     double weightPS = SetupKinematicsTTWJJ_NoBjorken_TopAntitopDecay(xMEM);
     if (verbosity>=2) cout << "weightPS="<<weightPS<<endl;
-    if (weightPS==0) { errorCounter[kErr_PS_Product]++; return 0; }
+    if (weightPS==0) { errorCounter[kErr_PS_Product]++; return MEMZEROWEIGHT; }
 
     if (verbosity>=2) {
         cout << "Bjet1_E computed "<<ComputedVarForTF.Bjet1_E<<" input "<<x[0]<<endl;
@@ -1684,15 +1705,15 @@ double MEPhaseSpace::Eval(const double* x) const {
     }
 
     double weightTF = ComputeTFProduct();
-    if (weightTF==0) { errorCounter[kErr_TF_Product]++; return 0; }
+    if (weightTF==0) { errorCounter[kErr_TF_Product]++; return MEMZEROWEIGHT; }
 
     ApplyTotalTransverseBoost();
     muF = (2*mTop+mW)/2.;
     double weightMEPDF = ConvolvePdfCrossSection(pCore->at(0)[0]*2/comEnergy, pCore->at(1)[0]*2/comEnergy, muF) * GeV2barn;
-    if (weightMEPDF==0) { errorCounter[kErr_ME]++; errorCounter[kErr_PDF]++; return 0; }
+    if (weightMEPDF==0) { errorCounter[kErr_ME]++; errorCounter[kErr_PDF]++; return MEMZEROWEIGHT; }
 
     weight = weightMEPDF * weightPS * weightTF;
-    if (weight==0) { errorCounter[kErr_Weight_Product]++; return 0;}
+    if (weight==0) { errorCounter[kErr_Weight_Product]++; return MEMZEROWEIGHT;}
 
   }
   if (iMode==kMEM_TTLL_TopAntitopDecay){
@@ -1713,14 +1734,14 @@ double MEPhaseSpace::Eval(const double* x) const {
 
     double weightPS = SetupKinematicsTTLL_NoBjorken_TopAntitopDecay(xMEM);
     if (verbosity>=2) cout << "weightPS="<<weightPS<<endl;
-    if (weightPS==0) { errorCounter[kErr_PS_Product]++; return 0; }
+    if (weightPS==0) { errorCounter[kErr_PS_Product]++; return MEMZEROWEIGHT; }
 
     double weightTF = ComputeTFProduct();
-    if (weightTF==0) { errorCounter[kErr_TF_Product]++; return 0; }
+    if (weightTF==0) { errorCounter[kErr_TF_Product]++; return MEMZEROWEIGHT; }
 
     ApplyTotalTransverseBoost();
     double weightME = ComputeMatrixElement() * GeV2barn;
-    if (weightME==0) { errorCounter[kErr_ME]++; return 0; }
+    if (weightME==0) { errorCounter[kErr_ME]++; return MEMZEROWEIGHT; }
 
     TLorentzVector Pl1, Pl2;
     SetMomentumFromEThetaPhi(0, MEMFix_HiggsFullLep.Lep1_E, MEMFix_HiggsFullLep.Lep1_Theta, MEMFix_HiggsFullLep.Lep1_Phi, &Pl1);
@@ -1728,10 +1749,10 @@ double MEPhaseSpace::Eval(const double* x) const {
     double mll = (Pl1+Pl2).M();
     muF = (2*mTop+mll)/2.;
     double weightPDF = ComputePDF(pCore->at(0)[0]*2/comEnergy, pCore->at(1)[0]*2/comEnergy, muF);
-    if (weightPDF==0) { errorCounter[kErr_PDF]++; return 0; }
+    if (weightPDF==0) { errorCounter[kErr_PDF]++; return MEMZEROWEIGHT; }
 
     weight = weightME * weightPDF * weightPS * weightTF;
-    if (weight==0) { errorCounter[kErr_Weight_Product]++; return 0;}
+    if (weight==0) { errorCounter[kErr_Weight_Product]++; return MEMZEROWEIGHT;}
 
   }
   if (iMode==kMEM_TTbar_TopAntitopSemiLepDecay || iMode==kMEM_TTbar_TopAntitopFullyLepDecay){
@@ -1750,21 +1771,21 @@ double MEPhaseSpace::Eval(const double* x) const {
 
     double weightPS = SetupKinematicsTTbar_NoBjorken_TopAntitopDecay(xMEM);
     if (verbosity>=2) cout << "weightPS="<<weightPS<<endl;
-    if (weightPS==0) { errorCounter[kErr_PS_Product]++; return 0; }
+    if (weightPS==0) { errorCounter[kErr_PS_Product]++; return MEMZEROWEIGHT; }
 
     double weightTF = ComputeTFProduct(); 
-    if (weightTF==0) { errorCounter[kErr_TF_Product]++; return 0; }
+    if (weightTF==0) { errorCounter[kErr_TF_Product]++; return MEMZEROWEIGHT; }
 
     ApplyTotalTransverseBoost();
     double weightME = ComputeMatrixElement() * GeV2barn;
-    if (weightME==0) { errorCounter[kErr_ME]++; return 0; }
+    if (weightME==0) { errorCounter[kErr_ME]++; return MEMZEROWEIGHT; }
 
     muF = (2*mTop)/2.;
     double weightPDF = ComputePDF(pCore->at(0)[0]*2/comEnergy, pCore->at(1)[0]*2/comEnergy, muF);
-    if (weightPDF==0) { errorCounter[kErr_PDF]++; return 0; }
+    if (weightPDF==0) { errorCounter[kErr_PDF]++; return MEMZEROWEIGHT; }
 
     weight = weightME * weightPDF * weightPS * weightTF;
-    if (weight==0) { errorCounter[kErr_Weight_Product]++; return 0;}
+    if (weight==0) { errorCounter[kErr_Weight_Product]++; return MEMZEROWEIGHT;}
 
   }
   if (iMode==kAllPartonsTTH_TopDecay || iMode==kAllPartonsTTH_TopLepDecayMwInt || iMode==kAllPartonsTTH_TopHadDecayMwInt){
@@ -1926,6 +1947,12 @@ double MEPhaseSpace::Eval(const double* x) const {
   }
 
 
+  if (iMinimize==1){
+    if (weight>0) weight = -log(weight);
+    else weight = 1000;
+    //if (verbosity>=1) cout << "Evaluation call "<<iCall<<" weight="<< weight<<endl;
+  }
+  
   if (verbosity>=2) cout << "Evaluation call "<<iCall<<" weight="<< weight<<endl;
   iCall++;
 
@@ -4975,6 +5002,11 @@ double MEPhaseSpace::ComputeTFProduct() const {
       weightTF_Recoil_Px = ComputeSingleTF_Histo("mET_Pt", Computed_mET_Pt, Measured_mET_Pt, MeasuredVarForTF.mHT);
       weightTF_Recoil_Py = ComputeSingleTF_Histo("mET_Phi", Computed_mET_Phi, Measured_mET_Phi, MeasuredVarForTF.mHT);
     }
+    else if (iTFOption==kTFRecoilmETcov){
+      weightTF_Recoil_Px = ComputeDoubleTF_MetCov(ComputedVarForTF.mET_Px, MeasuredVarForTF.mET_Px, ComputedVarForTF.mET_Py, MeasuredVarForTF.mET_Py, MeasuredVarForTF.mET_cov00, MeasuredVarForTF.mET_cov01, MeasuredVarForTF.mET_cov10, MeasuredVarForTF.mET_cov11);
+      weightTF_Recoil_Py = 1;
+
+    }
   }
 
   double weightTF = weightTF_Bjet1*weightTF_Bjet2*weightTF_Jet1*weightTF_Jet2*weightTF_Jet3*weightTF_Jet4*weightTF_Recoil_Px*weightTF_Recoil_Py;
@@ -4988,6 +5020,39 @@ double MEPhaseSpace::ComputeSingleTF_Gaus(double Gen_E, double Reco_E, double Re
 
   double weightTF = TMath::Gaus(Gen_E-Reco_E, 0, TMath::Abs(Res*Gen_E), kTRUE);
   if (verbosity>=2) cout << "TF Gaus Gen="<<Gen_E<<" Reco="<<Reco_E<<" weightTF="<<weightTF<<endl;
+
+  return weightTF;
+}
+
+double MEPhaseSpace::ComputeDoubleTF_MetCov(double Gen_MetPx, double Reco_MetPx, double Gen_MetPy, double Reco_MetPy, double Reco_MetCov00, double Reco_MetCov01, double Reco_MetCov10, double Reco_MetCov11) const{
+
+  double weightTF = 1;
+
+  double sigmaPx = sqrt(Reco_MetCov00);
+  double sigmaPy = sqrt(Reco_MetCov11);
+  double rho = Reco_MetCov01 / sigmaPx / sigmaPy;
+
+  double norm = 1./(2*TMath::Pi()*sqrt(1-rho*rho)*sigmaPx*sigmaPy);
+  
+  TMatrix CovMatrix(2,2); 
+  CovMatrix[0][0] = Reco_MetCov00;
+  CovMatrix[0][1] = Reco_MetCov01;
+  CovMatrix[1][0] = Reco_MetCov10;
+  CovMatrix[1][1] = Reco_MetCov11;
+  CovMatrix.Invert();
+
+  TMatrix mETcol(2,1);
+  mETcol[0][0] = Reco_MetPx-Gen_MetPx;
+  mETcol[1][0] = Reco_MetPy-Gen_MetPy;
+
+  TMatrix mETrow(1,2);
+  mETrow[0][0] = Reco_MetPx-Gen_MetPx;
+  mETrow[0][1] = Reco_MetPy-Gen_MetPy;
+
+  TMatrix ResultMatrix = CovMatrix * mETcol;
+  double arg = mETrow[0][0] * ResultMatrix[0][0] + mETrow[0][1] * ResultMatrix[1][0];
+
+  weightTF = norm * TMath::Exp(-0.5 * arg);
 
   return weightTF;
 }

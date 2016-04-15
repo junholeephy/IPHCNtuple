@@ -106,6 +106,7 @@ int main(int argc, char *argv[])
     //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, doOptim);
     hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, &cfgParser);
 
+    int doMinimization = cfgParser.valDoMinimization;
 
     //hypIntegrator.meIntegrator->SetVerbosity(2);
     //hypIntegrator.meIntegrator->SetVerbosity(1);
@@ -304,6 +305,8 @@ int main(int argc, char *argv[])
    for (int ih=0; ih<nhyp; ih++){
      hypIntegrator.SetupIntegrationHypothesis(hyp[ih], multiLepton.kCatJets, 0, nPointsHyp[ih]);
 
+     if (doMinimization) hypIntegrator.SetupMinimizerHypothesis(hyp[ih], multiLepton.kCatJets, 0, nPointsHyp[ih]);
+
      if (multiLepton.Leptons.size()==4 && (hyp[ih]!=kMEM_TTH_TopAntitopHiggsDecay && hyp[ih]!=kMEM_TTLL_TopAntitopDecay && hyp[ih]!=kMEM_TTbar_TopAntitopFullyLepDecay)) continue;
      if (multiLepton.Leptons.size()==2 && (hyp[ih]!=kMEM_TTH_TopAntitopHiggsSemiLepDecay && hyp[ih]!=kMEM_TTW_TopAntitopDecay && hyp[ih]!=kMEM_TTbar_TopAntitopSemiLepDecay)) continue;
 
@@ -361,8 +364,19 @@ int main(int argc, char *argv[])
                //else if (multiLepton.Bjets.size()==1) cout << "BjetSize="<<multiLepton.Bjets.size() <<" Bjet0Pt="<<multiLepton.Bjets.at(0).P4.Pt() <<endl;
 
                multiLepton.FillParticlesHypothesis(hyp[ih], &hypIntegrator.meIntegrator);
-               res = hypIntegrator.DoIntegration(multiLepton.xL, multiLepton.xU); 
-               cout << "Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" Cross section (pb) : " << res.weight<< " +/- "<< res.err<<" chi2/ndof="<< res.chi2<<" Time(s)="<<res.time<<endl;
+
+	       if (doMinimization){
+                 hypIntegrator.meIntegrator->SetMinimization(1);
+	         double * var;
+	         var = hypIntegrator.FindMinimizationiInitialValues(multiLepton.xL, multiLepton.xU);
+	         res = hypIntegrator.DoMinimization(multiLepton.xL, multiLepton.xU, var);
+	         cout << "Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" -log(max)=" << res.weight<<" Time(s)="<<res.time<<endl;
+	         hypIntegrator.meIntegrator->SetMinimization(0);
+	       }
+	       else {
+                 res = hypIntegrator.DoIntegration(multiLepton.xL, multiLepton.xU); 
+                 cout << "Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" Cross section (pb) : " << res.weight<< " +/- "<< res.err<<" chi2/ndof="<< res.chi2<<" Time(s)="<<res.time<<endl;
+	       }
 
 	       //cout << "ihyp="<<ih<<" iperm="<<iperm<<" Filling error hist "<<ih+nhyp*(nHypAllowed[index[ih]]+nNullResult[index[ih]])<<endl;
 	       //hypIntegrator.FillErrHist(&(tree.hMEPhaseSpace_Error[ih+nhyp*(nHypAllowed[index[ih]]+nNullResult[index[ih]])+12*nhyp*ievent]));

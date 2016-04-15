@@ -34,6 +34,7 @@ class ConfigParser
   string valMadgraphDir, valTFfile;
   int valVerbosity;
   int valTFOption;
+  int valDoMinimization;
 
   void ReadOptionValue(string*, int*);
   void ReadOptionValue(string*, double*);
@@ -78,6 +79,7 @@ void ConfigParser::GetConfigFromFile(string InputFile){
   ReadOptionValue(&option, &valOptimTopLep);
   ReadOptionValue(&option, &valOptimHiggs);
   ReadOptionValue(&option, &valOptimW);
+  ReadOptionValue(&option, &valDoMinimization);
 
   getline(fconf, line);
   getline(fconf, line);
