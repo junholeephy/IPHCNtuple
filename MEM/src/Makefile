@@ -109,7 +109,7 @@ GOSAM_DIR=
 # ROOT definitions
 ROOTCFLAGS    = $(shell root-config --cflags)
 ROOTLIBS      = $(shell root-config --libs)
-ROOTGLIBS     = $(shell root-config --glibs) -lMathMore
+ROOTGLIBS     = $(shell root-config --glibs) -lMathMore -lMinuit2
 
 #------------------------------------------------------------------------------
 # LHAPDF definitions
