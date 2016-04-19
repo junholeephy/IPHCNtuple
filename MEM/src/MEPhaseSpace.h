@@ -100,6 +100,7 @@
 #define kTFHistoBnonB_GausRecoil 2
 #define kTFHistoBnonBmET 3
 
+#define kTFRecoilNone -1
 #define kTFRecoilPtot 0
 #define kTFRecoilmET 1
 #define kTFRecoilmETphi 2

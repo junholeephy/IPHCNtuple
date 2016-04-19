@@ -323,9 +323,13 @@ int main(int argc, char *argv[])
      else if (multiLepton.kCatJets==kCat_3l_2b_1j || multiLepton.kCatJets==kCat_3l_1b_1j) multiLepton.SwitchJetsFromAllJets(kJetSingle);
      else if (multiLepton.kCatJets==kCat_2lss_2b_4j || multiLepton.kCatJets==kCat_2lss_1b_4j){
        if (JetChoice=="Mixed"){
-         if (shyp[ih]=="TTHsl" || shyp[ih]=="TTWJJ") multiLepton.SwitchJetsFromAllJets(kTwoJetPair_MwClosest_2ndMjjLowest);
+         if (shyp[ih]=="TTHsl") multiLepton.SwitchJetsFromAllJets(kTwoJetPair_MwClosest_2ndMjjLowest);
 	 else if (shyp[ih]=="TTW" || shyp[ih]=="TTbarsl") multiLepton.SwitchJetsFromAllJets(kJetPair_MwClosest); 
 	 else if (shyp[ih]=="TTWJJ") multiLepton.SwitchJetsFromAllJets(kTwoJetPair_MwClosest_2ndHighestPt);
+       }
+       else if (JetChoice=="MwClosest") {
+	 if (shyp[ih]=="TTW" || shyp[ih]=="TTbarsl") multiLepton.SwitchJetsFromAllJets(kJetPair_MwClosest); 
+         else multiLepton.SwitchJetsFromAllJets(kTwoJetPair_MwClosest_2ndMwClosest);
        }
      }
      else if (multiLepton.kCatJets==kCat_2lss_2b_3j || multiLepton.kCatJets==kCat_2lss_1b_3j) {
