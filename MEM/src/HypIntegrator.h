@@ -46,7 +46,7 @@ class HypIntegrator
 
   int intPoints;
 
-  void InitializeIntegrator(double , int , int , int, int, ConfigParser*);
+  void InitializeIntegrator(ConfigParser*);
   void SetNCalls(int);
   void ResetCounters();
   void SetupIntegrationHypothesis(int, int, int, int);
@@ -83,22 +83,21 @@ HypIntegrator::~HypIntegrator(){
 
 }
 
-void HypIntegrator::InitializeIntegrator(double comEnergy, int kGenerator, int kTFChoice, int kTFOption, int nPoints, ConfigParser* cfgParser){
-
-  meIntegrator->SetComEnergy(comEnergy);
-  meIntegrator->SetGenerator(kGenerator);
-  meIntegrator->SetTFChoice(kTFChoice);
-
-  meIntegrator->SetTFOption(cfgParser->valTFOption);
-  meIntegrator->SetOptimization(cfgParser->valOptim);
-  meIntegrator->SetOptimization(cfgParser->valOptimTopHad, cfgParser->valOptimTopLep, cfgParser->valOptimHiggs, cfgParser->valOptimW);
-
-  meIntegrator->InitializeMadgraphProcesses(cfgParser->valMadgraphDir);
-  meIntegrator->LoadTFfromHisto(cfgParser->valTFfile);
+void HypIntegrator::InitializeIntegrator(ConfigParser* cfgParser){
 
   meIntegrator->SetVerbosity(cfgParser->valVerbosity);
 
-  SetNCalls(nPoints);
+  meIntegrator->SetComEnergy(cfgParser->valComEnergy);
+  meIntegrator->SetGenerator(cfgParser->valGenerator);
+  meIntegrator->InitializeMadgraphProcesses(cfgParser->valMadgraphDir);
+
+  meIntegrator->SetOptimization(cfgParser->valOptim);
+  meIntegrator->SetOptimization(cfgParser->valOptimTopHad, cfgParser->valOptimTopLep, cfgParser->valOptimHiggs, cfgParser->valOptimW);
+
+  meIntegrator->transferFunctions->SetVerbosity(cfgParser->valVerbosity);
+  meIntegrator->transferFunctions->SetTFChoice(cfgParser->valTFChoice);
+  meIntegrator->transferFunctions->SetTFOption(cfgParser->valTFOption);
+  meIntegrator->transferFunctions->LoadTFfromHisto(cfgParser->valTFfile);
 
  return;
 }

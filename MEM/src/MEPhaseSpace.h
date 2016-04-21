@@ -9,6 +9,7 @@
 #include "TMatrixDSym.h"
 #include "TMatrix.h"
 
+#include "TransferFunctions.h"
 #include "LHAPDF/LHAPDF.h"
 //#include "/grid_mnt/home/nchanon/LHAPDF-6.1.5-install/include/LHAPDF/LHAPDF.h"
 #include "rambo.h"
@@ -94,7 +95,7 @@
 
 #define kTopLepDecay 0
 #define kTopHadDecay 1
-
+/*
 #define kTFNone 0
 #define kTFGaussian 1
 #define kTFHistoBnonB_GausRecoil 2
@@ -105,7 +106,7 @@
 #define kTFRecoilmET 1
 #define kTFRecoilmETphi 2
 #define kTFRecoilmETcov 3
-
+*/
 //#define kErr_PS_Top 0
 //#define kErr_PS_Boson 1
 #define kErr_PS_Product 0
@@ -144,7 +145,7 @@ using namespace LHAPDF;
 //GoSam
 //extern "C" void OLP_Start(const char * filename, int* success);
 //extern "C" void OLP_EvalSubProcess(int,double*,double,double*,double*);
-
+/*
 const string EtaRangeLabel[] = {"00eta08", "08eta16", "16eta24"};
 const string EnergyRangeLabel[] = {"25E50", "50E80", "80E120", "120E200", "200E300", "EGT300"};
 const float EtaRange[] = {0.0, 0.8, 1.6, 2.4};
@@ -154,7 +155,7 @@ const float EnergyRange[] = {25, 50, 80, 120, 200, 300, 7000};
 const string MetRangeLabel[] = {"mET0E100Sum0E1200", "mET0E100Sum1200E1600", "mET0E100SumEGT1600", "mETGT100Sum0E1200", "mETGT100Sum1200E1600", "mETGT100SumEGT1600"};
 const float MetRange[] = {0, 100, 7000};
 const float MetSumRange[] = {0, 1200, 1600, 7000};
-
+*/
 class MEPhaseSpace 
 {
 
@@ -206,12 +207,12 @@ class MEPhaseSpace
     int nExternals, nCoreExternals;
     mutable int iCall;
     mutable int iIteration;
-    int iTF;
-    int iTFOption;
+    //int iTF;
+    //int iTFOption;
     int iOptim, iOptimTopLep, iOptimTopHad, iOptimHiggs, iOptimW;
     int iMinimize;
 
-    double MEMZEROWEIGHT = 0;
+    double MEMZEROWEIGHT;
 
     mutable int isTopAntitop;
 
@@ -265,8 +266,8 @@ class MEPhaseSpace
     void SetIntegrationMode(int );
     void SetOption(int );
     void SetGenerator(int);
-    void SetTFChoice(int);
-    void SetTFOption(int);
+    //void SetTFChoice(int);
+    //void SetTFOption(int);
     void SetOptimization(int);
     void SetOptimization(int,int,int,int);
     void SetMinimization(int);
@@ -326,21 +327,23 @@ class MEPhaseSpace
     double ComputePDF(double, double, double) const;
     double ConvolvePdfCrossSection(double, double, double) const;
 
-    //double ComputeTFProduct(double, double, double, double, double, double) const;
+    TransferFunctions* transferFunctions;
+
     double ComputeTFProduct() const;
-    double ComputeSingleTF_Gaus(double, double, double) const;
-    double ComputeDoubleTF_MetCov(double, double, double, double, double, double, double, double) const; 
-    double ComputeSingleTF_Histo(string, double, double, double) const;
-    void LoadTFfromHisto(string) const;
+    //double ComputeSingleTF_Gaus(double, double, double) const;
+    //double ComputeDoubleTF_MetCov(double, double, double, double, double, double, double, double) const; 
+    //double ComputeSingleTF_Histo(string, double, double, double) const;
+    //void LoadTFfromHisto(string) const;
     void UpdateComputedVarForTF() const;
     void FillComputedJetForTF(double*, double*, double*) const;
+/*
     TH1F*** TF_nonB;
     TH1F*** TF_B;
     TH1F** TF_MetPx;
     TH1F** TF_MetPy;
     TH1F** TF_MetPt;
     TH1F** TF_MetPhi;
-
+*/
     struct FinalStateTTV {
       int Boson_Type;
       int Top1_Decay;
@@ -349,6 +352,7 @@ class MEPhaseSpace
       int Top2_Sign; 
     } FinalStateTTV;
 
+/*
     struct MeasuredVarForTF {
       double Bjet1_E;
       double Bjet1_Eta;
@@ -379,7 +383,7 @@ class MEPhaseSpace
       bool doJet4TF;
     } MeasuredVarForTF;
  
-    mutable struct ComputedVarForTF {
+    mutable struct transferFunctions->ComputedVarForTF {
       double Bjet1_E;
       double Bjet2_E;
       double Jet1_E;
@@ -394,7 +398,8 @@ class MEPhaseSpace
       double Recoil_Py;
       double mET_Px;
       double mET_Py;
-    } ComputedVarForTF;
+    } transferFunctions->ComputedVarForTF;
+*/
 
     mutable TLorentzVector Computed_mETvect;
  
@@ -458,128 +463,18 @@ MEPhaseSpace::MEPhaseSpace(){
   pTop = new vector<double*>();
   pAntitop = new vector<double*>();
   pHiggs = new vector<double*>();
-   
-/*
-    int check=0;
-    std::string fname("../gosam/ttH_ME/OLE_order.olc");
-    OLP_Start(fname.c_str(),&check);
-    if (verbosity>=1) cout << "GoSam initialization: "<<check<<endl;
-*/
-
-/*
-    process = new CPPProcess();
-    process->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_4/Cards/param_card.dat");
-    if (verbosity>=1) cout << "TTH Process nexternal="<<process->nexternal<<endl;
-
-  process_ggttll = new CPPProcess_ggttll();
-  process_ggttll->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_DECAY_ggttll/Cards/param_card.dat");
-  if (verbosity>=1) cout << "TTLL Process nexternal="<<process_ggttll->nexternal<<endl;
-
-
-  process_qqttlpvl_cdx = new CPPProcess_P0_Sigma_sm_ckm_cdx_ttxepve();
-  process_qqttlpvl_cdx->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_qqttlpvl/Cards/param_card.dat");
-  if (verbosity>=1) cout << "TTWP cdbar Process nexternal="<<process_qqttlpvl_cdx->nexternal<<endl;
-
-  process_qqttlpvl_udx = new CPPProcess_P0_Sigma_sm_ckm_udx_ttxepve();
-  process_qqttlpvl_udx->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_qqttlpvl/Cards/param_card.dat");
-  if (verbosity>=1) cout << "TTWP udbar Process nexternal="<<process_qqttlpvl_udx->nexternal<<endl;
-
-  process_qqttlpvl_usx = new CPPProcess_P0_Sigma_sm_ckm_usx_ttxepve();
-  process_qqttlpvl_usx->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_qqttlpvl/Cards/param_card.dat");
-  if (verbosity>=1) cout << "TTWP usbar Process nexternal="<<process_qqttlpvl_usx->nexternal<<endl;
-
-  process_qqttlmvl_dcx = new CPPProcess_P0_Sigma_sm_ckm_dcx_ttxemvex();
-  process_qqttlmvl_dcx->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_qqttlmvl/Cards/param_card.dat");
-  if (verbosity>=1) cout << "TTWM dcbar Process nexternal="<<process_qqttlmvl_dcx->nexternal<<endl;
-
-  process_qqttlmvl_dux = new CPPProcess_P0_Sigma_sm_ckm_dux_ttxemvex();
-  process_qqttlmvl_dux->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_qqttlmvl/Cards/param_card.dat");
-  if (verbosity>=1) cout << "TTWM dubar Process nexternal="<<process_qqttlmvl_dux->nexternal<<endl;
-
-  process_qqttlmvl_sux = new CPPProcess_P0_Sigma_sm_ckm_sux_ttxemvex();
-  process_qqttlmvl_sux->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_qqttlmvl/Cards/param_card.dat");
-  if (verbosity>=1) cout << "TTWM subar Process nexternal="<<process_qqttlmvl_sux->nexternal<<endl;
-
-process_P0_Sigma_sm_ckm_gc_ttxepvegd = new CPPProcess_P0_Sigma_sm_ckm_gc_ttxepvegd();
-process_P0_Sigma_sm_ckm_gc_ttxepvegd->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_ppttlpvljj/Cards/param_card.dat");
-if (verbosity>=1) cout << "TTWPJJ Process nexternal=" << process_P0_Sigma_sm_ckm_gc_ttxepvegd->nexternal << endl;
-
-process_P0_Sigma_sm_ckm_gdx_ttxepvegcx = new CPPProcess_P0_Sigma_sm_ckm_gdx_ttxepvegcx();
-process_P0_Sigma_sm_ckm_gdx_ttxepvegcx->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_ppttlpvljj/Cards/param_card.dat");
-if (verbosity>=1) cout << "TTWPJJ Process nexternal=" << process_P0_Sigma_sm_ckm_gdx_ttxepvegcx->nexternal << endl;
-
-process_P0_Sigma_sm_ckm_gdx_ttxepvegux = new CPPProcess_P0_Sigma_sm_ckm_gdx_ttxepvegux();
-process_P0_Sigma_sm_ckm_gdx_ttxepvegux->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_ppttlpvljj/Cards/param_card.dat");
-if (verbosity>=1) cout << "TTWPJJ Process nexternal=" << process_P0_Sigma_sm_ckm_gdx_ttxepvegux->nexternal << endl;
-
-process_P0_Sigma_sm_ckm_gsx_ttxepvegux = new CPPProcess_P0_Sigma_sm_ckm_gsx_ttxepvegux();
-process_P0_Sigma_sm_ckm_gsx_ttxepvegux->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_ppttlpvljj/Cards/param_card.dat");
-if (verbosity>=1) cout << "TTWPJJ Process nexternal=" << process_P0_Sigma_sm_ckm_gsx_ttxepvegux->nexternal << endl;
-
-process_P0_Sigma_sm_ckm_gu_ttxepvegd = new CPPProcess_P0_Sigma_sm_ckm_gu_ttxepvegd();
-process_P0_Sigma_sm_ckm_gu_ttxepvegd->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_ppttlpvljj/Cards/param_card.dat");
-if (verbosity>=1) cout << "TTWPJJ Process nexternal=" << process_P0_Sigma_sm_ckm_gu_ttxepvegd->nexternal << endl;
-
-process_P0_Sigma_sm_ckm_gu_ttxepvegs = new CPPProcess_P0_Sigma_sm_ckm_gu_ttxepvegs();
-process_P0_Sigma_sm_ckm_gu_ttxepvegs->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_ppttlpvljj/Cards/param_card.dat");
-if (verbosity>=1) cout << "TTWPJJ Process nexternal=" << process_P0_Sigma_sm_ckm_gu_ttxepvegs->nexternal << endl;
-
-process_P0_Sigma_sm_ckm_gcx_ttxemvexgdx = new CPPProcess_P0_Sigma_sm_ckm_gcx_ttxemvexgdx();
-process_P0_Sigma_sm_ckm_gcx_ttxemvexgdx->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_ppttlmvljj/Cards/param_card.dat");
-if (verbosity>=1) cout << "TTWMJJ Process nexternal=" << process_P0_Sigma_sm_ckm_gcx_ttxemvexgdx->nexternal << endl;
-
-process_P0_Sigma_sm_ckm_gd_ttxemvexgc = new CPPProcess_P0_Sigma_sm_ckm_gd_ttxemvexgc();
-process_P0_Sigma_sm_ckm_gd_ttxemvexgc->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_ppttlmvljj/Cards/param_card.dat");
-if (verbosity>=1) cout << "TTWMJJ Process nexternal=" << process_P0_Sigma_sm_ckm_gd_ttxemvexgc->nexternal << endl;
-
-process_P0_Sigma_sm_ckm_gd_ttxemvexgu = new CPPProcess_P0_Sigma_sm_ckm_gd_ttxemvexgu();
-process_P0_Sigma_sm_ckm_gd_ttxemvexgu->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_ppttlmvljj/Cards/param_card.dat");
-if (verbosity>=1) cout << "TTWMJJ Process nexternal=" << process_P0_Sigma_sm_ckm_gd_ttxemvexgu->nexternal << endl;
-
-process_P0_Sigma_sm_ckm_gs_ttxemvexgu = new CPPProcess_P0_Sigma_sm_ckm_gs_ttxemvexgu();
-process_P0_Sigma_sm_ckm_gs_ttxemvexgu->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_ppttlmvljj/Cards/param_card.dat");
-if (verbosity>=1) cout << "TTWMJJ Process nexternal=" << process_P0_Sigma_sm_ckm_gs_ttxemvexgu->nexternal << endl;
-
-process_P0_Sigma_sm_ckm_gux_ttxemvexgdx = new CPPProcess_P0_Sigma_sm_ckm_gux_ttxemvexgdx();
-process_P0_Sigma_sm_ckm_gux_ttxemvexgdx->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_ppttlmvljj/Cards/param_card.dat");
-if (verbosity>=1) cout << "TTWMJJ Process nexternal=" << process_P0_Sigma_sm_ckm_gux_ttxemvexgdx->nexternal << endl;
-
-process_P0_Sigma_sm_ckm_gux_ttxemvexgsx = new CPPProcess_P0_Sigma_sm_ckm_gux_ttxemvexgsx();
-process_P0_Sigma_sm_ckm_gux_ttxemvexgsx->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_ckm_DECAY_ppttlmvljj/Cards/param_card.dat");
-if (verbosity>=1) cout << "TTWMJJ Process nexternal=" << process_P0_Sigma_sm_ckm_gux_ttxemvexgsx->nexternal << endl;
-
-process_P0_Sigma_sm_gg_ttx = new CPPProcess_P0_Sigma_sm_gg_ttx();
-process_P0_Sigma_sm_gg_ttx->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_DECAY_ggtt/Cards/param_card.dat");
-if (verbosity>=1) cout << "TTbar Process nexternal=" << process_P0_Sigma_sm_gg_ttx->nexternal << endl;
-
-  InitializePhaseSpacePoint(&pCore, 8);
-
-  process_tbwjj = new CPPProcess_tbwjj();
-  process_tbwjj->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_DECAY_tbwjj/Cards/param_card.dat");
-  if (verbosity>=1) cout << "T->bWjj Process nexternal="<<process_tbwjj->nexternal<<endl;
-  InitializePhaseSpacePoint(&pTop, 4);
-
-  process_antitbwjj = new CPPProcess_antitbwjj();
-  process_antitbwjj->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_DECAY_antitbwjj/Cards/param_card.dat");
-  if (verbosity>=1) cout << "Anti T->bWjj Process nexternal="<<process_antitbwjj->nexternal<<endl;
-  InitializePhaseSpacePoint(&pAntitop, 4);
-
-  process_hw2l2nu = new CPPProcess_hw2l2nu();
-  process_hw2l2nu->initProc("/afs/cern.ch/work/c/chanon/MEM/Madgraph/PROC_SA_CPP_sm_DECAY_hw2l2nu/Cards/param_card.dat");
-  if (verbosity>=1) cout << "H->WW->2l2nu Process nexternal="<<process_hw2l2nu->nexternal<<endl;
-  InitializePhaseSpacePoint(&pHiggs, 5);
-*/
-
 
   InitializePhaseSpacePoint(&pCore, 8);
   InitializePhaseSpacePoint(&pTop, 4);
   InitializePhaseSpacePoint(&pAntitop, 4);
   InitializePhaseSpacePoint(&pHiggs, 5);
-
 
   //Initialise LHAPDF
   pdf = LHAPDF::mkPDF("NNPDF23_lo_as_0119_qed",0);
 
+  transferFunctions = new TransferFunctions();
+
+/*
   //Initialize transfert function
   TF_nonB = new TH1F**[3];
   TF_B = new TH1F**[3];
@@ -590,6 +485,7 @@ if (verbosity>=1) cout << "TTbar Process nexternal=" << process_P0_Sigma_sm_gg_t
   TF_MetPt = new TH1F*[6];
   TF_MetPhi = new TH1F*[6];
   //LoadTFfromHisto("/afs/cern.ch/work/c/chanon/MEM/data/TF_Daniel_05112015.root");
+*/
 
   //set constants from madgraph
   mTop = 173.;
@@ -612,6 +508,8 @@ if (verbosity>=1) cout << "TTbar Process nexternal=" << process_P0_Sigma_sm_gg_t
 
   //set factorization scale
   muF = (2*mTop+mHiggs)/2.;
+
+  MEMZEROWEIGHT = 0;
 
   iCall = 0;
   iIteration = 0;
@@ -768,7 +666,7 @@ void MEPhaseSpace::SetGenerator(int igen){
   iGen = igen;
   return;
 }
-
+/*
 void MEPhaseSpace::SetTFChoice(int iChoice){
 
   iTF = iChoice;
@@ -780,7 +678,7 @@ void MEPhaseSpace::SetTFOption(int iOption){
   iTFOption = iOption;
   return;
 }
-
+*/
 void MEPhaseSpace::SetOptimization(int iOption){
 
   iOptim = iOption;
@@ -1699,10 +1597,10 @@ double MEPhaseSpace::Eval(const double* x) const {
     if (weightPS==0) { errorCounter[kErr_PS_Product]++; return MEMZEROWEIGHT; }
 
     if (verbosity>=2) {
-        cout << "Bjet1_E computed "<<ComputedVarForTF.Bjet1_E<<" input "<<x[0]<<endl;
-        cout << "Bjet2_E computed "<<ComputedVarForTF.Bjet2_E<<" input "<<x[3]<<endl;
-	cout << "Jet1_E computed "<<ComputedVarForTF.Jet1_E<<" input "<<x[9]<<endl;
-	cout << "Jet2_E computed "<<ComputedVarForTF.Jet2_E<<" input "<<x[10]<<endl;
+        cout << "Bjet1_E computed "<<transferFunctions->ComputedVarForTF.Bjet1_E<<" input "<<x[0]<<endl;
+        cout << "Bjet2_E computed "<<transferFunctions->ComputedVarForTF.Bjet2_E<<" input "<<x[3]<<endl;
+	cout << "Jet1_E computed "<<transferFunctions->ComputedVarForTF.Jet1_E<<" input "<<x[9]<<endl;
+	cout << "Jet2_E computed "<<transferFunctions->ComputedVarForTF.Jet2_E<<" input "<<x[10]<<endl;
     }
 
     double weightTF = ComputeTFProduct();
@@ -4852,24 +4750,24 @@ void MEPhaseSpace::UpdateComputedVarForTF() const{
 
   //B-jets: Always
   if (FinalStateTTV.Top1_Sign==kTop) {
-    ComputedVarForTF.Bjet1_E = pTop->at(1)[0];
-    ComputedVarForTF.Bjet2_E = pAntitop->at(1)[0];
+    transferFunctions->ComputedVarForTF.Bjet1_E = pTop->at(1)[0];
+    transferFunctions->ComputedVarForTF.Bjet2_E = pAntitop->at(1)[0];
   }
   else if (FinalStateTTV.Top1_Sign==kAntitop){
-    ComputedVarForTF.Bjet1_E = pAntitop->at(1)[0];
-    ComputedVarForTF.Bjet2_E = pTop->at(1)[0];
+    transferFunctions->ComputedVarForTF.Bjet1_E = pAntitop->at(1)[0];
+    transferFunctions->ComputedVarForTF.Bjet2_E = pTop->at(1)[0];
   }
 
   //Jets
   if (FinalStateTTV.Top1_Decay==kTopHadDecay){  //Hadronic top is always the first
     //Jets for top had + top lep
     if (FinalStateTTV.Top1_Sign==kTop) {
-      FillComputedJetForTF(pTop->at(2), &(ComputedVarForTF.Jet1_E), &(ComputedVarForTF.Jet1_Eta));
-      FillComputedJetForTF(pTop->at(3), &(ComputedVarForTF.Jet2_E), &(ComputedVarForTF.Jet2_Eta));
+      FillComputedJetForTF(pTop->at(2), &(transferFunctions->ComputedVarForTF.Jet1_E), &(transferFunctions->ComputedVarForTF.Jet1_Eta));
+      FillComputedJetForTF(pTop->at(3), &(transferFunctions->ComputedVarForTF.Jet2_E), &(transferFunctions->ComputedVarForTF.Jet2_Eta));
     }
     else if (FinalStateTTV.Top1_Sign==kAntitop){
-      FillComputedJetForTF(pAntitop->at(2), &(ComputedVarForTF.Jet1_E), &(ComputedVarForTF.Jet1_Eta));
-      FillComputedJetForTF(pAntitop->at(3), &(ComputedVarForTF.Jet2_E), &(ComputedVarForTF.Jet2_Eta));
+      FillComputedJetForTF(pAntitop->at(2), &(transferFunctions->ComputedVarForTF.Jet1_E), &(transferFunctions->ComputedVarForTF.Jet1_Eta));
+      FillComputedJetForTF(pAntitop->at(3), &(transferFunctions->ComputedVarForTF.Jet2_E), &(transferFunctions->ComputedVarForTF.Jet2_Eta));
     }
   }
 
@@ -4877,22 +4775,22 @@ void MEPhaseSpace::UpdateComputedVarForTF() const{
     //Jets for semilep higgs
     if (FinalStateTTV.Top1_Decay!=kTopHadDecay){
       if (MEMFix_HiggsSemiLep.LepSign == 1){
-        FillComputedJetForTF(pHiggs->at(3), &(ComputedVarForTF.Jet1_E), &(ComputedVarForTF.Jet1_Eta));
-        FillComputedJetForTF(pHiggs->at(4), &(ComputedVarForTF.Jet2_E), &(ComputedVarForTF.Jet2_Eta));
+        FillComputedJetForTF(pHiggs->at(3), &(transferFunctions->ComputedVarForTF.Jet1_E), &(transferFunctions->ComputedVarForTF.Jet1_Eta));
+        FillComputedJetForTF(pHiggs->at(4), &(transferFunctions->ComputedVarForTF.Jet2_E), &(transferFunctions->ComputedVarForTF.Jet2_Eta));
       }
       else if (MEMFix_HiggsSemiLep.LepSign == -1){
-        FillComputedJetForTF(pHiggs->at(1), &(ComputedVarForTF.Jet1_E), &(ComputedVarForTF.Jet1_Eta));
-        FillComputedJetForTF(pHiggs->at(2), &(ComputedVarForTF.Jet2_E), &(ComputedVarForTF.Jet2_Eta));
+        FillComputedJetForTF(pHiggs->at(1), &(transferFunctions->ComputedVarForTF.Jet1_E), &(transferFunctions->ComputedVarForTF.Jet1_Eta));
+        FillComputedJetForTF(pHiggs->at(2), &(transferFunctions->ComputedVarForTF.Jet2_E), &(transferFunctions->ComputedVarForTF.Jet2_Eta));
       }
     }
     else if (FinalStateTTV.Top1_Decay==kTopHadDecay){
       if (MEMFix_HiggsSemiLep.LepSign == 1){
-        FillComputedJetForTF(pHiggs->at(3), &(ComputedVarForTF.Jet3_E), &(ComputedVarForTF.Jet3_Eta));
-        FillComputedJetForTF(pHiggs->at(4), &(ComputedVarForTF.Jet4_E), &(ComputedVarForTF.Jet4_Eta));
+        FillComputedJetForTF(pHiggs->at(3), &(transferFunctions->ComputedVarForTF.Jet3_E), &(transferFunctions->ComputedVarForTF.Jet3_Eta));
+        FillComputedJetForTF(pHiggs->at(4), &(transferFunctions->ComputedVarForTF.Jet4_E), &(transferFunctions->ComputedVarForTF.Jet4_Eta));
       }
       else if (MEMFix_HiggsSemiLep.LepSign == -1){
-        FillComputedJetForTF(pHiggs->at(1), &(ComputedVarForTF.Jet3_E), &(ComputedVarForTF.Jet3_Eta));
-        FillComputedJetForTF(pHiggs->at(2), &(ComputedVarForTF.Jet4_E), &(ComputedVarForTF.Jet4_Eta));
+        FillComputedJetForTF(pHiggs->at(1), &(transferFunctions->ComputedVarForTF.Jet3_E), &(transferFunctions->ComputedVarForTF.Jet3_Eta));
+        FillComputedJetForTF(pHiggs->at(2), &(transferFunctions->ComputedVarForTF.Jet4_E), &(transferFunctions->ComputedVarForTF.Jet4_Eta));
       }
     }
   }
@@ -4900,25 +4798,25 @@ void MEPhaseSpace::UpdateComputedVarForTF() const{
   if (FinalStateTTV.Boson_Type == kLNuJJ){
     //Jets for TTWJJ
     if (FinalStateTTV.Top1_Decay!=kTopHadDecay){
-      FillComputedJetForTF(pCore->at(6), &(ComputedVarForTF.Jet1_E), &(ComputedVarForTF.Jet1_Eta));
-      FillComputedJetForTF(pCore->at(7), &(ComputedVarForTF.Jet2_E), &(ComputedVarForTF.Jet2_Eta));
+      FillComputedJetForTF(pCore->at(6), &(transferFunctions->ComputedVarForTF.Jet1_E), &(transferFunctions->ComputedVarForTF.Jet1_Eta));
+      FillComputedJetForTF(pCore->at(7), &(transferFunctions->ComputedVarForTF.Jet2_E), &(transferFunctions->ComputedVarForTF.Jet2_Eta));
     }
     else if (FinalStateTTV.Top1_Decay==kTopHadDecay){
-      FillComputedJetForTF(pCore->at(6), &(ComputedVarForTF.Jet3_E), &(ComputedVarForTF.Jet3_Eta));
-      FillComputedJetForTF(pCore->at(7), &(ComputedVarForTF.Jet4_E), &(ComputedVarForTF.Jet4_Eta));
+      FillComputedJetForTF(pCore->at(6), &(transferFunctions->ComputedVarForTF.Jet3_E), &(transferFunctions->ComputedVarForTF.Jet3_Eta));
+      FillComputedJetForTF(pCore->at(7), &(transferFunctions->ComputedVarForTF.Jet4_E), &(transferFunctions->ComputedVarForTF.Jet4_Eta));
     }
   }
 
   //mET: Always
-  ComputedVarForTF.mET_Px = Computed_mETvect.Px();
-  ComputedVarForTF.mET_Py = Computed_mETvect.Py();
+  transferFunctions->ComputedVarForTF.mET_Px = Computed_mETvect.Px();
+  transferFunctions->ComputedVarForTF.mET_Py = Computed_mETvect.Py();
 
   //Recoil: Depends on nCoreExternals
-  ComputedVarForTF.Recoil_Px = 0; //-(pCore->at(2)[1]+pCore->at(3)[1]+pCore->at(4)[1]);
-  ComputedVarForTF.Recoil_Py = 0; //-(pCore->at(2)[2]+pCore->at(3)[2]+pCore->at(4)[2]);
+  transferFunctions->ComputedVarForTF.Recoil_Px = 0; //-(pCore->at(2)[1]+pCore->at(3)[1]+pCore->at(4)[1]);
+  transferFunctions->ComputedVarForTF.Recoil_Py = 0; //-(pCore->at(2)[2]+pCore->at(3)[2]+pCore->at(4)[2]);
   for (int i=2; i<2+nCoreExternals; i++){
-    ComputedVarForTF.Recoil_Px -= pCore->at(i)[1];
-    ComputedVarForTF.Recoil_Py -= pCore->at(i)[2];
+    transferFunctions->ComputedVarForTF.Recoil_Px -= pCore->at(i)[1];
+    transferFunctions->ComputedVarForTF.Recoil_Py -= pCore->at(i)[2];
   }
 
   return;
@@ -4926,52 +4824,51 @@ void MEPhaseSpace::UpdateComputedVarForTF() const{
 
 double MEPhaseSpace::ComputeTFProduct() const {
 
-  double weightTF_Bjet1 = 1;
-  double weightTF_Bjet2 = 1;
-  double weightTF_Jet1 = 1;
-  double weightTF_Jet2 = 1;
-  double weightTF_Jet3 = 1;
-  double weightTF_Jet4 = 1;
-  double weightTF_Recoil_Px = 1;
-  double weightTF_Recoil_Py = 1;
-
   UpdateComputedVarForTF();
 
+  int jetTFmode = 0;
+
+  if (FinalStateTTV.Top1_Decay == kTopHadDecay || FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep) jetTFmode = 1;  
+  if (FinalStateTTV.Top1_Decay == kTopHadDecay && (FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep)) jetTFmode = 2;
+
+  double weightTF = transferFunctions->ComputeTFProductJetBjetMet(jetTFmode);
+
+/*
   //B-jets
   if (iTF == kTFGaussian) {
-    if (MeasuredVarForTF.doBjet1TF) weightTF_Bjet1 = ComputeSingleTF_Gaus(ComputedVarForTF.Bjet1_E, MeasuredVarForTF.Bjet1_E, 0.2);
-    if (MeasuredVarForTF.doBjet2TF) weightTF_Bjet2 = ComputeSingleTF_Gaus(ComputedVarForTF.Bjet2_E, MeasuredVarForTF.Bjet2_E, 0.2);
+    if (MeasuredVarForTF.doBjet1TF) weightTF_Bjet1 = ComputeSingleTF_Gaus(transferFunctions->ComputedVarForTF.Bjet1_E, MeasuredVarForTF.Bjet1_E, 0.2);
+    if (MeasuredVarForTF.doBjet2TF) weightTF_Bjet2 = ComputeSingleTF_Gaus(transferFunctions->ComputedVarForTF.Bjet2_E, MeasuredVarForTF.Bjet2_E, 0.2);
   } 
   else if (iTF == kTFHistoBnonB_GausRecoil || iTF == kTFHistoBnonBmET){
-    if (MeasuredVarForTF.doBjet1TF) weightTF_Bjet1 = ComputeSingleTF_Histo("Bjet", ComputedVarForTF.Bjet1_E, MeasuredVarForTF.Bjet1_E, MeasuredVarForTF.Bjet1_Eta);
-    if (MeasuredVarForTF.doBjet2TF) weightTF_Bjet2 = ComputeSingleTF_Histo("Bjet", ComputedVarForTF.Bjet2_E, MeasuredVarForTF.Bjet2_E, MeasuredVarForTF.Bjet2_Eta);
+    if (MeasuredVarForTF.doBjet1TF) weightTF_Bjet1 = ComputeSingleTF_Histo("Bjet", transferFunctions->ComputedVarForTF.Bjet1_E, MeasuredVarForTF.Bjet1_E, MeasuredVarForTF.Bjet1_Eta);
+    if (MeasuredVarForTF.doBjet2TF) weightTF_Bjet2 = ComputeSingleTF_Histo("Bjet", transferFunctions->ComputedVarForTF.Bjet2_E, MeasuredVarForTF.Bjet2_E, MeasuredVarForTF.Bjet2_Eta);
   }
 
   //Jets
   if (iTF == kTFGaussian){
-    if (MeasuredVarForTF.doJet1TF) weightTF_Jet1 = ComputeSingleTF_Gaus(ComputedVarForTF.Jet1_E, MeasuredVarForTF.Jet1_E, 0.2);
-    else if (TMath::Abs(ComputedVarForTF.Jet1_Eta)<2.4 && (ComputedVarForTF.Jet1_E / TMath::CosH(ComputedVarForTF.Jet1_Eta))>25) weightTF_Jet1 = 0;
-    if (MeasuredVarForTF.doJet2TF) weightTF_Jet2 = ComputeSingleTF_Gaus(ComputedVarForTF.Jet2_E, MeasuredVarForTF.Jet2_E, 0.2);
-    else if (TMath::Abs(ComputedVarForTF.Jet2_Eta)<2.4 && (ComputedVarForTF.Jet2_E / TMath::CosH(ComputedVarForTF.Jet2_Eta))>25) weightTF_Jet2 = 0;
+    if (MeasuredVarForTF.doJet1TF) weightTF_Jet1 = ComputeSingleTF_Gaus(transferFunctions->ComputedVarForTF.Jet1_E, MeasuredVarForTF.Jet1_E, 0.2);
+    else if (TMath::Abs(transferFunctions->ComputedVarForTF.Jet1_Eta)<2.4 && (transferFunctions->ComputedVarForTF.Jet1_E / TMath::CosH(transferFunctions->ComputedVarForTF.Jet1_Eta))>25) weightTF_Jet1 = 0;
+    if (MeasuredVarForTF.doJet2TF) weightTF_Jet2 = ComputeSingleTF_Gaus(transferFunctions->ComputedVarForTF.Jet2_E, MeasuredVarForTF.Jet2_E, 0.2);
+    else if (TMath::Abs(transferFunctions->ComputedVarForTF.Jet2_Eta)<2.4 && (transferFunctions->ComputedVarForTF.Jet2_E / TMath::CosH(transferFunctions->ComputedVarForTF.Jet2_Eta))>25) weightTF_Jet2 = 0;
     if (FinalStateTTV.Top1_Decay == kTopHadDecay && (FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep)) {
-      if (MeasuredVarForTF.doJet3TF) weightTF_Jet3 = ComputeSingleTF_Gaus(ComputedVarForTF.Jet3_E, MeasuredVarForTF.Jet3_E, 0.2);
-      else if (TMath::Abs(ComputedVarForTF.Jet3_Eta)<2.4 && (ComputedVarForTF.Jet3_E / TMath::CosH(ComputedVarForTF.Jet3_Eta))>25) weightTF_Jet3 = 0;
-      if (MeasuredVarForTF.doJet4TF) weightTF_Jet4 = ComputeSingleTF_Gaus(ComputedVarForTF.Jet4_E, MeasuredVarForTF.Jet4_E, 0.2);
-      else if (TMath::Abs(ComputedVarForTF.Jet4_Eta)<2.4 && (ComputedVarForTF.Jet4_E / TMath::CosH(ComputedVarForTF.Jet4_Eta))>25) weightTF_Jet4 = 0;
+      if (MeasuredVarForTF.doJet3TF) weightTF_Jet3 = ComputeSingleTF_Gaus(transferFunctions->ComputedVarForTF.Jet3_E, MeasuredVarForTF.Jet3_E, 0.2);
+      else if (TMath::Abs(transferFunctions->ComputedVarForTF.Jet3_Eta)<2.4 && (transferFunctions->ComputedVarForTF.Jet3_E / TMath::CosH(transferFunctions->ComputedVarForTF.Jet3_Eta))>25) weightTF_Jet3 = 0;
+      if (MeasuredVarForTF.doJet4TF) weightTF_Jet4 = ComputeSingleTF_Gaus(transferFunctions->ComputedVarForTF.Jet4_E, MeasuredVarForTF.Jet4_E, 0.2);
+      else if (TMath::Abs(transferFunctions->ComputedVarForTF.Jet4_Eta)<2.4 && (transferFunctions->ComputedVarForTF.Jet4_E / TMath::CosH(transferFunctions->ComputedVarForTF.Jet4_Eta))>25) weightTF_Jet4 = 0;
     }
   }
   else if (iTF == kTFHistoBnonB_GausRecoil || iTF == kTFHistoBnonBmET){
     if (FinalStateTTV.Top1_Decay == kTopHadDecay || FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep){
-      if (MeasuredVarForTF.doJet1TF) weightTF_Jet1 = ComputeSingleTF_Histo("Jet", ComputedVarForTF.Jet1_E, MeasuredVarForTF.Jet1_E, MeasuredVarForTF.Jet1_Eta);
-      else if (TMath::Abs(ComputedVarForTF.Jet1_Eta)<2.4 && (ComputedVarForTF.Jet1_E / TMath::CosH(ComputedVarForTF.Jet1_Eta))>25) weightTF_Jet1 = 0;
-      if (MeasuredVarForTF.doJet2TF) weightTF_Jet2 = ComputeSingleTF_Histo("Jet", ComputedVarForTF.Jet2_E, MeasuredVarForTF.Jet2_E, MeasuredVarForTF.Jet2_Eta);
-      else if (TMath::Abs(ComputedVarForTF.Jet2_Eta)<2.4 && (ComputedVarForTF.Jet2_E / TMath::CosH(ComputedVarForTF.Jet2_Eta))>25) weightTF_Jet2 = 0;
+      if (MeasuredVarForTF.doJet1TF) weightTF_Jet1 = ComputeSingleTF_Histo("Jet", transferFunctions->ComputedVarForTF.Jet1_E, MeasuredVarForTF.Jet1_E, MeasuredVarForTF.Jet1_Eta);
+      else if (TMath::Abs(transferFunctions->ComputedVarForTF.Jet1_Eta)<2.4 && (transferFunctions->ComputedVarForTF.Jet1_E / TMath::CosH(transferFunctions->ComputedVarForTF.Jet1_Eta))>25) weightTF_Jet1 = 0;
+      if (MeasuredVarForTF.doJet2TF) weightTF_Jet2 = ComputeSingleTF_Histo("Jet", transferFunctions->ComputedVarForTF.Jet2_E, MeasuredVarForTF.Jet2_E, MeasuredVarForTF.Jet2_Eta);
+      else if (TMath::Abs(transferFunctions->ComputedVarForTF.Jet2_Eta)<2.4 && (transferFunctions->ComputedVarForTF.Jet2_E / TMath::CosH(transferFunctions->ComputedVarForTF.Jet2_Eta))>25) weightTF_Jet2 = 0;
     }
     if (FinalStateTTV.Top1_Decay == kTopHadDecay && (FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep)) {
-      if (MeasuredVarForTF.doJet3TF) weightTF_Jet3 = ComputeSingleTF_Histo("Jet", ComputedVarForTF.Jet3_E, MeasuredVarForTF.Jet3_E, MeasuredVarForTF.Jet3_Eta);
-      else if (TMath::Abs(ComputedVarForTF.Jet3_Eta)<2.4 && (ComputedVarForTF.Jet3_E / TMath::CosH(ComputedVarForTF.Jet3_Eta))>25) weightTF_Jet3 = 0;
-      if (MeasuredVarForTF.doJet4TF) weightTF_Jet4 = ComputeSingleTF_Histo("Jet", ComputedVarForTF.Jet4_E, MeasuredVarForTF.Jet4_E, MeasuredVarForTF.Jet4_Eta);
-      else if (TMath::Abs(ComputedVarForTF.Jet4_Eta)<2.4 && (ComputedVarForTF.Jet4_E / TMath::CosH(ComputedVarForTF.Jet4_Eta))>25) weightTF_Jet4 = 0;
+      if (MeasuredVarForTF.doJet3TF) weightTF_Jet3 = ComputeSingleTF_Histo("Jet", transferFunctions->ComputedVarForTF.Jet3_E, MeasuredVarForTF.Jet3_E, MeasuredVarForTF.Jet3_Eta);
+      else if (TMath::Abs(transferFunctions->ComputedVarForTF.Jet3_Eta)<2.4 && (transferFunctions->ComputedVarForTF.Jet3_E / TMath::CosH(transferFunctions->ComputedVarForTF.Jet3_Eta))>25) weightTF_Jet3 = 0;
+      if (MeasuredVarForTF.doJet4TF) weightTF_Jet4 = ComputeSingleTF_Histo("Jet", transferFunctions->ComputedVarForTF.Jet4_E, MeasuredVarForTF.Jet4_E, MeasuredVarForTF.Jet4_Eta);
+      else if (TMath::Abs(transferFunctions->ComputedVarForTF.Jet4_Eta)<2.4 && (transferFunctions->ComputedVarForTF.Jet4_E / TMath::CosH(transferFunctions->ComputedVarForTF.Jet4_Eta))>25) weightTF_Jet4 = 0;
     }
   }
 
@@ -4980,23 +4877,23 @@ double MEPhaseSpace::ComputeTFProduct() const {
   //Recoil
   if (iTF == kTFGaussian || iTF==kTFHistoBnonB_GausRecoil){
     if (iTFOption==kTFRecoilPtot){
-      weightTF_Recoil_Px = ComputeSingleTF_Gaus(ComputedVarForTF.Recoil_Px, MeasuredVarForTF.Recoil_Px, 0.2);
-      weightTF_Recoil_Py = ComputeSingleTF_Gaus(ComputedVarForTF.Recoil_Py, MeasuredVarForTF.Recoil_Py, 0.2);
+      weightTF_Recoil_Px = ComputeSingleTF_Gaus(transferFunctions->ComputedVarForTF.Recoil_Px, MeasuredVarForTF.Recoil_Px, 0.2);
+      weightTF_Recoil_Py = ComputeSingleTF_Gaus(transferFunctions->ComputedVarForTF.Recoil_Py, MeasuredVarForTF.Recoil_Py, 0.2);
     }
     else if (iTFOption==kTFRecoilmET){
-      weightTF_Recoil_Px = ComputeSingleTF_Gaus(ComputedVarForTF.mET_Px, MeasuredVarForTF.mET_Px, 0.2);
-      weightTF_Recoil_Py = ComputeSingleTF_Gaus(ComputedVarForTF.mET_Py, MeasuredVarForTF.mET_Py, 0.2);
+      weightTF_Recoil_Px = ComputeSingleTF_Gaus(transferFunctions->ComputedVarForTF.mET_Px, MeasuredVarForTF.mET_Px, 0.2);
+      weightTF_Recoil_Py = ComputeSingleTF_Gaus(transferFunctions->ComputedVarForTF.mET_Py, MeasuredVarForTF.mET_Py, 0.2);
     }
   }
   else if (iTF == kTFHistoBnonBmET){
     if (iTFOption==kTFRecoilmET){
-      weightTF_Recoil_Px = ComputeSingleTF_Histo("mET_Px", ComputedVarForTF.mET_Px, MeasuredVarForTF.mET_Px, MeasuredVarForTF.mHT);
-      weightTF_Recoil_Py = ComputeSingleTF_Histo("mET_Py", ComputedVarForTF.mET_Py, MeasuredVarForTF.mET_Py, MeasuredVarForTF.mHT);
+      weightTF_Recoil_Px = ComputeSingleTF_Histo("mET_Px", transferFunctions->ComputedVarForTF.mET_Px, MeasuredVarForTF.mET_Px, MeasuredVarForTF.mHT);
+      weightTF_Recoil_Py = ComputeSingleTF_Histo("mET_Py", transferFunctions->ComputedVarForTF.mET_Py, MeasuredVarForTF.mET_Py, MeasuredVarForTF.mHT);
     }
     else if (iTFOption==kTFRecoilmETphi){
-      double Computed_mET_Pt = sqrt(ComputedVarForTF.mET_Px*ComputedVarForTF.mET_Px+ComputedVarForTF.mET_Py*ComputedVarForTF.mET_Py);
+      double Computed_mET_Pt = sqrt(transferFunctions->ComputedVarForTF.mET_Px*transferFunctions->ComputedVarForTF.mET_Px+transferFunctions->ComputedVarForTF.mET_Py*transferFunctions->ComputedVarForTF.mET_Py);
       double Measured_mET_Pt = sqrt(MeasuredVarForTF.mET_Px*MeasuredVarForTF.mET_Px+MeasuredVarForTF.mET_Py*MeasuredVarForTF.mET_Py); 
-      TVector3 met_tmp; met_tmp.SetXYZ(ComputedVarForTF.mET_Px, ComputedVarForTF.mET_Py, 0);
+      TVector3 met_tmp; met_tmp.SetXYZ(transferFunctions->ComputedVarForTF.mET_Px, transferFunctions->ComputedVarForTF.mET_Py, 0);
       double Computed_mET_Phi = met_tmp.Phi();
       met_tmp.SetXYZ(MeasuredVarForTF.mET_Px, MeasuredVarForTF.mET_Py, 0);
       double Measured_mET_Phi = met_tmp.Phi();
@@ -5004,19 +4901,20 @@ double MEPhaseSpace::ComputeTFProduct() const {
       weightTF_Recoil_Py = ComputeSingleTF_Histo("mET_Phi", Computed_mET_Phi, Measured_mET_Phi, MeasuredVarForTF.mHT);
     }
     else if (iTFOption==kTFRecoilmETcov){
-      weightTF_Recoil_Px = ComputeDoubleTF_MetCov(ComputedVarForTF.mET_Px, MeasuredVarForTF.mET_Px, ComputedVarForTF.mET_Py, MeasuredVarForTF.mET_Py, MeasuredVarForTF.mET_cov00, MeasuredVarForTF.mET_cov01, MeasuredVarForTF.mET_cov10, MeasuredVarForTF.mET_cov11);
+      weightTF_Recoil_Px = ComputeDoubleTF_MetCov(transferFunctions->ComputedVarForTF.mET_Px, MeasuredVarForTF.mET_Px, transferFunctions->ComputedVarForTF.mET_Py, MeasuredVarForTF.mET_Py, MeasuredVarForTF.mET_cov00, MeasuredVarForTF.mET_cov01, MeasuredVarForTF.mET_cov10, MeasuredVarForTF.mET_cov11);
       weightTF_Recoil_Py = 1;
 
     }
   }
 
   double weightTF = weightTF_Bjet1*weightTF_Bjet2*weightTF_Jet1*weightTF_Jet2*weightTF_Jet3*weightTF_Jet4*weightTF_Recoil_Px*weightTF_Recoil_Py;
-
+*/
   if (verbosity>=2) cout << "TFProduct weightTF="<<weightTF<<endl; 
 
   return weightTF;
 }
 
+/*
 double MEPhaseSpace::ComputeSingleTF_Gaus(double Gen_E, double Reco_E, double Res) const {
 
   double weightTF = TMath::Gaus(Gen_E-Reco_E, 0, TMath::Abs(Res*Gen_E), kTRUE);
@@ -5195,7 +5093,7 @@ void MEPhaseSpace::LoadTFfromHisto(string FileName) const {
 
   return;
 }
-
+*/
 vector<double*> MEPhaseSpace::GetPhaseSpacePoint(){
 
   double effectiveLumi = (float)(rand() % 10000) / 10000. * comEnergy;

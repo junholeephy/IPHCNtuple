@@ -104,7 +104,8 @@ int main(int argc, char *argv[])
     //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, kOptimizeNone);
     //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, kOptimizeMw);
     //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, doOptim);
-    hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, &cfgParser);
+    //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, &cfgParser);
+    hypIntegrator.InitializeIntegrator(&cfgParser);
 
     int doMinimization = cfgParser.valDoMinimization;
 
