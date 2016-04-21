@@ -32,8 +32,10 @@ class ConfigParser
   string valJetChoice;
   int valOptim, valOptimTopLep, valOptimTopHad, valOptimHiggs, valOptimW;
   string valMadgraphDir, valTFfile;
+  int valGenerator;
+  double valComEnergy;
   int valVerbosity;
-  int valTFOption;
+  int valTFChoice, valTFOption;
   int valDoMinimization;
 
   void ReadOptionValue(string*, int*);
@@ -92,12 +94,15 @@ void ConfigParser::GetConfigFromFile(string InputFile){
   getline(fconf, line);
   getline(fconf, line);
   getline(fconf, line);
+  ReadOptionValue(&option, &valGenerator);
   ReadOptionValue(&option, &valMadgraphDir);
+  ReadOptionValue(&option, &valComEnergy);
 
   getline(fconf, line);
   getline(fconf, line);
   getline(fconf, line);
   ReadOptionValue(&option, &valTFfile);
+  ReadOptionValue(&option, &valTFChoice);
   ReadOptionValue(&option, &valTFOption);
 
   fconf.close();
