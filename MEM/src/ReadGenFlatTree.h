@@ -557,10 +557,6 @@ void ReadGenFlatTree::InitializeDryRun(string InputFileName){
   tInput->SetBranchAddress("genJet_eta",&genJet_eta,&b_genJet_eta);
   tInput->SetBranchAddress("genJet_phi",&genJet_phi,&b_genJet_phi);
   tInput->SetBranchAddress("genJet_E",&genJet_E,&b_genJet_E);
-  tInput->SetBranchAddress("signal_2lss_TT_MVA",&signal_2lss_TT_MVA,&b_signal_2lss_TT_MVA);
-  tInput->SetBranchAddress("signal_2lss_TTV_MVA",&signal_2lss_TTV_MVA,&b_signal_2lss_TTV_MVA);
-  tInput->SetBranchAddress("signal_3l_TT_MVA",&signal_3l_TT_MVA,&b_signal_3l_TT_MVA);
-  tInput->SetBranchAddress("signal_3l_TTV_MVA",&signal_3l_TTV_MVA,&b_signal_3l_TTV_MVA);
 
   cout << "Creating output tree"<<endl;
 
@@ -615,10 +611,6 @@ void ReadGenFlatTree::InitializeDryRun(string InputFileName){
   tOutput->Branch("mc_passLepPresel",&mc_passLepPresel,"mc_passLepPresel/I");
   tOutput->Branch("mc_passJetPresel25",&mc_passJetPresel25,"mc_passJetPresel25/I");
   tOutput->Branch("mc_passBjetPresel25",&mc_passBjetPresel25,"mc_passBjetPresel25/I");
-  tOutput->Branch("signal_2lss_TT_MVA",&signal_2lss_TT_MVA,"signal_2lss_TT_MVA/F");
-  tOutput->Branch("signal_2lss_TTV_MVA",&signal_2lss_TTV_MVA,"signal_2lss_TTV_MVA/F");
-  tOutput->Branch("signal_3l_TT_MVA",&signal_3l_TT_MVA,"signal_3l_TT_MVA/F");
-  tOutput->Branch("signal_3l_TTV_MVA",&signal_3l_TTV_MVA,"signal_3l_TTV_MVA/F");
 
   cout << "multilepton variables"<<endl;
   tOutput->Branch("multilepton_Bjet1_Id",&multilepton_Bjet1_Id,"multilepton_Bjet1_Id/I");
