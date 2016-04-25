@@ -447,6 +447,9 @@ class ReadGenFlatTree {
   TH1F** hMEPhaseSpace_ErrorTot_Fail;
   TH1F** hMEPhaseSpace_ErrorTot_Pass;
 
+  TH1D* hMEAllWeights[7][12];
+  TH1D* hMEAllWeights_nlog[7][12];
+
   private:
 };
 
@@ -922,6 +925,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("signal_2lss_TTV_MVA",&signal_2lss_TTV_MVA,"signal_2lss_TTV_MVA/F");
   tOutput->Branch("signal_3l_TT_MVA",&signal_3l_TT_MVA,"signal_3l_TT_MVA/F");
   tOutput->Branch("signal_3l_TTV_MVA",&signal_3l_TTV_MVA,"signal_3l_TTV_MVA/F");
+
 }
 
 

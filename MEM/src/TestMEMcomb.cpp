@@ -170,8 +170,50 @@ int main(int argc, char *argv[])
     sname = "hErrHist_Tot_hyp" + shyp[ih] + "_Fail";
     tree.hMEPhaseSpace_ErrorTot_Fail[ih] = new TH1F(sname.c_str(), sname.c_str(), 10, 0, 10);
   }
-                                                                                                                                
+  
+  string index_CatJets[12];
+  index_CatJets[0] = "3l_2b_2j";
+  index_CatJets[1] = "3l_1b_2j";
+  index_CatJets[2] = "3l_2b_1j";
+  index_CatJets[3] = "3l_1b_1j";
+  index_CatJets[4] = "3l_2b_0j";
+  index_CatJets[5] = "4l_2b";
+  index_CatJets[6] = "4l_1b";
+  index_CatJets[7] = "2lss_2b_4j";
+  index_CatJets[8] = "2lss_1b_4j";
+  index_CatJets[9] = "2lss_2b_3j";
+  index_CatJets[10] = "2lss_1b_3j";
+  index_CatJets[11] = "2lss_2b_2j";
 
+  string index_Hyp[7]; 
+  index_Hyp[0] = "TTLL";
+  index_Hyp[1] = "TTHfl";
+  index_Hyp[2] = "TTHsl";
+  index_Hyp[3] = "TTW";
+  index_Hyp[4] = "TTWJJ";
+  index_Hyp[5] = "TTbarfl";
+  index_Hyp[6] = "TTbarsl";
+
+  Double_t index_XS[7];
+  index_XS[0] = xsTTLL;
+  index_XS[1] = xsTTH;
+  index_XS[2] = xsTTH;
+  index_XS[3] = xsTTW;
+  index_XS[4] = xsTTW;
+  index_XS[5] = xsTTbar;
+  index_XS[6] = xsTTbar;
+
+  bool sel_tmp=0;
+  
+  for(int index_hyp=0; index_hyp<7; index_hyp++){
+     for(int index_cat=0; index_cat<12; index_cat++){
+   	  sname = "hMEAllWeights_" + index_Hyp[index_hyp] + "_" + index_CatJets[index_cat];
+		  tree.hMEAllWeights[index_hyp][index_cat] = new TH1D(sname.c_str(),sname.c_str(),1000,0,1e-9);
+   	  sname = "hMEAllWeights_nlog_" + index_Hyp[index_hyp] + "_" + index_CatJets[index_cat];
+   	  tree.hMEAllWeights_nlog[index_hyp][index_cat] = new TH1D(sname.c_str(),sname.c_str(),700,0,700);
+     }
+  }
+                                                                                                                     
     int ievent=0;
     for (Long64_t iEvent=atoi(argv[2]); iEvent<evMax; iEvent++){
 
@@ -405,7 +447,7 @@ int main(int argc, char *argv[])
 	       if (shyp[ih]=="TTLL"){ 
   		 tree.mc_mem_ttz_weight += res.weight / xsTTLL;
 		 if(res.weight>0)
-			 tree.mc_mem_ttz_weight_logmean += log(res.weight / xsTTLL);
+		    tree.mc_mem_ttz_weight_logmean += log(res.weight / xsTTLL);
   	 	 tree.mc_mem_ttz_weight_time += res.time;
   		 tree.mc_mem_ttz_weight_err += res.err / xsTTLL;
   		 tree.mc_mem_ttz_weight_chi2 += res.chi2;
@@ -413,14 +455,14 @@ int main(int argc, char *argv[])
                if (shyp[ih]=="TTHfl"){
 	         tree.mc_mem_tthfl_weight += res.weight / xsTTH;
 	         if(res.weight>0)
-					tree.mc_mem_tthfl_weight_logmean += log(res.weight / xsTTH);
+	            tree.mc_mem_tthfl_weight_logmean += log(res.weight / xsTTH);
                  tree.mc_mem_tthfl_weight_time += res.time;
                  tree.mc_mem_tthfl_weight_err += res.err / xsTTH;
                  tree.mc_mem_tthfl_weight_chi2 += res.chi2;
 
                  tree.mc_mem_tth_weight += res.weight / xsTTH;
                  if(res.weight>0)
-						  tree.mc_mem_tth_weight_logmean += log(res.weight / xsTTH);
+                    tree.mc_mem_tth_weight_logmean += log(res.weight / xsTTH);
                  tree.mc_mem_tth_weight_time += res.time;
                  tree.mc_mem_tth_weight_err += res.err / xsTTH;
                  tree.mc_mem_tth_weight_chi2 += res.chi2;
@@ -428,14 +470,14 @@ int main(int argc, char *argv[])
                if (shyp[ih]=="TTHsl"){
                  tree.mc_mem_tthsl_weight += res.weight / xsTTH;
                  if(res.weight>0)
-						  tree.mc_mem_tthsl_weight_logmean += log(res.weight / xsTTH);
+                    tree.mc_mem_tthsl_weight_logmean += log(res.weight / xsTTH);
                  tree.mc_mem_tthsl_weight_time += res.time;
                  tree.mc_mem_tthsl_weight_err += res.err / xsTTH;
                  tree.mc_mem_tthsl_weight_chi2 += res.chi2;
 
                  tree.mc_mem_tth_weight += res.weight / xsTTH;
                  if(res.weight>0)
-						  tree.mc_mem_tth_weight_logmean += log(res.weight / xsTTH);
+                    tree.mc_mem_tth_weight_logmean += log(res.weight / xsTTH);
                  tree.mc_mem_tth_weight_time += res.time;
                  tree.mc_mem_tth_weight_err += res.err / xsTTH;
                  tree.mc_mem_tth_weight_chi2 += res.chi2;
@@ -443,7 +485,7 @@ int main(int argc, char *argv[])
                if (shyp[ih]=="TTW"){
                  tree.mc_mem_ttw_weight += res.weight / xsTTW;
                  if(res.weight>0)
-						  tree.mc_mem_ttw_weight_logmean += log(res.weight / xsTTW);
+                    tree.mc_mem_ttw_weight_logmean += log(res.weight / xsTTW);
                  tree.mc_mem_ttw_weight_time += res.time;
                  tree.mc_mem_ttw_weight_err += res.err / xsTTW;
                  tree.mc_mem_ttw_weight_chi2 += res.chi2;
@@ -451,7 +493,7 @@ int main(int argc, char *argv[])
                if (shyp[ih]=="TTWJJ"){
                  tree.mc_mem_ttwjj_weight += res.weight / xsTTW;
                  if(res.weight>0)
-						  tree.mc_mem_ttwjj_weight_logmean += log(res.weight / xsTTW);
+                    tree.mc_mem_ttwjj_weight_logmean += log(res.weight / xsTTW);
                  tree.mc_mem_ttwjj_weight_time += res.time;
                  tree.mc_mem_ttwjj_weight_err += res.err / xsTTW;
                  tree.mc_mem_ttwjj_weight_chi2 += res.chi2;
@@ -459,14 +501,14 @@ int main(int argc, char *argv[])
                if (shyp[ih]=="TTbarfl"){
                  tree.mc_mem_ttbarfl_weight += res.weight / xsTTbar;
                  if(res.weight>0)
-						  tree.mc_mem_ttbarfl_weight_logmean += log(res.weight / xsTTbar);
+                    tree.mc_mem_ttbarfl_weight_logmean += log(res.weight / xsTTbar);
                  tree.mc_mem_ttbarfl_weight_time += res.time;
                  tree.mc_mem_ttbarfl_weight_err += res.err / xsTTbar;
                  tree.mc_mem_ttbarfl_weight_chi2 += res.chi2;
 
                  tree.mc_mem_ttbar_weight += res.weight / xsTTbar;
                  if(res.weight>0)
-						  tree.mc_mem_ttbar_weight_logmean += log(res.weight / xsTTbar);
+                    tree.mc_mem_ttbar_weight_logmean += log(res.weight / xsTTbar);
                  tree.mc_mem_ttbar_weight_time += res.time;
                  tree.mc_mem_ttbar_weight_err += res.err / xsTTbar;
                  tree.mc_mem_ttbar_weight_chi2 += res.chi2;
@@ -474,17 +516,36 @@ int main(int argc, char *argv[])
                if (shyp[ih]=="TTbarsl"){
                  tree.mc_mem_ttbarsl_weight += res.weight / xsTTbar;
                  if(res.weight>0)
-						  tree.mc_mem_ttbarsl_weight_logmean += log(res.weight / xsTTbar);
+                    tree.mc_mem_ttbarsl_weight_logmean += log(res.weight / xsTTbar);
                  tree.mc_mem_ttbarsl_weight_time += res.time;
                  tree.mc_mem_ttbarsl_weight_err += res.err / xsTTbar;
                  tree.mc_mem_ttbarsl_weight_chi2 += res.chi2;
 
                  tree.mc_mem_ttbar_weight += res.weight / xsTTbar;
                  if(res.weight>0)
-						  tree.mc_mem_ttbar_weight_logmean += log(res.weight / xsTTbar);
+                    tree.mc_mem_ttbar_weight_logmean += log(res.weight / xsTTbar);
                  tree.mc_mem_ttbar_weight_time += res.time;
                  tree.mc_mem_ttbar_weight_err += res.err / xsTTbar;
                  tree.mc_mem_ttbar_weight_chi2 += res.chi2;
+               }
+
+               for(int index_hyp=0; index_hyp<7; index_hyp++){
+						for(int index_cat=0; index_cat<12; index_cat++){
+							if(index_cat<=6)
+								sel_tmp = (tree.is_3l_TTH_SR)*(tree.catJets==index_cat)*(shyp[ih]==index_Hyp[index_hyp]);
+							if(index_cat>=7 && index_cat<=11)
+								sel_tmp = (tree.is_2lss_TTH_SR)*(tree.catJets==index_cat)*(shyp[ih]==index_Hyp[index_hyp]);
+							if(sel_tmp){
+								if(res.weight>0){
+									tree.hMEAllWeights[index_hyp][index_cat]->Fill(res.weight/index_XS[index_hyp],tree.weight);
+									tree.hMEAllWeights_nlog[index_hyp][index_cat]->Fill(-log(res.weight/index_XS[index_hyp]),tree.weight);
+								}
+								else{
+									tree.hMEAllWeights[index_hyp][index_cat]->Fill(1e-300,tree.weight);
+									tree.hMEAllWeights_nlog[index_hyp][index_cat]->Fill(-log(1e-300),tree.weight);
+								}
+							}
+						}
                }
 
              } //end combcheck
@@ -537,7 +598,7 @@ int main(int argc, char *argv[])
      else {
        tree.mc_mem_ttz_weight = 1e-300;//std::numeric_limits< double >::min();
        tree.mc_mem_ttz_weight_log = log(tree.mc_mem_ttz_weight);
-       tree.mc_mem_ttz_weight_logmean = -300.;
+       tree.mc_mem_ttz_weight_logmean = log(1e-300);
        tree.mc_mem_ttz_weight_max = 1e-300;
      }
      if (tree.mc_mem_tthfl_weight>0){       
@@ -552,7 +613,7 @@ int main(int argc, char *argv[])
      else {
        tree.mc_mem_tthfl_weight = 1e-300;//std::numeric_limits< double >::min();
        tree.mc_mem_tthfl_weight_log = log(tree.mc_mem_tthfl_weight);
-       tree.mc_mem_tthfl_weight_logmean = -300.;
+       tree.mc_mem_tthfl_weight_logmean = log(1e-300);
        tree.mc_mem_tthfl_weight_max = 1e-300;
      }
      if (tree.mc_mem_tthsl_weight>0){
@@ -567,7 +628,7 @@ int main(int argc, char *argv[])
      else {
        tree.mc_mem_tthsl_weight = 1e-300;//std::numeric_limits< double >::min();
        tree.mc_mem_tthsl_weight_log = log(tree.mc_mem_tthsl_weight);
-       tree.mc_mem_tthsl_weight_logmean = -300.;
+       tree.mc_mem_tthsl_weight_logmean = log(1e-300);
        tree.mc_mem_tthsl_weight_max = 1e-300;
      }
      int nHypAllowed_TTH = nHypAllowed[1]+nHypAllowed[2];
@@ -586,7 +647,7 @@ int main(int argc, char *argv[])
        cout << "Equal to 0"<<endl;
        tree.mc_mem_tth_weight = 1e-300;//std::numeric_limits< double >::min();
        tree.mc_mem_tth_weight_log = log(tree.mc_mem_tth_weight);
-       tree.mc_mem_tth_weight_logmean = -300.;
+       tree.mc_mem_tth_weight_logmean = log(1e-300);
       tree.mc_mem_tth_weight_max = 1e-300;
      }
      if (nHypAllowed[3]>0){
@@ -601,7 +662,7 @@ int main(int argc, char *argv[])
      else {
        tree.mc_mem_ttw_weight = 1e-300;//std::numeric_limits< double >::min();
        tree.mc_mem_ttw_weight_log = log(tree.mc_mem_ttw_weight);
-       tree.mc_mem_ttw_weight_logmean = -300.;
+       tree.mc_mem_ttw_weight_logmean = log(1e-300);
        tree.mc_mem_ttw_weight_max = 1e-300;
      }
      if (nHypAllowed[4]>0){
@@ -616,7 +677,7 @@ int main(int argc, char *argv[])
      else {
        tree.mc_mem_ttwjj_weight = 1e-300;//std::numeric_limits< double >::min();
        tree.mc_mem_ttwjj_weight_log = log(tree.mc_mem_ttwjj_weight);
-       tree.mc_mem_ttwjj_weight_logmean = -300.;
+       tree.mc_mem_ttwjj_weight_logmean = log(1e-300);
        tree.mc_mem_ttwjj_weight_max = 1e-300;
      }
      if (tree.mc_mem_ttbarfl_weight>0){
@@ -631,7 +692,7 @@ int main(int argc, char *argv[])
      else {
        tree.mc_mem_ttbarfl_weight = 1e-300;//std::numeric_limits< double >::min();
        tree.mc_mem_ttbarfl_weight_log = log(tree.mc_mem_ttbarfl_weight);
-       tree.mc_mem_ttbarfl_weight_logmean = -300.;
+       tree.mc_mem_ttbarfl_weight_logmean = log(1e-300);
        tree.mc_mem_ttbarfl_weight_max = 1e-300;
      }
      if (tree.mc_mem_ttbarsl_weight>0){
@@ -646,7 +707,7 @@ int main(int argc, char *argv[])
      else {
        tree.mc_mem_ttbarsl_weight = 1e-300;//std::numeric_limits< double >::min();
        tree.mc_mem_ttbarsl_weight_log = log(tree.mc_mem_ttbarsl_weight);
-       tree.mc_mem_ttbarsl_weight_logmean = -300.;
+       tree.mc_mem_ttbarsl_weight_logmean = log(1e-300);
        tree.mc_mem_ttbarsl_weight_max = 1e-300;
      }
      int nHypAllowed_TTbar = nHypAllowed[5]+nHypAllowed[6];
@@ -665,7 +726,7 @@ int main(int argc, char *argv[])
        cout << "Equal to 0"<<endl;
        tree.mc_mem_ttbar_weight = 1e-300;//std::numeric_limits< double >::min();
        tree.mc_mem_ttbar_weight_log = log(tree.mc_mem_ttbar_weight);
-       tree.mc_mem_ttbar_weight_logmean = -300.;
+       tree.mc_mem_ttbar_weight_logmean = log(1e-300);
       tree.mc_mem_ttbar_weight_max = 1e-300;
      }
 
@@ -761,6 +822,12 @@ int main(int argc, char *argv[])
     tree.hMEPhaseSpace_ErrorTot[ihyp]->Write();    
     tree.hMEPhaseSpace_ErrorTot_Pass[ihyp]->Write();
     tree.hMEPhaseSpace_ErrorTot_Fail[ihyp]->Write();
+  }
+  for(int index_hyp=0; index_hyp<7; index_hyp++){
+	  for(int index_cat=0; index_cat<12; index_cat++){
+		  tree.hMEAllWeights[index_hyp][index_cat]->Write();
+		  tree.hMEAllWeights_nlog[index_hyp][index_cat]->Write();
+	  }
   }
 
   tree.tOutput->Write();
