@@ -185,31 +185,21 @@ int main(int argc, char *argv[])
   index_CatJets[10] = "2lss_1b_3j";
   index_CatJets[11] = "2lss_2b_2j";
 
-  string index_Hyp[7]; 
-  index_Hyp[0] = "TTLL";
-  index_Hyp[1] = "TTHfl";
-  index_Hyp[2] = "TTHsl";
-  index_Hyp[3] = "TTW";
-  index_Hyp[4] = "TTWJJ";
-  index_Hyp[5] = "TTbarfl";
-  index_Hyp[6] = "TTbarsl";
-
   Double_t index_XS[7];
-  index_XS[0] = xsTTLL;
-  index_XS[1] = xsTTH;
-  index_XS[2] = xsTTH;
-  index_XS[3] = xsTTW;
-  index_XS[4] = xsTTW;
-  index_XS[5] = xsTTbar;
-  index_XS[6] = xsTTbar;
+  for(int index_hyp=0; index_hyp<nhyp; index_hyp++){
+     if(shyp[index_hyp]=="TTLL") index_XS[index_hyp]=xsTTLL;
+     if(shyp[index_hyp]=="TTW" || shyp[index_hyp]=="TTWJJ") index_XS[index_hyp]=xsTTW;
+     if(shyp[index_hyp]=="TTH" || shyp[index_hyp]=="TTHsl" || shyp[index_hyp]=="TTHfl") index_XS[index_hyp]=xsTTH;
+     if(shyp[index_hyp]=="TTbar" || shyp[index_hyp]=="TTbarsl" || shyp[index_hyp]=="TTbarfl") index_XS[index_hyp]=xsTTbar;
+  }
 
   bool sel_tmp=0;
   
-  for(int index_hyp=0; index_hyp<7; index_hyp++){
+  for(int index_hyp=0; index_hyp<nhyp; index_hyp++){
      for(int index_cat=0; index_cat<12; index_cat++){
-   	  sname = "hMEAllWeights_" + index_Hyp[index_hyp] + "_" + index_CatJets[index_cat];
+   	  sname = "hMEAllWeights_" + shyp[index_hyp] + "_" + index_CatJets[index_cat];
    	  tree.hMEAllWeights[index_hyp][index_cat] = new TH1D(sname.c_str(),sname.c_str(),1000,0,1e-9);
-   	  sname = "hMEAllWeights_nlog_" + index_Hyp[index_hyp] + "_" + index_CatJets[index_cat];
+   	  sname = "hMEAllWeights_nlog_" + shyp[index_hyp] + "_" + index_CatJets[index_cat];
    	  tree.hMEAllWeights_nlog[index_hyp][index_cat] = new TH1D(sname.c_str(),sname.c_str(),700,0,700);
      }
   }
@@ -529,21 +519,19 @@ int main(int argc, char *argv[])
                  tree.mc_mem_ttbar_weight_chi2 += res.chi2;
                }
 
-               for(int index_hyp=0; index_hyp<7; index_hyp++){
-                  for(int index_cat=0; index_cat<12; index_cat++){
-                     if(index_cat<=6)
-                        sel_tmp = (tree.is_3l_TTH_SR)*(tree.catJets==index_cat)*(shyp[ih]==index_Hyp[index_hyp]);
-                     if(index_cat>=7 && index_cat<=11)
-                        sel_tmp = (tree.is_2lss_TTH_SR)*(tree.catJets==index_cat)*(shyp[ih]==index_Hyp[index_hyp]);
-                     if(sel_tmp){
-                        if(res.weight>0){
-                           tree.hMEAllWeights[index_hyp][index_cat]->Fill(res.weight/index_XS[index_hyp],tree.weight);
-                           tree.hMEAllWeights_nlog[index_hyp][index_cat]->Fill(-log(res.weight/index_XS[index_hyp]),tree.weight);
-                        }
-                        else{
-                           tree.hMEAllWeights[index_hyp][index_cat]->Fill(1e-300,tree.weight);
-                           tree.hMEAllWeights_nlog[index_hyp][index_cat]->Fill(-log(1e-300),tree.weight);
-                        }
+               for(int index_cat=0; index_cat<12; index_cat++){
+                  if(index_cat<=6)
+                     sel_tmp = (tree.is_3l_TTH_SR)*(tree.catJets==index_cat);
+                  if(index_cat>=7 && index_cat<=11)
+                     sel_tmp = (tree.is_2lss_TTH_SR)*(tree.catJets==index_cat);
+                  if(sel_tmp){
+                     if(res.weight>0){
+                        tree.hMEAllWeights[ih][index_cat]->Fill(res.weight/index_XS[ih],tree.weight);
+                        tree.hMEAllWeights_nlog[ih][index_cat]->Fill(-log(res.weight/index_XS[ih]),tree.weight);
+                     }
+                     else{
+                        tree.hMEAllWeights[ih][index_cat]->Fill(1e-300,tree.weight);
+                        tree.hMEAllWeights_nlog[ih][index_cat]->Fill(-log(1e-300),tree.weight);
                      }
                   }
                }
@@ -823,7 +811,7 @@ int main(int argc, char *argv[])
     tree.hMEPhaseSpace_ErrorTot_Pass[ihyp]->Write();
     tree.hMEPhaseSpace_ErrorTot_Fail[ihyp]->Write();
   }
-  for(int index_hyp=0; index_hyp<7; index_hyp++){
+  for(int index_hyp=0; index_hyp<nhyp; index_hyp++){
      for(int index_cat=0; index_cat<12; index_cat++){
         tree.hMEAllWeights[index_hyp][index_cat]->Write();
         tree.hMEAllWeights_nlog[index_hyp][index_cat]->Write();
