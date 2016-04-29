@@ -267,7 +267,7 @@ double TransferFunctions::ComputeSingleTF_Histo(string Part, double Gen_E, doubl
   for (int iBin=0; iBin<3; iBin++){ //MHT
     if (Reco_Eta > MetSumRange[iBin] && Reco_Eta<MetSumRange[iBin+1]) iMet = iMet*3 + iBin;
   }
-  if ((Part=="mET_Px" || Part=="mET_Py") && (iMet<0 || iMet>5)){
+  if ((Part=="mET_Px" || Part=="mET_Py" || Part=="mET_Pt" || Part=="mET_Phi") && (iMet<0 || iMet>5)){
     if (verbosity_>=2) cout << "TF Histo mET component = "<<Reco_E<<" out of range, set weightTF=1"<<endl;
     return 1;
   }
@@ -275,40 +275,50 @@ double TransferFunctions::ComputeSingleTF_Histo(string Part, double Gen_E, doubl
   int iTFbin = -1;
 
   if (Part=="Bjet") {
-    if (iTF == kTFHistoBnonBmET) iTFbin = TFratio_B[iEta][iEnergy]->FindBin(Gen_E-Reco_E);
-    else if (iTF == kTFHistoBnonBratiomET) iTFbin = TF_B[iEta][iEnergy]->FindBin(Reco_E/Gen_E);
-
-    if (iTFbin >= TF_B[iEta][iEnergy]->GetNbinsX() || iTFbin==0) weightTF = 0;
-    else weightTF = TF_B[iEta][iEnergy]->GetBinContent(iTFbin);
+    if (iTF == kTFHistoBnonBmET) {
+      iTFbin = TF_B[iEta][iEnergy]->FindBin(Gen_E-Reco_E);
+      if (iTFbin >= TF_B[iEta][iEnergy]->GetNbinsX() || iTFbin==0) weightTF = 0;
+      else weightTF = TF_B[iEta][iEnergy]->GetBinContent(iTFbin);
+    }
+    else if (iTF == kTFHistoBnonBratiomET) {
+      iTFbin = TFratio_B[iEta][iEnergy]->FindBin(Reco_E/Gen_E);
+      if (iTFbin >= TFratio_B[iEta][iEnergy]->GetNbinsX() || iTFbin==0) weightTF = 0;
+      else weightTF = TFratio_B[iEta][iEnergy]->GetBinContent(iTFbin);
+    }
   }
 
   if (Part=="Jet") {
-    if (iTF == kTFHistoBnonBmET) iTFbin = TF_nonB[iEta][iEnergy]->FindBin(Gen_E-Reco_E);
-    else if (iTF == kTFHistoBnonBratiomET) iTFbin = TFratio_nonB[iEta][iEnergy]->FindBin(Reco_E/Gen_E);
-
-    if (iTFbin >= TF_nonB[iEta][iEnergy]->GetNbinsX() || iTFbin==0) weightTF = 0;
-    else weightTF = TF_nonB[iEta][iEnergy]->GetBinContent(iTFbin);
+    if (iTF == kTFHistoBnonBmET) {
+      iTFbin = TF_nonB[iEta][iEnergy]->FindBin(Gen_E-Reco_E);
+      if (iTFbin >= TF_nonB[iEta][iEnergy]->GetNbinsX() || iTFbin==0) weightTF = 0;
+      else weightTF = TF_nonB[iEta][iEnergy]->GetBinContent(iTFbin);
+    }
+    else if (iTF == kTFHistoBnonBratiomET) {
+      iTFbin = TFratio_nonB[iEta][iEnergy]->FindBin(Reco_E/Gen_E);
+      if (iTFbin >= TFratio_nonB[iEta][iEnergy]->GetNbinsX() || iTFbin==0) weightTF = 0;
+      else weightTF = TFratio_nonB[iEta][iEnergy]->GetBinContent(iTFbin);
+    }
   }
 
   if (Part=="mET_Px") {
     iTFbin = TF_MetPx[iMet]->FindBin(Gen_E-Reco_E);
     if (iTFbin >= TF_MetPx[iMet]->GetNbinsX() || iTFbin==0) weightTF = 0;
-    weightTF = TF_MetPx[iMet]->GetBinContent(iTFbin);
+    else weightTF = TF_MetPx[iMet]->GetBinContent(iTFbin);
   }
   if (Part=="mET_Py") {
     iTFbin = TF_MetPy[iMet]->FindBin(Gen_E-Reco_E);
     if (iTFbin >= TF_MetPy[iMet]->GetNbinsX() || iTFbin==0) weightTF = 0;
-    weightTF = TF_MetPy[iMet]->GetBinContent(iTFbin);
+    else weightTF = TF_MetPy[iMet]->GetBinContent(iTFbin);
   }
   if (Part=="mET_Pt") {
     iTFbin = TF_MetPt[iMet]->FindBin(Gen_E-Reco_E);
     if (iTFbin >= TF_MetPt[iMet]->GetNbinsX() || iTFbin==0) weightTF = 0;
-    weightTF = TF_MetPt[iMet]->GetBinContent(iTFbin);
+    else weightTF = TF_MetPt[iMet]->GetBinContent(iTFbin);
   }
   if (Part=="mET_Phi") {
     iTFbin = TF_MetPhi[iMet]->FindBin(Gen_E-Reco_E);
     if (iTFbin >= TF_MetPhi[iMet]->GetNbinsX() || iTFbin==0) weightTF = 0;
-    weightTF = TF_MetPhi[iMet]->GetBinContent(iTFbin);
+    else weightTF = TF_MetPhi[iMet]->GetBinContent(iTFbin);
   }
 
   if (verbosity_>=2) cout << "TF Histo "<<Part<< " Gen="<<Gen_E<<" Reco="<<Reco_E<<" weightTF="<<weightTF<<endl;
