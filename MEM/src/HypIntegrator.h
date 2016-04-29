@@ -37,12 +37,14 @@ class HypIntegrator
 
   MEPhaseSpace* meIntegrator;
 
+  int nPointsCatHyp;
   ROOT::Math::Functor** toIntegrate;
 
   ROOT::Math::GSLMCIntegrator* ig2;
   ROOT::Math::VegasParameters* param;
 
   ROOT::Minuit2::Minuit2Minimizer* minimizer;
+  TRandom2 rnd;
 
   int intPoints;
 
@@ -125,29 +127,31 @@ void HypIntegrator::SetupIntegrationHypothesis(int kMode, int kCat, int stageVal
   param->stage      = stageValue;
   ig2->SetParameters(*param);
 
-  SetNCalls(nPoints);
+  nPointsCatHyp = nPoints;
   if (meIntegrator->iNleptons==3){
     if (kMode!=kMEM_TTW_TopAntitopDecay && kMode!=kMEM_TTbar_TopAntitopFullyLepDecay){
-      if (kCat==kCat_3l_1b_2j || kCat==kCat_3l_2b_1j) SetNCalls(nPoints*10);
-      if (kCat==kCat_3l_1b_1j || kCat==kCat_3l_2b_0j) SetNCalls(nPoints*50);
+      if (kCat==kCat_3l_1b_2j || kCat==kCat_3l_2b_1j) nPointsCatHyp *= 10;
+      if (kCat==kCat_3l_1b_1j || kCat==kCat_3l_2b_0j) nPointsCatHyp *= 50;
     }
     if (kMode==kMEM_TTW_TopAntitopDecay || kMode==kMEM_TTbar_TopAntitopFullyLepDecay){
-      if (kCat==kCat_3l_1b_2j || kCat==kCat_3l_1b_1j) SetNCalls(nPoints*10);
+      if (kCat==kCat_3l_1b_2j || kCat==kCat_3l_1b_1j) nPointsCatHyp *= 10;
     }
   }
   else if (meIntegrator->iNleptons==4){
-    if (kCat==kCat_4l_2b) SetNCalls(nPoints*3);   
-    if (kCat==kCat_4l_1b) SetNCalls(nPoints*30); 
+    if (kCat==kCat_4l_2b) nPointsCatHyp *= 3;   
+    if (kCat==kCat_4l_1b) nPointsCatHyp *= 30; 
   }
   else if (meIntegrator->iNleptons==2){
     if (kMode!=kMEM_TTW_TopAntitopDecay && kMode!=kMEM_TTbar_TopAntitopSemiLepDecay){
-      if (kCat==kCat_2lss_2b_3j || kCat==kCat_2lss_1b_4j) SetNCalls(nPoints*10);
-      if (kCat==kCat_2lss_1b_3j || kCat==kCat_2lss_2b_2j) SetNCalls(nPoints*50);
+      if (kCat==kCat_2lss_2b_3j || kCat==kCat_2lss_1b_4j) nPointsCatHyp *= 10;
+      if (kCat==kCat_2lss_1b_3j || kCat==kCat_2lss_2b_2j) nPointsCatHyp *= 50;
     }
     if (kMode==kMEM_TTW_TopAntitopDecay || kMode==kMEM_TTbar_TopAntitopSemiLepDecay){
-      if (kCat==kCat_2lss_1b_4j || kCat==kCat_2lss_1b_3j) SetNCalls(nPoints*10);
+      if (kCat==kCat_2lss_1b_4j || kCat==kCat_2lss_1b_3j) nPointsCatHyp *= 10;
     }
   }
+
+  SetNCalls(nPointsCatHyp);
   ResetCounters();
 
   return;
@@ -164,7 +168,7 @@ void HypIntegrator::SetupMinimizerHypothesis(int kMode, int kCat, int stageValue
 
   minimizer->SetFunction(*FunctorHyp);
 
-  minimizer->SetMaxFunctionCalls(100000);
+  minimizer->SetMaxFunctionCalls(5*nPointsCatHyp);
   minimizer->SetPrintLevel(1);
 
   return;
@@ -200,15 +204,13 @@ double* HypIntegrator::FindMinimizationiInitialValues(double* xL, double* xU)
 
   ResetCounters();
 
-  TRandom2 rnd;
-
   double* varbest = new double[minimizer->NDim()];
   double* var = new double[minimizer->NDim()];
 
   double val = 1000;
   double valmin = 1000;
   int ival=0;
-  for (int i=0; i<10000; i++){
+  for (int i=0; i<nPointsCatHyp; i++){
     for (unsigned int ivar=0; ivar<minimizer->NDim(); ivar++){
       var[ivar] = xL[ivar] + rnd.Uniform()*(xU[ivar]-xL[ivar]);
     }
