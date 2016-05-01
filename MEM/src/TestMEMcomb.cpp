@@ -104,7 +104,8 @@ int main(int argc, char *argv[])
     //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, kOptimizeNone);
     //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, kOptimizeMw);
     //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, doOptim);
-    hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, &cfgParser);
+    //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, &cfgParser);
+    hypIntegrator.InitializeIntegrator(&cfgParser);
 
     int doMinimization = cfgParser.valDoMinimization;
 
@@ -371,11 +372,18 @@ int main(int argc, char *argv[])
 
 	       if (doMinimization){
                  hypIntegrator.meIntegrator->SetMinimization(1);
+		 double resweightmin = 1000;
 	         double * var;
-	         var = hypIntegrator.FindMinimizationiInitialValues(multiLepton.xL, multiLepton.xU);
-	         res = hypIntegrator.DoMinimization(multiLepton.xL, multiLepton.xU, var);
-	         cout << "Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" -log(max)=" << res.weight<<" Time(s)="<<res.time<<endl;
-	         hypIntegrator.meIntegrator->SetMinimization(0);
+		 for (int itry=0; itry<10; itry++){
+	           var = hypIntegrator.FindMinimizationiInitialValues(multiLepton.xL, multiLepton.xU);
+	           res = hypIntegrator.DoMinimization(multiLepton.xL, multiLepton.xU, var);
+	           cout << "TRY Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" -log(max)=" << res.weight<<" Time(s)="<<res.time<<endl;
+		   if ( res.weight < resweightmin) resweightmin = res.weight;
+		 }
+                 hypIntegrator.meIntegrator->SetMinimization(0);
+
+		 res.weight = exp(-resweightmin);
+		 cout << "FINAL Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" min=" << res.weight<<" Time(s)="<<res.time<<endl;
 	       }
 	       else {
                  res = hypIntegrator.DoIntegration(multiLepton.xL, multiLepton.xU); 
