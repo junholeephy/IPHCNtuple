@@ -70,8 +70,8 @@ class Tree {
         Float_t         mc_ptHat;
         Float_t         mc_weight;
         vector<float>   *mc_pdfweights;
-        
-	
+
+
 	// ####################################
         // #   ____  _ _                      #
         // #  |  _ \(_) | ___   _   _ _ __    #
@@ -308,6 +308,15 @@ class Tree {
         vector<float>   *tau_byLooseIsolationMVA3newDMwLT;
         vector<float>   *tau_byMediumIsolationMVA3newDMwLT;
         vector<float>   *tau_byTightIsolationMVA3newDMwLT;
+
+        vector<float>   *tau_byLooseCombinedIsolationDeltaBetaCorr3HitsdR03;
+        vector<float>   *tau_byMediumCombinedIsolationDeltaBetaCorr3HitsdR03;
+        vector<float>   *tau_byTightCombinedIsolationDeltaBetaCorr3HitsdR03;
+        vector<float>   *tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT;
+        vector<float>   *tau_byMediumIsolationMVArun2v1DBdR03oldDMwLT;
+        vector<float>   *tau_byTightIsolationMVArun2v1DBdR03oldDMwLT;
+        vector<float>   *tau_byVTightIsolationMVArun2v1DBdR03oldDMwLT;
+
         vector<float>   *tau_byCombinedIsolationDeltaBetaCorrRaw3Hits;
         vector<float>   *tau_chargedIsoPtSum;
         vector<float>   *tau_neutralIsoPtSum;
@@ -929,7 +938,7 @@ class Tree {
         TBranch        *b_mc_scale;   //!
         TBranch        *b_mc_ptHat;   //!
         TBranch        *b_mc_pdfweights;  //!
-        
+
 	// ####################################
         // #   ____  _ _                      #
         // #  |  _ \(_) | ___   _   _ _ __    #
@@ -1162,9 +1171,18 @@ class Tree {
         TBranch   *b_tau_byLooseCombinedIsolationDeltaBetaCorr3Hits;
         TBranch   *b_tau_byMediumCombinedIsolationDeltaBetaCorr3Hits;
         TBranch   *b_tau_byTightCombinedIsolationDeltaBetaCorr3Hits;
-        //TBranch   *b_tau_byLooseIsolationMVA3newDMwLT;
-        //TBranch   *b_tau_byMediumIsolationMVA3newDMwLT;
-        //TBranch   *b_tau_byTightIsolationMVA3newDMwLT;
+        TBranch   *b_tau_byLooseIsolationMVA3newDMwLT;
+        TBranch   *b_tau_byMediumIsolationMVA3newDMwLT;
+        TBranch   *b_tau_byTightIsolationMVA3newDMwLT;
+
+        TBranch   *b_tau_byLooseCombinedIsolationDeltaBetaCorr3HitsdR03;
+        TBranch   *b_tau_byMediumCombinedIsolationDeltaBetaCorr3HitsdR03;
+        TBranch   *b_tau_byTightCombinedIsolationDeltaBetaCorr3HitsdR03;
+        TBranch   *b_tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT;
+        TBranch   *b_tau_byMediumIsolationMVArun2v1DBdR03oldDMwLT;
+        TBranch   *b_tau_byTightIsolationMVArun2v1DBdR03oldDMwLT;
+        TBranch   *b_tau_byVTightIsolationMVArun2v1DBdR03oldDMwLT;
+
         TBranch   *b_tau_byCombinedIsolationDeltaBetaCorrRaw3Hits;
         TBranch   *b_tau_chargedIsoPtSum;
         TBranch   *b_tau_neutralIsoPtSum;

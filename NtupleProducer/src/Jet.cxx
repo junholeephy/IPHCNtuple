@@ -121,7 +121,8 @@ bool Jet::sel()
             pass_isLoose    &&
             pass_muOverlap  &&
             pass_elOverlap  &&
-            pass_tauOverlap );
+            pass_tauOverlap 
+            );
 
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     // synchronization printout

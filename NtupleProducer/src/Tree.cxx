@@ -304,7 +304,16 @@ void Tree::Init(TChain *ch)
     tau_byLooseIsolationMVA3newDMwLT = 0;
     tau_byMediumIsolationMVA3newDMwLT = 0;
     tau_byTightIsolationMVA3newDMwLT = 0;
-    tau_byCombinedIsolationDeltaBetaCorrRaw3Hits = 0;
+    
+    tau_byLooseCombinedIsolationDeltaBetaCorr3HitsdR03  = 0;
+    tau_byMediumCombinedIsolationDeltaBetaCorr3HitsdR03 = 0;
+    tau_byTightCombinedIsolationDeltaBetaCorr3HitsdR03  = 0;
+    tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT         = 0;
+    tau_byMediumIsolationMVArun2v1DBdR03oldDMwLT        = 0;
+    tau_byTightIsolationMVArun2v1DBdR03oldDMwLT         = 0;
+    tau_byVTightIsolationMVArun2v1DBdR03oldDMwLT        = 0;
+    
+    tau_byCombinedIsolationDeltaBetaCorrRaw3Hits        = 0;
     tau_chargedIsoPtSum = 0;
     tau_neutralIsoPtSum = 0;
     tau_puCorrPtSum = 0;
@@ -1086,10 +1095,19 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("tau_byLooseCombinedIsolationDeltaBetaCorr3Hits", &tau_byLooseCombinedIsolationDeltaBetaCorr3Hits,&b_tau_byLooseCombinedIsolationDeltaBetaCorr3Hits);
     fChain->SetBranchAddress("tau_byMediumCombinedIsolationDeltaBetaCorr3Hits", &tau_byMediumCombinedIsolationDeltaBetaCorr3Hits, &b_tau_byMediumCombinedIsolationDeltaBetaCorr3Hits);
     fChain->SetBranchAddress("tau_byTightCombinedIsolationDeltaBetaCorr3Hits", &tau_byTightCombinedIsolationDeltaBetaCorr3Hits, &b_tau_byTightCombinedIsolationDeltaBetaCorr3Hits);
-    //fChain->SetBranchAddress("tau_byLooseIsolationMVA3newDMwLT", &tau_byLooseIsolationMVA3newDMwLT, &b_tau_byLooseIsolationMVA3newDMwLT);
-    //fChain->SetBranchAddress("tau_byMediumIsolationMVA3newDMwLT", &tau_byMediumIsolationMVA3newDMwLT, &b_tau_byMediumIsolationMVA3newDMwLT);
-    //fChain->SetBranchAddress("tau_byTightIsolationMVA3newDMwLT", &tau_byTightIsolationMVA3newDMwLT, &b_tau_byTightIsolationMVA3newDMwLT);
+    fChain->SetBranchAddress("tau_byLooseIsolationMVA3newDMwLT", &tau_byLooseIsolationMVA3newDMwLT, &b_tau_byLooseIsolationMVA3newDMwLT);
+    fChain->SetBranchAddress("tau_byMediumIsolationMVA3newDMwLT", &tau_byMediumIsolationMVA3newDMwLT, &b_tau_byMediumIsolationMVA3newDMwLT);
+    fChain->SetBranchAddress("tau_byTightIsolationMVA3newDMwLT", &tau_byTightIsolationMVA3newDMwLT, &b_tau_byTightIsolationMVA3newDMwLT);
     fChain->SetBranchAddress("tau_byCombinedIsolationDeltaBetaCorrRaw3Hits", &tau_byCombinedIsolationDeltaBetaCorrRaw3Hits, &b_tau_byCombinedIsolationDeltaBetaCorrRaw3Hits);
+
+    fChain->SetBranchAddress("tau_byLooseCombinedIsolationDeltaBetaCorr3HitsdR03",  &tau_byLooseCombinedIsolationDeltaBetaCorr3HitsdR03,  &b_tau_byLooseCombinedIsolationDeltaBetaCorr3HitsdR03  );
+    fChain->SetBranchAddress("tau_byMediumCombinedIsolationDeltaBetaCorr3HitsdR03", &tau_byMediumCombinedIsolationDeltaBetaCorr3HitsdR03, &b_tau_byMediumCombinedIsolationDeltaBetaCorr3HitsdR03 );
+    fChain->SetBranchAddress("tau_byTightCombinedIsolationDeltaBetaCorr3HitsdR03",  &tau_byTightCombinedIsolationDeltaBetaCorr3HitsdR03,  &b_tau_byTightCombinedIsolationDeltaBetaCorr3HitsdR03  );
+    fChain->SetBranchAddress("tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT",         &tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT,         &b_tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT         );
+    fChain->SetBranchAddress("tau_byMediumIsolationMVArun2v1DBdR03oldDMwLT",        &tau_byMediumIsolationMVArun2v1DBdR03oldDMwLT,        &b_tau_byMediumIsolationMVArun2v1DBdR03oldDMwLT        );
+    fChain->SetBranchAddress("tau_byTightIsolationMVArun2v1DBdR03oldDMwLT",         &tau_byTightIsolationMVArun2v1DBdR03oldDMwLT,         &b_tau_byTightIsolationMVArun2v1DBdR03oldDMwLT         ); 
+    fChain->SetBranchAddress("tau_byVTightIsolationMVArun2v1DBdR03oldDMwLT",        &tau_byVTightIsolationMVArun2v1DBdR03oldDMwLT,        &b_tau_byVTightIsolationMVArun2v1DBdR03oldDMwLT        );
+       
     fChain->SetBranchAddress("tau_chargedIsoPtSum", &tau_chargedIsoPtSum, &b_tau_chargedIsoPtSum);
     fChain->SetBranchAddress("tau_neutralIsoPtSum", &tau_neutralIsoPtSum, &b_tau_neutralIsoPtSum);
     fChain->SetBranchAddress("tau_puCorrPtSum", &tau_puCorrPtSum, &b_tau_puCorrPtSum);

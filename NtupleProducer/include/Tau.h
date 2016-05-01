@@ -89,6 +89,17 @@ class Tau : public Base
         float _byMediumIsolationMVA3newDMwLT; //placeholder, will it exist for Run II ??
         float _byTightIsolationMVA3newDMwLT;  //placeholder, will it exist for Run II ??
 
+        // isolation discriminators
+
+        float _byLooseCombinedIsolationDeltaBetaCorr3HitsdR03;
+        float _byMediumCombinedIsolationDeltaBetaCorr3HitsdR03;
+        float _byTightCombinedIsolationDeltaBetaCorr3HitsdR03;
+
+        float _byLooseIsolationMVArun2v1DBdR03oldDMwLT;
+        float _byMediumIsolationMVArun2v1DBdR03oldDMwLT;
+        float _byTightIsolationMVArun2v1DBdR03oldDMwLT;
+        float _byVTightIsolationMVArun2v1DBdR03oldDMwLT;
+
         // raw values of the isolation
 
         float _byCombinedIsolationDeltaBetaCorrRaw3Hits;

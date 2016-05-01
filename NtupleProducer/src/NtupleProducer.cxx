@@ -38,17 +38,17 @@ int main(int argc, char *argv[])
     for(int i=0;i<argc;i++)
     {
         if( ! strcmp(argv[i],"--file") )    fname_str      = argv[i+1];
-	if( ! strcmp(argv[i],"--outfile") ) fname_out_str  = argv[i+1];	
+        if( ! strcmp(argv[i],"--outfile") ) fname_out_str  = argv[i+1];	
         if( ! strcmp(argv[i],"--tree") )    stream_str     = argv[i+1];
         if( ! strcmp(argv[i],"--nmax") )    nmax           = atoi(argv[i+1]);
-	if( ! strcmp(argv[i],"--isdata") )  isdata         = (bool) atoi(argv[i+1]);
-	
+        if( ! strcmp(argv[i],"--isdata") )  isdata         = (bool) atoi(argv[i+1]);
+
     }   
 
     const char *fname = fname_str;
     const char *stream = stream_str;
     const char *fname_out = fname_out_str;
-    
+
     std::cout << "--file="   << fname      << std::endl;
     std::cout << "--outfile="<< fname_out  << std::endl;
     std::cout << "--tree="   << stream     << std::endl;
@@ -82,27 +82,27 @@ int main(int argc, char *argv[])
     Truth  truth;
     GenJet genjet;
     TriggerObj trigObj;
-    
+
     evdebug = new std::vector<int>();
     //   evdebug->push_back(120);
 
     int nlep = 0;
     int njet = 0;
- 
+
     int n_mu  = 0;
     int n_el  = 0;
     int n_tau = 0;
     int n_jet = 0;
-   
+
     for(Long64_t i=0;i<nentries;i++)
     {
         if( i > nmax && nmax >= 0 ) break; 
 
         //std::cout << "i:" << i << std::endl;
         ch->GetEntry(i);
-   
-   
- 
+
+
+
         nt->clearVar();	
 
         //	if( !(isHtoWW || isHtoZZ || isHtoTT) ) continue;
@@ -117,15 +117,34 @@ int main(int argc, char *argv[])
         //	else if( isHtoTT ) ev._tth_channel = 2;
 
         nt->NtEvent->push_back(ev);
-   
+
         bool mu_presel  = false,
              el_presel  = false,
              tau_presel = false,
              jet_presel = false;
+
+        int n_mu_evt = 0;
+
+        // muons
+        for(int j=0;j<ntP->mu_n;j++)
+        {
+            idx = j;
+
+            mu.init();
+            mu.read();
+
+            if( mu.sel())
+            {
+                nt->NtMuon->push_back(mu);
+                mu_presel = true;
+                n_mu_evt ++;
+            }
+        }
+        if(mu_presel) n_mu++;
         
-	int n_el_evt = 0;
- 
-         // electrons
+        int n_el_evt = 0;
+
+        // electrons
         for(int j=0;j<ntP->el_n;j++)
         {
             idx = j;
@@ -133,38 +152,18 @@ int main(int argc, char *argv[])
             el.init();
             el.read();
             if( el.sel() ) nlep++;
-           
+
             if( el.sel()) 
             {    
                 nt->NtElectron->push_back(el);
                 el_presel = true;
-		n_el_evt++;
+                n_el_evt++;
             }
         }
         if(el_presel) n_el++;
-	
-        int n_mu_evt = 0;
-        
-	// muons
-        for(int j=0;j<ntP->mu_n;j++)
-        {
-            idx = j;
 
-            mu.init();
-            mu.read();
-         
-            if( mu.sel()) 
-            {
-                nt->NtMuon->push_back(mu);
-                mu_presel = true;
-		n_mu_evt ++;
-            }
-        }
-        if(mu_presel) n_mu++;
-	
-	// preselection
-	if ( (n_mu_evt + n_el_evt) < 2 ) continue; 
-
+        // preselection
+        // if ( (n_mu_evt + n_el_evt) < 2 ) continue; 
 
         // taus 
         for(int j=0;j<ntP->tau_n;j++)
@@ -173,7 +172,7 @@ int main(int argc, char *argv[])
 
             tau.init();
             tau.read();
-         
+
             if (tau.sel()) 
             {    
                 nt->NtTau->push_back(tau);
@@ -189,7 +188,7 @@ int main(int argc, char *argv[])
 
             jet.init();
             jet.read(isdata);
-            
+
             if (jet.sel()) 
             {    
                 nt->NtJet->push_back(jet);
@@ -197,43 +196,43 @@ int main(int argc, char *argv[])
             }    
         }
         if(jet_presel) n_jet++;
-	
-	//trigger objects
-	/*for(int j=0;j<ntP->triggerobject_n;j++)
-        {
-            idx = j;
-            
-            trigObj.init();
-            trigObj.read();
-          
-            if (trigObj.sel()) nt->NtTriggerObj->push_back(trigObj);
-        }*/
-	
-	if (!isdata)
-	{
-	  // genjets
-          for(int j=0;j<ntP->genJet_n;j++)
+
+        //trigger objects
+        /*for(int j=0;j<ntP->triggerobject_n;j++)
           {
-              idx = j;
-	      
-              genjet.init();
-              genjet.read();
-	      
-              if (genjet.sel()) nt->NtGenJet->push_back(genjet);
-          }
+          idx = j;
 
-          // truth
-          truth.init();
-          truth.read();
-          truth.readMultiLepton();
+          trigObj.init();
+          trigObj.read();
 
-          nt->NtTruth->push_back(truth);
-	}
+          if (trigObj.sel()) nt->NtTriggerObj->push_back(trigObj);
+          }*/
 
-        /*std::cout << " n_mu :  " << n_mu  << std::endl
-                  << " n_el :  " << n_el  << std::endl
-                  << " n_tau:  " << n_tau << std::endl
-                  << " n_jet:  " << n_jet << std::endl;*/
+        if (!isdata)
+        {
+            // genjets
+            for(int j=0;j<ntP->genJet_n;j++)
+            {
+                idx = j;
+
+                genjet.init();
+                genjet.read();
+
+                if (genjet.sel()) nt->NtGenJet->push_back(genjet);
+            }
+
+            // truth
+            truth.init();
+            truth.read();
+            truth.readMultiLepton();
+
+            nt->NtTruth->push_back(truth);
+        }
+
+        std::cout << " n_mu :  " << n_mu  << std::endl
+          << " n_el :  " << n_el  << std::endl
+          << " n_tau:  " << n_tau << std::endl
+          << " n_jet:  " << n_jet << std::endl;
 
         nt->fill();
     }  
