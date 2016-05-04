@@ -11,6 +11,9 @@
 #include "GenJet.h"
 #include "TriggerObj.h"
 #include "Ntuple.h"
+// JES
+//#include "CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
+//#include "CondFormats/JetMETObjects/interface/JetCorrectionUncertainty.h"
 
 extern Tree             *ntP;
 extern TChain           *ch;

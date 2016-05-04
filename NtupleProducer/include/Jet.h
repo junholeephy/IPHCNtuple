@@ -55,7 +55,9 @@ class Jet : public Base
 
         void  read(bool isdata);
         void  init();
-
+	void  setJESUncertainty(float JES_uncert);
+        void  JECUncertainty();
+    
     protected:
 
         int _ID;
@@ -93,7 +95,17 @@ class Jet : public Base
           float _jet_genParton_m      ;
           float _jet_genParton_E      ;
           float _jet_genParton_status ;*/
-          float _jet_genParton_id     ;
+        float _jet_genParton_id     ;
+
+        float _JES_uncert; // to be used with pt(1+/-uncert), E(1+/-uncert)
+	
+        float _pt_JER;
+        float _pt_JER_down;
+        float _pt_JER_up;
+        
+	double _cJER[5];
+        double _cJER_down[5];
+        double _cJER_up[5];
 
         ClassDef(Jet,1)
 };
