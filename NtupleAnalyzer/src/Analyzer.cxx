@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
         if( ! strcmp(argv[i],"--lumi") )    lumi = atoi(argv[i+1]);
         if( ! strcmp(argv[i],"--xsec") )    xsec = atof(argv[i+1]);
         if( ! strcmp(argv[i],"--isdata") )  isdata = (bool) atoi(argv[i+1]);
-	if( ! strcmp(argv[i],"--dataset") ) dataset_str = argv[i+1];
+        if( ! strcmp(argv[i],"--dataset") ) dataset_str = argv[i+1];
     }
 
     const char *fname = fname_str;                                                                                         
@@ -64,17 +64,30 @@ int main(int argc, char *argv[])
 
     TChain *thetree = 0;
 
+    // TTH Transfer Function analysis
+
+    // TTbarHiggsTFAnalysis *TTHTFanalysis = new TTbarHiggsTFAnalysis(fname,thetree,"TTbarHiggs",stream);
+    // TTHTFanalysis->createHistograms();
+    // TTHTFanalysis->Loop();
+    // TTHTFanalysis->writeHistograms();
+
+    // TTH Trigger Studies
+
+    // TTbar...
+
+    // TTH Charge Flip Determination
+
+    // TTbar...
+
+    // TTH Fake Rate Determination
+
+    // TTbar...
+
     //TTH MEM analysis
     TTbarHiggsMultileptonAnalysis *TTHanalysis = new TTbarHiggsMultileptonAnalysis(fname,thetree,dataset,stream,outfile,isdata,xsec,lumi,nowe,nmax);
     // TTHanalysis->InitLHCO(1,1); // to print LHCO files
     TTHanalysis->createHistograms();
     TTHanalysis->Loop();
     TTHanalysis->writeHistograms();
-
-    ////TTH Transfer Function analysis
-    //TTbarHiggsTFAnalysis *TTHTFanalysis = new TTbarHiggsTFAnalysis(fname,thetree,"TTbarHiggs",stream);
-    //TTHTFanalysis->createHistograms();
-    //TTHTFanalysis->Loop();
-    //TTHTFanalysis->writeHistograms();
 
 }
