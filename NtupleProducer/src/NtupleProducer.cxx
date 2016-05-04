@@ -93,7 +93,14 @@ int main(int argc, char *argv[])
     int n_el  = 0;
     int n_tau = 0;
     int n_jet = 0;
-
+    
+    //JetCorrectionUncertainty *jesTotal;
+    
+    
+    //if (isdata == false)  jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_MC/Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
+    //else                  jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_MC/Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
+   
+   
     for(Long64_t i=0;i<nentries;i++)
     {
         if( i > nmax && nmax >= 0 ) break; 
@@ -188,7 +195,13 @@ int main(int argc, char *argv[])
 
             jet.init();
             jet.read(isdata);
-
+	    
+	    //jesTotal->setJetPt(jpt);
+            //jesTotal->setJetEta(jeta);
+            
+	    //jet.setJESUncertainty(jesTotal->getUncertainty(true));
+            jet.setJESUncertainty(0.);
+  
             if (jet.sel()) 
             {    
                 nt->NtJet->push_back(jet);
