@@ -84,6 +84,10 @@ class ReadGenFlatTree {
   std::vector<float>* genJet_eta;
   std::vector<float>* genJet_phi;
   std::vector<float>* genJet_E;
+  Float_t signal_2lss_TT_MVA;
+  Float_t signal_2lss_TTV_MVA;
+  Float_t signal_3l_TT_MVA;
+  Float_t signal_3l_TTV_MVA;
 
   TBranch* b_mc_event;
   TBranch* b_mc_weight;
@@ -146,6 +150,10 @@ class ReadGenFlatTree {
   TBranch* b_genJet_eta;
   TBranch* b_genJet_phi;
   TBranch* b_genJet_E;
+  TBranch* b_signal_2lss_TT_MVA;
+  TBranch* b_signal_2lss_TTV_MVA;
+  TBranch* b_signal_3l_TT_MVA;
+  TBranch* b_signal_3l_TTV_MVA;
 
   Int_t mc_event;
   Float_t mc_totp4_px;
@@ -439,6 +447,9 @@ class ReadGenFlatTree {
   TH1F** hMEPhaseSpace_ErrorTot_Fail;
   TH1F** hMEPhaseSpace_ErrorTot_Pass;
 
+  TH1D* hMEAllWeights[7][12];
+  TH1D* hMEAllWeights_nlog[7][12];
+
   private:
 };
 
@@ -490,7 +501,6 @@ void ReadGenFlatTree::InitializeDryRun(string InputFileName){
   genJet_eta = 0;
   genJet_phi = 0;
   genJet_E = 0;
-
 
   tInput->SetBranchAddress("mc_weight",&mc_weight,&b_mc_weight);
   tInput->SetBranchAddress("mc_truth_h0_id",&mc_truth_h0_id,&b_mc_truth_h0_id);
@@ -731,6 +741,11 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tInput->SetBranchAddress("multilepton_mETcov11",&multilepton_mETcov11,&b_multilepton_mETcov11);
   tInput->SetBranchAddress("multilepton_Ptot",&multilepton_Ptot_ptr,&b_multilepton_Ptot);
 
+  tInput->SetBranchAddress("signal_2lss_TT_MVA",&signal_2lss_TT_MVA,&b_signal_2lss_TT_MVA);
+  tInput->SetBranchAddress("signal_2lss_TTV_MVA",&signal_2lss_TTV_MVA,&b_signal_2lss_TTV_MVA);
+  tInput->SetBranchAddress("signal_3l_TT_MVA",&signal_3l_TT_MVA,&b_signal_3l_TT_MVA);
+  tInput->SetBranchAddress("signal_3l_TTV_MVA",&signal_3l_TTV_MVA,&b_signal_3l_TTV_MVA);
+
   cout << "Creating output tree"<<endl;
 
   fOutput = new TFile("output.root", "RECREATE");
@@ -905,6 +920,12 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_ttvjj_tth_likelihood_nlog",&mc_mem_ttvjj_tth_likelihood_nlog,"mc_mem_ttvjj_tth_likelihood_nlog/D");
   tOutput->Branch("mc_mem_ttvjj_tth_likelihood_max",&mc_mem_ttvjj_tth_likelihood_max,"mc_mem_ttvjj_tth_likelihood_max/D");
   tOutput->Branch("mc_mem_ttvjj_tth_likelihood_avg",&mc_mem_ttvjj_tth_likelihood_avg,"mc_mem_ttvjj_tth_likelihood_avg/D");
+
+  tOutput->Branch("signal_2lss_TT_MVA",&signal_2lss_TT_MVA,"signal_2lss_TT_MVA/F");
+  tOutput->Branch("signal_2lss_TTV_MVA",&signal_2lss_TTV_MVA,"signal_2lss_TTV_MVA/F");
+  tOutput->Branch("signal_3l_TT_MVA",&signal_3l_TT_MVA,"signal_3l_TT_MVA/F");
+  tOutput->Branch("signal_3l_TTV_MVA",&signal_3l_TTV_MVA,"signal_3l_TTV_MVA/F");
+
 }
 
 
