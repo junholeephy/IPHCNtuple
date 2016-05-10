@@ -237,7 +237,7 @@ void MultiLepton::ReadIntegrationBoundaries(int kMode, MEPhaseSpace** meIntegrat
   int nparam = (*meIntegrator)->GetNumberIntegrationVar(kMode, kCatJets);
 
   for (int i=0; i<nparam; i++) {
-     cout << "Var "<<i<<" xL="<<xL[i]<<" xU="<<xU[i]<<endl;
+     if ((*meIntegrator)->verbosity>=2) cout << "Var "<<i<<" xL="<<xL[i]<<" xU="<<xU[i]<<endl;
      if (xU[i] < xL[i]) cout << "Error: xU < xL" << endl;
   }
   return;
@@ -422,7 +422,11 @@ void MultiLepton::FillTTHFullyLepHyp(MEPhaseSpace** meIntegrator)
 }
 
 void MultiLepton::FillTTLLHyp(MEPhaseSpace** meIntegrator){
+
   FillTTHFullyLepHyp(meIntegrator);
+
+  (*meIntegrator)->FinalStateTTV.Boson_Type = kLL;
+
   return;
 }
 

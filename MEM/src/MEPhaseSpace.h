@@ -213,6 +213,7 @@ class MEPhaseSpace
     int iMinimize;
 
     double MEMZEROWEIGHT;
+    mutable double weight_max;
 
     mutable int isTopAntitop;
 
@@ -329,6 +330,9 @@ class MEPhaseSpace
 
     TransferFunctions* transferFunctions;
 
+    void UpdateKinVar() const;
+    double KinComputeWmass(double* , double* ) const;
+
     double ComputeTFProduct() const;
     void UpdateComputedVarForTF() const;
     void FillComputedJetForTF(double*, double*, double*) const;
@@ -389,6 +393,38 @@ class MEPhaseSpace
       int isJmissing;
     } MEMFix_HiggsSemiLep;
 
+    mutable struct MEMKin_TopHad {
+      double W_Mass;
+      double B_E;
+      double Jet1_E;
+      double Jet2_E;
+    } MEMKin_TopHad;
+   
+    mutable struct MEMKin_TopLep {
+      double W_Mass;
+      double B_E;
+      double Neut_E;
+    } MEMKin_TopLep1, MEMKin_TopLep2;
+
+    mutable struct MEMKin_Wlnu {
+      double W_Mass;
+      double Neut_E;
+    } MEMKin_Wlnu, MEMKin_Wlnu_tmp;
+
+    mutable struct MEMKin_H2l2nu {
+      double W1_Mass;
+      double Neut1_E;
+      double W2_Mass;
+      double Neut2_E;
+    } MEMKin_H2l2nu;
+
+    mutable struct MEMKin_Hlnujj {
+      double Wlnu_Mass;
+      double Neut_E;
+      double Wjj_Mass;
+      double Jet1_E;
+      double Jet2_E;
+    } MEMKin_Hlnujj;
 
     int verbosity;
     void SetVerbosity(int);
@@ -1284,6 +1320,11 @@ void MEPhaseSpace::ApplyTotalTransverseBoost() const {
 
   if (verbosity>=2) cout << "Applying boost"<<endl;
 
+  if (FinalStateTTV.Boson_Type == kLNu){ //Careful pCore will be boosted back to Lab frame !
+      MEMKin_Wlnu_tmp.W_Mass = KinComputeWmass(pCore->at(4), pCore->at(5));
+      MEMKin_Wlnu_tmp.Neut_E = pCore->at(5)[0];
+   }
+
   TLorentzVector Top(pCore->at(2)[1], pCore->at(2)[2], pCore->at(2)[3], pCore->at(2)[0]);
   TLorentzVector Antitop(pCore->at(3)[1], pCore->at(3)[2], pCore->at(3)[3], pCore->at(3)[0]);
 
@@ -1386,7 +1427,7 @@ void MEPhaseSpace::ApplyTotalTransverseBoost() const {
 
 double MEPhaseSpace::Eval(const double* x) const {
 
-  if (verbosity>=1 && iIteration % 20000==0) cout << "Iteration "<<iIteration<<", non-zero "<< iCall<<endl;
+  if (verbosity>=1 && iIteration % 100000==0) cout << "Iteration "<<iIteration<<", non-zero "<< iCall<<endl;
   iIteration++;
 
   //cout << "Bjorken x: x1="<<x[0]<<" x2="<<x[1]<<endl;
@@ -1758,6 +1799,11 @@ double MEPhaseSpace::Eval(const double* x) const {
     if (weightPS==0) return 0;
     double weightME = ComputeMatrixElement();
     weight = weightME * weightPS;
+  }
+
+  if (weight > weight_max) {
+    weight_max = weight;
+    UpdateKinVar();
   }
 
 
@@ -4652,6 +4698,65 @@ double MEPhaseSpace::ConvolvePdfCrossSection(double x1, double x2, double mu) co
   return weight;
 }
 
+void MEPhaseSpace::UpdateKinVar() const{
+
+   if (verbosity>=2) cout << "UpdateKinVar Top1_Decay="<<FinalStateTTV.Top1_Decay<<" Top2_Decay="<<FinalStateTTV.Top2_Decay<<" Boson_Type=" << FinalStateTTV.Boson_Type<< endl;
+ 
+   if (FinalStateTTV.Top1_Decay==kTopHadDecay) {
+     if (FinalStateTTV.Top1_Sign==kTop) MEMKin_TopHad.W_Mass = KinComputeWmass(pTop->at(2), pTop->at(3));
+     else if (FinalStateTTV.Top1_Sign==kAntitop) MEMKin_TopHad.W_Mass = KinComputeWmass(pAntitop->at(2), pAntitop->at(3));
+     MEMKin_TopHad.B_E = transferFunctions->ComputedVarForTF.Bjet1_E;
+     MEMKin_TopHad.Jet1_E = transferFunctions->ComputedVarForTF.Jet1_E;
+     MEMKin_TopHad.Jet2_E = transferFunctions->ComputedVarForTF.Jet2_E;
+   }
+
+   if (FinalStateTTV.Top1_Decay==kTopLepDecay) {
+     if (FinalStateTTV.Top1_Sign==kTop) MEMKin_TopLep1.W_Mass = KinComputeWmass(pTop->at(2), pTop->at(3));
+     else if (FinalStateTTV.Top1_Sign==kAntitop) MEMKin_TopLep1.W_Mass = KinComputeWmass(pAntitop->at(2), pAntitop->at(3)); 
+     MEMKin_TopLep1.B_E = transferFunctions->ComputedVarForTF.Bjet1_E;
+     if (FinalStateTTV.Top1_Sign==kTop) MEMKin_TopLep1.Neut_E = pTop->at(3)[0];
+     if (FinalStateTTV.Top1_Sign==kAntitop) MEMKin_TopLep1.Neut_E = pAntitop->at(3)[0];
+   }
+
+   if (FinalStateTTV.Top2_Decay==kTopLepDecay) {
+     if (FinalStateTTV.Top2_Sign==kTop) MEMKin_TopLep2.W_Mass = KinComputeWmass(pTop->at(2), pTop->at(3));
+     else if (FinalStateTTV.Top2_Sign==kAntitop) MEMKin_TopLep2.W_Mass = KinComputeWmass(pAntitop->at(2), pAntitop->at(3));
+     MEMKin_TopLep2.B_E = transferFunctions->ComputedVarForTF.Bjet2_E;
+     if (FinalStateTTV.Top2_Sign==kTop) MEMKin_TopLep2.Neut_E = pTop->at(3)[0];
+     if (FinalStateTTV.Top2_Sign==kAntitop) MEMKin_TopLep2.Neut_E = pAntitop->at(3)[0];
+   }
+ 
+   if (FinalStateTTV.Boson_Type == kLNu){ //Careful pCore is boosted back to Lab frame !
+      MEMKin_Wlnu.W_Mass = MEMKin_Wlnu_tmp.W_Mass; //KinComputeWmass(pCore->at(3), pCore->at(4));
+      MEMKin_Wlnu.Neut_E = MEMKin_Wlnu_tmp.Neut_E; //pCore->at(4)[0];
+   }
+
+   if (FinalStateTTV.Boson_Type == kHfullylep){
+     MEMKin_H2l2nu.W1_Mass = KinComputeWmass(pHiggs->at(1), pHiggs->at(2));
+     MEMKin_H2l2nu.Neut1_E = pHiggs->at(2)[0];
+     MEMKin_H2l2nu.W2_Mass = KinComputeWmass(pHiggs->at(3), pHiggs->at(4));
+     MEMKin_H2l2nu.Neut2_E = pHiggs->at(4)[0];
+   }
+
+   if (FinalStateTTV.Boson_Type == kHsemilep) {
+     MEMKin_Hlnujj.Wlnu_Mass = KinComputeWmass(pHiggs->at(1), pHiggs->at(2));
+     MEMKin_Hlnujj.Neut_E = pHiggs->at(2)[0];
+     MEMKin_Hlnujj.Wjj_Mass = KinComputeWmass(pHiggs->at(3), pHiggs->at(4));
+     MEMKin_Hlnujj.Jet1_E = pHiggs->at(3)[0];
+     MEMKin_Hlnujj.Jet2_E = pHiggs->at(4)[0];
+     if (iMode==kMEM_TTH_TopAntitopHiggsSemiLepDecay && MEMFix_HiggsSemiLep.LepSign == 1){
+       MEMKin_Hlnujj.Wlnu_Mass = KinComputeWmass(pHiggs->at(3), pHiggs->at(4));
+       MEMKin_Hlnujj.Neut_E = pHiggs->at(4)[0];
+       MEMKin_Hlnujj.Wjj_Mass = KinComputeWmass(pHiggs->at(1), pHiggs->at(2));
+       MEMKin_Hlnujj.Jet1_E = pHiggs->at(1)[0];
+       MEMKin_Hlnujj.Jet2_E = pHiggs->at(2)[0];
+     }
+   }
+
+
+  return;
+}
+
 void MEPhaseSpace::FillComputedJetForTF(double* Jet, double* Computed_E, double* Computed_Eta) const{
 
   TLorentzVector Pjet; Pjet.SetPxPyPzE(Jet[1], Jet[2], Jet[3], Jet[0]);
@@ -4659,6 +4764,14 @@ void MEPhaseSpace::FillComputedJetForTF(double* Jet, double* Computed_E, double*
   *Computed_Eta = Pjet.Eta();
   //*Computed_Pt = Pjet.Pt();
   return;
+}
+
+double MEPhaseSpace::KinComputeWmass(double* Part1, double* Part2) const {
+
+  TLorentzVector P1; P1.SetPxPyPzE(Part1[1], Part1[2], Part1[3], Part1[0]);
+  TLorentzVector P2; P2.SetPxPyPzE(Part2[1], Part2[2], Part2[3], Part2[0]);
+
+  return (P1+P2).M();
 }
 
 void MEPhaseSpace::UpdateComputedVarForTF() const{

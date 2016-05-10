@@ -125,6 +125,7 @@ int main(int argc, char *argv[])
     bool doPermutationBjet = true;
 
     IntegrationResult res;
+    IntegrationResult resMinimized;
 
     tree.InitializeMEMRun(InputFileName);
     if (atoi(argv[3])==-1 || evMax>tree.tInput->GetEntries()) evMax = tree.tInput->GetEntries();
@@ -241,10 +242,19 @@ int main(int argc, char *argv[])
       int nHypAllowed[7];
       int nNullResult[7];
       double weight_max[7];
+      double kinweight_max[7];
+      double weight_kinmax[7];
+      double kinweight_maxint[7];
+      double weight_kinmaxint[7];
+
       for (int ih=0; ih<7; ih++) {
         nHypAllowed[ih] = 0;
         nNullResult[ih] = 0;
         weight_max[ih] = 0;
+        kinweight_max[ih] = 0;
+        weight_kinmax[ih] = 0;
+	kinweight_maxint[ih] = 0;
+        weight_kinmaxint[ih] = 0;
       }
 
       tree.mc_mem_ttz_weight_logmean = 0;
@@ -255,6 +265,10 @@ int main(int argc, char *argv[])
       tree.mc_mem_ttz_weight_chi2 = 0;
       tree.mc_mem_ttz_weight_max = 0;
       tree.mc_mem_ttz_weight_avg = 0;
+      tree.mc_kin_ttz_weight_logmax = 0;
+      tree.mc_kin_ttz_weight_logmaxint = 0;
+      tree.mc_mem_ttz_weight_kinmax = 0;
+      tree.mc_mem_ttz_weight_kinmaxint = 0;
 
       tree.mc_mem_ttw_weight_logmean = 0;
       tree.mc_mem_ttw_weight_log = 0;
@@ -264,6 +278,10 @@ int main(int argc, char *argv[])
       tree.mc_mem_ttw_weight_chi2 = 0;
       tree.mc_mem_ttw_weight_max = 0;
       tree.mc_mem_ttw_weight_avg = 0;
+      tree.mc_kin_ttw_weight_logmax = 0;
+      tree.mc_kin_ttw_weight_logmaxint = 0;
+      tree.mc_mem_ttw_weight_kinmax = 0;
+      tree.mc_mem_ttw_weight_kinmaxint = 0;
 
       tree.mc_mem_ttwjj_weight_logmean = 0;
       tree.mc_mem_ttwjj_weight_log = 0;
@@ -273,6 +291,10 @@ int main(int argc, char *argv[])
       tree.mc_mem_ttwjj_weight_chi2 = 0;
       tree.mc_mem_ttwjj_weight_max = 0;
       tree.mc_mem_ttwjj_weight_avg = 0;
+      tree.mc_kin_ttwjj_weight_logmax = 0;
+      tree.mc_kin_ttwjj_weight_logmaxint = 0;
+      tree.mc_mem_ttwjj_weight_kinmax = 0;
+      tree.mc_mem_ttwjj_weight_kinmaxint = 0;
 
       tree.mc_mem_tthfl_weight_logmean = 0;
       tree.mc_mem_tthfl_weight_log = 0;
@@ -282,6 +304,10 @@ int main(int argc, char *argv[])
       tree.mc_mem_tthfl_weight_chi2 = 0;
       tree.mc_mem_tthfl_weight_max = 0;
       tree.mc_mem_tthfl_weight_avg = 0;   
+      tree.mc_kin_tthfl_weight_logmax = 0;
+      tree.mc_kin_tthfl_weight_logmaxint = 0;
+      tree.mc_mem_tthfl_weight_kinmax = 0;
+      tree.mc_mem_tthfl_weight_kinmaxint = 0;
 
       tree.mc_mem_tthsl_weight_logmean = 0;
       tree.mc_mem_tthsl_weight_log = 0;
@@ -291,6 +317,10 @@ int main(int argc, char *argv[])
       tree.mc_mem_tthsl_weight_chi2 = 0;
       tree.mc_mem_tthsl_weight_max = 0;
       tree.mc_mem_tthsl_weight_avg = 0;
+      tree.mc_kin_tthsl_weight_logmax = 0;
+      tree.mc_kin_tthsl_weight_logmaxint = 0;
+      tree.mc_mem_tthsl_weight_kinmax = 0;
+      tree.mc_mem_tthsl_weight_kinmaxint = 0;
 
       tree.mc_mem_tth_weight_logmean = 0;
       tree.mc_mem_tth_weight_log = 0;
@@ -300,6 +330,10 @@ int main(int argc, char *argv[])
       tree.mc_mem_tth_weight_chi2 = 0;
       tree.mc_mem_tth_weight_max = 0;
       tree.mc_mem_tth_weight_avg = 0;
+      tree.mc_kin_tth_weight_logmax = 0;
+      tree.mc_kin_tth_weight_logmaxint = 0;
+      tree.mc_mem_tth_weight_kinmax = 0;
+      tree.mc_mem_tth_weight_kinmaxint = 0;
 
       tree.mc_mem_ttbarfl_weight_logmean = 0;
       tree.mc_mem_ttbarfl_weight_log = 0;
@@ -309,6 +343,10 @@ int main(int argc, char *argv[])
       tree.mc_mem_ttbarfl_weight_chi2 = 0;
       tree.mc_mem_ttbarfl_weight_max = 0;
       tree.mc_mem_ttbarfl_weight_avg = 0;
+      tree.mc_kin_ttbarfl_weight_logmax = 0;
+      tree.mc_kin_ttbarfl_weight_logmaxint = 0;
+      tree.mc_mem_ttbarfl_weight_kinmax = 0;
+      tree.mc_mem_ttbarfl_weight_kinmaxint = 0;
 
       tree.mc_mem_ttbarsl_weight_logmean = 0;
       tree.mc_mem_ttbarsl_weight_log = 0;
@@ -318,6 +356,10 @@ int main(int argc, char *argv[])
       tree.mc_mem_ttbarsl_weight_chi2 = 0;
       tree.mc_mem_ttbarsl_weight_max = 0;
       tree.mc_mem_ttbarsl_weight_avg = 0;
+      tree.mc_kin_ttbarsl_weight_logmax = 0;
+      tree.mc_kin_ttbarsl_weight_logmaxint = 0;
+      tree.mc_mem_ttbarsl_weight_kinmax = 0;
+      tree.mc_mem_ttbarsl_weight_kinmaxint = 0;
 
       tree.mc_mem_ttbar_weight_logmean = 0;
       tree.mc_mem_ttbar_weight_log = 0;
@@ -327,7 +369,10 @@ int main(int argc, char *argv[])
       tree.mc_mem_ttbar_weight_chi2 = 0;
       tree.mc_mem_ttbar_weight_max = 0;
       tree.mc_mem_ttbar_weight_avg = 0;
-
+      tree.mc_kin_ttbar_weight_logmax = 0;
+      tree.mc_kin_ttbar_weight_logmaxint = 0;
+      tree.mc_mem_ttbar_weight_kinmax = 0;
+      tree.mc_mem_ttbar_weight_kinmaxint = 0;
 
    //multiLepton.kCatJets = tree.catJets;
    cout << "Nleptons="<< multiLepton.Leptons.size()<<", Category: "<<multiLepton.kCatJets<<endl;
@@ -388,6 +433,8 @@ int main(int argc, char *argv[])
          multiLepton.DoSort(&multiLepton.Leptons);
 
          do {
+
+	     hypIntegrator.meIntegrator->weight_max = 0;
              //cout << "Lepton0Pt="<<multiLepton.Leptons.at(0).P4.Pt()<<" Lepton1Pt="<<multiLepton.Leptons.at(1).P4.Pt() << " Lepton2Pt="<<multiLepton.Leptons.at(2).P4.Pt()<<endl;
 	     //cout << "Jet0Pt="<<multiLepton.Jets.at(0).P4.Pt() <<" Jet1Pt="<<multiLepton.Jets.at(1).P4.Pt() <<endl;
 	     //cout << "Bjet0Pt="<<multiLepton.Bjets.at(0).P4.Pt() <<" Bjet1Pt="<<multiLepton.Bjets.at(1).P4.Pt() <<endl;
@@ -402,25 +449,28 @@ int main(int argc, char *argv[])
 
                multiLepton.FillParticlesHypothesis(hyp[ih], &hypIntegrator.meIntegrator);
 
+               double kinresweightmin = 1000;
 	       if (doMinimization){
                  hypIntegrator.meIntegrator->SetMinimization(1);
-		 double resweightmin = 1000;
 	         double * var;
 		 for (int itry=0; itry<10; itry++){
 	           var = hypIntegrator.FindMinimizationiInitialValues(multiLepton.xL, multiLepton.xU);
-	           res = hypIntegrator.DoMinimization(multiLepton.xL, multiLepton.xU, var);
-	           cout << "TRY Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" -log(max)=" << res.weight<<" Time(s)="<<res.time<<endl;
-		   if ( res.weight < resweightmin) resweightmin = res.weight;
+	           resMinimized = hypIntegrator.DoMinimization(multiLepton.xL, multiLepton.xU, var);
+	           cout << "KIN TRY Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" -log(max)=" << resMinimized.weight<<" Time(s)="<<res.time<<endl;
+		   if ( resMinimized.weight < kinresweightmin) kinresweightmin = resMinimized.weight;
 		 }
                  hypIntegrator.meIntegrator->SetMinimization(0);
 
-		 res.weight = exp(-resweightmin);
-		 cout << "FINAL Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" min=" << res.weight<<" Time(s)="<<res.time<<endl;
+		 resMinimized.weight = exp(-kinresweightmin);
+		 cout << "KIN FINAL Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" max=" << resMinimized.weight<<" Time(s)="<<res.time<<endl;
 	       }
-	       else {
-                 res = hypIntegrator.DoIntegration(multiLepton.xL, multiLepton.xU); 
-                 cout << "Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" Cross section (pb) : " << res.weight<< " +/- "<< res.err<<" chi2/ndof="<< res.chi2<<" Time(s)="<<res.time<<endl;
-	       }
+	       //else {
+	       
+	       hypIntegrator.meIntegrator->weight_max = 0;
+               res = hypIntegrator.DoIntegration(multiLepton.xL, multiLepton.xU); 
+               cout << "MEM Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" Cross section (pb) : " << res.weight<< " +/- "<< res.err<<" chi2/ndof="<< res.chi2<<" Time(s)="<<res.time<<endl;
+	       //}
+	       cout << "KIN from MEM Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" max=" << hypIntegrator.meIntegrator->weight_max<<" Time(s)="<<res.time<<endl;
 
 	       //cout << "ihyp="<<ih<<" iperm="<<iperm<<" Filling error hist "<<ih+nhyp*(nHypAllowed[index[ih]]+nNullResult[index[ih]])<<endl;
 	       //hypIntegrator.FillErrHist(&(tree.hMEPhaseSpace_Error[ih+nhyp*(nHypAllowed[index[ih]]+nNullResult[index[ih]])+12*nhyp*ievent]));
@@ -439,88 +489,93 @@ int main(int argc, char *argv[])
 		 hypIntegrator.FillErrHist(&(tree.hMEPhaseSpace_ErrorTot_Fail[ih]));
 		 nNullResult[index[ih]]++;
 	       }
-               if (res.weight > weight_max[ih]) weight_max[ih] = res.weight;
+
+               if (res.weight > weight_max[index[ih]]) weight_max[index[ih]] = res.weight;
+
+               if (doMinimization) {
+		 if (!(resMinimized.weight>0)) {
+		   resMinimized.weight = 0;
+		 }
+		 if (resMinimized.weight > kinweight_max[index[ih]]) {
+		   kinweight_max[index[ih]] = resMinimized.weight;
+		   weight_kinmax[index[ih]] = res.weight;
+		 }
+	       }
+               if (hypIntegrator.meIntegrator->weight_max > kinweight_maxint[index[ih]]) {
+                 cout << "better kinweight_maxint"<<endl;
+                 kinweight_maxint[index[ih]] = hypIntegrator.meIntegrator->weight_max;
+                 weight_kinmaxint[index[ih]] = res.weight;
+               }
 
 	       if (shyp[ih]=="TTLL"){ 
   		 tree.mc_mem_ttz_weight += res.weight / xsTTLL;
-		 if(res.weight>0)
-		    tree.mc_mem_ttz_weight_logmean += log(res.weight / xsTTLL);
+		 if (res.weight>0) tree.mc_mem_ttz_weight_logmean += log(res.weight / xsTTLL);
   	 	 tree.mc_mem_ttz_weight_time += res.time;
   		 tree.mc_mem_ttz_weight_err += res.err / xsTTLL;
   		 tree.mc_mem_ttz_weight_chi2 += res.chi2;
 	       }
                if (shyp[ih]=="TTHfl"){
 	         tree.mc_mem_tthfl_weight += res.weight / xsTTH;
-	         if(res.weight>0)
-	            tree.mc_mem_tthfl_weight_logmean += log(res.weight / xsTTH);
+	         if (res.weight>0) tree.mc_mem_tthfl_weight_logmean += log(res.weight / xsTTH);
                  tree.mc_mem_tthfl_weight_time += res.time;
                  tree.mc_mem_tthfl_weight_err += res.err / xsTTH;
                  tree.mc_mem_tthfl_weight_chi2 += res.chi2;
 
                  tree.mc_mem_tth_weight += res.weight / xsTTH;
-                 if(res.weight>0)
-                    tree.mc_mem_tth_weight_logmean += log(res.weight / xsTTH);
+                 if (res.weight>0) tree.mc_mem_tth_weight_logmean += log(res.weight / xsTTH);
                  tree.mc_mem_tth_weight_time += res.time;
                  tree.mc_mem_tth_weight_err += res.err / xsTTH;
                  tree.mc_mem_tth_weight_chi2 += res.chi2;
                }
                if (shyp[ih]=="TTHsl"){
                  tree.mc_mem_tthsl_weight += res.weight / xsTTH;
-                 if(res.weight>0)
-                    tree.mc_mem_tthsl_weight_logmean += log(res.weight / xsTTH);
+                 if (res.weight>0) tree.mc_mem_tthsl_weight_logmean += log(res.weight / xsTTH);
                  tree.mc_mem_tthsl_weight_time += res.time;
                  tree.mc_mem_tthsl_weight_err += res.err / xsTTH;
                  tree.mc_mem_tthsl_weight_chi2 += res.chi2;
 
                  tree.mc_mem_tth_weight += res.weight / xsTTH;
-                 if(res.weight>0)
-                    tree.mc_mem_tth_weight_logmean += log(res.weight / xsTTH);
+                 if (res.weight>0) tree.mc_mem_tth_weight_logmean += log(res.weight / xsTTH);
                  tree.mc_mem_tth_weight_time += res.time;
                  tree.mc_mem_tth_weight_err += res.err / xsTTH;
                  tree.mc_mem_tth_weight_chi2 += res.chi2;
                }
                if (shyp[ih]=="TTW"){
                  tree.mc_mem_ttw_weight += res.weight / xsTTW;
-                 if(res.weight>0)
-                    tree.mc_mem_ttw_weight_logmean += log(res.weight / xsTTW);
+                 if (res.weight>0) tree.mc_mem_ttw_weight_logmean += log(res.weight / xsTTW);
                  tree.mc_mem_ttw_weight_time += res.time;
                  tree.mc_mem_ttw_weight_err += res.err / xsTTW;
                  tree.mc_mem_ttw_weight_chi2 += res.chi2;
                }
                if (shyp[ih]=="TTWJJ"){
                  tree.mc_mem_ttwjj_weight += res.weight / xsTTW;
-                 if(res.weight>0)
-                    tree.mc_mem_ttwjj_weight_logmean += log(res.weight / xsTTW);
+                 if (res.weight>0) tree.mc_mem_ttwjj_weight_logmean += log(res.weight / xsTTW);
                  tree.mc_mem_ttwjj_weight_time += res.time;
                  tree.mc_mem_ttwjj_weight_err += res.err / xsTTW;
                  tree.mc_mem_ttwjj_weight_chi2 += res.chi2;
                }
                if (shyp[ih]=="TTbarfl"){
                  tree.mc_mem_ttbarfl_weight += res.weight / xsTTbar;
-                 if(res.weight>0)
-                    tree.mc_mem_ttbarfl_weight_logmean += log(res.weight / xsTTbar);
+                 if (res.weight>0) tree.mc_mem_ttbarfl_weight_logmean += log(res.weight / xsTTbar);
                  tree.mc_mem_ttbarfl_weight_time += res.time;
                  tree.mc_mem_ttbarfl_weight_err += res.err / xsTTbar;
                  tree.mc_mem_ttbarfl_weight_chi2 += res.chi2;
 
                  tree.mc_mem_ttbar_weight += res.weight / xsTTbar;
-                 if(res.weight>0)
-                    tree.mc_mem_ttbar_weight_logmean += log(res.weight / xsTTbar);
+                 if (res.weight>0) tree.mc_mem_ttbar_weight_logmean += log(res.weight / xsTTbar);
                  tree.mc_mem_ttbar_weight_time += res.time;
                  tree.mc_mem_ttbar_weight_err += res.err / xsTTbar;
                  tree.mc_mem_ttbar_weight_chi2 += res.chi2;
                }
                if (shyp[ih]=="TTbarsl"){
                  tree.mc_mem_ttbarsl_weight += res.weight / xsTTbar;
-                 if(res.weight>0)
-                    tree.mc_mem_ttbarsl_weight_logmean += log(res.weight / xsTTbar);
+                 if (res.weight>0) tree.mc_mem_ttbarsl_weight_logmean += log(res.weight / xsTTbar);
                  tree.mc_mem_ttbarsl_weight_time += res.time;
                  tree.mc_mem_ttbarsl_weight_err += res.err / xsTTbar;
                  tree.mc_mem_ttbarsl_weight_chi2 += res.chi2;
 
                  tree.mc_mem_ttbar_weight += res.weight / xsTTbar;
-                 if(res.weight>0)
-                    tree.mc_mem_ttbar_weight_logmean += log(res.weight / xsTTbar);
+                 if (res.weight>0) tree.mc_mem_ttbar_weight_logmean += log(res.weight / xsTTbar);
                  tree.mc_mem_ttbar_weight_time += res.time;
                  tree.mc_mem_ttbar_weight_err += res.err / xsTTbar;
                  tree.mc_mem_ttbar_weight_chi2 += res.chi2;
@@ -565,6 +620,97 @@ int main(int argc, char *argv[])
        }
      } while (doPermutationBjet && permresbjet);
 
+
+     if (shyp[ih]=="TTLL"){
+      //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopHadDecay){
+          tree.mc_kin_ttz_tophad_Wmass = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_Mass : -99;
+          tree.mc_kin_ttz_tophad_Benergy = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.B_E : -99;
+          tree.mc_kin_ttz_tophad_Jet1energy = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_E : -99;
+          tree.mc_kin_ttz_tophad_Jet2energy = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_E : -99;
+     //  }
+       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopLepDecay){
+          tree.mc_kin_ttz_toplep_Wmass = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_Mass : -99;
+          tree.mc_kin_ttz_toplep_Benergy = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.B_E : -99;
+          tree.mc_kin_ttz_toplep_Neutenergy = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_E : -99;
+       //}
+       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top2_Decay==kTopLepDecay){
+          tree.mc_kin_ttz_toplep2_Wmass = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_Mass : -99;
+          tree.mc_kin_ttz_toplep2_Benergy = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.B_E : -99;
+          tree.mc_kin_ttz_toplep2_Neutenergy = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_E : -99;
+       //}
+     }
+     if (shyp[ih]=="TTHfl") {
+       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopHadDecay){
+          tree.mc_kin_tthfl_tophad_Wmass = (kinweight_maxint[1]>0  && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_Mass : -99;
+          tree.mc_kin_tthfl_tophad_Benergy = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.B_E : -99;
+          tree.mc_kin_tthfl_tophad_Jet1energy = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_E : -99;
+          tree.mc_kin_tthfl_tophad_Jet2energy = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_E : -99;
+       //}
+       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopLepDecay){
+          tree.mc_kin_tthfl_toplep_Wmass = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_Mass : -99;
+          tree.mc_kin_tthfl_toplep_Benergy = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.B_E : -99;
+          tree.mc_kin_tthfl_toplep_Neutenergy = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_E : -99;
+       //}
+       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top2_Decay==kTopLepDecay){
+          tree.mc_kin_tthfl_toplep2_Wmass = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_Mass : -99;
+          tree.mc_kin_tthfl_toplep2_Benergy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.B_E : -99;
+          tree.mc_kin_tthfl_toplep2_Neutenergy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_E : -99;
+       //}
+       //if (hypIntegrator.meIntegrator->FinalStateTTV.Boson_Type == kHfullylep){
+          tree.mc_kin_tthfl_h2l2nu_W1mass = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.W1_Mass : -99;
+          tree.mc_kin_tthfl_h2l2nu_Neut1energy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.Neut1_E : -99;
+          tree.mc_kin_tthfl_h2l2nu_W2mass = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.W2_Mass : -99;
+          tree.mc_kin_tthfl_h2l2nu_Neut2energy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.Neut2_E : -99;
+       //}
+     }
+     if (shyp[ih]=="TTHsl"){
+       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopHadDecay){
+          tree.mc_kin_tthsl_tophad_Wmass = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_Mass : -99;
+          tree.mc_kin_tthsl_tophad_Benergy = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.B_E : -99;
+          tree.mc_kin_tthsl_tophad_Jet1energy = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_E : -99;
+          tree.mc_kin_tthsl_tophad_Jet2energy = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_E : -99;
+       //}
+       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopLepDecay){
+          tree.mc_kin_tthsl_toplep_Wmass = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_Mass : -99;
+          tree.mc_kin_tthsl_toplep_Benergy = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.B_E : -99;
+          tree.mc_kin_tthsl_toplep_Neutenergy = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_E : -99;
+       //}
+       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top2_Decay==kTopLepDecay){
+          tree.mc_kin_tthsl_toplep2_Wmass = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_Mass : -99;
+          tree.mc_kin_tthsl_toplep2_Benergy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.B_E : -99;
+          tree.mc_kin_tthsl_toplep2_Neutenergy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_E : -99;
+       //}
+       //if (hypIntegrator.meIntegrator->FinalStateTTV.Boson_Type == kHsemilep){
+          tree.mc_kin_tthsl_hlnujj_W1mass = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Wlnu_Mass : -99;
+          tree.mc_kin_tthsl_hlnujj_Neut1energy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Neut_E : -99;
+          tree.mc_kin_tthsl_hlnujj_W2mass = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Wjj_Mass : -99;
+          tree.mc_kin_tthsl_hlnujj_Jet1energy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Jet1_E : -99;
+          tree.mc_kin_tthsl_hlnujj_Jet2energy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Jet2_E : -99;
+       //}
+     }
+     if (shyp[ih]=="TTW"){
+       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopHadDecay){
+          tree.mc_kin_ttw_tophad_Wmass = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_Mass : -99;
+          tree.mc_kin_ttw_tophad_Benergy = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.B_E : -99;
+          tree.mc_kin_ttw_tophad_Jet1energy = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_E : -99;
+          tree.mc_kin_ttw_tophad_Jet2energy = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_E : -99;
+       //}
+       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopLepDecay){
+          tree.mc_kin_ttw_toplep_Wmass = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_Mass : -99;
+          tree.mc_kin_ttw_toplep_Benergy = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.B_E : -99;
+          tree.mc_kin_ttw_toplep_Neutenergy = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_E : -99;
+       //}
+       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top2_Decay==kTopLepDecay){
+          tree.mc_kin_ttw_toplep2_Wmass = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_Mass : -99;
+          tree.mc_kin_ttw_toplep2_Benergy = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.B_E : -99;
+          tree.mc_kin_ttw_toplep2_Neutenergy = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_E : -99;
+       //}
+       //if (hypIntegrator.meIntegrator->FinalStateTTV.Boson_Type == kLNu){
+          tree.mc_kin_ttw_wlnu_Wmass = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_Wlnu.W_Mass : -99;
+          tree.mc_kin_ttw_wlnu_Neutenergy = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_Wlnu.Neut_E : -99;
+       //}
+     }
+
    } //end hypothesis for loop
 
    for (int ih=0; ih<nhyp; ih++) {
@@ -596,6 +742,29 @@ int main(int argc, char *argv[])
        tree.mc_mem_ttz_weight_logmean = log(1e-300);
        tree.mc_mem_ttz_weight_max = 1e-300;
      }
+     tree.mc_kin_ttz_weight_logmax = (kinweight_max[0]>0) ? log(kinweight_max[0] / xsTTLL) : log(1e-300);
+     tree.mc_kin_ttz_weight_logmaxint = (kinweight_maxint[0]>0) ? log(kinweight_maxint[0] / xsTTLL) : log(1e-300);
+     tree.mc_mem_ttz_weight_kinmax = (weight_kinmax[0]>0) ? weight_kinmax[0] / xsTTLL : 1e-300;
+     tree.mc_mem_ttz_weight_kinmaxint = (weight_kinmaxint[0]>0) ? weight_kinmaxint[0] / xsTTLL : 1e-300;
+/*     //if (kinweight_maxint[0]>0){
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopHadDecay){
+	  tree.mc_kin_ttz_tophad_Wmass = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_Mass : -99;
+          tree.mc_kin_ttz_tophad_Benergy = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.B_E : -99;
+	  tree.mc_kin_ttz_tophad_Jet1energy = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_E : -99;
+	  tree.mc_kin_ttz_tophad_Jet2energy = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_E : -99;
+       }
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopLepDecay){
+	  tree.mc_kin_ttz_toplep_Wmass = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_Mass : -99;
+          tree.mc_kin_ttz_toplep_Benergy = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.B_E : -99;
+          tree.mc_kin_ttz_toplep_Neutenergy = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_E : -99;
+       }
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Top2_Decay==kTopLepDecay){
+          tree.mc_kin_ttz_toplep2_Wmass = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_Mass : -99;
+          tree.mc_kin_ttz_toplep2_Benergy = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.B_E : -99;
+          tree.mc_kin_ttz_toplep2_Neutenergy = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_E : -99;
+       }
+     //}*/
+
      if (tree.mc_mem_tthfl_weight>0){       
        tree.mc_mem_tthfl_weight_avg = tree.mc_mem_tthfl_weight / (nHypAllowed[1]+nNullResult[1]);
        tree.mc_mem_tthfl_weight_max = weight_max[1] / xsTTH;
@@ -611,6 +780,35 @@ int main(int argc, char *argv[])
        tree.mc_mem_tthfl_weight_logmean = log(1e-300);
        tree.mc_mem_tthfl_weight_max = 1e-300;
      }
+     tree.mc_kin_tthfl_weight_logmax = (kinweight_max[1]>0) ? log(kinweight_max[1] / xsTTH) : log(1e-300);
+     tree.mc_kin_tthfl_weight_logmaxint = (kinweight_maxint[1]>0) ? log(kinweight_maxint[1] / xsTTH) : log(1e-300);
+     tree.mc_mem_tthfl_weight_kinmax = (weight_kinmax[1]>0) ? weight_kinmax[1] / xsTTH : 1e-300;
+     tree.mc_mem_tthfl_weight_kinmaxint = (weight_kinmaxint[1]>0) ? weight_kinmaxint[1] / xsTTH : 1e-300;
+   /*  //if (kinweight_maxint[1]>0){
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopHadDecay){
+          tree.mc_kin_tthfl_tophad_Wmass = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_Mass : -99;
+          tree.mc_kin_tthfl_tophad_Benergy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.B_E : -99;
+          tree.mc_kin_tthfl_tophad_Jet1energy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_E : -99;
+          tree.mc_kin_tthfl_tophad_Jet2energy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_E : -99;
+       }
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopLepDecay){
+          tree.mc_kin_tthfl_toplep_Wmass = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_Mass : -99;
+          tree.mc_kin_tthfl_toplep_Benergy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.B_E : -99;
+          tree.mc_kin_tthfl_toplep_Neutenergy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_E : -99;
+       }
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Top2_Decay==kTopLepDecay){
+          tree.mc_kin_tthfl_toplep2_Wmass = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_Mass : -99;
+          tree.mc_kin_tthfl_toplep2_Benergy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.B_E : -99;
+          tree.mc_kin_tthfl_toplep2_Neutenergy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_E : -99;
+       }
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Boson_Type == kHfullylep){
+	  tree.mc_kin_tthfl_h2l2nu_W1mass = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.W1_Mass : -99;
+          tree.mc_kin_tthfl_h2l2nu_Neut1energy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.Neut1_E : -99;
+          tree.mc_kin_tthfl_h2l2nu_W2mass = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.W2_Mass : -99;
+	  tree.mc_kin_tthfl_h2l2nu_Neut2energy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.Neut2_E : -99;
+       }
+     //}*/
+
      if (tree.mc_mem_tthsl_weight>0){
        tree.mc_mem_tthsl_weight_avg = tree.mc_mem_tthsl_weight / (nHypAllowed[2]+nNullResult[2]);
        tree.mc_mem_tthsl_weight_max = weight_max[2] / xsTTH;
@@ -626,12 +824,42 @@ int main(int argc, char *argv[])
        tree.mc_mem_tthsl_weight_logmean = log(1e-300);
        tree.mc_mem_tthsl_weight_max = 1e-300;
      }
+     tree.mc_kin_tthsl_weight_logmax = (kinweight_max[2]>0) ? log(kinweight_max[2] / xsTTH) : log(1e-300);
+     tree.mc_kin_tthsl_weight_logmaxint = (kinweight_maxint[2]>0) ? log(kinweight_maxint[2] / xsTTH) : log(1e-300);
+     tree.mc_mem_tthsl_weight_kinmax = (weight_kinmax[2]>0) ? weight_kinmax[2] / xsTTH : 1e-300;
+     tree.mc_mem_tthsl_weight_kinmaxint = (weight_kinmaxint[2]>0) ? weight_kinmaxint[2] / xsTTH : 1e-300;
+  /*   //if (kinweight_maxint[2]>0){
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopHadDecay){
+          tree.mc_kin_tthsl_tophad_Wmass = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_Mass : -99;
+          tree.mc_kin_tthsl_tophad_Benergy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.B_E : -99;
+          tree.mc_kin_tthsl_tophad_Jet1energy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_E : -99;
+          tree.mc_kin_tthsl_tophad_Jet2energy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_E : -99;
+       }
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopLepDecay){
+          tree.mc_kin_tthsl_toplep_Wmass = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_Mass : -99;
+          tree.mc_kin_tthsl_toplep_Benergy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.B_E : -99;
+          tree.mc_kin_tthsl_toplep_Neutenergy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_E : -99;
+       }
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Top2_Decay==kTopLepDecay){
+          tree.mc_kin_tthsl_toplep2_Wmass = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_Mass : -99;
+          tree.mc_kin_tthsl_toplep2_Benergy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.B_E : -99;
+          tree.mc_kin_tthsl_toplep2_Neutenergy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_E : -99;
+       }
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Boson_Type == kHsemilep){
+          tree.mc_kin_tthsl_hlnujj_W1mass = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Wlnu_Mass : -99;
+          tree.mc_kin_tthsl_hlnujj_Neut1energy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Neut_E : -99;
+          tree.mc_kin_tthsl_hlnujj_W2mass = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Wjj_Mass : -99;
+          tree.mc_kin_tthsl_hlnujj_Jet1energy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Jet1_E : -99;
+          tree.mc_kin_tthsl_hlnujj_Jet2energy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Jet2_E : -99;
+       }
+     //}*/ 
+
      int nHypAllowed_TTH = nHypAllowed[1]+nHypAllowed[2];
      cout << "nHypAllowed_TTH="<<nHypAllowed_TTH<<endl;
      if (nHypAllowed_TTH>0){
        cout << "Greater than 0"<<endl;
        tree.mc_mem_tth_weight_avg = tree.mc_mem_tth_weight / ((nHypAllowed[1]+nNullResult[1])+nHypAllowed[2]+nNullResult[2]);
-       tree.mc_mem_tth_weight_max = ((weight_max[1]>weight_max[2])?weight_max[1]:weight_max[2]) / xsTTH;
+       tree.mc_mem_tth_weight_max = ((weight_max[1]>weight_max[2])?weight_max[1] / xsTTH :weight_max[2]) / xsTTH;
        tree.mc_mem_tth_weight /= nHypAllowed_TTH;
        tree.mc_mem_tth_weight_logmean /= nHypAllowed_TTH;
        tree.mc_mem_tth_weight_log = log(tree.mc_mem_tth_weight);
@@ -643,8 +871,13 @@ int main(int argc, char *argv[])
        tree.mc_mem_tth_weight = 1e-300;//std::numeric_limits< double >::min();
        tree.mc_mem_tth_weight_log = log(tree.mc_mem_tth_weight);
        tree.mc_mem_tth_weight_logmean = log(1e-300);
-      tree.mc_mem_tth_weight_max = 1e-300;
+       tree.mc_mem_tth_weight_max = 1e-300;
      }
+     tree.mc_kin_tth_weight_logmax = (tree.mc_kin_tthsl_weight_logmax > tree.mc_kin_tthfl_weight_logmax) ? tree.mc_kin_tthsl_weight_logmax : tree.mc_kin_tthfl_weight_logmax;
+     tree.mc_kin_tth_weight_logmaxint = (tree.mc_kin_tthsl_weight_logmaxint > tree.mc_kin_tthfl_weight_logmaxint) ? tree.mc_kin_tthsl_weight_logmaxint : tree.mc_kin_tthfl_weight_logmaxint;
+     tree.mc_mem_tth_weight_kinmax = (tree.mc_kin_tthsl_weight_logmax > tree.mc_kin_tthfl_weight_logmax) ? tree.mc_mem_tthsl_weight_kinmax : tree.mc_mem_tthfl_weight_kinmax;
+     tree.mc_mem_tth_weight_kinmaxint = (tree.mc_kin_tthsl_weight_logmaxint > tree.mc_kin_tthfl_weight_logmaxint) ? tree.mc_mem_tthsl_weight_kinmaxint : tree.mc_mem_tthfl_weight_kinmaxint;
+
      if (nHypAllowed[3]>0){
        tree.mc_mem_ttw_weight_avg = tree.mc_mem_ttw_weight / (nHypAllowed[3]+nNullResult[3]);
        tree.mc_mem_ttw_weight_max = weight_max[3] / xsTTW;
@@ -660,6 +893,33 @@ int main(int argc, char *argv[])
        tree.mc_mem_ttw_weight_logmean = log(1e-300);
        tree.mc_mem_ttw_weight_max = 1e-300;
      }
+     tree.mc_kin_ttw_weight_logmax = (kinweight_max[3]>0) ? log(kinweight_max[3] / xsTTW) : log(1e-300);
+     tree.mc_kin_ttw_weight_logmaxint = (kinweight_maxint[3]>0) ? log(kinweight_maxint[3] / xsTTW) : log(1e-300);
+     tree.mc_mem_ttw_weight_kinmax = (weight_kinmax[3]>0) ? weight_kinmax[3] / xsTTW : 1e-300;
+     tree.mc_mem_ttw_weight_kinmaxint = (weight_kinmaxint[3]>0) ? weight_kinmaxint[3] / xsTTW : 1e-300;
+  /*   //if (kinweight_maxint[3]>0){
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopHadDecay){
+          tree.mc_kin_ttw_tophad_Wmass = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_Mass : -99;
+          tree.mc_kin_ttw_tophad_Benergy = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.B_E : -99;
+          tree.mc_kin_ttw_tophad_Jet1energy = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_E : -99;
+          tree.mc_kin_ttw_tophad_Jet2energy = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_E : -99;
+       }
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopLepDecay){
+          tree.mc_kin_ttw_toplep_Wmass = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_Mass : -99;
+          tree.mc_kin_ttw_toplep_Benergy = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.B_E : -99;
+          tree.mc_kin_ttw_toplep_Neutenergy = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_E : -99;
+       }
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Top2_Decay==kTopLepDecay){
+          tree.mc_kin_ttw_toplep2_Wmass = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_Mass : -99;
+          tree.mc_kin_ttw_toplep2_Benergy = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.B_E : -99;
+          tree.mc_kin_ttw_toplep2_Neutenergy = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_E : -99;
+       }
+       if (hypIntegrator.meIntegrator->FinalStateTTV.Boson_Type == kLNu){
+	  tree.mc_kin_ttw_wlnu_Wmass = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_Wlnu.W_Mass : -99;
+	  tree.mc_kin_ttw_wlnu_Neutenergy = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_Wlnu.Neut_E : -99;
+       }
+     //}*/
+
      if (nHypAllowed[4]>0){
        tree.mc_mem_ttwjj_weight_avg = tree.mc_mem_ttwjj_weight / (nHypAllowed[4]+nNullResult[4]);
        tree.mc_mem_ttwjj_weight_max = weight_max[4] / xsTTW;
@@ -675,14 +935,20 @@ int main(int argc, char *argv[])
        tree.mc_mem_ttwjj_weight_logmean = log(1e-300);
        tree.mc_mem_ttwjj_weight_max = 1e-300;
      }
+     tree.mc_kin_ttwjj_weight_logmax = (kinweight_max[4]>0) ? log(kinweight_max[4] / xsTTW) : log(1e-300);
+     tree.mc_kin_ttwjj_weight_logmaxint = (kinweight_maxint[4]>0) ? log(kinweight_maxint[4] / xsTTW) : log(1e-300);
+     tree.mc_mem_ttwjj_weight_kinmax = (weight_kinmax[4]>0) ? weight_kinmax[4] / xsTTW : 1e-300;
+     tree.mc_mem_ttwjj_weight_kinmaxint = (weight_kinmaxint[4]>0) ? weight_kinmaxint[4] / xsTTW : 1e-300;
+
+
      if (tree.mc_mem_ttbarfl_weight>0){
-       tree.mc_mem_ttbarfl_weight_avg = tree.mc_mem_ttbarfl_weight / (nHypAllowed[1]+nNullResult[1]);
-       tree.mc_mem_ttbarfl_weight_max = weight_max[1] / xsTTbar;
-       tree.mc_mem_ttbarfl_weight /= nHypAllowed[1];
-       tree.mc_mem_ttbarfl_weight_logmean /= nHypAllowed[1];
+       tree.mc_mem_ttbarfl_weight_avg = tree.mc_mem_ttbarfl_weight / (nHypAllowed[5]+nNullResult[5]);
+       tree.mc_mem_ttbarfl_weight_max = weight_max[5] / xsTTbar;
+       tree.mc_mem_ttbarfl_weight /= nHypAllowed[5];
+       tree.mc_mem_ttbarfl_weight_logmean /= nHypAllowed[5];
        tree.mc_mem_ttbarfl_weight_log = log(tree.mc_mem_ttbarfl_weight);
-       tree.mc_mem_ttbarfl_weight_err /= nHypAllowed[1];
-       tree.mc_mem_ttbarfl_weight_chi2 /= nHypAllowed[1];
+       tree.mc_mem_ttbarfl_weight_err /= nHypAllowed[5];
+       tree.mc_mem_ttbarfl_weight_chi2 /= nHypAllowed[5];
      }
      else {
        tree.mc_mem_ttbarfl_weight = 1e-300;//std::numeric_limits< double >::min();
@@ -690,14 +956,20 @@ int main(int argc, char *argv[])
        tree.mc_mem_ttbarfl_weight_logmean = log(1e-300);
        tree.mc_mem_ttbarfl_weight_max = 1e-300;
      }
+     tree.mc_kin_ttbarfl_weight_logmax = (kinweight_max[5]>0) ? log(kinweight_max[5] / xsTTbar) : log(1e-300);
+     tree.mc_kin_ttbarfl_weight_logmaxint = (kinweight_maxint[5]>0) ? log(kinweight_maxint[5] / xsTTbar) : log(1e-300);
+     tree.mc_mem_ttbarfl_weight_kinmax = (weight_kinmax[5]>0) ? weight_kinmax[5] / xsTTbar : 1e-300;
+     tree.mc_mem_ttbarfl_weight_kinmaxint = (weight_kinmaxint[5]>0) ? weight_kinmaxint[5] / xsTTbar : 1e-300;
+
+
      if (tree.mc_mem_ttbarsl_weight>0){
-       tree.mc_mem_ttbarsl_weight_avg = tree.mc_mem_ttbarsl_weight / (nHypAllowed[2]+nNullResult[2]);
-       tree.mc_mem_ttbarsl_weight_max = weight_max[2] / xsTTbar;
-       tree.mc_mem_ttbarsl_weight /= nHypAllowed[2];
-       tree.mc_mem_ttbarsl_weight_logmean /= nHypAllowed[2];
+       tree.mc_mem_ttbarsl_weight_avg = tree.mc_mem_ttbarsl_weight / (nHypAllowed[6]+nNullResult[6]);
+       tree.mc_mem_ttbarsl_weight_max = weight_max[6] / xsTTbar;
+       tree.mc_mem_ttbarsl_weight /= nHypAllowed[6];
+       tree.mc_mem_ttbarsl_weight_logmean /= nHypAllowed[6];
        tree.mc_mem_ttbarsl_weight_log = log(tree.mc_mem_ttbarsl_weight);
-       tree.mc_mem_ttbarsl_weight_err /= nHypAllowed[2];
-       tree.mc_mem_ttbarsl_weight_chi2 /= nHypAllowed[2];
+       tree.mc_mem_ttbarsl_weight_err /= nHypAllowed[6];
+       tree.mc_mem_ttbarsl_weight_chi2 /= nHypAllowed[6];
      }
      else {
        tree.mc_mem_ttbarsl_weight = 1e-300;//std::numeric_limits< double >::min();
@@ -705,6 +977,11 @@ int main(int argc, char *argv[])
        tree.mc_mem_ttbarsl_weight_logmean = log(1e-300);
        tree.mc_mem_ttbarsl_weight_max = 1e-300;
      }
+     tree.mc_kin_ttbarsl_weight_logmax = (kinweight_max[6]>0) ? log(kinweight_max[6] / xsTTbar) : log(1e-300);
+     tree.mc_kin_ttbarsl_weight_logmaxint = (kinweight_maxint[6]>0) ? log(kinweight_maxint[6] / xsTTbar) : log(1e-300);
+     tree.mc_mem_ttbarsl_weight_kinmax = (weight_kinmax[6]>0) ? weight_kinmax[6] / xsTTbar : 1e-300;
+     tree.mc_mem_ttbarsl_weight_kinmaxint = (weight_kinmaxint[6]>0) ? weight_kinmaxint[6] / xsTTbar : 1e-300;
+
      int nHypAllowed_TTbar = nHypAllowed[5]+nHypAllowed[6];
      cout << "nHypAllowed_TTbar="<<nHypAllowed_TTbar<<endl;
      if (nHypAllowed_TTbar>0){
@@ -724,6 +1001,10 @@ int main(int argc, char *argv[])
        tree.mc_mem_ttbar_weight_logmean = log(1e-300);
       tree.mc_mem_ttbar_weight_max = 1e-300;
      }
+     tree.mc_kin_ttbar_weight_logmax = (tree.mc_kin_ttbarsl_weight_logmax > tree.mc_kin_ttbarfl_weight_logmax) ? tree.mc_kin_ttbarsl_weight_logmax : tree.mc_kin_ttbarfl_weight_logmax;
+     tree.mc_kin_ttbar_weight_logmaxint = (tree.mc_kin_ttbarsl_weight_logmaxint > tree.mc_kin_ttbarfl_weight_logmaxint) ? tree.mc_kin_ttbarsl_weight_logmaxint : tree.mc_kin_ttbarfl_weight_logmaxint;
+     tree.mc_mem_ttbar_weight_kinmax = (tree.mc_kin_ttbarsl_weight_logmax > tree.mc_kin_ttbarfl_weight_logmax) ? tree.mc_mem_ttbarsl_weight_kinmax : tree.mc_mem_ttbarfl_weight_kinmax;
+     tree.mc_mem_ttbar_weight_kinmaxint = (tree.mc_kin_ttbarsl_weight_logmaxint > tree.mc_kin_ttbarfl_weight_logmaxint) ? tree.mc_mem_ttbarsl_weight_kinmaxint : tree.mc_mem_ttbarfl_weight_kinmaxint;
 
      //tree.mc_mem_ttz_tthfl_likelihood = xsTTLL*tree.mc_mem_ttz_weight / (xsTTLL*tree.mc_mem_ttz_weight + xsTTH*tree.mc_mem_tthfl_weight);
      //tree.mc_mem_ttz_tthsl_likelihood = xsTTLL*tree.mc_mem_ttz_weight / (xsTTLL*tree.mc_mem_ttz_weight + xsTTH*tree.mc_mem_tthsl_weight);

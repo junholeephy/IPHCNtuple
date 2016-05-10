@@ -1,4 +1,3 @@
-
 #ifndef READGENFLATTREE_H
 #define READGENFLATTREE_H
 
@@ -276,6 +275,25 @@ class ReadGenFlatTree {
   Double_t mc_mem_tthfl_weight_max;
   Double_t mc_mem_tthfl_weight_avg;
   Double_t mc_mem_tthfl_weight_logmean;
+  Double_t mc_kin_tthfl_weight_logmax;
+  Double_t mc_kin_tthfl_weight_logmaxint;
+  Double_t mc_mem_tthfl_weight_kinmax;
+  Double_t mc_mem_tthfl_weight_kinmaxint;
+
+  Float_t mc_kin_tthfl_tophad_Wmass;
+  Float_t mc_kin_tthfl_tophad_Benergy;
+  Float_t mc_kin_tthfl_tophad_Jet1energy;
+  Float_t mc_kin_tthfl_tophad_Jet2energy;
+  Float_t mc_kin_tthfl_toplep_Wmass;
+  Float_t mc_kin_tthfl_toplep_Benergy;
+  Float_t mc_kin_tthfl_toplep_Neutenergy;
+  Float_t mc_kin_tthfl_toplep2_Wmass;
+  Float_t mc_kin_tthfl_toplep2_Benergy;
+  Float_t mc_kin_tthfl_toplep2_Neutenergy;
+  Float_t mc_kin_tthfl_h2l2nu_W1mass;
+  Float_t mc_kin_tthfl_h2l2nu_Neut1energy;
+  Float_t mc_kin_tthfl_h2l2nu_W2mass;
+  Float_t mc_kin_tthfl_h2l2nu_Neut2energy;
 
   Double_t mc_mem_tthsl_weight;
   Double_t mc_mem_tthsl_weight_log;
@@ -285,6 +303,26 @@ class ReadGenFlatTree {
   Double_t mc_mem_tthsl_weight_max;
   Double_t mc_mem_tthsl_weight_avg;
   Double_t mc_mem_tthsl_weight_logmean;
+  Double_t mc_kin_tthsl_weight_logmax;
+  Double_t mc_kin_tthsl_weight_logmaxint;
+  Double_t mc_mem_tthsl_weight_kinmax;
+  Double_t mc_mem_tthsl_weight_kinmaxint;
+
+  Float_t mc_kin_tthsl_tophad_Wmass;
+  Float_t mc_kin_tthsl_tophad_Benergy;
+  Float_t mc_kin_tthsl_tophad_Jet1energy;
+  Float_t mc_kin_tthsl_tophad_Jet2energy;
+  Float_t mc_kin_tthsl_toplep_Wmass;
+  Float_t mc_kin_tthsl_toplep_Benergy;
+  Float_t mc_kin_tthsl_toplep_Neutenergy;
+  Float_t mc_kin_tthsl_toplep2_Wmass;
+  Float_t mc_kin_tthsl_toplep2_Benergy;
+  Float_t mc_kin_tthsl_toplep2_Neutenergy;
+  Float_t mc_kin_tthsl_hlnujj_W1mass;
+  Float_t mc_kin_tthsl_hlnujj_Neut1energy;
+  Float_t mc_kin_tthsl_hlnujj_W2mass;
+  Float_t mc_kin_tthsl_hlnujj_Jet1energy;
+  Float_t mc_kin_tthsl_hlnujj_Jet2energy;
 
   Double_t mc_mem_tth_weight;
   Double_t mc_mem_tth_weight_log;
@@ -294,6 +332,10 @@ class ReadGenFlatTree {
   Double_t mc_mem_tth_weight_max;
   Double_t mc_mem_tth_weight_avg;
   Double_t mc_mem_tth_weight_logmean;
+  Double_t mc_kin_tth_weight_logmax;
+  Double_t mc_kin_tth_weight_logmaxint;
+  Double_t mc_mem_tth_weight_kinmax;
+  Double_t mc_mem_tth_weight_kinmaxint;
 
   Double_t mc_mem_ttz_weight;
   Double_t mc_mem_ttz_weight_log;
@@ -303,6 +345,21 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttz_weight_max;
   Double_t mc_mem_ttz_weight_avg;
   Double_t mc_mem_ttz_weight_logmean;
+  Double_t mc_kin_ttz_weight_logmax;
+  Double_t mc_kin_ttz_weight_logmaxint;
+  Double_t mc_mem_ttz_weight_kinmax;
+  Double_t mc_mem_ttz_weight_kinmaxint;
+
+  Float_t mc_kin_ttz_tophad_Wmass;
+  Float_t mc_kin_ttz_tophad_Benergy;
+  Float_t mc_kin_ttz_tophad_Jet1energy;
+  Float_t mc_kin_ttz_tophad_Jet2energy;
+  Float_t mc_kin_ttz_toplep_Wmass;
+  Float_t mc_kin_ttz_toplep_Benergy;
+  Float_t mc_kin_ttz_toplep_Neutenergy;
+  Float_t mc_kin_ttz_toplep2_Wmass;
+  Float_t mc_kin_ttz_toplep2_Benergy;
+  Float_t mc_kin_ttz_toplep2_Neutenergy;
 
   Double_t mc_mem_ttw_weight;
   Double_t mc_mem_ttw_weight_log;
@@ -312,6 +369,23 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttw_weight_max;
   Double_t mc_mem_ttw_weight_avg;
   Double_t mc_mem_ttw_weight_logmean;
+  Double_t mc_kin_ttw_weight_logmax;
+  Double_t mc_kin_ttw_weight_logmaxint;
+  Double_t mc_mem_ttw_weight_kinmax;
+  Double_t mc_mem_ttw_weight_kinmaxint;
+
+  Float_t mc_kin_ttw_tophad_Wmass;
+  Float_t mc_kin_ttw_tophad_Benergy;
+  Float_t mc_kin_ttw_tophad_Jet1energy;
+  Float_t mc_kin_ttw_tophad_Jet2energy;
+  Float_t mc_kin_ttw_toplep_Wmass;
+  Float_t mc_kin_ttw_toplep_Benergy;
+  Float_t mc_kin_ttw_toplep_Neutenergy;
+  Float_t mc_kin_ttw_toplep2_Wmass;
+  Float_t mc_kin_ttw_toplep2_Benergy;
+  Float_t mc_kin_ttw_toplep2_Neutenergy;
+  Float_t mc_kin_ttw_wlnu_Wmass;
+  Float_t mc_kin_ttw_wlnu_Neutenergy;
 
   Double_t mc_mem_ttwjj_weight;
   Double_t mc_mem_ttwjj_weight_log;
@@ -321,6 +395,10 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttwjj_weight_max;
   Double_t mc_mem_ttwjj_weight_avg;
   Double_t mc_mem_ttwjj_weight_logmean;
+  Double_t mc_kin_ttwjj_weight_logmax;
+  Double_t mc_kin_ttwjj_weight_logmaxint;
+  Double_t mc_mem_ttwjj_weight_kinmax;
+  Double_t mc_mem_ttwjj_weight_kinmaxint;
 
   Double_t mc_mem_ttbarfl_weight;
   Double_t mc_mem_ttbarfl_weight_log;
@@ -330,6 +408,10 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttbarfl_weight_max;
   Double_t mc_mem_ttbarfl_weight_avg;
   Double_t mc_mem_ttbarfl_weight_logmean;
+  Double_t mc_kin_ttbarfl_weight_logmax;
+  Double_t mc_kin_ttbarfl_weight_logmaxint;
+  Double_t mc_mem_ttbarfl_weight_kinmax;
+  Double_t mc_mem_ttbarfl_weight_kinmaxint;
 
   Double_t mc_mem_ttbarsl_weight;
   Double_t mc_mem_ttbarsl_weight_log;
@@ -339,6 +421,10 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttbarsl_weight_max;
   Double_t mc_mem_ttbarsl_weight_avg;
   Double_t mc_mem_ttbarsl_weight_logmean;
+  Double_t mc_kin_ttbarsl_weight_logmax;
+  Double_t mc_kin_ttbarsl_weight_logmaxint;
+  Double_t mc_mem_ttbarsl_weight_kinmax;
+  Double_t mc_mem_ttbarsl_weight_kinmaxint;
 
   Double_t mc_mem_ttbar_weight;
   Double_t mc_mem_ttbar_weight_log;
@@ -348,6 +434,11 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttbar_weight_max;
   Double_t mc_mem_ttbar_weight_avg;
   Double_t mc_mem_ttbar_weight_logmean;
+  Double_t mc_kin_ttbar_weight_logmax;
+  Double_t mc_kin_ttbar_weight_logmaxint;
+  Double_t mc_mem_ttbar_weight_kinmax;
+  Double_t mc_mem_ttbar_weight_kinmaxint;
+
 
   //Double_t mc_mem_ttz_tthfl_likelihood;
   //Double_t mc_mem_ttz_tthsl_likelihood;  
@@ -818,6 +909,25 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_tthfl_weight_max",&mc_mem_tthfl_weight_max,"mc_mem_tthfl_weight_max/D");
   tOutput->Branch("mc_mem_tthfl_weight_avg",&mc_mem_tthfl_weight_avg,"mc_mem_tthfl_weight_avg/D");
   tOutput->Branch("mc_mem_tthfl_weight_logmean",&mc_mem_tthfl_weight_logmean,"mc_mem_tthfl_weight_logmean/D");
+  tOutput->Branch("mc_mem_tthfl_weight_kinmax",&mc_mem_tthfl_weight_kinmax,"mc_mem_tthfl_weight_kinmax/D");
+  tOutput->Branch("mc_mem_tthfl_weight_kinmaxint",&mc_mem_tthfl_weight_kinmaxint,"mc_mem_tthfl_weight_kinmaxint/D");
+  tOutput->Branch("mc_kin_tthfl_weight_logmax",&mc_kin_tthfl_weight_logmax,"mc_kin_tthfl_weight_logmax/D");
+  tOutput->Branch("mc_kin_tthfl_weight_logmaxint",&mc_kin_tthfl_weight_logmaxint,"mc_kin_tthfl_weight_logmaxint/D");
+
+  tOutput->Branch("mc_kin_tthfl_tophad_Wmass",&mc_kin_tthfl_tophad_Wmass,"mc_kin_tthfl_tophad_Wmass/F");
+  tOutput->Branch("mc_kin_tthfl_tophad_Benergy",&mc_kin_tthfl_tophad_Benergy,"mc_kin_tthfl_tophad_Benergy/F");
+  tOutput->Branch("mc_kin_tthfl_tophad_Jet1energy",&mc_kin_tthfl_tophad_Jet1energy,"mc_kin_tthfl_tophad_Jet1energy/F");
+  tOutput->Branch("mc_kin_tthfl_tophad_Jet2energy",&mc_kin_tthfl_tophad_Jet2energy,"mc_kin_tthfl_tophad_Jet2energy/F");
+  tOutput->Branch("mc_kin_tthfl_toplep_Wmass",&mc_kin_tthfl_toplep_Wmass,"mc_kin_tthfl_toplep_Wmass/F");
+  tOutput->Branch("mc_kin_tthfl_toplep_Benergy",&mc_kin_tthfl_toplep_Benergy,"mc_kin_tthfl_toplep_Benergy/F");
+  tOutput->Branch("mc_kin_tthfl_toplep_Neutenergy",&mc_kin_tthfl_toplep_Neutenergy,"mc_kin_tthfl_toplep_Neutenergy/F");
+  tOutput->Branch("mc_kin_tthfl_toplep2_Wmass",&mc_kin_tthfl_toplep2_Wmass,"mc_kin_tthfl_toplep2_Wmass/F");
+  tOutput->Branch("mc_kin_tthfl_toplep2_Benergy",&mc_kin_tthfl_toplep2_Benergy,"mc_kin_tthfl_toplep2_Benergy/F");
+  tOutput->Branch("mc_kin_tthfl_toplep_Neutenergy",&mc_kin_tthfl_toplep_Neutenergy,"mc_kin_tthfl_toplep_Neutenergy/F");
+  tOutput->Branch("mc_kin_tthfl_h2l2nu_W1mass",&mc_kin_tthfl_h2l2nu_W1mass,"mc_kin_tthfl_h2l2nu_W1mass/F");
+  tOutput->Branch("mc_kin_tthfl_h2l2nu_Neut1energy",&mc_kin_tthfl_h2l2nu_Neut1energy,"mc_kin_tthfl_h2l2nu_Neut1energy/F");
+  tOutput->Branch("mc_kin_tthfl_h2l2nu_W2mass",&mc_kin_tthfl_h2l2nu_W2mass,"mc_kin_tthfl_h2l2nu_W2mass/F");
+  tOutput->Branch("mc_kin_tthfl_h2l2nu_Neut2energy",&mc_kin_tthfl_h2l2nu_Neut2energy,"mc_kin_tthfl_h2l2nu_Neut2energy/F");
 
   tOutput->Branch("mc_mem_tthsl_weight",&mc_mem_tthsl_weight,"mc_mem_tthsl_weight/D");
   tOutput->Branch("mc_mem_tthsl_weight_log",&mc_mem_tthsl_weight_log,"mc_mem_tthsl_weight_log/D");
@@ -827,6 +937,26 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_tthsl_weight_max",&mc_mem_tthsl_weight_max,"mc_mem_tthsl_weight_max/D");
   tOutput->Branch("mc_mem_tthsl_weight_avg",&mc_mem_tthsl_weight_avg,"mc_mem_tthsl_weight_avg/D");
   tOutput->Branch("mc_mem_tthsl_weight_logmean",&mc_mem_tthsl_weight_logmean,"mc_mem_tthsl_weight_logmean/D");
+  tOutput->Branch("mc_mem_tthsl_weight_kinmax",&mc_mem_tthsl_weight_kinmax,"mc_mem_tthsl_weight_kinmax/D");
+  tOutput->Branch("mc_mem_tthsl_weight_kinmaxint",&mc_mem_tthsl_weight_kinmaxint,"mc_mem_tthsl_weight_kinmaxint/D");
+  tOutput->Branch("mc_kin_tthsl_weight_logmax",&mc_kin_tthsl_weight_logmax,"mc_kin_tthsl_weight_logmax/D");
+  tOutput->Branch("mc_kin_tthsl_weight_logmaxint",&mc_kin_tthsl_weight_logmaxint,"mc_kin_tthsl_weight_logmaxint/D");
+
+  tOutput->Branch("mc_kin_tthsl_tophad_Wmass",&mc_kin_tthsl_tophad_Wmass,"mc_kin_tthsl_tophad_Wmass/F");
+  tOutput->Branch("mc_kin_tthsl_tophad_Benergy",&mc_kin_tthsl_tophad_Benergy,"mc_kin_tthsl_tophad_Benergy/F");
+  tOutput->Branch("mc_kin_tthsl_tophad_Jet1energy",&mc_kin_tthsl_tophad_Jet1energy,"mc_kin_tthsl_tophad_Jet1energy/F");
+  tOutput->Branch("mc_kin_tthsl_tophad_Jet2energy",&mc_kin_tthsl_tophad_Jet2energy,"mc_kin_tthsl_tophad_Jet2energy/F");
+  tOutput->Branch("mc_kin_tthsl_toplep_Wmass",&mc_kin_tthsl_toplep_Wmass,"mc_kin_tthsl_toplep_Wmass/F");
+  tOutput->Branch("mc_kin_tthsl_toplep_Benergy",&mc_kin_tthsl_toplep_Benergy,"mc_kin_tthsl_toplep_Benergy/F");
+  tOutput->Branch("mc_kin_tthsl_toplep_Neutenergy",&mc_kin_tthsl_toplep_Neutenergy,"mc_kin_tthsl_toplep_Neutenergy/F");
+  tOutput->Branch("mc_kin_tthsl_toplep2_Wmass",&mc_kin_tthsl_toplep2_Wmass,"mc_kin_tthsl_toplep2_Wmass/F");
+  tOutput->Branch("mc_kin_tthsl_toplep2_Benergy",&mc_kin_tthsl_toplep2_Benergy,"mc_kin_tthsl_toplep2_Benergy/F");
+  tOutput->Branch("mc_kin_tthsl_toplep2_Neutenergy",&mc_kin_tthsl_toplep2_Neutenergy,"mc_kin_tthsl_toplep2_Neutenergy/F");
+  tOutput->Branch("mc_kin_tthsl_hlnujj_W1mass",&mc_kin_tthsl_hlnujj_W1mass,"mc_kin_tthsl_hlnujj_W1mass/F");
+  tOutput->Branch("mc_kin_tthsl_hlnujj_Neut1energy",&mc_kin_tthsl_hlnujj_Neut1energy,"mc_kin_tthsl_hlnujj_Neut1energy/F");
+  tOutput->Branch("mc_kin_tthsl_hlnujj_W2mass",&mc_kin_tthsl_hlnujj_W2mass,"mc_kin_tthsl_hlnujj_W2mass/F");
+  tOutput->Branch("mc_kin_tthsl_hlnujj_Jet1energy",&mc_kin_tthsl_hlnujj_Jet1energy,"mc_kin_tthsl_hlnujj_Jet1energy/F");
+  tOutput->Branch("mc_kin_tthsl_hlnujj_Jet2energy",&mc_kin_tthsl_hlnujj_Jet2energy,"mc_kin_tthsl_hlnujj_Jet2energy/F");
 
   tOutput->Branch("mc_mem_tth_weight",&mc_mem_tth_weight,"mc_mem_tth_weight/D");
   tOutput->Branch("mc_mem_tth_weight_log",&mc_mem_tth_weight_log,"mc_mem_tth_weight_log/D");
@@ -836,6 +966,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_tth_weight_max",&mc_mem_tth_weight_max,"mc_mem_tth_weight_max/D");
   tOutput->Branch("mc_mem_tth_weight_avg",&mc_mem_tth_weight_avg,"mc_mem_tth_weight_avg/D");
   tOutput->Branch("mc_mem_tth_weight_logmean",&mc_mem_tth_weight_logmean,"mc_mem_tth_weight_logmean/D");
+  tOutput->Branch("mc_mem_tth_weight_kinmax",&mc_mem_tth_weight_kinmax,"mc_mem_tth_weight_kinmax/D");
+  tOutput->Branch("mc_mem_tth_weight_kinmaxint",&mc_mem_tth_weight_kinmaxint,"mc_mem_tth_weight_kinmaxint/D");
+  tOutput->Branch("mc_kin_tth_weight_logmax",&mc_kin_tth_weight_logmax,"mc_kin_tth_weight_logmax/D");
+  tOutput->Branch("mc_kin_tth_weight_logmaxint",&mc_kin_tth_weight_logmaxint,"mc_kin_tth_weight_logmaxint/D");
 
   tOutput->Branch("mc_mem_ttz_weight",&mc_mem_ttz_weight,"mc_mem_ttz_weight/D");
   tOutput->Branch("mc_mem_ttz_weight_log",&mc_mem_ttz_weight_log,"mc_mem_ttz_weight_log/D");
@@ -845,6 +979,21 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_ttz_weight_max",&mc_mem_ttz_weight_max,"mc_mem_ttz_weight_max/D");
   tOutput->Branch("mc_mem_ttz_weight_avg",&mc_mem_ttz_weight_avg,"mc_mem_ttz_weight_avg/D");
   tOutput->Branch("mc_mem_ttz_weight_logmean",&mc_mem_ttz_weight_logmean,"mc_mem_ttz_weight_logmean/D");
+  tOutput->Branch("mc_mem_ttz_weight_kinmax",&mc_mem_ttz_weight_kinmax,"mc_mem_ttz_weight_kinmax/D");
+  tOutput->Branch("mc_mem_ttz_weight_kinmaxint",&mc_mem_ttz_weight_kinmaxint,"mc_mem_ttz_weight_kinmaxint/D");
+  tOutput->Branch("mc_kin_ttz_weight_logmax",&mc_kin_ttz_weight_logmax,"mc_kin_ttz_weight_logmax/D");
+  tOutput->Branch("mc_kin_ttz_weight_logmaxint",&mc_kin_ttz_weight_logmaxint,"mc_kin_ttz_weight_logmaxint/D");
+
+  tOutput->Branch("mc_kin_ttz_tophad_Wmass",&mc_kin_ttz_tophad_Wmass,"mc_kin_ttz_tophad_Wmass/F");
+  tOutput->Branch("mc_kin_ttz_tophad_Benergy",&mc_kin_ttz_tophad_Benergy,"mc_kin_ttz_tophad_Benergy/F");
+  tOutput->Branch("mc_kin_ttz_tophad_Jet1energy",&mc_kin_ttz_tophad_Jet1energy,"mc_kin_ttz_tophad_Jet1energy/F");
+  tOutput->Branch("mc_kin_ttz_tophad_Jet2energy",&mc_kin_ttz_tophad_Jet2energy,"mc_kin_ttz_tophad_Jet2energy/F");
+  tOutput->Branch("mc_kin_ttz_toplep_Wmass",&mc_kin_ttz_toplep_Wmass,"mc_kin_ttz_toplep_Wmass/F");
+  tOutput->Branch("mc_kin_ttz_toplep_Benergy",&mc_kin_ttz_toplep_Benergy,"mc_kin_ttz_toplep_Benergy/F");
+  tOutput->Branch("mc_kin_ttz_toplep_Neutenergy",&mc_kin_ttz_toplep_Neutenergy,"mc_kin_ttz_toplep_Neutenergy/F");
+  tOutput->Branch("mc_kin_ttz_toplep2_Wmass",&mc_kin_ttz_toplep2_Wmass,"mc_kin_ttz_toplep2_Wmass/F");
+  tOutput->Branch("mc_kin_ttz_toplep2_Benergy",&mc_kin_ttz_toplep2_Benergy,"mc_kin_ttz_toplep2_Benergy/F");
+  tOutput->Branch("mc_kin_ttz_toplep2_Neutenergy",&mc_kin_ttz_toplep2_Neutenergy,"mc_kin_ttz_toplep2_Neutenergy/F");
 
   tOutput->Branch("mc_mem_ttw_weight",&mc_mem_ttw_weight,"mc_mem_ttw_weight/D");
   tOutput->Branch("mc_mem_ttw_weight_log",&mc_mem_ttw_weight_log,"mc_mem_ttw_weight_log/D");
@@ -854,6 +1003,23 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_ttw_weight_max",&mc_mem_ttw_weight_max,"mc_mem_ttw_weight_max/D");
   tOutput->Branch("mc_mem_ttw_weight_avg",&mc_mem_ttw_weight_avg,"mc_mem_ttw_weight_avg/D");
   tOutput->Branch("mc_mem_ttw_weight_logmean",&mc_mem_ttw_weight_logmean,"mc_mem_ttw_weight_logmean/D");
+  tOutput->Branch("mc_mem_ttw_weight_kinmax",&mc_mem_ttw_weight_kinmax,"mc_mem_ttw_weight_kinmax/D");
+  tOutput->Branch("mc_mem_ttw_weight_kinmaxint",&mc_mem_ttw_weight_kinmaxint,"mc_mem_ttw_weight_kinmaxint/D");
+  tOutput->Branch("mc_kin_ttw_weight_logmax",&mc_kin_ttw_weight_logmax,"mc_kin_ttw_weight_logmax/D");
+  tOutput->Branch("mc_kin_ttw_weight_logmaxint",&mc_kin_ttw_weight_logmaxint,"mc_kin_ttw_weight_logmaxint/D");
+
+  tOutput->Branch("mc_kin_ttw_tophad_Wmass",&mc_kin_ttw_tophad_Wmass,"mc_kin_ttw_tophad_Wmass/F");
+  tOutput->Branch("mc_kin_ttw_tophad_Benergy",&mc_kin_ttw_tophad_Benergy,"mc_kin_ttw_tophad_Benergy/F");
+  tOutput->Branch("mc_kin_ttw_tophad_Jet1energy",&mc_kin_ttw_tophad_Jet1energy,"mc_kin_ttw_tophad_Jet1energy/F");
+  tOutput->Branch("mc_kin_ttw_tophad_Jet2energy",&mc_kin_ttw_tophad_Jet2energy,"mc_kin_ttw_tophad_Jet2energy/F");
+  tOutput->Branch("mc_kin_ttw_toplep_Wmass",&mc_kin_ttw_toplep_Wmass,"mc_kin_ttw_toplep_Wmass/F");
+  tOutput->Branch("mc_kin_ttw_toplep_Benergy",&mc_kin_ttw_toplep_Benergy,"mc_kin_ttw_toplep_Benergy/F");
+  tOutput->Branch("mc_kin_ttw_toplep_Neutenergy",&mc_kin_ttw_toplep_Neutenergy,"mc_kin_ttw_toplep_Neutenergy/F");
+  tOutput->Branch("mc_kin_ttw_toplep2_Wmass",&mc_kin_ttw_toplep2_Wmass,"mc_kin_ttw_toplep2_Wmass/F");
+  tOutput->Branch("mc_kin_ttw_toplep2_Benergy",&mc_kin_ttw_toplep2_Benergy,"mc_kin_ttw_toplep2_Benergy/F");
+  tOutput->Branch("mc_kin_ttw_toplep2_Neutenergy",&mc_kin_ttw_toplep2_Neutenergy,"mc_kin_ttw_toplep2_Neutenergy/F");
+  tOutput->Branch("mc_kin_ttw_wlnu_Wmass",&mc_kin_ttw_wlnu_Wmass,"mc_kin_ttw_wlnu_Wmass/F");
+  tOutput->Branch("mc_kin_ttw_wlnu_Neutenergy",&mc_kin_ttw_wlnu_Neutenergy,"mc_kin_ttw_wlnu_Neutenergy/F");
 
   tOutput->Branch("mc_mem_ttwjj_weight",&mc_mem_ttwjj_weight,"mc_mem_ttwjj_weight/D");
   tOutput->Branch("mc_mem_ttwjj_weight_log",&mc_mem_ttwjj_weight_log,"mc_mem_ttwjj_weight_log/D");
@@ -863,6 +1029,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_ttwjj_weight_max",&mc_mem_ttwjj_weight_max,"mc_mem_ttwjj_weight_max/D");
   tOutput->Branch("mc_mem_ttwjj_weight_avg",&mc_mem_ttwjj_weight_avg,"mc_mem_ttwjj_weight_avg/D");
   tOutput->Branch("mc_mem_ttwjj_weight_logmean",&mc_mem_ttwjj_weight_logmean,"mc_mem_ttwjj_weight_logmean/D");
+  tOutput->Branch("mc_mem_ttwjj_weight_kinmax",&mc_mem_ttwjj_weight_kinmax,"mc_mem_ttwjj_weight_kinmax/D");
+  tOutput->Branch("mc_mem_ttwjj_weight_kinmaxint",&mc_mem_ttwjj_weight_kinmaxint,"mc_mem_ttwjj_weight_kinmaxint/D");
+  tOutput->Branch("mc_kin_ttwjj_weight_logmax",&mc_kin_ttwjj_weight_logmax,"mc_kin_ttwjj_weight_logmax/D");
+  tOutput->Branch("mc_kin_ttwjj_weight_logmaxint",&mc_kin_ttwjj_weight_logmaxint,"mc_kin_ttwjj_weight_logmaxint/D");
 
   tOutput->Branch("mc_mem_ttbarfl_weight",&mc_mem_ttbarfl_weight,"mc_mem_ttbarfl_weight/D");
   tOutput->Branch("mc_mem_ttbarfl_weight_log",&mc_mem_ttbarfl_weight_log,"mc_mem_ttbarfl_weight_log/D");
@@ -872,6 +1042,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_ttbarfl_weight_max",&mc_mem_ttbarfl_weight_max,"mc_mem_ttbarfl_weight_max/D");
   tOutput->Branch("mc_mem_ttbarfl_weight_avg",&mc_mem_ttbarfl_weight_avg,"mc_mem_ttbarfl_weight_avg/D");
   tOutput->Branch("mc_mem_ttbarfl_weight_logmean",&mc_mem_ttbarfl_weight_logmean,"mc_mem_ttbarfl_weight_logmean/D");
+  tOutput->Branch("mc_mem_ttbarfl_weight_kinmax",&mc_mem_ttbarfl_weight_kinmax,"mc_mem_ttbarfl_weight_kinmax/D");
+  tOutput->Branch("mc_mem_ttbarfl_weight_kinmaxint",&mc_mem_ttbarfl_weight_kinmaxint,"mc_mem_ttbarfl_weight_kinmaxint/D");
+  tOutput->Branch("mc_kin_ttbarfl_weight_logmax",&mc_kin_ttbarfl_weight_logmax,"mc_kin_ttbarfl_weight_logmax/D");
+  tOutput->Branch("mc_kin_ttbarfl_weight_logmaxint",&mc_kin_ttbarfl_weight_logmaxint,"mc_kin_ttbarfl_weight_logmaxint/D");
 
   tOutput->Branch("mc_mem_ttbarsl_weight",&mc_mem_ttbarsl_weight,"mc_mem_ttbarsl_weight/D");
   tOutput->Branch("mc_mem_ttbarsl_weight_log",&mc_mem_ttbarsl_weight_log,"mc_mem_ttbarsl_weight_log/D");
@@ -881,6 +1055,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_ttbarsl_weight_max",&mc_mem_ttbarsl_weight_max,"mc_mem_ttbarsl_weight_max/D");
   tOutput->Branch("mc_mem_ttbarsl_weight_avg",&mc_mem_ttbarsl_weight_avg,"mc_mem_ttbarsl_weight_avg/D");
   tOutput->Branch("mc_mem_ttbarsl_weight_logmean",&mc_mem_ttbarsl_weight_logmean,"mc_mem_ttbarsl_weight_logmean/D");
+  tOutput->Branch("mc_mem_ttbarsl_weight_kinmax",&mc_mem_ttbarsl_weight_kinmax,"mc_mem_ttbarsl_weight_kinmax/D");
+  tOutput->Branch("mc_mem_ttbarsl_weight_kinmaxint",&mc_mem_ttbarsl_weight_kinmaxint,"mc_mem_ttbarsl_weight_kinmaxint/D");
+  tOutput->Branch("mc_kin_ttbarsl_weight_logmax",&mc_kin_ttbarsl_weight_logmax,"mc_kin_ttbarsl_weight_logmax/D");
+  tOutput->Branch("mc_kin_ttbarsl_weight_logmaxint",&mc_kin_ttbarsl_weight_logmaxint,"mc_kin_ttbarsl_weight_logmaxint/D");
 
   tOutput->Branch("mc_mem_ttbar_weight",&mc_mem_ttbar_weight,"mc_mem_ttbar_weight/D");
   tOutput->Branch("mc_mem_ttbar_weight_log",&mc_mem_ttbar_weight_log,"mc_mem_ttbar_weight_log/D");
@@ -890,6 +1068,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_ttbar_weight_max",&mc_mem_ttbar_weight_max,"mc_mem_ttbar_weight_max/D");
   tOutput->Branch("mc_mem_ttbar_weight_avg",&mc_mem_ttbar_weight_avg,"mc_mem_ttbar_weight_avg/D");
   tOutput->Branch("mc_mem_ttbar_weight_logmean",&mc_mem_ttbar_weight_logmean,"mc_mem_ttbar_weight_logmean/D");
+  tOutput->Branch("mc_mem_ttbar_weight_kinmax",&mc_mem_ttbar_weight_kinmax,"mc_mem_ttbar_weight_kinmax/D");
+  tOutput->Branch("mc_mem_ttbar_weight_kinmaxint",&mc_mem_ttbar_weight_kinmaxint,"mc_mem_ttbar_weight_kinmaxint/D");
+  tOutput->Branch("mc_kin_ttbar_weight_logmax",&mc_kin_ttbar_weight_logmax,"mc_kin_ttbar_weight_logmax/D");
+  tOutput->Branch("mc_kin_ttbar_weight_logmaxint",&mc_kin_ttbar_weight_logmaxint,"mc_kin_ttbar_weight_logmaxint/D");
 
   tOutput->Branch("mc_mem_ttz_tth_likelihood",&mc_mem_ttz_tth_likelihood,"mc_mem_ttz_tth_likelihood/D");
   tOutput->Branch("mc_mem_ttz_tth_likelihood_nlog",&mc_mem_ttz_tth_likelihood_nlog,"mc_mem_ttz_tth_likelihood_nlog/D");

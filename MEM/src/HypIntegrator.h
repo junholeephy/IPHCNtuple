@@ -178,6 +178,8 @@ void HypIntegrator::ResetCounters(){
 
   meIntegrator->iIteration = 0;
   meIntegrator->iCall = 0;
+  meIntegrator->weight_max = 0;
+
   for (int i=0; i<20; i++) meIntegrator->errorCounter[i]=0;
 
   return;
