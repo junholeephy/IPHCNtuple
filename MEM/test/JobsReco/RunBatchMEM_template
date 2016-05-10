@@ -22,5 +22,5 @@ ${EXECDIR}/./test INPUTFILE NMIN NMAX --MEMRun DIR_JOBS/Jobs_OPTION/config.cfg >
 
 ls 
 
-cp log_PROC_OPTION_NUM DIR_JOBS/Jobs_OPTION/
+#cp log_PROC_OPTION_NUM DIR_JOBS/Jobs_OPTION/
 cp output.root DIR_JOBS/Jobs_OPTION/output_PROC_OPTION_NUM.root
