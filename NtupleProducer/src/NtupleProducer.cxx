@@ -94,11 +94,13 @@ int main(int argc, char *argv[])
     int n_tau = 0;
     int n_jet = 0;
     
-    //JetCorrectionUncertainty *jesTotal;
+    JetCorrectionUncertainty *jesTotal;
     
     
     //if (isdata == false)  jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_MC/Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
-    //else                  jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_MC/Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
+    //else		  jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_MC/Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
+    if (isdata == false)  jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("./Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
+    else		  jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("./Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
    
    
     for(Long64_t i=0;i<nentries;i++)
@@ -109,21 +111,24 @@ int main(int argc, char *argv[])
         ch->GetEntry(i);
 
 
-
         nt->clearVar();	
+
 
         //	if( !(isHtoWW || isHtoZZ || isHtoTT) ) continue;
 
         // event
         ev.init();
 
+
         ev.read(isdata); 
+	
 
         //	if( isHtoWW ) ev._tth_channel = 0;
         //	else if( isHtoZZ ) ev._tth_channel = 1;
         //	else if( isHtoTT ) ev._tth_channel = 2;
 
         nt->NtEvent->push_back(ev);
+
 
         bool mu_presel  = false,
              el_presel  = false,
@@ -177,9 +182,11 @@ int main(int argc, char *argv[])
         {
             idx = j;
 
-            tau.init();
-            tau.read();
+            tau.init();std::cout <<"060"<< std::endl;
 
+            tau.read();
+            tau.init();
+   
             if (tau.sel()) 
             {    
                 nt->NtTau->push_back(tau);
@@ -187,6 +194,7 @@ int main(int argc, char *argv[])
             }
         }	
         if(tau_presel) n_tau++;
+
 
         // jets
         for(int j=0;j<ntP->jet_n;j++)
@@ -196,11 +204,11 @@ int main(int argc, char *argv[])
             jet.init();
             jet.read(isdata);
 	    
-	    //jesTotal->setJetPt(jpt);
-            //jesTotal->setJetEta(jeta);
+	    jesTotal->setJetPt(ntP->jet_pt->at(idx));
+            jesTotal->setJetEta(ntP->jet_eta->at(idx));
             
-	    //jet.setJESUncertainty(jesTotal->getUncertainty(true));
-            jet.setJESUncertainty(0.);
+	    jet.setJESUncertainty(jesTotal->getUncertainty(true));
+            //jet.setJESUncertainty(0.);
   
             if (jet.sel()) 
             {    
@@ -248,6 +256,7 @@ int main(int argc, char *argv[])
           << " n_jet:  " << n_jet << std::endl;
 
         nt->fill();
+	
     }  
 
     delete evdebug;
