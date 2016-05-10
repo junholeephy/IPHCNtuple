@@ -3,6 +3,11 @@ CMSINC      = -I$(CMSSW_BASE)/src
 #EGAMLIB      = -L$(CMSSW_BASE)/lib/slc6_amd64_gcc481 -lEgammaAnalysisElectronTools
 #FORMLIB      = -L$(CMSSW_BASE)/lib/slc6_amd64_gcc481 -lEgammaAnalysisElectronTools
 
+JETLIBS     = -L$(CMSSW_RELEASE_BASE)/lib/slc6_amd64_gcc493 -lCondFormatsJetMETObjects
+JETINC      = -I$(CMSSW_RELEASE_BASE)/src
+
+
+
 # escape c11
 ROOTCFLAGS    = $(shell root-config --cflags | sed -e "s%-std=c++0x %%g")
 #ROOTCFLAGS    = $(shell root-config --cflags | sed -e "s%-std=c++11 %%g")
@@ -15,8 +20,8 @@ LDFLAGS       = -g
 SOFLAGS       = -shared
 
 CXXFLAGS       = $(ROOTCFLAGS)
-INCLUDE_FLAGS  = $(CMSINC)
-LDLIBS         = $(ROOTLIBS) #-lCintex
+INCLUDE_FLAGS  = $(JETINC)
+LDLIBS         = $(ROOTLIBS) $(JETLIBS)
 GLIBS          = $(ROOTGLIBS)
 
 EXE           = test/NtupleProducer
