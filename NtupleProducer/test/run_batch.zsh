@@ -29,7 +29,7 @@ nmax=-1
 
 fxsec="table.txt"
 
-fdir=$(ls -d lists_AC*)
+fdir=$(ls -d lists*)
 
 echo $fdir
 
