@@ -7,7 +7,7 @@ infl="input.txt"
 
 ./NtupleProducer      \
 --file ${infl}        \
---outfile output.root \
+--outfile output \
 --tree FlatTree/tree  \
 --nmax -1             \
 --isdata 0

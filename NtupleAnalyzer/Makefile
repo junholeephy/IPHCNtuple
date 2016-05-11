@@ -2,8 +2,8 @@
 
 CC = g++ -g -Wno-writable-strings -Wno-write-strings -fsanitize=address -lTMVA
 
-NTUPLEINC    = -I../NtupleProducer/include
-NTUPLELIB    = -L../NtupleProducer \
+NTUPLEINC    = -I../NtupleProducer/include -I$(CMSSW_RELEASE_BASE)/src
+NTUPLELIB    = -L../NtupleProducer -L$(CMSSW_RELEASE_BASE)/lib/slc6_amd64_gcc493 -lCondFormatsJetMETObjects \
               -lNtuple
 
 KINFITINC    = -I../../KinFit
@@ -21,9 +21,9 @@ INCLUDES                = $(shell $(ROOTCONF) --incdir) $(ROOTCFLAGS)
 CINTINCLUDES            = $(shell $(ROOTCONF) --incdir)
 LIBS                    = $(ROOTLIBS)
 
-LDLIBS  = $(ROOTLIBS) $(NTUPLELIB) $(KINFITLIB)
+LDLIBS  = $(ROOTLIBS) $(NTUPLELIB) $(KINFITLIB) 
 
-ADDINC = $(NTUPLEINC) $(KINFITINC)
+ADDINC = $(NTUPLEINC) $(KINFITINC) 
 
 SRC = src/Analyzer.cxx  src/Hist.cxx \
 src/TTbarDileptonAnalysis.cxx src/HistoManager.cxx \

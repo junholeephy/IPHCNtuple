@@ -79,23 +79,7 @@ void Jet::init()
     _pt_JER_down          = 0.;
     _pt_JER_up            = 0.;
     
-    _cJER[0] = 1.052; // 0.0-0.5
-    _cJER[1] = 1.057; // 0.5-1.1
-    _cJER[2] = 1.096; // 1.1-1.7
-    _cJER[3] = 1.134; // 1.7-2.3
-    _cJER[4] = 1.288; // 2.3-5.0
    
-    _cJER_down[0] = 0.990;
-    _cJER_down[1] = 1.001;
-    _cJER_down[2] = 1.032;
-    _cJER_down[3] = 1.042;
-    _cJER_down[4] = 1.089;
-
-    _cJER_up[0] = 1.115;
-    _cJER_up[1] = 1.114;
-    _cJER_up[2] = 1.161;
-    _cJER_up[3] = 1.228;
-    _cJER_up[4] = 1.488;
     
 }
 
@@ -175,6 +159,10 @@ void Jet::JECUncertainty()
 {  
    // JER taken from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
    
+   double _cJER[5];
+   double _cJER_down[5];
+   double _cJER_up[5];
+
    _cJER[0] = 1.052; // 0.0-0.5
    _cJER[1] = 1.057; // 0.5-1.1
    _cJER[2] = 1.096; // 1.1-1.7

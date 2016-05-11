@@ -72,17 +72,19 @@ int main(int argc, char *argv[])
     nt->createVar();
     std::cout << "Creation DONE" << std::endl;
     nt->setBranchAddress();
-    std::cout << "SetBranchAddress DONE" << std::endl;
+    std::cout << "SetBranchAddress DONE ***" << std::endl;
 
     Event     ev;
     Electron  el;
     Muon      mu;
-    Tau      tau;
-    Jet      jet;
+    Tau      tau; 
+    Jet      jet; 
+  
     Truth  truth;
     GenJet genjet;
     TriggerObj trigObj;
-
+    
+   
     evdebug = new std::vector<int>();
     //   evdebug->push_back(120);
 
@@ -93,16 +95,14 @@ int main(int argc, char *argv[])
     int n_el  = 0;
     int n_tau = 0;
     int n_jet = 0;
-    
+   
+  
     JetCorrectionUncertainty *jesTotal;
-    
-    
-    //if (isdata == false)  jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_MC/Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
-    //else		  jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_MC/Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
-    if (isdata == false)  jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("./Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
-    else		  jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("./Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
+  
    
-   
+    if (isdata == false) jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_MC/Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
+    else		 jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_DATA/Fall15_25nsV2_DATA_UncertaintySources_AK4PFchs.txt", "Total")));
+    
     for(Long64_t i=0;i<nentries;i++)
     {
         if( i > nmax && nmax >= 0 ) break; 
@@ -182,8 +182,8 @@ int main(int argc, char *argv[])
         {
             idx = j;
 
-            tau.init();std::cout <<"060"<< std::endl;
-
+            tau.init();
+	    
             tau.read();
             tau.init();
    

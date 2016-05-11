@@ -12,9 +12,10 @@ que="sbg_local"
 
 export HOME=$(pwd)
 
-dout="/home-pbs/lebihan/someone/ttH_010216/ttH/NtupleProducer/test/"
-dout_f="/opt/sbg/scratch1/cms/lebihan/trees_Analyzer_akoula_patch2_01022016_pbs/"
+dout="/home-pbs/lebihan/someone/ttH_JEC3/ttH/NtupleProducer/test/"
+dout_f="/opt/sbg/scratch1/cms/lebihan/ntuples_JESJEC/"
 
+echo "CMSSW_RELEASE_BASE" $CMSSW_RELEASE_BASE
 
 runName="toy${jName}"
 logName="log${jName}"
