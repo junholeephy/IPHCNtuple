@@ -8,10 +8,10 @@ Install
 # The code is based on ROOT6, setup it manually or via CMSSW:
 
 mkdir MyAnalysis/; cd MyAnalysis/
-export SCRAM_ARCH=slc6_amd64_gcc491
+export SCRAM_ARCH=slc6_amd64_gcc493
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-cmsrel CMSSW_7_4_12_patch4
-cd CMSSW_7_4_12_patch4/src/
+cmsrel CMSSW_7_6_3
+cd CMSSW_7_6_3/src/
 cmsenv
 
 # get the code from GIT
