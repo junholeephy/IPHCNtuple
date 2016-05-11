@@ -32,5 +32,5 @@ cd KinFit/
 make
 cd ../
 
-cd IPHCNtuple/NtupleAnalyzer/
+cd ttH/NtupleAnalyzer/
 make
