@@ -103,10 +103,6 @@ class Jet : public Base
         float _pt_JER_down;
         float _pt_JER_up;
         
-	double _cJER[5];
-        double _cJER_down[5];
-        double _cJER_up[5];
-
         ClassDef(Jet,1)
 };
 
