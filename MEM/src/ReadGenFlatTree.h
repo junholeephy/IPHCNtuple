@@ -475,6 +475,16 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttvjj_tth_likelihood_max;
   Double_t mc_mem_ttvjj_tth_likelihood_avg;
 
+  std::vector<double>* MEAllWeights_TTLL;
+  std::vector<double>* MEAllWeights_TTHfl;
+  std::vector<double>* MEAllWeights_TTHsl;
+  std::vector<double>* MEAllWeights_TTH;
+  std::vector<double>* MEAllWeights_TTW;
+  std::vector<double>* MEAllWeights_TTWJJ;
+  std::vector<double>* MEAllWeights_TTbarfl;
+  std::vector<double>* MEAllWeights_TTbarsl;
+  std::vector<double>* MEAllWeights_TTbar;
+
   TBranch* b_catJets;
   TBranch* b_is_2lss_TTH_SR;
   TBranch* b_is_3l_TTH_SR;
@@ -768,6 +778,16 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
    multilepton_JetLowestMjj2_2ndPair_P4_ptr = 0;
    multilepton_mET_ptr = 0;
    multilepton_Ptot_ptr = 0;
+
+	MEAllWeights_TTLL = new std::vector<double>;
+	MEAllWeights_TTHfl = new std::vector<double>;
+	MEAllWeights_TTHsl = new std::vector<double>;
+	MEAllWeights_TTH = new std::vector<double>;
+	MEAllWeights_TTW = new std::vector<double>;
+	MEAllWeights_TTWJJ = new std::vector<double>;
+	MEAllWeights_TTbarfl = new std::vector<double>;
+	MEAllWeights_TTbarsl = new std::vector<double>;
+	MEAllWeights_TTbar = new std::vector<double>;
 
   tInput->SetBranchAddress("mc_event",&mc_event,&b_mc_event);
   tInput->SetBranchAddress("mc_weight",&mc_weight,&b_mc_weight);
@@ -1108,6 +1128,15 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("signal_3l_TT_MVA",&signal_3l_TT_MVA,"signal_3l_TT_MVA/F");
   tOutput->Branch("signal_3l_TTV_MVA",&signal_3l_TTV_MVA,"signal_3l_TTV_MVA/F");
 
+  tOutput->Branch("MEAllWeights_TTLL","vector<double_t>",&MEAllWeights_TTLL);
+  tOutput->Branch("MEAllWeights_TTHfl","vector<double_t>",&MEAllWeights_TTHfl);
+  tOutput->Branch("MEAllWeights_TTHsl","vector<double_t>",&MEAllWeights_TTHsl);
+  tOutput->Branch("MEAllWeights_TTH","vector<double_t>",&MEAllWeights_TTH);
+  tOutput->Branch("MEAllWeights_TTW","vector<double_t>",&MEAllWeights_TTW);
+  tOutput->Branch("MEAllWeights_TTWJJ","vector<double_t>",&MEAllWeights_TTWJJ);
+  tOutput->Branch("MEAllWeights_TTbarfl","vector<double_t>",&MEAllWeights_TTbarfl);
+  tOutput->Branch("MEAllWeights_TTbarsl","vector<double_t>",&MEAllWeights_TTbarsl);
+  tOutput->Branch("MEAllWeights_TTbar","vector<double_t>",&MEAllWeights_TTbar);
 }
 
 
