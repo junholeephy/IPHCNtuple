@@ -779,15 +779,15 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
    multilepton_mET_ptr = 0;
    multilepton_Ptot_ptr = 0;
 
-	MEAllWeights_TTLL = new std::vector<double>;
-	MEAllWeights_TTHfl = new std::vector<double>;
-	MEAllWeights_TTHsl = new std::vector<double>;
-	MEAllWeights_TTH = new std::vector<double>;
-	MEAllWeights_TTW = new std::vector<double>;
-	MEAllWeights_TTWJJ = new std::vector<double>;
-	MEAllWeights_TTbarfl = new std::vector<double>;
-	MEAllWeights_TTbarsl = new std::vector<double>;
-	MEAllWeights_TTbar = new std::vector<double>;
+   MEAllWeights_TTLL = new std::vector<double>;
+   MEAllWeights_TTHfl = new std::vector<double>;
+   MEAllWeights_TTHsl = new std::vector<double>;
+   MEAllWeights_TTH = new std::vector<double>;
+   MEAllWeights_TTW = new std::vector<double>;
+   MEAllWeights_TTWJJ = new std::vector<double>;
+   MEAllWeights_TTbarfl = new std::vector<double>;
+   MEAllWeights_TTbarsl = new std::vector<double>;
+   MEAllWeights_TTbar = new std::vector<double>;
 
   tInput->SetBranchAddress("mc_event",&mc_event,&b_mc_event);
   tInput->SetBranchAddress("mc_weight",&mc_weight,&b_mc_weight);
