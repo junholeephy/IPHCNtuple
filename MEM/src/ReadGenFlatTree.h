@@ -485,6 +485,16 @@ class ReadGenFlatTree {
   std::vector<double>* MEAllWeights_TTbarsl;
   std::vector<double>* MEAllWeights_TTbar;
 
+  std::vector<float>* MEAllWeights_TTLL_log;
+  std::vector<float>* MEAllWeights_TTHfl_log;
+  std::vector<float>* MEAllWeights_TTHsl_log;
+  std::vector<float>* MEAllWeights_TTH_log;
+  std::vector<float>* MEAllWeights_TTW_log;
+  std::vector<float>* MEAllWeights_TTWJJ_log;
+  std::vector<float>* MEAllWeights_TTbarfl_log;
+  std::vector<float>* MEAllWeights_TTbarsl_log;
+  std::vector<float>* MEAllWeights_TTbar_log;
+
   TBranch* b_catJets;
   TBranch* b_is_2lss_TTH_SR;
   TBranch* b_is_3l_TTH_SR;
@@ -788,6 +798,16 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
    MEAllWeights_TTbarfl = new std::vector<double>;
    MEAllWeights_TTbarsl = new std::vector<double>;
    MEAllWeights_TTbar = new std::vector<double>;
+
+   MEAllWeights_TTLL_log = new std::vector<float>;
+   MEAllWeights_TTHfl_log = new std::vector<float>;
+   MEAllWeights_TTHsl_log = new std::vector<float>;
+   MEAllWeights_TTH_log = new std::vector<float>;
+   MEAllWeights_TTW_log = new std::vector<float>;
+   MEAllWeights_TTWJJ_log = new std::vector<float>;
+   MEAllWeights_TTbarfl_log = new std::vector<float>;
+   MEAllWeights_TTbarsl_log = new std::vector<float>;
+   MEAllWeights_TTbar_log = new std::vector<float>;
 
   tInput->SetBranchAddress("mc_event",&mc_event,&b_mc_event);
   tInput->SetBranchAddress("mc_weight",&mc_weight,&b_mc_weight);
@@ -1128,15 +1148,25 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("signal_3l_TT_MVA",&signal_3l_TT_MVA,"signal_3l_TT_MVA/F");
   tOutput->Branch("signal_3l_TTV_MVA",&signal_3l_TTV_MVA,"signal_3l_TTV_MVA/F");
 
-  tOutput->Branch("MEAllWeights_TTLL","vector<double_t>",&MEAllWeights_TTLL);
-  tOutput->Branch("MEAllWeights_TTHfl","vector<double_t>",&MEAllWeights_TTHfl);
-  tOutput->Branch("MEAllWeights_TTHsl","vector<double_t>",&MEAllWeights_TTHsl);
-  tOutput->Branch("MEAllWeights_TTH","vector<double_t>",&MEAllWeights_TTH);
-  tOutput->Branch("MEAllWeights_TTW","vector<double_t>",&MEAllWeights_TTW);
-  tOutput->Branch("MEAllWeights_TTWJJ","vector<double_t>",&MEAllWeights_TTWJJ);
-  tOutput->Branch("MEAllWeights_TTbarfl","vector<double_t>",&MEAllWeights_TTbarfl);
-  tOutput->Branch("MEAllWeights_TTbarsl","vector<double_t>",&MEAllWeights_TTbarsl);
-  tOutput->Branch("MEAllWeights_TTbar","vector<double_t>",&MEAllWeights_TTbar);
+  tOutput->Branch("MEAllWeights_TTLL","vector<double>",&MEAllWeights_TTLL);
+  tOutput->Branch("MEAllWeights_TTHfl","vector<double>",&MEAllWeights_TTHfl);
+  tOutput->Branch("MEAllWeights_TTHsl","vector<double>",&MEAllWeights_TTHsl);
+  tOutput->Branch("MEAllWeights_TTH","vector<double>",&MEAllWeights_TTH);
+  tOutput->Branch("MEAllWeights_TTW","vector<double>",&MEAllWeights_TTW);
+  tOutput->Branch("MEAllWeights_TTWJJ","vector<double>",&MEAllWeights_TTWJJ);
+  tOutput->Branch("MEAllWeights_TTbarfl","vector<double>",&MEAllWeights_TTbarfl);
+  tOutput->Branch("MEAllWeights_TTbarsl","vector<double>",&MEAllWeights_TTbarsl);
+  tOutput->Branch("MEAllWeights_TTbar","vector<double>",&MEAllWeights_TTbar);
+
+  tOutput->Branch("MEAllWeights_TTLL_log","vector<float>",&MEAllWeights_TTLL_log);
+  tOutput->Branch("MEAllWeights_TTHfl_log","vector<float>",&MEAllWeights_TTHfl_log);
+  tOutput->Branch("MEAllWeights_TTHsl_log","vector<float>",&MEAllWeights_TTHsl_log);
+  tOutput->Branch("MEAllWeights_TTH_log","vector<float>",&MEAllWeights_TTH_log);
+  tOutput->Branch("MEAllWeights_TTW_log","vector<float>",&MEAllWeights_TTW_log);
+  tOutput->Branch("MEAllWeights_TTWJJ_log","vector<float>",&MEAllWeights_TTWJJ_log);
+  tOutput->Branch("MEAllWeights_TTbarfl_log","vector<float>",&MEAllWeights_TTbarfl_log);
+  tOutput->Branch("MEAllWeights_TTbarsl_log","vector<float>",&MEAllWeights_TTbarsl_log);
+  tOutput->Branch("MEAllWeights_TTbar_log","vector<float>",&MEAllWeights_TTbar_log);
 }
 
 
