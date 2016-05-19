@@ -535,7 +535,10 @@ void MultiLepton::FillTTWHyp(MEPhaseSpace** meIntegrator, bool doTTWJJ)
     (*meIntegrator)->FinalStateTTV.Top2_Decay = kTopLepDecay;
     (*meIntegrator)->FinalStateTTV.Top2_Sign = (Leptons[1].Id>0)?kAntitop:kTop;
 
-    if (!doTTWJJ) SetPresenceBandJets(meIntegrator, 0, 0); //Assumes TTW, not TTWJJ
+    if (!doTTWJJ) {
+      SetPresenceBandJets(meIntegrator, 0, 0); //Assumes TTW, not TTWJJ
+      (*meIntegrator)->MEMFix_HiggsSemiLep.isJmissing = -1;
+    }
     if (doTTWJJ) SetPresenceBandJets(meIntegrator, 0, 2); 
 
     (*meIntegrator)->MEMFix_HiggsSemiLep.Lep1_E = Leptons[0].P4.E();

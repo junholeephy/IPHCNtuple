@@ -77,7 +77,7 @@ HypIntegrator::HypIntegrator(){
   param = new ROOT::Math::VegasParameters( *(ig2->ExtraOptions()) );
 
   minimizer = new ROOT::Minuit2::Minuit2Minimizer( ROOT::Minuit2::kMigrad );
-
+  minimizer->SetPrintLevel(0);
 }
 
 HypIntegrator::~HypIntegrator(){
@@ -169,7 +169,7 @@ void HypIntegrator::SetupMinimizerHypothesis(int kMode, int kCat, int stageValue
   minimizer->SetFunction(*FunctorHyp);
 
   minimizer->SetMaxFunctionCalls(5*nPointsCatHyp);
-  minimizer->SetPrintLevel(1);
+  minimizer->SetPrintLevel(0);
 
   return;
 }

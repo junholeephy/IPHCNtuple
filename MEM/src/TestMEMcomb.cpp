@@ -620,43 +620,79 @@ int main(int argc, char *argv[])
        }
      } while (doPermutationBjet && permresbjet);
 
-
+     TLorentzVector Pnull(0,0,0,0);
      if (shyp[ih]=="TTLL"){
-      //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopHadDecay){
+          tree.mc_kin_ttz_tophad_P4 = (kinweight_maxint[0]>0  && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Top_P4 : Pnull;
+          tree.mc_kin_ttz_tophad_W_P4 = (kinweight_maxint[0]>0  && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_P4 : Pnull;
+          tree.mc_kin_ttz_tophad_Bjet_P4 = (kinweight_maxint[0]>0  && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Bjet_P4 : Pnull;
+          tree.mc_kin_ttz_tophad_Jet1_P4 = (kinweight_maxint[0]>0  && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_P4 : Pnull;
+          tree.mc_kin_ttz_tophad_Jet2_P4 = (kinweight_maxint[0]>0  && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_P4 : Pnull;
+	  tree.mc_kin_ttz_tophad_Pt = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Top_Pt : -99;
           tree.mc_kin_ttz_tophad_Wmass = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_Mass : -99;
           tree.mc_kin_ttz_tophad_Benergy = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.B_E : -99;
           tree.mc_kin_ttz_tophad_Jet1energy = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_E : -99;
           tree.mc_kin_ttz_tophad_Jet2energy = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_E : -99;
-     //  }
-       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopLepDecay){
+          tree.mc_kin_ttz_toplep_P4 = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Top_P4 : Pnull;
+          tree.mc_kin_ttz_toplep_W_P4 = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_P4 : Pnull;
+          tree.mc_kin_ttz_toplep_Bjet_P4 = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Bjet_P4 : Pnull;
+          tree.mc_kin_ttz_toplep_Lep_P4 = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Lep_P4 : Pnull;
+          tree.mc_kin_ttz_toplep_Neut_P4 = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_P4 : Pnull;
+	  tree.mc_kin_ttz_toplep_Pt = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Top_Pt : -99;
           tree.mc_kin_ttz_toplep_Wmass = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_Mass : -99;
           tree.mc_kin_ttz_toplep_Benergy = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.B_E : -99;
           tree.mc_kin_ttz_toplep_Neutenergy = (kinweight_maxint[0]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_E : -99;
-       //}
-       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top2_Decay==kTopLepDecay){
+          tree.mc_kin_ttz_toplep2_P4 = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Top_P4 : Pnull;
+          tree.mc_kin_ttz_toplep2_W_P4 = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_P4 : Pnull;
+          tree.mc_kin_ttz_toplep2_Bjet_P4 = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Bjet_P4 : Pnull;
+          tree.mc_kin_ttz_toplep2_Lep_P4 = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Lep_P4 : Pnull;
+          tree.mc_kin_ttz_toplep2_Neut_P4 = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_P4 : Pnull;
+          tree.mc_kin_ttz_toplep2_Pt = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Top_Pt : -99;
           tree.mc_kin_ttz_toplep2_Wmass = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_Mass : -99;
           tree.mc_kin_ttz_toplep2_Benergy = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.B_E : -99;
           tree.mc_kin_ttz_toplep2_Neutenergy = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_E : -99;
-       //}
+          tree.mc_kin_ttz_zll_P4 = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_Zll.Z_P4 : Pnull;
+          tree.mc_kin_ttz_zll_Lep1_P4 = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_Zll.Lep1_P4 : Pnull;
+          tree.mc_kin_ttz_zll_Lep2_P4 = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_Zll.Lep2_P4 : Pnull;
+	  tree.mc_kin_ttz_zll_Pt = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_Zll.Z_Pt : -99;
+          tree.mc_kin_ttz_zll_Zmass = (kinweight_maxint[0]>0) ? hypIntegrator.meIntegrator->MEMKin_Zll.Z_Mass : -99;
      }
      if (shyp[ih]=="TTHfl") {
-       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopHadDecay){
+	  tree.mc_kin_tthfl_tophad_P4 = (kinweight_maxint[1]>0  && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Top_P4 : Pnull;
+          tree.mc_kin_tthfl_tophad_W_P4 = (kinweight_maxint[1]>0  && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_P4 : Pnull;
+          tree.mc_kin_tthfl_tophad_Bjet_P4 = (kinweight_maxint[1]>0  && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Bjet_P4 : Pnull;
+          tree.mc_kin_tthfl_tophad_Jet1_P4 = (kinweight_maxint[1]>0  && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_P4 : Pnull;
+          tree.mc_kin_tthfl_tophad_Jet2_P4 = (kinweight_maxint[1]>0  && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_P4 : Pnull;
+          tree.mc_kin_tthfl_tophad_Pt = (kinweight_maxint[1]>0  && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Top_Pt : -99;
           tree.mc_kin_tthfl_tophad_Wmass = (kinweight_maxint[1]>0  && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_Mass : -99;
           tree.mc_kin_tthfl_tophad_Benergy = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.B_E : -99;
           tree.mc_kin_tthfl_tophad_Jet1energy = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_E : -99;
           tree.mc_kin_tthfl_tophad_Jet2energy = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_E : -99;
-       //}
-       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopLepDecay){
+	  tree.mc_kin_tthfl_toplep_P4 = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Top_P4 : Pnull;
+          tree.mc_kin_tthfl_toplep_W_P4 = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_P4 : Pnull;
+          tree.mc_kin_tthfl_toplep_Bjet_P4 = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Bjet_P4 : Pnull;
+          tree.mc_kin_tthfl_toplep_Lep_P4 = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Lep_P4 : Pnull;
+          tree.mc_kin_tthfl_toplep_Neut_P4 = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_P4 : Pnull;
+          tree.mc_kin_tthfl_toplep_Pt = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Top_Pt : -99;
           tree.mc_kin_tthfl_toplep_Wmass = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_Mass : -99;
           tree.mc_kin_tthfl_toplep_Benergy = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.B_E : -99;
           tree.mc_kin_tthfl_toplep_Neutenergy = (kinweight_maxint[1]>0 && hypIntegrator.meIntegrator->iNleptons==4) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_E : -99;
-       //}
-       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top2_Decay==kTopLepDecay){
+          tree.mc_kin_tthfl_toplep2_P4 = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Top_P4 : Pnull;
+          tree.mc_kin_tthfl_toplep2_W_P4 = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_P4 : Pnull;
+          tree.mc_kin_tthfl_toplep2_Bjet_P4 = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Bjet_P4 : Pnull;
+          tree.mc_kin_tthfl_toplep2_Lep_P4 = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Lep_P4 : Pnull;
+          tree.mc_kin_tthfl_toplep2_Neut_P4 = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_P4 : Pnull;
+          tree.mc_kin_tthfl_toplep2_Pt = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Top_Pt : -99;
           tree.mc_kin_tthfl_toplep2_Wmass = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_Mass : -99;
           tree.mc_kin_tthfl_toplep2_Benergy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.B_E : -99;
           tree.mc_kin_tthfl_toplep2_Neutenergy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_E : -99;
-       //}
-       //if (hypIntegrator.meIntegrator->FinalStateTTV.Boson_Type == kHfullylep){
+          tree.mc_kin_tthfl_h2l2nu_P4 = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.Higgs_P4 : Pnull;
+          tree.mc_kin_tthfl_h2l2nu_W1_P4 = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.W1_P4 : Pnull;
+          tree.mc_kin_tthfl_h2l2nu_W2_P4 = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.W2_P4 : Pnull;
+          tree.mc_kin_tthfl_h2l2nu_Lep1_P4 = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.Lep1_P4 : Pnull;
+          tree.mc_kin_tthfl_h2l2nu_Lep2_P4 = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.Lep2_P4 : Pnull;
+          tree.mc_kin_tthfl_h2l2nu_Neut1_P4 = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.Neut1_P4 : Pnull;
+          tree.mc_kin_tthfl_h2l2nu_Neut2_P4 = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.Neut2_P4 : Pnull;
+          tree.mc_kin_tthfl_h2l2nu_Pt = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.Higgs_Pt : -99;
           tree.mc_kin_tthfl_h2l2nu_W1mass = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.W1_Mass : -99;
           tree.mc_kin_tthfl_h2l2nu_Neut1energy = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.Neut1_E : -99;
           tree.mc_kin_tthfl_h2l2nu_W2mass = (kinweight_maxint[1]>0) ? hypIntegrator.meIntegrator->MEMKin_H2l2nu.W2_Mass : -99;
@@ -664,51 +700,83 @@ int main(int argc, char *argv[])
        //}
      }
      if (shyp[ih]=="TTHsl"){
-       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopHadDecay){
+          tree.mc_kin_tthsl_tophad_P4 = (kinweight_maxint[2]>0  && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Top_P4 : Pnull;
+          tree.mc_kin_tthsl_tophad_W_P4 = (kinweight_maxint[2]>0  && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_P4 : Pnull;
+          tree.mc_kin_tthsl_tophad_Bjet_P4 = (kinweight_maxint[2]>0  && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Bjet_P4 : Pnull;
+          tree.mc_kin_tthsl_tophad_Jet1_P4 = (kinweight_maxint[2]>0  && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_P4 : Pnull;
+          tree.mc_kin_tthsl_tophad_Jet2_P4 = (kinweight_maxint[2]>0  && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_P4 : Pnull;
+          tree.mc_kin_tthsl_tophad_Pt = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Top_Pt : -99;
           tree.mc_kin_tthsl_tophad_Wmass = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_Mass : -99;
           tree.mc_kin_tthsl_tophad_Benergy = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.B_E : -99;
           tree.mc_kin_tthsl_tophad_Jet1energy = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_E : -99;
           tree.mc_kin_tthsl_tophad_Jet2energy = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_E : -99;
-       //}
-       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopLepDecay){
+          tree.mc_kin_tthsl_toplep_P4 = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Top_P4 : Pnull;
+          tree.mc_kin_tthsl_toplep_W_P4 = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_P4 : Pnull;
+          tree.mc_kin_tthsl_toplep_Bjet_P4 = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Bjet_P4 : Pnull;
+          tree.mc_kin_tthsl_toplep_Lep_P4 = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Lep_P4 : Pnull;
+          tree.mc_kin_tthsl_toplep_Neut_P4 = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_P4 : Pnull;
+          tree.mc_kin_tthsl_toplep_Pt = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Top_Pt : -99;
           tree.mc_kin_tthsl_toplep_Wmass = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_Mass : -99;
           tree.mc_kin_tthsl_toplep_Benergy = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.B_E : -99;
           tree.mc_kin_tthsl_toplep_Neutenergy = (kinweight_maxint[2]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_E : -99;
-       //}
-       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top2_Decay==kTopLepDecay){
+          tree.mc_kin_tthsl_toplep2_P4 = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Top_P4 : Pnull;
+          tree.mc_kin_tthsl_toplep2_W_P4 = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_P4 : Pnull;
+          tree.mc_kin_tthsl_toplep2_Bjet_P4 = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Bjet_P4 : Pnull;
+          tree.mc_kin_tthsl_toplep2_Lep_P4 = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Lep_P4 : Pnull;
+          tree.mc_kin_tthsl_toplep2_Neut_P4 = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_P4 : Pnull;
+          tree.mc_kin_tthsl_toplep2_Pt = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Top_Pt : -99;
           tree.mc_kin_tthsl_toplep2_Wmass = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_Mass : -99;
           tree.mc_kin_tthsl_toplep2_Benergy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.B_E : -99;
           tree.mc_kin_tthsl_toplep2_Neutenergy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_E : -99;
-       //}
-       //if (hypIntegrator.meIntegrator->FinalStateTTV.Boson_Type == kHsemilep){
+          tree.mc_kin_tthsl_hlnujj_P4 = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Higgs_P4 : Pnull;
+          tree.mc_kin_tthsl_hlnujj_W1_P4 = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.W1_P4 : Pnull;
+          tree.mc_kin_tthsl_hlnujj_W2_P4 = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.W2_P4 : Pnull;
+          tree.mc_kin_tthsl_hlnujj_Lep_P4 = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Lep_P4 : Pnull;
+          tree.mc_kin_tthsl_hlnujj_Neut_P4 = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Neut_P4 : Pnull;
+          tree.mc_kin_tthsl_hlnujj_Jet1_P4 = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Jet1_P4 : Pnull;
+          tree.mc_kin_tthsl_hlnujj_Jet2_P4 = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Jet2_P4 : Pnull;
+          tree.mc_kin_tthsl_hlnujj_Pt = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Higgs_Pt : -99;
           tree.mc_kin_tthsl_hlnujj_W1mass = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Wlnu_Mass : -99;
           tree.mc_kin_tthsl_hlnujj_Neut1energy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Neut_E : -99;
           tree.mc_kin_tthsl_hlnujj_W2mass = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Wjj_Mass : -99;
           tree.mc_kin_tthsl_hlnujj_Jet1energy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Jet1_E : -99;
           tree.mc_kin_tthsl_hlnujj_Jet2energy = (kinweight_maxint[2]>0) ? hypIntegrator.meIntegrator->MEMKin_Hlnujj.Jet2_E : -99;
-       //}
      }
      if (shyp[ih]=="TTW"){
-       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopHadDecay){
+          tree.mc_kin_ttw_tophad_P4 = (kinweight_maxint[3]>0  && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Top_P4 : Pnull;
+          tree.mc_kin_ttw_tophad_W_P4 = (kinweight_maxint[3]>0  && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_P4 : Pnull;
+          tree.mc_kin_ttw_tophad_Bjet_P4 = (kinweight_maxint[3]>0  && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Bjet_P4 : Pnull;
+          tree.mc_kin_ttw_tophad_Jet1_P4 = (kinweight_maxint[3]>0  && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_P4 : Pnull;
+          tree.mc_kin_ttw_tophad_Jet2_P4 = (kinweight_maxint[3]>0  && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_P4 : Pnull;
+          tree.mc_kin_ttw_tophad_Pt = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Top_Pt : -99;
           tree.mc_kin_ttw_tophad_Wmass = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.W_Mass : -99;
           tree.mc_kin_ttw_tophad_Benergy = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.B_E : -99;
           tree.mc_kin_ttw_tophad_Jet1energy = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet1_E : -99;
           tree.mc_kin_ttw_tophad_Jet2energy = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==2) ? hypIntegrator.meIntegrator->MEMKin_TopHad.Jet2_E : -99;
-       //}
-       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top1_Decay==kTopLepDecay){
+          tree.mc_kin_ttw_toplep_P4 = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Top_P4 : Pnull;
+          tree.mc_kin_ttw_toplep_W_P4 = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_P4 : Pnull;
+          tree.mc_kin_ttw_toplep_Bjet_P4 = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Bjet_P4 : Pnull;
+          tree.mc_kin_ttw_toplep_Lep_P4 = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Lep_P4 : Pnull;
+          tree.mc_kin_ttw_toplep_Neut_P4 = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_P4 : Pnull;
+          tree.mc_kin_ttw_toplep_Pt = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Top_Pt : -99;
           tree.mc_kin_ttw_toplep_Wmass = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.W_Mass : -99;
           tree.mc_kin_ttw_toplep_Benergy = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.B_E : -99;
           tree.mc_kin_ttw_toplep_Neutenergy = (kinweight_maxint[3]>0 && hypIntegrator.meIntegrator->iNleptons==3) ? hypIntegrator.meIntegrator->MEMKin_TopLep1.Neut_E : -99;
-       //}
-       //if (hypIntegrator.meIntegrator->FinalStateTTV.Top2_Decay==kTopLepDecay){
+          tree.mc_kin_ttw_toplep2_P4 = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Top_P4 : Pnull;
+          tree.mc_kin_ttw_toplep2_W_P4 = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_P4 : Pnull;
+          tree.mc_kin_ttw_toplep2_Bjet_P4 = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Bjet_P4 : Pnull;
+          tree.mc_kin_ttw_toplep2_Lep_P4 = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Lep_P4 : Pnull;
+          tree.mc_kin_ttw_toplep2_Neut_P4 = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_P4 : Pnull;
+          tree.mc_kin_ttw_toplep2_Pt = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Top_Pt : -99;
           tree.mc_kin_ttw_toplep2_Wmass = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.W_Mass : -99;
           tree.mc_kin_ttw_toplep2_Benergy = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.B_E : -99;
           tree.mc_kin_ttw_toplep2_Neutenergy = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_TopLep2.Neut_E : -99;
-       //}
-       //if (hypIntegrator.meIntegrator->FinalStateTTV.Boson_Type == kLNu){
+          tree.mc_kin_ttw_wlnu_W_P4 = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_Wlnu.W_P4 : Pnull;
+          tree.mc_kin_ttw_wlnu_Lep_P4 = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_Wlnu.Lep_P4 : Pnull;
+          tree.mc_kin_ttw_wlnu_Neut_P4 = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_Wlnu.Neut_P4 : Pnull;
+          tree.mc_kin_ttw_wlnu_Pt = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_Wlnu.W_Pt : -99;
           tree.mc_kin_ttw_wlnu_Wmass = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_Wlnu.W_Mass : -99;
           tree.mc_kin_ttw_wlnu_Neutenergy = (kinweight_maxint[3]>0) ? hypIntegrator.meIntegrator->MEMKin_Wlnu.Neut_E : -99;
-       //}
      }
 
    } //end hypothesis for loop
