@@ -394,6 +394,12 @@ class MEPhaseSpace
     } MEMFix_HiggsSemiLep;
 
     mutable struct MEMKin_TopHad {
+      TLorentzVector Top_P4;
+      TLorentzVector W_P4;
+      TLorentzVector Bjet_P4;
+      TLorentzVector Jet1_P4;
+      TLorentzVector Jet2_P4;
+      double Top_Pt;
       double W_Mass;
       double B_E;
       double Jet1_E;
@@ -401,17 +407,43 @@ class MEPhaseSpace
     } MEMKin_TopHad;
    
     mutable struct MEMKin_TopLep {
+      TLorentzVector Top_P4;
+      TLorentzVector W_P4;
+      TLorentzVector Bjet_P4;
+      TLorentzVector Lep_P4;
+      TLorentzVector Neut_P4;
+      double Top_Pt;
       double W_Mass;
       double B_E;
       double Neut_E;
     } MEMKin_TopLep1, MEMKin_TopLep2;
 
     mutable struct MEMKin_Wlnu {
+      TLorentzVector W_P4;
+      TLorentzVector Lep_P4;
+      TLorentzVector Neut_P4;
+      double W_Pt;
       double W_Mass;
       double Neut_E;
     } MEMKin_Wlnu, MEMKin_Wlnu_tmp;
 
+    mutable struct MEMKin_Zll {
+      TLorentzVector Z_P4;
+      TLorentzVector Lep1_P4;
+      TLorentzVector Lep2_P4;
+      double Z_Mass;
+      double Z_Pt;
+    } MEMKin_Zll, MEMKin_Zll_tmp;
+
     mutable struct MEMKin_H2l2nu {
+      TLorentzVector Higgs_P4;
+      TLorentzVector W1_P4;
+      TLorentzVector W2_P4;
+      TLorentzVector Lep1_P4;
+      TLorentzVector Lep2_P4;
+      TLorentzVector Neut1_P4;
+      TLorentzVector Neut2_P4;
+      double Higgs_Pt;
       double W1_Mass;
       double Neut1_E;
       double W2_Mass;
@@ -419,6 +451,14 @@ class MEPhaseSpace
     } MEMKin_H2l2nu;
 
     mutable struct MEMKin_Hlnujj {
+      TLorentzVector Higgs_P4;
+      TLorentzVector W1_P4;
+      TLorentzVector W2_P4;
+      TLorentzVector Lep_P4;
+      TLorentzVector Neut_P4;
+      TLorentzVector Jet1_P4;
+      TLorentzVector Jet2_P4;
+      double Higgs_Pt;
       double Wlnu_Mass;
       double Neut_E;
       double Wjj_Mass;
@@ -1321,9 +1361,20 @@ void MEPhaseSpace::ApplyTotalTransverseBoost() const {
   if (verbosity>=2) cout << "Applying boost"<<endl;
 
   if (FinalStateTTV.Boson_Type == kLNu){ //Careful pCore will be boosted back to Lab frame !
+      MEMKin_Wlnu_tmp.W_P4.SetPxPyPzE(pCore->at(4)[1]+pCore->at(5)[1], pCore->at(4)[2]+pCore->at(5)[2], pCore->at(4)[3]+pCore->at(5)[3], pCore->at(4)[0]+pCore->at(5)[0]);
+      MEMKin_Wlnu_tmp.Lep_P4.SetPxPyPzE(pCore->at(4)[1], pCore->at(4)[2], pCore->at(4)[3], pCore->at(4)[0]);
+      MEMKin_Wlnu_tmp.Neut_P4.SetPxPyPzE(pCore->at(5)[1], pCore->at(5)[2], pCore->at(5)[3], pCore->at(5)[0]);
       MEMKin_Wlnu_tmp.W_Mass = KinComputeWmass(pCore->at(4), pCore->at(5));
       MEMKin_Wlnu_tmp.Neut_E = pCore->at(5)[0];
+      MEMKin_Wlnu_tmp.W_Pt = sqrt(pCore->at(4)[1]*pCore->at(4)[1]+pCore->at(5)[1]*pCore->at(5)[1]);
    }
+  if (FinalStateTTV.Boson_Type == kLL){
+      MEMKin_Zll_tmp.Z_P4.SetPxPyPzE(pCore->at(4)[1]+pCore->at(5)[1], pCore->at(4)[2]+pCore->at(5)[2], pCore->at(4)[3]+pCore->at(5)[3], pCore->at(4)[0]+pCore->at(5)[0]);
+      MEMKin_Zll_tmp.Lep1_P4.SetPxPyPzE(pCore->at(4)[1], pCore->at(4)[2], pCore->at(4)[3], pCore->at(4)[0]);
+      MEMKin_Zll_tmp.Lep2_P4.SetPxPyPzE(pCore->at(5)[1], pCore->at(5)[2], pCore->at(5)[3], pCore->at(5)[0]);
+      MEMKin_Zll.Z_Mass = KinComputeWmass(pCore->at(4), pCore->at(5));
+      MEMKin_Zll.Z_Pt = sqrt(pCore->at(4)[1]*pCore->at(4)[1]+pCore->at(5)[1]*pCore->at(5)[1]);
+  }
 
   TLorentzVector Top(pCore->at(2)[1], pCore->at(2)[2], pCore->at(2)[3], pCore->at(2)[0]);
   TLorentzVector Antitop(pCore->at(3)[1], pCore->at(3)[2], pCore->at(3)[3], pCore->at(3)[0]);
@@ -4703,35 +4754,102 @@ void MEPhaseSpace::UpdateKinVar() const{
    if (verbosity>=2) cout << "UpdateKinVar Top1_Decay="<<FinalStateTTV.Top1_Decay<<" Top2_Decay="<<FinalStateTTV.Top2_Decay<<" Boson_Type=" << FinalStateTTV.Boson_Type<< endl;
  
    if (FinalStateTTV.Top1_Decay==kTopHadDecay) {
-     if (FinalStateTTV.Top1_Sign==kTop) MEMKin_TopHad.W_Mass = KinComputeWmass(pTop->at(2), pTop->at(3));
-     else if (FinalStateTTV.Top1_Sign==kAntitop) MEMKin_TopHad.W_Mass = KinComputeWmass(pAntitop->at(2), pAntitop->at(3));
+     if (FinalStateTTV.Top1_Sign==kTop) {
+       MEMKin_TopHad.Top_P4.SetPxPyPzE(pTop->at(0)[1], pTop->at(0)[2], pTop->at(0)[3], pTop->at(0)[0]);
+       MEMKin_TopHad.W_P4.SetPxPyPzE(pTop->at(2)[1]+pTop->at(3)[1], pTop->at(2)[2]+pTop->at(3)[2], pTop->at(2)[3]+pTop->at(3)[3], pTop->at(2)[0]+pTop->at(3)[0]);
+       MEMKin_TopHad.Bjet_P4.SetPxPyPzE(pTop->at(1)[1], pTop->at(1)[2], pTop->at(1)[3], pTop->at(1)[0]);
+       MEMKin_TopHad.Jet1_P4.SetPxPyPzE(pTop->at(2)[1], pTop->at(2)[2], pTop->at(2)[3], pTop->at(2)[0]);
+       MEMKin_TopHad.Jet2_P4.SetPxPyPzE(pTop->at(3)[1], pTop->at(3)[2], pTop->at(3)[3], pTop->at(3)[0]);
+       MEMKin_TopHad.W_Mass = KinComputeWmass(pTop->at(2), pTop->at(3));
+       MEMKin_TopHad.Top_Pt = sqrt(pTop->at(0)[1]*pTop->at(0)[1]+pTop->at(0)[2]*pTop->at(0)[2]);
+     }
+     else if (FinalStateTTV.Top1_Sign==kAntitop) {
+       MEMKin_TopHad.Top_P4.SetPxPyPzE(pAntitop->at(0)[1], pAntitop->at(0)[2], pAntitop->at(0)[3], pAntitop->at(0)[0]);
+       MEMKin_TopHad.W_P4.SetPxPyPzE(pAntitop->at(2)[1]+pAntitop->at(3)[1], pAntitop->at(2)[2]+pAntitop->at(3)[2], pAntitop->at(2)[3]+pAntitop->at(3)[3], pAntitop->at(2)[0]+pAntitop->at(3)[0]);
+       MEMKin_TopHad.Bjet_P4.SetPxPyPzE(pAntitop->at(1)[1], pAntitop->at(1)[2], pAntitop->at(1)[3], pAntitop->at(1)[0]);
+       MEMKin_TopHad.Jet1_P4.SetPxPyPzE(pAntitop->at(2)[1], pAntitop->at(2)[2], pAntitop->at(2)[3], pAntitop->at(2)[0]);
+       MEMKin_TopHad.Jet2_P4.SetPxPyPzE(pAntitop->at(3)[1], pAntitop->at(3)[2], pAntitop->at(3)[3], pAntitop->at(3)[0]);
+       MEMKin_TopHad.W_Mass = KinComputeWmass(pAntitop->at(2), pAntitop->at(3));
+       MEMKin_TopHad.Top_Pt =  sqrt(pAntitop->at(0)[1]*pAntitop->at(0)[1]+pAntitop->at(0)[2]*pAntitop->at(0)[2]);
+     }
      MEMKin_TopHad.B_E = transferFunctions->ComputedVarForTF.Bjet1_E;
      MEMKin_TopHad.Jet1_E = transferFunctions->ComputedVarForTF.Jet1_E;
      MEMKin_TopHad.Jet2_E = transferFunctions->ComputedVarForTF.Jet2_E;
    }
 
    if (FinalStateTTV.Top1_Decay==kTopLepDecay) {
-     if (FinalStateTTV.Top1_Sign==kTop) MEMKin_TopLep1.W_Mass = KinComputeWmass(pTop->at(2), pTop->at(3));
-     else if (FinalStateTTV.Top1_Sign==kAntitop) MEMKin_TopLep1.W_Mass = KinComputeWmass(pAntitop->at(2), pAntitop->at(3)); 
+     if (FinalStateTTV.Top1_Sign==kTop) {
+       MEMKin_TopLep1.Top_P4.SetPxPyPzE(pTop->at(0)[1], pTop->at(0)[2], pTop->at(0)[3], pTop->at(0)[0]);
+       MEMKin_TopLep1.W_P4.SetPxPyPzE(pTop->at(2)[1]+pTop->at(3)[1], pTop->at(2)[2]+pTop->at(3)[2], pTop->at(2)[3]+pTop->at(3)[3], pTop->at(2)[0]+pTop->at(3)[0]);
+       MEMKin_TopLep1.Bjet_P4.SetPxPyPzE(pTop->at(1)[1], pTop->at(1)[2], pTop->at(1)[3], pTop->at(1)[0]);
+       MEMKin_TopLep1.Lep_P4.SetPxPyPzE(pTop->at(2)[1], pTop->at(2)[2], pTop->at(2)[3], pTop->at(2)[0]);
+       MEMKin_TopLep1.Neut_P4.SetPxPyPzE(pTop->at(3)[1], pTop->at(3)[2], pTop->at(3)[3], pTop->at(3)[0]);
+       MEMKin_TopLep1.W_Mass = KinComputeWmass(pTop->at(2), pTop->at(3));
+       MEMKin_TopLep1.Top_Pt = sqrt(pTop->at(0)[1]*pTop->at(0)[1]+pTop->at(0)[2]*pTop->at(0)[2]);
+     }
+     else if (FinalStateTTV.Top1_Sign==kAntitop) {
+       MEMKin_TopLep1.Top_P4.SetPxPyPzE(pAntitop->at(0)[1], pAntitop->at(0)[2], pAntitop->at(0)[3], pAntitop->at(0)[0]);
+       MEMKin_TopLep1.W_P4.SetPxPyPzE(pAntitop->at(2)[1]+pAntitop->at(3)[1], pAntitop->at(2)[2]+pAntitop->at(3)[2], pAntitop->at(2)[3]+pAntitop->at(3)[3], pAntitop->at(2)[0]+pAntitop->at(3)[0]);
+       MEMKin_TopLep1.Bjet_P4.SetPxPyPzE(pAntitop->at(1)[1], pAntitop->at(1)[2], pAntitop->at(1)[3], pAntitop->at(1)[0]);
+       MEMKin_TopLep1.Lep_P4.SetPxPyPzE(pAntitop->at(2)[1], pAntitop->at(2)[2], pAntitop->at(2)[3], pAntitop->at(2)[0]);
+       MEMKin_TopLep1.Neut_P4.SetPxPyPzE(pAntitop->at(3)[1], pAntitop->at(3)[2], pAntitop->at(3)[3], pAntitop->at(3)[0]);
+       MEMKin_TopLep1.W_Mass = KinComputeWmass(pAntitop->at(2), pAntitop->at(3));
+       MEMKin_TopLep1.Top_Pt = sqrt(pAntitop->at(0)[1]*pAntitop->at(0)[1]+pAntitop->at(0)[2]*pAntitop->at(0)[2]);
+     } 
      MEMKin_TopLep1.B_E = transferFunctions->ComputedVarForTF.Bjet1_E;
      if (FinalStateTTV.Top1_Sign==kTop) MEMKin_TopLep1.Neut_E = pTop->at(3)[0];
      if (FinalStateTTV.Top1_Sign==kAntitop) MEMKin_TopLep1.Neut_E = pAntitop->at(3)[0];
    }
 
    if (FinalStateTTV.Top2_Decay==kTopLepDecay) {
-     if (FinalStateTTV.Top2_Sign==kTop) MEMKin_TopLep2.W_Mass = KinComputeWmass(pTop->at(2), pTop->at(3));
-     else if (FinalStateTTV.Top2_Sign==kAntitop) MEMKin_TopLep2.W_Mass = KinComputeWmass(pAntitop->at(2), pAntitop->at(3));
+     if (FinalStateTTV.Top2_Sign==kTop) {
+       MEMKin_TopLep2.Top_P4.SetPxPyPzE(pTop->at(0)[1], pTop->at(0)[2], pTop->at(0)[3], pTop->at(0)[0]);
+       MEMKin_TopLep2.W_P4.SetPxPyPzE(pTop->at(2)[1]+pTop->at(3)[1], pTop->at(2)[2]+pTop->at(3)[2], pTop->at(2)[3]+pTop->at(3)[3], pTop->at(2)[0]+pTop->at(3)[0]);
+       MEMKin_TopLep2.Bjet_P4.SetPxPyPzE(pTop->at(1)[1], pTop->at(1)[2], pTop->at(1)[3], pTop->at(1)[0]);
+       MEMKin_TopLep2.Lep_P4.SetPxPyPzE(pTop->at(2)[1], pTop->at(2)[2], pTop->at(2)[3], pTop->at(2)[0]);
+       MEMKin_TopLep2.Neut_P4.SetPxPyPzE(pTop->at(3)[1], pTop->at(3)[2], pTop->at(3)[3], pTop->at(3)[0]);
+       MEMKin_TopLep2.W_Mass = KinComputeWmass(pTop->at(2), pTop->at(3));
+       MEMKin_TopLep2.Top_Pt = sqrt(pTop->at(0)[1]*pTop->at(0)[1]+pTop->at(0)[2]*pTop->at(0)[2]);
+     }
+     else if (FinalStateTTV.Top2_Sign==kAntitop) {
+       MEMKin_TopLep2.Top_P4.SetPxPyPzE(pAntitop->at(0)[1], pAntitop->at(0)[2], pAntitop->at(0)[3], pAntitop->at(0)[0]);
+       MEMKin_TopLep2.W_P4.SetPxPyPzE(pAntitop->at(2)[1]+pAntitop->at(3)[1], pAntitop->at(2)[2]+pAntitop->at(3)[2], pAntitop->at(2)[3]+pAntitop->at(3)[3], pAntitop->at(2)[0]+pAntitop->at(3)[0]);
+       MEMKin_TopLep2.Bjet_P4.SetPxPyPzE(pAntitop->at(1)[1], pAntitop->at(1)[2], pAntitop->at(1)[3], pAntitop->at(1)[0]);
+       MEMKin_TopLep2.Lep_P4.SetPxPyPzE(pAntitop->at(2)[1], pAntitop->at(2)[2], pAntitop->at(2)[3], pAntitop->at(2)[0]);
+       MEMKin_TopLep2.Neut_P4.SetPxPyPzE(pAntitop->at(3)[1], pAntitop->at(3)[2], pAntitop->at(3)[3], pAntitop->at(3)[0]);
+       MEMKin_TopLep2.W_Mass = KinComputeWmass(pAntitop->at(2), pAntitop->at(3));
+       MEMKin_TopLep2.Top_Pt = sqrt(pAntitop->at(0)[1]*pAntitop->at(0)[1]+pAntitop->at(0)[2]*pAntitop->at(0)[2]);
+     }
      MEMKin_TopLep2.B_E = transferFunctions->ComputedVarForTF.Bjet2_E;
      if (FinalStateTTV.Top2_Sign==kTop) MEMKin_TopLep2.Neut_E = pTop->at(3)[0];
      if (FinalStateTTV.Top2_Sign==kAntitop) MEMKin_TopLep2.Neut_E = pAntitop->at(3)[0];
    }
  
    if (FinalStateTTV.Boson_Type == kLNu){ //Careful pCore is boosted back to Lab frame !
+      MEMKin_Wlnu.W_P4 = MEMKin_Wlnu_tmp.W_P4;
+      MEMKin_Wlnu.Lep_P4 = MEMKin_Wlnu_tmp.Lep_P4;
+      MEMKin_Wlnu.Neut_P4 = MEMKin_Wlnu_tmp.Neut_P4;
       MEMKin_Wlnu.W_Mass = MEMKin_Wlnu_tmp.W_Mass; //KinComputeWmass(pCore->at(3), pCore->at(4));
       MEMKin_Wlnu.Neut_E = MEMKin_Wlnu_tmp.Neut_E; //pCore->at(4)[0];
+      MEMKin_Wlnu.W_Pt = MEMKin_Wlnu_tmp.W_Pt;
+   }
+   if (FinalStateTTV.Boson_Type == kLL){ 
+      MEMKin_Zll.Z_P4 = MEMKin_Zll_tmp.Z_P4;
+      MEMKin_Zll.Lep1_P4 = MEMKin_Zll_tmp.Lep1_P4;
+      MEMKin_Zll.Lep2_P4 = MEMKin_Zll_tmp.Lep2_P4;
+      MEMKin_Zll.Z_Mass = MEMKin_Zll_tmp.Z_Mass; //KinComputeWmass(pCore->at(4), pCore->at(5));
+      MEMKin_Zll.Z_Pt = MEMKin_Zll_tmp.Z_Pt;//sqrt(pCore->at(4)[1]*pCore->at(4)[1]+pCore->at(5)[1]*pCore->at(5)[1]);
    }
 
    if (FinalStateTTV.Boson_Type == kHfullylep){
+     MEMKin_H2l2nu.Higgs_P4.SetPxPyPzE(pHiggs->at(0)[1], pHiggs->at(0)[2], pHiggs->at(0)[3], pHiggs->at(0)[0]);
+     MEMKin_H2l2nu.W1_P4.SetPxPyPzE(pHiggs->at(1)[1]+pHiggs->at(2)[1], pHiggs->at(1)[2]+pHiggs->at(2)[2], pHiggs->at(1)[3]+pHiggs->at(2)[3], pHiggs->at(1)[0]+pHiggs->at(2)[0]);
+     MEMKin_H2l2nu.W2_P4.SetPxPyPzE(pHiggs->at(3)[1]+pHiggs->at(4)[1], pHiggs->at(3)[2]+pHiggs->at(4)[2], pHiggs->at(3)[3]+pHiggs->at(4)[3], pHiggs->at(1)[0]+pHiggs->at(2)[0]);
+     MEMKin_H2l2nu.Lep1_P4.SetPxPyPzE(pHiggs->at(1)[1], pHiggs->at(1)[2], pHiggs->at(1)[3], pHiggs->at(1)[0]);
+     MEMKin_H2l2nu.Neut1_P4.SetPxPyPzE(pHiggs->at(2)[1], pHiggs->at(2)[2], pHiggs->at(2)[3], pHiggs->at(2)[0]);
+     MEMKin_H2l2nu.Lep2_P4.SetPxPyPzE(pHiggs->at(3)[1], pHiggs->at(3)[2], pHiggs->at(3)[3], pHiggs->at(3)[0]);
+     MEMKin_H2l2nu.Lep2_P4.SetPxPyPzE(pHiggs->at(4)[1], pHiggs->at(4)[2], pHiggs->at(4)[3], pHiggs->at(4)[0]);
+     MEMKin_H2l2nu.Higgs_Pt = sqrt(pHiggs->at(0)[1]*pHiggs->at(0)[1]+pHiggs->at(0)[2]*pHiggs->at(0)[2]);
      MEMKin_H2l2nu.W1_Mass = KinComputeWmass(pHiggs->at(1), pHiggs->at(2));
      MEMKin_H2l2nu.Neut1_E = pHiggs->at(2)[0];
      MEMKin_H2l2nu.W2_Mass = KinComputeWmass(pHiggs->at(3), pHiggs->at(4));
@@ -4739,12 +4857,27 @@ void MEPhaseSpace::UpdateKinVar() const{
    }
 
    if (FinalStateTTV.Boson_Type == kHsemilep) {
+     MEMKin_Hlnujj.Higgs_P4.SetPxPyPzE(pHiggs->at(0)[1], pHiggs->at(0)[2], pHiggs->at(0)[3], pHiggs->at(0)[0]);
+     MEMKin_Hlnujj.W1_P4.SetPxPyPzE(pHiggs->at(1)[1]+pHiggs->at(2)[1], pHiggs->at(1)[2]+pHiggs->at(2)[2], pHiggs->at(1)[3]+pHiggs->at(2)[3], pHiggs->at(1)[0]+pHiggs->at(2)[0]);
+     MEMKin_Hlnujj.W2_P4.SetPxPyPzE(pHiggs->at(3)[1]+pHiggs->at(4)[1], pHiggs->at(3)[2]+pHiggs->at(4)[2], pHiggs->at(3)[3]+pHiggs->at(4)[3], pHiggs->at(1)[0]+pHiggs->at(2)[0]);
+     MEMKin_Hlnujj.Lep_P4.SetPxPyPzE(pHiggs->at(1)[1], pHiggs->at(1)[2], pHiggs->at(1)[3], pHiggs->at(1)[0]);
+     MEMKin_Hlnujj.Neut_P4.SetPxPyPzE(pHiggs->at(2)[1], pHiggs->at(2)[2], pHiggs->at(2)[3], pHiggs->at(2)[0]);
+     MEMKin_Hlnujj.Jet1_P4.SetPxPyPzE(pHiggs->at(3)[1], pHiggs->at(3)[2], pHiggs->at(3)[3], pHiggs->at(3)[0]);
+     MEMKin_Hlnujj.Jet2_P4.SetPxPyPzE(pHiggs->at(4)[1], pHiggs->at(4)[2], pHiggs->at(4)[3], pHiggs->at(4)[0]);
+     MEMKin_Hlnujj.Higgs_Pt = sqrt(pHiggs->at(0)[1]*pHiggs->at(0)[1]+pHiggs->at(0)[2]*pHiggs->at(0)[2]);
      MEMKin_Hlnujj.Wlnu_Mass = KinComputeWmass(pHiggs->at(1), pHiggs->at(2));
      MEMKin_Hlnujj.Neut_E = pHiggs->at(2)[0];
      MEMKin_Hlnujj.Wjj_Mass = KinComputeWmass(pHiggs->at(3), pHiggs->at(4));
      MEMKin_Hlnujj.Jet1_E = pHiggs->at(3)[0];
      MEMKin_Hlnujj.Jet2_E = pHiggs->at(4)[0];
      if (iMode==kMEM_TTH_TopAntitopHiggsSemiLepDecay && MEMFix_HiggsSemiLep.LepSign == 1){
+     MEMKin_Hlnujj.Higgs_P4.SetPxPyPzE(pHiggs->at(0)[1], pHiggs->at(0)[2], pHiggs->at(0)[3], pHiggs->at(0)[0]);
+     MEMKin_Hlnujj.W1_P4.SetPxPyPzE(pHiggs->at(1)[1]+pHiggs->at(2)[1], pHiggs->at(1)[2]+pHiggs->at(2)[2], pHiggs->at(1)[3]+pHiggs->at(2)[3], pHiggs->at(1)[0]+pHiggs->at(2)[0]);
+     MEMKin_Hlnujj.W2_P4.SetPxPyPzE(pHiggs->at(3)[1]+pHiggs->at(4)[1], pHiggs->at(3)[2]+pHiggs->at(4)[2], pHiggs->at(3)[3]+pHiggs->at(4)[3], pHiggs->at(1)[0]+pHiggs->at(2)[0]);
+     MEMKin_Hlnujj.Jet1_P4.SetPxPyPzE(pHiggs->at(1)[1], pHiggs->at(1)[2], pHiggs->at(1)[3], pHiggs->at(1)[0]);
+     MEMKin_Hlnujj.Jet2_P4.SetPxPyPzE(pHiggs->at(2)[1], pHiggs->at(2)[2], pHiggs->at(2)[3], pHiggs->at(2)[0]);
+     MEMKin_Hlnujj.Neut_P4.SetPxPyPzE(pHiggs->at(3)[1], pHiggs->at(3)[2], pHiggs->at(3)[3], pHiggs->at(3)[0]);
+     MEMKin_Hlnujj.Lep_P4.SetPxPyPzE(pHiggs->at(4)[1], pHiggs->at(4)[2], pHiggs->at(4)[3], pHiggs->at(4)[0]);
        MEMKin_Hlnujj.Wlnu_Mass = KinComputeWmass(pHiggs->at(3), pHiggs->at(4));
        MEMKin_Hlnujj.Neut_E = pHiggs->at(4)[0];
        MEMKin_Hlnujj.Wjj_Mass = KinComputeWmass(pHiggs->at(1), pHiggs->at(2));

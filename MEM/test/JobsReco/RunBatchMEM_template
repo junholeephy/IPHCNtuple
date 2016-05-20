@@ -13,11 +13,13 @@ setenv LHAPDF_BIN $LHAPDF/bin
 setenv PATH ${PATH}:${LHAPDF_BIN}
 setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:$LHAPDF/lib
 
-setenv ROOTSYS /usr/bin/root
+#setenv ROOTSYS /usr/bin/root
 rehash
 
-cd ${LOCALDIR}
+cd ${EXECDIR}
+eval `scram runtime -csh`
 
+cd ${LOCALDIR}
 ${EXECDIR}/./test INPUTFILE NMIN NMAX --MEMRun DIR_JOBS/Jobs_OPTION/config.cfg > log_PROC_OPTION_NUM
 
 ls 

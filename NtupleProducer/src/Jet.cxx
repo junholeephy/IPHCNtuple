@@ -187,9 +187,11 @@ void Jet::JECUncertainty()
    if( fabs(_eta) >= 1.1 && fabs(_eta) < 1.7 ) etaIdx = 2;
    if( fabs(_eta) >= 1.7 && fabs(_eta) < 2.3 ) etaIdx = 3;
    if( fabs(_eta) >= 2.3 && fabs(_eta) < 5.0 ) etaIdx = 4;	
+
+   double pt_uncorr = (_pt - _jet_genJet_pt) / _cJER[etaIdx] + _jet_genJet_pt;
   
-   _pt_JER	= _jet_genJet_pt + _cJER[etaIdx]*(_pt-_jet_genJet_pt);
-   _pt_JER_down = _jet_genJet_pt + _cJER_down[etaIdx]*(_pt-_jet_genJet_pt);
-   _pt_JER_up   = _jet_genJet_pt + _cJER_up[etaIdx]*(_pt-_jet_genJet_pt);
+   _pt_JER	= _jet_genJet_pt + _cJER[etaIdx]*(pt_uncorr-_jet_genJet_pt);
+   _pt_JER_down = _jet_genJet_pt + _cJER_down[etaIdx]*(pt_uncorr-_jet_genJet_pt);
+   _pt_JER_up   = _jet_genJet_pt + _cJER_up[etaIdx]*(pt_uncorr-_jet_genJet_pt);
 		    
 }
