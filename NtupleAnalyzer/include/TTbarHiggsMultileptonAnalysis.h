@@ -94,7 +94,7 @@ class TTbarHiggsMultileptonAnalysis
         virtual void     Loop();
 
         void initializeOutputTree();
-        void selectBjets(std::string, int*, int*);
+        void selectBjets(std::string, int*, int*, bool);
         void fillOutputTree();
 
         // needed to print info in LHCO text format (madweight)
@@ -109,6 +109,7 @@ class TTbarHiggsMultileptonAnalysis
         Int_t mc_event;
         Float_t weight;
         Float_t mc_weight;
+	Float_t weight_scale_muF0p5, weight_scale_muF2, weight_scale_muR0p5, weight_scale_muR2;
         Float_t weight_PV; // PU reweighting from PV distribution
         Int_t mc_3l_category, mc_ttbar_decay, mc_boson_decay, mc_ttZhypAllowed, mc_nJets25, mc_nBtagJets25, mc_nMediumBtagJets25, mc_nNonBtagJets25;
         Int_t catJets;
