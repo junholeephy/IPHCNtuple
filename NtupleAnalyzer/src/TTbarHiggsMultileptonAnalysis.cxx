@@ -3417,14 +3417,15 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
 
     multilepton_Bjet1_Id = -999;
     if (ib1!=-1){
-	//FillJetInfoOutputTree(&multilepton_Bjet1_Id, 5, &multilepton_Bjet1_P4, Bjet1, &multilepton_Bjet1_CSV, vSelectedJets.at(ib1).CSVv2(), &multilepton_Bjet1_JEC_Up, &multilepton_Bjet1_JEC_Down, vSelectedJets.at(ib1).JES_uncert(), &multilepton_Bjet1_JER_Up, &multilepton_Bjet1_JER_Down, vSelectedJets.at(ib1).pt_JER(), vSelectedJets.at(ib1).pt_JER_Up(), vSelectedJets.at(ib1).pt_JER_Down());
-        multilepton_Bjet1_P4 = Bjet1;
-        multilepton_Bjet1_Id = 5;
+	FillJetInfoOutputTree(&multilepton_Bjet1_Id, 5, &multilepton_Bjet1_P4, Bjet1, &multilepton_Bjet1_CSV, vSelectedJets.at(ib1).CSVv2(), &multilepton_Bjet1_JEC_Up, &multilepton_Bjet1_JEC_Down, vSelectedJets.at(ib1).JES_uncert(), &multilepton_Bjet1_JER_Up, &multilepton_Bjet1_JER_Down, vSelectedJets.at(ib1).pt_JER(), vSelectedJets.at(ib1).pt_JER_up(), vSelectedJets.at(ib1).pt_JER_down());
+        //multilepton_Bjet1_P4 = Bjet1;
+        //multilepton_Bjet1_Id = 5;
     }
     multilepton_Bjet2_Id = -999;
     if (ib2!=-1){
-        multilepton_Bjet2_P4 = Bjet2;
-        multilepton_Bjet2_Id = 5;
+	FillJetInfoOutputTree(&multilepton_Bjet2_Id, 5, &multilepton_Bjet2_P4, Bjet2, &multilepton_Bjet2_CSV, vSelectedJets.at(ib2).CSVv2(), &multilepton_Bjet2_JEC_Up, &multilepton_Bjet2_JEC_Down, vSelectedJets.at(ib2).JES_uncert(), &multilepton_Bjet2_JER_Up, &multilepton_Bjet2_JER_Down, vSelectedJets.at(ib2).pt_JER(), vSelectedJets.at(ib2).pt_JER_up(), vSelectedJets.at(ib2).pt_JER_down());
+        //multilepton_Bjet2_P4 = Bjet2;
+        //multilepton_Bjet2_Id = 5;
     }
 
     //Choose 2 jets
@@ -3508,52 +3509,82 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     multilepton_JetLowestMjj1_2ndPair_Id = -999;
     multilepton_JetLowestMjj2_2ndPair_Id = -999;
 
+    TLorentzVector Jet1, Jet2;
+
     if (ij1!=-1 && ij2==-1){
-        multilepton_JetHighestPt1_Id = 1;
-        multilepton_JetHighestPt1_P4.SetPtEtaPhiE(vSelectedJets.at(ij1).pt(), vSelectedJets.at(ij1).eta(), vSelectedJets.at(ij1).phi(), vSelectedJets.at(ij1).E());
+	Jet1.SetPtEtaPhiE(vSelectedJets.at(ij1).pt(), vSelectedJets.at(ij1).eta(), vSelectedJets.at(ij1).phi(), vSelectedJets.at(ij1).E());
+	FillJetInfoOutputTree(&multilepton_JetHighestPt1_Id, 1, &multilepton_JetHighestPt1_P4, Jet1, &multilepton_JetHighestPt1_CSV, vSelectedJets.at(ij1).CSVv2(), &multilepton_JetHighestPt1_JEC_Up, &multilepton_JetHighestPt1_JEC_Down, vSelectedJets.at(ij1).JES_uncert(), &multilepton_JetHighestPt1_JER_Up, &multilepton_JetHighestPt1_JER_Down, vSelectedJets.at(ij1).pt_JER(), vSelectedJets.at(ij1).pt_JER_up(), vSelectedJets.at(ij1).pt_JER_down());
+        //multilepton_JetHighestPt1_Id = 1;
+        //multilepton_JetHighestPt1_P4.SetPtEtaPhiE(vSelectedJets.at(ij1).pt(), vSelectedJets.at(ij1).eta(), vSelectedJets.at(ij1).phi(), vSelectedJets.at(ij1).E());
     }   
     if (ij1!=-1 && ij2!=-1) {
-        multilepton_JetHighestPt1_Id = 1;
-        multilepton_JetHighestPt2_Id = 1;
-        multilepton_JetHighestPt1_P4.SetPtEtaPhiE(vSelectedJets.at(ij1).pt(), vSelectedJets.at(ij1).eta(), vSelectedJets.at(ij1).phi(), vSelectedJets.at(ij1).E());
-        multilepton_JetHighestPt2_P4.SetPtEtaPhiE(vSelectedJets.at(ij2).pt(), vSelectedJets.at(ij2).eta(), vSelectedJets.at(ij2).phi(), vSelectedJets.at(ij2).E());
+	Jet1.SetPtEtaPhiE(vSelectedJets.at(ij1).pt(), vSelectedJets.at(ij1).eta(), vSelectedJets.at(ij1).phi(), vSelectedJets.at(ij1).E());
+	Jet2.SetPtEtaPhiE(vSelectedJets.at(ij2).pt(), vSelectedJets.at(ij2).eta(), vSelectedJets.at(ij2).phi(), vSelectedJets.at(ij2).E());
+	FillJetInfoOutputTree(&multilepton_JetHighestPt1_Id, 1, &multilepton_JetHighestPt1_P4, Jet1, &multilepton_JetHighestPt1_CSV, vSelectedJets.at(ij1).CSVv2(), &multilepton_JetHighestPt1_JEC_Up, &multilepton_JetHighestPt1_JEC_Down, vSelectedJets.at(ij1).JES_uncert(), &multilepton_JetHighestPt1_JER_Up, &multilepton_JetHighestPt1_JER_Down, vSelectedJets.at(ij1).pt_JER(), vSelectedJets.at(ij1).pt_JER_up(), vSelectedJets.at(ij1).pt_JER_down());
+	FillJetInfoOutputTree(&multilepton_JetHighestPt2_Id, 1, &multilepton_JetHighestPt2_P4, Jet2, &multilepton_JetHighestPt2_CSV, vSelectedJets.at(ij2).CSVv2(), &multilepton_JetHighestPt2_JEC_Up, &multilepton_JetHighestPt2_JEC_Down, vSelectedJets.at(ij2).JES_uncert(), &multilepton_JetHighestPt2_JER_Up, &multilepton_JetHighestPt2_JER_Down, vSelectedJets.at(ij2).pt_JER(), vSelectedJets.at(ij2).pt_JER_up(), vSelectedJets.at(ij2).pt_JER_down());	
+        //multilepton_JetHighestPt1_Id = 1;
+        //multilepton_JetHighestPt2_Id = 1;
+        //multilepton_JetHighestPt1_P4.SetPtEtaPhiE(vSelectedJets.at(ij1).pt(), vSelectedJets.at(ij1).eta(), vSelectedJets.at(ij1).phi(), vSelectedJets.at(ij1).E());
+        //multilepton_JetHighestPt2_P4.SetPtEtaPhiE(vSelectedJets.at(ij2).pt(), vSelectedJets.at(ij2).eta(), vSelectedJets.at(ij2).phi(), vSelectedJets.at(ij2).E());
     }
     if (ik1!=-1 && ik2!=-1){
-        multilepton_JetClosestMw1_Id = 2;
-        multilepton_JetClosestMw2_Id = 2;
-        multilepton_JetClosestMw1_P4.SetPtEtaPhiE(vSelectedJets.at(ik1).pt(), vSelectedJets.at(ik1).eta(), vSelectedJets.at(ik1).phi(), vSelectedJets.at(ik1).E());
-        multilepton_JetClosestMw2_P4.SetPtEtaPhiE(vSelectedJets.at(ik2).pt(), vSelectedJets.at(ik2).eta(), vSelectedJets.at(ik2).phi(), vSelectedJets.at(ik2).E());
+	Jet1.SetPtEtaPhiE(vSelectedJets.at(ik1).pt(), vSelectedJets.at(ik1).eta(), vSelectedJets.at(ik1).phi(), vSelectedJets.at(ik1).E());
+	Jet2.SetPtEtaPhiE(vSelectedJets.at(ik2).pt(), vSelectedJets.at(ik2).eta(), vSelectedJets.at(ik2).phi(), vSelectedJets.at(ik2).E());
+	FillJetInfoOutputTree(&multilepton_JetClosestMw1_Id, 2, &multilepton_JetClosestMw1_P4, Jet1, &multilepton_JetClosestMw1_CSV, vSelectedJets.at(ik1).CSVv2(), &multilepton_JetClosestMw1_JEC_Up, &multilepton_JetClosestMw1_JEC_Down, vSelectedJets.at(ik1).JES_uncert(), &multilepton_JetClosestMw1_JER_Up, &multilepton_JetClosestMw1_JER_Down, vSelectedJets.at(ik1).pt_JER(), vSelectedJets.at(ik1).pt_JER_up(), vSelectedJets.at(ik1).pt_JER_down());
+        FillJetInfoOutputTree(&multilepton_JetClosestMw2_Id, 2, &multilepton_JetClosestMw2_P4, Jet2, &multilepton_JetClosestMw2_CSV, vSelectedJets.at(ik2).CSVv2(), &multilepton_JetClosestMw2_JEC_Up, &multilepton_JetClosestMw2_JEC_Down, vSelectedJets.at(ik2).JES_uncert(), &multilepton_JetClosestMw2_JER_Up, &multilepton_JetClosestMw2_JER_Down, vSelectedJets.at(ik2).pt_JER(), vSelectedJets.at(ik2).pt_JER_up(), vSelectedJets.at(ik2).pt_JER_down());
+        //multilepton_JetClosestMw1_Id = 2;
+        //multilepton_JetClosestMw2_Id = 2;
+        //multilepton_JetClosestMw1_P4.SetPtEtaPhiE(vSelectedJets.at(ik1).pt(), vSelectedJets.at(ik1).eta(), vSelectedJets.at(ik1).phi(), vSelectedJets.at(ik1).E());
+        //multilepton_JetClosestMw2_P4.SetPtEtaPhiE(vSelectedJets.at(ik2).pt(), vSelectedJets.at(ik2).eta(), vSelectedJets.at(ik2).phi(), vSelectedJets.at(ik2).E());
     }
     if (il1!=-1 && il2!=-1){
-        multilepton_JetLowestMjj1_Id = 3;
-        multilepton_JetLowestMjj2_Id = 3;
-        multilepton_JetLowestMjj1_P4.SetPtEtaPhiE(vSelectedJets.at(il1).pt(), vSelectedJets.at(il1).eta(), vSelectedJets.at(il1).phi(), vSelectedJets.at(il1).E());
-        multilepton_JetLowestMjj2_P4.SetPtEtaPhiE(vSelectedJets.at(il2).pt(), vSelectedJets.at(il2).eta(), vSelectedJets.at(il2).phi(), vSelectedJets.at(il2).E());
+        Jet1.SetPtEtaPhiE(vSelectedJets.at(il1).pt(), vSelectedJets.at(il1).eta(), vSelectedJets.at(il1).phi(), vSelectedJets.at(il1).E());
+	Jet2.SetPtEtaPhiE(vSelectedJets.at(il2).pt(), vSelectedJets.at(il2).eta(), vSelectedJets.at(il2).phi(), vSelectedJets.at(il2).E());
+	FillJetInfoOutputTree(&multilepton_JetLowestMjj1_Id, 3, &multilepton_JetLowestMjj1_P4, Jet1, &multilepton_JetLowestMjj1_CSV, vSelectedJets.at(il1).CSVv2(), &multilepton_JetLowestMjj1_JEC_Up, &multilepton_JetLowestMjj1_JEC_Down, vSelectedJets.at(il1).JES_uncert(), &multilepton_JetLowestMjj1_JER_Up, &multilepton_JetLowestMjj1_JER_Down, vSelectedJets.at(il1).pt_JER(), vSelectedJets.at(il1).pt_JER_up(), vSelectedJets.at(il1).pt_JER_down());
+	FillJetInfoOutputTree(&multilepton_JetLowestMjj2_Id, 3, &multilepton_JetLowestMjj2_P4, Jet2, &multilepton_JetLowestMjj2_CSV, vSelectedJets.at(il2).CSVv2(), &multilepton_JetLowestMjj2_JEC_Up, &multilepton_JetLowestMjj2_JEC_Down, vSelectedJets.at(il2).JES_uncert(), &multilepton_JetLowestMjj2_JER_Up, &multilepton_JetLowestMjj2_JER_Down, vSelectedJets.at(il2).pt_JER(), vSelectedJets.at(il2).pt_JER_up(), vSelectedJets.at(il2).pt_JER_down());
+        //multilepton_JetLowestMjj1_Id = 3;
+        //multilepton_JetLowestMjj2_Id = 3;
+        //multilepton_JetLowestMjj1_P4.SetPtEtaPhiE(vSelectedJets.at(il1).pt(), vSelectedJets.at(il1).eta(), vSelectedJets.at(il1).phi(), vSelectedJets.at(il1).E());
+        //multilepton_JetLowestMjj2_P4.SetPtEtaPhiE(vSelectedJets.at(il2).pt(), vSelectedJets.at(il2).eta(), vSelectedJets.at(il2).phi(), vSelectedJets.at(il2).E());
     }
 
     //2nd pair (first one: closest to Mw)
     if (is2lss && ij1!=-1 && ij2!=-1){
         if (im1!=-1 && im2==-1){
-            multilepton_JetHighestPt1_2ndPair_Id = 1;
-            multilepton_JetHighestPt1_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(im1).pt(), vSelectedJets.at(im1).eta(), vSelectedJets.at(im1).phi(), vSelectedJets.at(im1).E());
+	    Jet1.SetPtEtaPhiE(vSelectedJets.at(im1).pt(), vSelectedJets.at(im1).eta(), vSelectedJets.at(im1).phi(), vSelectedJets.at(im1).E());
+	    FillJetInfoOutputTree(&multilepton_JetHighestPt1_2ndPair_Id, 1, &multilepton_JetHighestPt1_2ndPair_P4, Jet1, &multilepton_JetHighestPt1_2ndPair_CSV, vSelectedJets.at(im1).CSVv2(), &multilepton_JetHighestPt1_2ndPair_JEC_Up, &multilepton_JetHighestPt1_2ndPair_JEC_Down, vSelectedJets.at(im1).JES_uncert(), &multilepton_JetHighestPt1_2ndPair_JER_Up, &multilepton_JetHighestPt1_2ndPair_JER_Down, vSelectedJets.at(im1).pt_JER(), vSelectedJets.at(im1).pt_JER_up(), vSelectedJets.at(im1).pt_JER_down());
+            //multilepton_JetHighestPt1_2ndPair_Id = 1;
+            //multilepton_JetHighestPt1_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(im1).pt(), vSelectedJets.at(im1).eta(), vSelectedJets.at(im1).phi(), vSelectedJets.at(im1).E());
         }
         if (im1!=-1 && im2!=-1){
-            multilepton_JetHighestPt1_2ndPair_Id = 1;
-            multilepton_JetHighestPt1_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(im1).pt(), vSelectedJets.at(im1).eta(), vSelectedJets.at(im1).phi(), vSelectedJets.at(im1).E());
-            multilepton_JetHighestPt2_2ndPair_Id = 1;
-            multilepton_JetHighestPt2_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(im2).pt(), vSelectedJets.at(im2).eta(), vSelectedJets.at(im2).phi(), vSelectedJets.at(im2).E());   
+            Jet1.SetPtEtaPhiE(vSelectedJets.at(im1).pt(), vSelectedJets.at(im1).eta(), vSelectedJets.at(im1).phi(), vSelectedJets.at(im1).E());
+            Jet2.SetPtEtaPhiE(vSelectedJets.at(im2).pt(), vSelectedJets.at(im2).eta(), vSelectedJets.at(im2).phi(), vSelectedJets.at(im2).E());
+	    FillJetInfoOutputTree(&multilepton_JetHighestPt1_2ndPair_Id, 1, &multilepton_JetHighestPt1_2ndPair_P4, Jet1, &multilepton_JetHighestPt1_2ndPair_CSV, vSelectedJets.at(im1).CSVv2(), &multilepton_JetHighestPt1_2ndPair_JEC_Up, &multilepton_JetHighestPt1_2ndPair_JEC_Down, vSelectedJets.at(im1).JES_uncert(), &multilepton_JetHighestPt1_2ndPair_JER_Up, &multilepton_JetHighestPt1_2ndPair_JER_Down, vSelectedJets.at(im1).pt_JER(), vSelectedJets.at(im1).pt_JER_up(), vSelectedJets.at(im1).pt_JER_down());
+	    FillJetInfoOutputTree(&multilepton_JetHighestPt2_2ndPair_Id, 1, &multilepton_JetHighestPt2_2ndPair_P4, Jet2, &multilepton_JetHighestPt2_2ndPair_CSV, vSelectedJets.at(im2).CSVv2(), &multilepton_JetHighestPt2_2ndPair_JEC_Up, &multilepton_JetHighestPt2_2ndPair_JEC_Down, vSelectedJets.at(im2).JES_uncert(), &multilepton_JetHighestPt2_2ndPair_JER_Up, &multilepton_JetHighestPt2_2ndPair_JER_Down, vSelectedJets.at(im2).pt_JER(), vSelectedJets.at(im2).pt_JER_up(), vSelectedJets.at(im2).pt_JER_down());
+            //multilepton_JetHighestPt1_2ndPair_Id = 1;
+            //multilepton_JetHighestPt1_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(im1).pt(), vSelectedJets.at(im1).eta(), vSelectedJets.at(im1).phi(), vSelectedJets.at(im1).E());
+            //multilepton_JetHighestPt2_2ndPair_Id = 1;
+            //multilepton_JetHighestPt2_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(im2).pt(), vSelectedJets.at(im2).eta(), vSelectedJets.at(im2).phi(), vSelectedJets.at(im2).E());   
         }
         if (io1!=-1 && io2!=-1){
-            multilepton_JetClosestMw1_2ndPair_Id = 2;
-            multilepton_JetClosestMw2_2ndPair_Id = 2;
-            multilepton_JetClosestMw1_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(io1).pt(), vSelectedJets.at(io1).eta(), vSelectedJets.at(io1).phi(), vSelectedJets.at(io1).E());
-            multilepton_JetClosestMw2_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(io2).pt(), vSelectedJets.at(io2).eta(), vSelectedJets.at(io2).phi(), vSelectedJets.at(io2).E());
+	    Jet1.SetPtEtaPhiE(vSelectedJets.at(ip1).pt(), vSelectedJets.at(ip1).eta(), vSelectedJets.at(ip1).phi(), vSelectedJets.at(ip1).E());
+	    Jet2.SetPtEtaPhiE(vSelectedJets.at(io2).pt(), vSelectedJets.at(io2).eta(), vSelectedJets.at(io2).phi(), vSelectedJets.at(io2).E());
+	    FillJetInfoOutputTree(&multilepton_JetClosestMw1_2ndPair_Id, 2, &multilepton_JetClosestMw1_2ndPair_P4, Jet1, &multilepton_JetClosestMw1_2ndPair_CSV, vSelectedJets.at(io1).CSVv2(), &multilepton_JetClosestMw1_2ndPair_JEC_Up, &multilepton_JetClosestMw1_2ndPair_JEC_Down, vSelectedJets.at(io1).JES_uncert(), &multilepton_JetClosestMw1_2ndPair_JER_Up, &multilepton_JetClosestMw1_2ndPair_JER_Down, vSelectedJets.at(io1).pt_JER(), vSelectedJets.at(io1).pt_JER_up(), vSelectedJets.at(io1).pt_JER_down());
+            FillJetInfoOutputTree(&multilepton_JetClosestMw2_2ndPair_Id, 2, &multilepton_JetClosestMw2_2ndPair_P4, Jet2, &multilepton_JetClosestMw2_2ndPair_CSV, vSelectedJets.at(io2).CSVv2(), &multilepton_JetClosestMw2_2ndPair_JEC_Up, &multilepton_JetClosestMw2_2ndPair_JEC_Down, vSelectedJets.at(io2).JES_uncert(), &multilepton_JetClosestMw2_2ndPair_JER_Up, &multilepton_JetClosestMw2_2ndPair_JER_Down, vSelectedJets.at(io2).pt_JER(), vSelectedJets.at(io2).pt_JER_up(), vSelectedJets.at(io2).pt_JER_down());
+            //multilepton_JetClosestMw1_2ndPair_Id = 2;
+            //multilepton_JetClosestMw2_2ndPair_Id = 2;
+            //multilepton_JetClosestMw1_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(io1).pt(), vSelectedJets.at(io1).eta(), vSelectedJets.at(io1).phi(), vSelectedJets.at(io1).E());
+            //multilepton_JetClosestMw2_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(io2).pt(), vSelectedJets.at(io2).eta(), vSelectedJets.at(io2).phi(), vSelectedJets.at(io2).E());
         }
         if (ip1!=-1 && ip2!=-1){
-            multilepton_JetLowestMjj1_2ndPair_Id = 3;
-            multilepton_JetLowestMjj2_2ndPair_Id = 3;
-            multilepton_JetLowestMjj1_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(ip1).pt(), vSelectedJets.at(ip1).eta(), vSelectedJets.at(ip1).phi(), vSelectedJets.at(ip1).E());
-            multilepton_JetLowestMjj2_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(ip2).pt(), vSelectedJets.at(ip2).eta(), vSelectedJets.at(ip2).phi(), vSelectedJets.at(ip2).E());
+	    Jet1.SetPtEtaPhiE(vSelectedJets.at(ip1).pt(), vSelectedJets.at(ip1).eta(), vSelectedJets.at(ip1).phi(), vSelectedJets.at(ip1).E());
+	    Jet2.SetPtEtaPhiE(vSelectedJets.at(ip2).pt(), vSelectedJets.at(ip2).eta(), vSelectedJets.at(ip2).phi(), vSelectedJets.at(ip2).E());
+	    FillJetInfoOutputTree(&multilepton_JetLowestMjj1_2ndPair_Id, 3, &multilepton_JetLowestMjj1_2ndPair_P4, Jet1, &multilepton_JetLowestMjj1_2ndPair_CSV, vSelectedJets.at(ip1).CSVv2(), &multilepton_JetLowestMjj1_2ndPair_JEC_Up, &multilepton_JetLowestMjj1_2ndPair_JEC_Down, vSelectedJets.at(ip1).JES_uncert(), &multilepton_JetLowestMjj1_2ndPair_JER_Up, &multilepton_JetLowestMjj1_2ndPair_JER_Down, vSelectedJets.at(ip1).pt_JER(), vSelectedJets.at(ip1).pt_JER_up(), vSelectedJets.at(ip1).pt_JER_down());
+            FillJetInfoOutputTree(&multilepton_JetLowestMjj2_2ndPair_Id, 3, &multilepton_JetLowestMjj2_2ndPair_P4, Jet2, &multilepton_JetLowestMjj2_2ndPair_CSV, vSelectedJets.at(ip2).CSVv2(), &multilepton_JetLowestMjj2_2ndPair_JEC_Up, &multilepton_JetLowestMjj2_2ndPair_JEC_Down, vSelectedJets.at(ip2).JES_uncert(), &multilepton_JetLowestMjj2_2ndPair_JER_Up, &multilepton_JetLowestMjj2_2ndPair_JER_Down, vSelectedJets.at(ip2).pt_JER(), vSelectedJets.at(ip2).pt_JER_up(), vSelectedJets.at(ip2).pt_JER_down());
+            //multilepton_JetLowestMjj1_2ndPair_Id = 3;
+            //multilepton_JetLowestMjj2_2ndPair_Id = 3;
+            //multilepton_JetLowestMjj1_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(ip1).pt(), vSelectedJets.at(ip1).eta(), vSelectedJets.at(ip1).phi(), vSelectedJets.at(ip1).E());
+            //multilepton_JetLowestMjj2_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(ip2).pt(), vSelectedJets.at(ip2).eta(), vSelectedJets.at(ip2).phi(), vSelectedJets.at(ip2).E());
         }
     }
 
