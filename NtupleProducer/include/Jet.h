@@ -53,6 +53,11 @@ class Jet : public Base
           float jet_genParton_status() {return  _jet_genParton_status ;};*/
           float jet_genParton_id()     {return  _jet_genParton_id     ;};
 
+	float JES_uncert()	{return _JES_uncert;}
+	float pt_JER()		{return _pt_JER;}
+	float pt_JER_down()	{return _pt_JER_down;}
+	float pt_JER_up()	{return _pt_JER_up;}
+
         void  read(bool isdata);
         void  init();
 	void  setJESUncertainty(float JES_uncert);
