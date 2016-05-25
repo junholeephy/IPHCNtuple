@@ -659,6 +659,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         int pvn = vEvent->at(0).pv_n();
         theHistoManager->fillHisto("NumberOfPrimaryVertex", "noSel", "", "",  pvn, 1);
 
+	mc_event = vEvent->at(0).id();
 
         if ( !_isdata )
         {
