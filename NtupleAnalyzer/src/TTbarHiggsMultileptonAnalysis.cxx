@@ -1727,7 +1727,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
 
     // ======================================================================================================
     // variables against ttbar
-    max_Lep_eta     = std::max( abs(vSelectedLeptons.at(0).eta()), abs(vSelectedLeptons.at(1).eta()) ) ; // ok
+    max_Lep_eta     = std::max( fabs(vSelectedLeptons.at(0).eta()), abs(vSelectedLeptons.at(1).eta()) ) ; // ok
 
     numJets_float   = vSelectedJets.size() ;                                                             // ok
 
@@ -2335,7 +2335,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     // ======================================================================================================
     // variables against ttbar
 
-    max_Lep_eta     = std::max( abs(vSelectedLeptons.at(0).eta()), abs(vSelectedLeptons.at(1).eta()) ) ;     // ok
+    max_Lep_eta     = std::max( fabs(vSelectedLeptons.at(0).eta()), abs(vSelectedLeptons.at(1).eta()) ) ;     // ok
 
     MT_met_lep1     = sqrt( 2 * vSelectedLeptons.at(0).p4().Pt() * vEvent->at(0).metpt() 
                       * (1 - cos( vSelectedLeptons.at(0).phi() - vEvent->at(0).metphi() )));                 // ok
@@ -2368,8 +2368,8 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
 
     for (int i=0; i<vSelectedJets.size(); i++)
     {
-        if( DeltaRLeptonJet( vSelectedLeptons.at(2), vSelectedJets.at(i) ) < mindr_lep1_jet )
-        { mindr_lep1_jet = DeltaRLeptonJet( vSelectedLeptons.at(0), vSelectedJets.at(i) ); }               // ok
+        if( DeltaRLeptonJet( vSelectedLeptons.at(2), vSelectedJets.at(i) ) < mindr_lep2_jet )
+        { mindr_lep2_jet = DeltaRLeptonJet( vSelectedLeptons.at(0), vSelectedJets.at(i) ); }               // ok
     }
 
     signal_3l_TT_MVA    = mva_3l_tt->EvaluateMVA("BDTG method");
