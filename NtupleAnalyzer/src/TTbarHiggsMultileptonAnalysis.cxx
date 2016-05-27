@@ -1039,7 +1039,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // ################################################################################
 
         max_Lep_eta     = 0. ;
-        numJets_float   = 0. ;
+        //numJets_float   = 0. ;
+        nJet25_Recl     = 0 ;
         mindr_lep1_jet  = 0. ;
         mindr_lep2_jet  = 0. ;
         met             = 0. ;
@@ -1727,9 +1728,10 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
 
     // ======================================================================================================
     // variables against ttbar
-    max_Lep_eta     = std::max( fabs(vSelectedLeptons.at(0).eta()), abs(vSelectedLeptons.at(1).eta()) ) ; // ok
+    max_Lep_eta     = std::max( fabs(vSelectedLeptons.at(0).eta()), fabs(vSelectedLeptons.at(1).eta()) ) ; // ok
 
-    numJets_float   = vSelectedJets.size() ;                                                             // ok
+    //numJets_float   = vSelectedJets.size() ;                                                             // ok
+    nJet25_Recl = vSelectedJets.size() ;     
 
     mindr_lep1_jet = 1000.;
 
@@ -2335,12 +2337,13 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     // ======================================================================================================
     // variables against ttbar
 
-    max_Lep_eta     = std::max( fabs(vSelectedLeptons.at(0).eta()), abs(vSelectedLeptons.at(1).eta()) ) ;     // ok
+    max_Lep_eta     = std::max( fabs(vSelectedLeptons.at(0).eta()), fabs(vSelectedLeptons.at(1).eta()) ) ;     // ok
 
     MT_met_lep1     = sqrt( 2 * vSelectedLeptons.at(0).p4().Pt() * vEvent->at(0).metpt() 
                       * (1 - cos( vSelectedLeptons.at(0).phi() - vEvent->at(0).metphi() )));                 // ok
 
-    numJets_float   = vSelectedJets.size() ;                                                                 // ok
+    //numJets_float   = vSelectedJets.size() ;                                                                 // ok
+    nJet25_Recl = vSelectedJets.size() ;
 
     mhtJet25_Recl   = sqrt( (jet_px*jet_px) + (jet_py*jet_py) );                                             // ok
 
@@ -3188,7 +3191,7 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
 
     tOutput->Branch("max_Lep_eta", &max_Lep_eta, "max_Lep_eta/F");
     tOutput->Branch("MT_met_lep1",&MT_met_lep1,"MT_met_lep1/F");
-    tOutput->Branch("nJet25_Recl",&nJet25_Recl,"nJet25_Recl/I");
+    tOutput->Branch("nJet25_Recl",&nJet25_Recl,"nJet25_Recl/F");
     tOutput->Branch("mindr_lep1_jet",&mindr_lep1_jet,"mindr_lep1_jet/F");
     tOutput->Branch("mindr_lep2_jet",&mindr_lep2_jet,"mindr_lep2_jet/F");
     tOutput->Branch("LepGood_conePt0",&LepGood_conePt0,"LepGood_conePt0/F");
