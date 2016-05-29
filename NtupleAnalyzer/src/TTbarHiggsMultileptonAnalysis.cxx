@@ -2,6 +2,7 @@
 #include "TSystem.h"
 #include "SignalExtractionMVA.cxx"
 #include "Helper.cxx"
+#include "BTagging.cxx"
 
 #define kCat_3l_2b_2j 0
 #define kCat_3l_1b_2j 1
@@ -15,6 +16,8 @@
 #define kCat_2lss_2b_3j 9
 #define kCat_2lss_1b_3j 10
 #define kCat_2lss_2b_2j 11
+
+using namespace std;
 
 TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis() 
 {
@@ -118,6 +121,9 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
 
     theHistoManager->addHisto2D("SelectedLeptonsVsJets",           "noSel",   "ttH2lss",   "",    8,    0,    7,    8,    0,    7);
     theHistoManager->addHisto2D("SelectedLeptonsVsBJets",          "noSel",   "ttH2lss",   "",    8,    0,    7,    8,    0,    7);
+
+    theHistoManager->addHisto("WeightCSV_min",                                    "",     "ttH2l",   "",    30,    0,    3);
+    theHistoManager->addHisto("WeightCSV_max",                                    "",     "ttH2l",   "",    30,    0,    3);
 
     theHistoManager->addHisto("CutFlow",                          "FullThreeLeptons",   "ttH2lss",   "",    10,   -1,    9);
 
@@ -587,6 +593,14 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("Signal_2lss_TTV_MVA",                      "FinalCut", "ttH2lss",   "",  20,   -1,     1);
     theHistoManager->addHisto("Signal_3l_TT_MVA",                         "FinalCut",   "ttH3l",   "",  20,   -1,     1);
     theHistoManager->addHisto("Signal_3l_TTV_MVA",                        "FinalCut",   "ttH3l",   "",  20,   -1,     1);
+
+    std::string inputFileHF = "/home-pbs/xcoubez/ttHAnalysis_Git/ttHAnalysis_76X_Moriond_ALLCORRECTIONS/IPHCNtuple/NtupleAnalyzer/src/weight/csv_rwt_fit_hf_76x_2016_02_08.root";
+    std::string inputFileLF = "/home-pbs/xcoubez/ttHAnalysis_Git/ttHAnalysis_76X_Moriond_ALLCORRECTIONS/IPHCNtuple/NtupleAnalyzer/src/weight/csv_rwt_fit_lf_76x_2016_02_08.root";
+
+    TFile* f_CSVwgt_HF = new TFile ((inputFileHF).c_str());
+    TFile* f_CSVwgt_LF = new TFile ((inputFileLF).c_str());
+
+    fillCSVhistos(f_CSVwgt_HF, f_CSVwgt_LF);
 
 }
 
@@ -1649,6 +1663,76 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
     met_ld = 0.00397 * vEvent->at(0).metpt() + 0.00265 * MHT;
 
     if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH2lss", _sampleName.Data(),   3, weight);
+
+    // #################################
+    // # b-tagging nominal reweighting #
+    // #################################
+
+    std::vector<double> jetPts;
+    std::vector<double> jetEtas;
+    std::vector<double> jetCSVs;
+    std::vector<int>    jetFlavors;
+    int iSys = 0;
+    double wgt_csv, wgt_csv_def, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf, new_weight;
+
+    for(int i=0; i<vSelectedJets.size(); i++)
+    {
+        jetPts.push_back(     vSelectedJets.at(i).pt()                );
+        jetEtas.push_back(    vSelectedJets.at(i).eta()               );
+        jetCSVs.push_back(    vSelectedJets.at(i).CSVv2()             );
+        jetFlavors.push_back( vSelectedJets.at(i).jet_hadronFlavour() );
+    }
+
+    wgt_csv_def = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, iSys, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf);
+    new_weight = weight * wgt_csv_def; // weight = weight * wgt_csv_def;
+
+    // ##################################################################################################################################
+
+    // ##################################
+    // # b-tagging deriving systematics #
+    // ##################################
+
+    std::vector<double> weights_csv;
+    double wgt_csv_def_sys = 0;
+
+    for(int i=7; i<25; i++)
+    {
+        wgt_csv_def_sys = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, i, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf);
+        weights_csv.push_back(wgt_csv_def_sys);
+    }
+
+    auto min_csv = min_element(weights_csv.begin(),weights_csv.end());
+    auto max_csv = max_element(weights_csv.begin(),weights_csv.end());
+    double min_weight_csv = *min_element(weights_csv.begin(),weights_csv.end()); //*min_csv;
+    double max_weight_csv = *max_element(weights_csv.begin(),weights_csv.end()); //*max_csv;
+    theHistoManager->fillHisto("WeightCSV_min",  "",   "ttH2l",   "", min_weight_csv, 1);
+    theHistoManager->fillHisto("WeightCSV_max",  "",   "ttH2l",   "", max_weight_csv, 1);
+
+    // ###############################
+    // # theory deriving systematics #
+    // ###############################
+
+    std::vector<double> weights_muF_muR;
+    double wgt_theory_sys = 0;
+
+    wgt_theory_sys = vEvent->at(0).weight_scale_muF0p5() * vEvent->at(0).weight_scale_muR0p5();
+    weights_muF_muR.push_back(wgt_theory_sys);
+    wgt_theory_sys = vEvent->at(0).weight_scale_muF2() * vEvent->at(0).weight_scale_muR2();
+    weights_muF_muR.push_back(wgt_theory_sys);    
+    wgt_theory_sys = vEvent->at(0).weight_scale_muF0p5();
+    weights_muF_muR.push_back(wgt_theory_sys);
+    wgt_theory_sys = vEvent->at(0).weight_scale_muF2();
+    weights_muF_muR.push_back(wgt_theory_sys);
+    wgt_theory_sys = vEvent->at(0).weight_scale_muR0p5();
+    weights_muF_muR.push_back(wgt_theory_sys);
+    wgt_theory_sys = vEvent->at(0).weight_scale_muR2();
+    weights_muF_muR.push_back(wgt_theory_sys);
+    wgt_theory_sys = vEvent->at(0).weight_scale_muF0p5() * vEvent->at(0).weight_scale_muR2();
+    weights_muF_muR.push_back(wgt_theory_sys);
+    wgt_theory_sys = vEvent->at(0).weight_scale_muF0p5() * vEvent->at(0).weight_scale_muR2();
+    weights_muF_muR.push_back(wgt_theory_sys);
+
+    // ##################################################################################################################################
 
     if(  (abs(vSelectedLeptons.at(0).id()) == 11)
             && (abs(vSelectedLeptons.at(1).id()) == 11)
