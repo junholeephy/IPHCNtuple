@@ -2,6 +2,7 @@
 #include "TSystem.h"
 #include "SignalExtractionMVA.cxx"
 #include "Helper.cxx"
+#include "BTagging.cxx"
 
 #define kCat_3l_2b_2j 0
 #define kCat_3l_1b_2j 1
@@ -15,6 +16,8 @@
 #define kCat_2lss_2b_3j 9
 #define kCat_2lss_1b_3j 10
 #define kCat_2lss_2b_2j 11
+
+using namespace std;
 
 TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis() 
 {
@@ -118,6 +121,9 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
 
     theHistoManager->addHisto2D("SelectedLeptonsVsJets",           "noSel",   "ttH2lss",   "",    8,    0,    7,    8,    0,    7);
     theHistoManager->addHisto2D("SelectedLeptonsVsBJets",          "noSel",   "ttH2lss",   "",    8,    0,    7,    8,    0,    7);
+
+    theHistoManager->addHisto("WeightCSV_min",                                    "",     "ttH2l",   "",    30,    0,    3);
+    theHistoManager->addHisto("WeightCSV_max",                                    "",     "ttH2l",   "",    30,    0,    3);
 
     theHistoManager->addHisto("CutFlow",                          "FullThreeLeptons",   "ttH2lss",   "",    10,   -1,    9);
 
@@ -588,6 +594,13 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("Signal_3l_TT_MVA",                         "FinalCut",   "ttH3l",   "",  20,   -1,     1);
     theHistoManager->addHisto("Signal_3l_TTV_MVA",                        "FinalCut",   "ttH3l",   "",  20,   -1,     1);
 
+    std::string inputFileHF = "/home-pbs/xcoubez/ttHAnalysis_Git/ttHAnalysis_76X_Moriond_ALLCORRECTIONS/IPHCNtuple/NtupleAnalyzer/src/weight/csv_rwt_fit_hf_76x_2016_02_08.root";
+    std::string inputFileLF = "/home-pbs/xcoubez/ttHAnalysis_Git/ttHAnalysis_76X_Moriond_ALLCORRECTIONS/IPHCNtuple/NtupleAnalyzer/src/weight/csv_rwt_fit_lf_76x_2016_02_08.root";
+
+    TFile* f_CSVwgt_HF = new TFile ((inputFileHF).c_str());
+    TFile* f_CSVwgt_LF = new TFile ((inputFileLF).c_str());
+
+    fillCSVhistos(f_CSVwgt_HF, f_CSVwgt_LF);
 }
 
 
@@ -659,6 +672,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         int pvn = vEvent->at(0).pv_n();
         theHistoManager->fillHisto("NumberOfPrimaryVertex", "noSel", "", "",  pvn, 1);
 
+	mc_event = vEvent->at(0).id();
 
         if ( !_isdata )
         {
@@ -1038,7 +1052,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // ################################################################################
 
         max_Lep_eta     = 0. ;
-        numJets_float   = 0. ;
+        //numJets_float   = 0. ;
+        nJet25_Recl     = 0 ;
         mindr_lep1_jet  = 0. ;
         mindr_lep2_jet  = 0. ;
         met             = 0. ;
@@ -1648,6 +1663,53 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
 
     if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH2lss", _sampleName.Data(),   3, weight);
 
+    // #################################
+    // # b-tagging nominal reweighting #
+    // #################################
+
+    std::vector<double> jetPts;
+    std::vector<double> jetEtas;
+    std::vector<double> jetCSVs;
+    std::vector<int>    jetFlavors;
+    int iSys = 0;
+    double wgt_csv, wgt_csv_def, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf, new_weight;
+
+    for(int i=0; i<vSelectedJets.size(); i++)
+    {
+        jetPts.push_back(     vSelectedJets.at(i).pt()                );
+        jetEtas.push_back(    vSelectedJets.at(i).eta()               );
+        jetCSVs.push_back(    vSelectedJets.at(i).CSVv2()             );
+        jetFlavors.push_back( vSelectedJets.at(i).jet_hadronFlavour() );
+    }
+
+    wgt_csv_def = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, iSys, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf);
+    new_weight = weight * wgt_csv_def; // weight = weight * wgt_csv_def;
+
+    // ##################################################################################################################################
+
+    // ##################################
+    // # b-tagging deriving systematics #
+    // ##################################
+
+    std::vector<double> weights_csv;
+    double wgt_csv_def_sys = 0;
+
+    for(int i=7; i<25; i++)
+    {
+        wgt_csv_def_sys = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, i, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf)/wgt_csv_def;
+        weights_csv.push_back(wgt_csv_def_sys);
+    }
+
+    double min_weight_csv = *min_element(weights_csv.begin(),weights_csv.end());
+    double max_weight_csv = *max_element(weights_csv.begin(),weights_csv.end());
+    theHistoManager->fillHisto("WeightCSV_min",  "",   "ttH2l",   "", min_weight_csv, 1);
+    theHistoManager->fillHisto("WeightCSV_max",  "",   "ttH2l",   "", max_weight_csv, 1);
+
+    weight_csv_down = min_weight_csv;
+    weight_csv_up   = max_weight_csv;    
+
+    // ##################################################################################################################################
+
     if(  (abs(vSelectedLeptons.at(0).id()) == 11)
             && (abs(vSelectedLeptons.at(1).id()) == 11)
             && (pass_Zveto                            )
@@ -1726,9 +1788,10 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
 
     // ======================================================================================================
     // variables against ttbar
-    max_Lep_eta     = std::max( abs(vSelectedLeptons.at(0).eta()), abs(vSelectedLeptons.at(1).eta()) ) ; // ok
+    max_Lep_eta     = std::max( fabs(vSelectedLeptons.at(0).eta()), fabs(vSelectedLeptons.at(1).eta()) ) ; // ok
 
-    numJets_float   = vSelectedJets.size() ;                                                             // ok
+    //numJets_float   = vSelectedJets.size() ;                                                             // ok
+    nJet25_Recl = vSelectedJets.size() ;     
 
     mindr_lep1_jet = 1000.;
 
@@ -2301,6 +2364,53 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     }
     if( fabs(sum_charges_3l) != 1 ) return;
 
+    // #################################
+    // # b-tagging nominal reweighting #
+    // #################################
+
+    std::vector<double> jetPts;
+    std::vector<double> jetEtas;
+    std::vector<double> jetCSVs;
+    std::vector<int>    jetFlavors;
+    int iSys = 0;
+    double wgt_csv, wgt_csv_def, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf, new_weight;
+
+    for(int i=0; i<vSelectedJets.size(); i++)
+    {
+        jetPts.push_back(     vSelectedJets.at(i).pt()                );
+        jetEtas.push_back(    vSelectedJets.at(i).eta()               );
+        jetCSVs.push_back(    vSelectedJets.at(i).CSVv2()             );
+        jetFlavors.push_back( vSelectedJets.at(i).jet_hadronFlavour() );
+    }
+
+    wgt_csv_def = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, iSys, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf);
+    new_weight = weight * wgt_csv_def; // weight = weight * wgt_csv_def;
+
+    // ##################################################################################################################################
+
+    // ##################################
+    // # b-tagging deriving systematics #
+    // ##################################
+
+    std::vector<double> weights_csv;
+    double wgt_csv_def_sys = 0;
+
+    for(int i=7; i<25; i++)
+    {
+        wgt_csv_def_sys = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, i, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf)/wgt_csv_def;
+        weights_csv.push_back(wgt_csv_def_sys);
+    }
+
+    double min_weight_csv = *min_element(weights_csv.begin(),weights_csv.end()); 
+    double max_weight_csv = *max_element(weights_csv.begin(),weights_csv.end()); 
+    theHistoManager->fillHisto("WeightCSV_min",  "",   "ttH2l",   "", min_weight_csv, 1);
+    theHistoManager->fillHisto("WeightCSV_max",  "",   "ttH2l",   "", max_weight_csv, 1);
+
+    weight_csv_down = min_weight_csv;
+    weight_csv_up   = max_weight_csv;
+
+    // ##################################################################################################################################
+
     theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "ttH3l",   "", 8                              , weight);
 
     theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "ttH3l",   "", vSelectedLeptons.at(0).pt()    , weight);
@@ -2334,12 +2444,13 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     // ======================================================================================================
     // variables against ttbar
 
-    max_Lep_eta     = std::max( abs(vSelectedLeptons.at(0).eta()), abs(vSelectedLeptons.at(1).eta()) ) ;     // ok
+    max_Lep_eta     = std::max( fabs(vSelectedLeptons.at(0).eta()), fabs(vSelectedLeptons.at(1).eta()) ) ;     // ok
 
     MT_met_lep1     = sqrt( 2 * vSelectedLeptons.at(0).p4().Pt() * vEvent->at(0).metpt() 
                       * (1 - cos( vSelectedLeptons.at(0).phi() - vEvent->at(0).metphi() )));                 // ok
 
-    numJets_float   = vSelectedJets.size() ;                                                                 // ok
+    //numJets_float   = vSelectedJets.size() ;                                                                 // ok
+    nJet25_Recl = vSelectedJets.size() ;
 
     mhtJet25_Recl   = sqrt( (jet_px*jet_px) + (jet_py*jet_py) );                                             // ok
 
@@ -2367,8 +2478,8 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
 
     for (int i=0; i<vSelectedJets.size(); i++)
     {
-        if( DeltaRLeptonJet( vSelectedLeptons.at(2), vSelectedJets.at(i) ) < mindr_lep1_jet )
-        { mindr_lep1_jet = DeltaRLeptonJet( vSelectedLeptons.at(0), vSelectedJets.at(i) ); }               // ok
+        if( DeltaRLeptonJet( vSelectedLeptons.at(2), vSelectedJets.at(i) ) < mindr_lep2_jet )
+        { mindr_lep2_jet = DeltaRLeptonJet( vSelectedLeptons.at(0), vSelectedJets.at(i) ); }               // ok
     }
 
     signal_3l_TT_MVA    = mva_3l_tt->EvaluateMVA("BDTG method");
@@ -3158,6 +3269,8 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("weight_scale_muF2",&weight_scale_muF2,"weight_scale_muF2/F");
     tOutput->Branch("weight_scale_muR0p5",&weight_scale_muR0p5,"weight_scale_muR0p5/F");
     tOutput->Branch("weight_scale_muR2",&weight_scale_muR2,"weight_scale_muR2/F");
+    tOutput->Branch("weight_csv_down",&weight_csv_down,"weight_csv_down/F");
+    tOutput->Branch("weight_csv_up",&weight_csv_up,"weight_csv_up/F");
 
     tOutput->Branch("PV_weight",&weight_PV,"PV_weight/F");
     tOutput->Branch("mc_3l_category",&mc_3l_category,"mc_3l_category/I");
@@ -3187,7 +3300,7 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
 
     tOutput->Branch("max_Lep_eta", &max_Lep_eta, "max_Lep_eta/F");
     tOutput->Branch("MT_met_lep1",&MT_met_lep1,"MT_met_lep1/F");
-    tOutput->Branch("nJet25_Recl",&nJet25_Recl,"nJet25_Recl/I");
+    tOutput->Branch("nJet25_Recl",&nJet25_Recl,"nJet25_Recl/F");
     tOutput->Branch("mindr_lep1_jet",&mindr_lep1_jet,"mindr_lep1_jet/F");
     tOutput->Branch("mindr_lep2_jet",&mindr_lep2_jet,"mindr_lep2_jet/F");
     tOutput->Branch("LepGood_conePt0",&LepGood_conePt0,"LepGood_conePt0/F");
@@ -3337,15 +3450,17 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     bool is2lss=false, is3l=false, is4l=false;
 
     int tot_charge = 0;
+    int tot_id = 0;
     if (vSelectedLeptons.size()>=4) {
         for (unsigned int i=0; i<4; i++) {
             tot_charge += vSelectedLeptons.at(i).charge();
+	    tot_id += vSelectedLeptons.at(i).id();
         }
     }
-    if ((is_3l_TTH_SR || is_3l_TTZ_CR) && vSelectedLeptons.size()>=4 && tot_charge==0 ) is4l = true;
+    if ((is_3l_TTH_SR || is_3l_TTZ_CR) && vSelectedLeptons.size()>=4 && tot_charge==0 && tot_id==0) is4l = true;
     else if ( ((is_3l_TTH_SR || is_3l_TTZ_CR) && vSelectedLeptons.size()==3)
 	 || (is_Zl_CR && vSelectedLeptons.size() == 2 &&  vFakeLeptons.size() == 1) 
-	 || ((is_3l_TTH_SR || is_3l_TTZ_CR) && vSelectedLeptons.size()>=4 && tot_charge!=0)) 
+	 || ((is_3l_TTH_SR || is_3l_TTZ_CR) && vSelectedLeptons.size()>=4 && (tot_charge!=0 || tot_id!=0))) 
 	is3l = true;
     else if ( is_2lss_TTH_SR && vSelectedLeptons.size()==2 && vSelectedLeptons.at(0).charge()==vSelectedLeptons.at(1).charge()) is2lss = true;
     if (!is2lss && !is3l && !is4l) return;

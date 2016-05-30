@@ -1055,7 +1055,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
     is_2lss_TTH_SR = true;   
 
     // Calcul of input variables of the 2D BDT
-    max_Lep_eta     = std::max( abs(vSelectedLeptons.at(0).eta()), abs(vSelectedLeptons.at(1).eta()) ) ;
+    max_Lep_eta     = std::max( fabs(vSelectedLeptons.at(0).eta()), fabs(vSelectedLeptons.at(1).eta()) ) ;
 
     numJets_float   = vSelectedJets.size() ;
 
@@ -1631,7 +1631,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     is_3l_TTH_SR = true;   
 
     // Calcul of input variables of the 2D BDT
-    max_Lep_eta     = std::max( abs(vSelectedLeptons.at(0).eta()), abs(vSelectedLeptons.at(1).eta()) ) ;
+    max_Lep_eta     = std::max( fabs(vSelectedLeptons.at(0).eta()), fabs(vSelectedLeptons.at(1).eta()) ) ;
 
     numJets_float   = vSelectedJets.size() ;
 

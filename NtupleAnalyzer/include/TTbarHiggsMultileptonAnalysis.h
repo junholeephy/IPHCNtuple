@@ -110,7 +110,8 @@ class TTbarHiggsMultileptonAnalysis
         Int_t mc_event;
         Float_t weight;
         Float_t mc_weight;
-	Float_t weight_scale_muF0p5, weight_scale_muF2, weight_scale_muR0p5, weight_scale_muR2;
+    	Float_t weight_scale_muF0p5, weight_scale_muF2, weight_scale_muR0p5, weight_scale_muR2;
+        Float_t weight_csv_up, weight_csv_down;
         Float_t weight_PV; // PU reweighting from PV distribution
         Int_t mc_3l_category, mc_ttbar_decay, mc_boson_decay, mc_ttZhypAllowed, mc_nJets25, mc_nBtagJets25, mc_nMediumBtagJets25, mc_nNonBtagJets25;
         Int_t catJets;
@@ -120,8 +121,8 @@ class TTbarHiggsMultileptonAnalysis
 
         Int_t multilepton_Bjet1_Id, multilepton_Bjet2_Id;
         TLorentzVector multilepton_Bjet1_P4, multilepton_Bjet2_P4;
-	Float_t multilepton_Bjet1_CSV, multilepton_Bjet2_CSV;
-	Float_t multilepton_Bjet1_JEC_Up, multilepton_Bjet1_JEC_Down, multilepton_Bjet2_JEC_Up, multilepton_Bjet2_JEC_Down;
+	    Float_t multilepton_Bjet1_CSV, multilepton_Bjet2_CSV;
+	    Float_t multilepton_Bjet1_JEC_Up, multilepton_Bjet1_JEC_Down, multilepton_Bjet2_JEC_Up, multilepton_Bjet2_JEC_Down;
         Float_t multilepton_Bjet1_JER_Up, multilepton_Bjet1_JER_Down, multilepton_Bjet2_JER_Up, multilepton_Bjet2_JER_Down;
 
         Int_t multilepton_JetHighestPt1_Id, multilepton_JetHighestPt2_Id, multilepton_JetClosestMw1_Id, multilepton_JetClosestMw2_Id, multilepton_JetLowestMjj1_Id, multilepton_JetLowestMjj2_Id;
