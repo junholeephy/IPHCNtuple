@@ -601,7 +601,6 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     TFile* f_CSVwgt_LF = new TFile ((inputFileLF).c_str());
 
     fillCSVhistos(f_CSVwgt_HF, f_CSVwgt_LF);
-
 }
 
 
@@ -1697,40 +1696,17 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
 
     for(int i=7; i<25; i++)
     {
-        wgt_csv_def_sys = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, i, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf);
+        wgt_csv_def_sys = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, i, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf)/wgt_csv_def;
         weights_csv.push_back(wgt_csv_def_sys);
     }
 
-    auto min_csv = min_element(weights_csv.begin(),weights_csv.end());
-    auto max_csv = max_element(weights_csv.begin(),weights_csv.end());
-    double min_weight_csv = *min_element(weights_csv.begin(),weights_csv.end()); //*min_csv;
-    double max_weight_csv = *max_element(weights_csv.begin(),weights_csv.end()); //*max_csv;
+    double min_weight_csv = *min_element(weights_csv.begin(),weights_csv.end());
+    double max_weight_csv = *max_element(weights_csv.begin(),weights_csv.end());
     theHistoManager->fillHisto("WeightCSV_min",  "",   "ttH2l",   "", min_weight_csv, 1);
     theHistoManager->fillHisto("WeightCSV_max",  "",   "ttH2l",   "", max_weight_csv, 1);
 
-    // ###############################
-    // # theory deriving systematics #
-    // ###############################
-
-    std::vector<double> weights_muF_muR;
-    double wgt_theory_sys = 0;
-
-    wgt_theory_sys = vEvent->at(0).weight_scale_muF0p5() * vEvent->at(0).weight_scale_muR0p5();
-    weights_muF_muR.push_back(wgt_theory_sys);
-    wgt_theory_sys = vEvent->at(0).weight_scale_muF2() * vEvent->at(0).weight_scale_muR2();
-    weights_muF_muR.push_back(wgt_theory_sys);    
-    wgt_theory_sys = vEvent->at(0).weight_scale_muF0p5();
-    weights_muF_muR.push_back(wgt_theory_sys);
-    wgt_theory_sys = vEvent->at(0).weight_scale_muF2();
-    weights_muF_muR.push_back(wgt_theory_sys);
-    wgt_theory_sys = vEvent->at(0).weight_scale_muR0p5();
-    weights_muF_muR.push_back(wgt_theory_sys);
-    wgt_theory_sys = vEvent->at(0).weight_scale_muR2();
-    weights_muF_muR.push_back(wgt_theory_sys);
-    wgt_theory_sys = vEvent->at(0).weight_scale_muF0p5() * vEvent->at(0).weight_scale_muR2();
-    weights_muF_muR.push_back(wgt_theory_sys);
-    wgt_theory_sys = vEvent->at(0).weight_scale_muF0p5() * vEvent->at(0).weight_scale_muR2();
-    weights_muF_muR.push_back(wgt_theory_sys);
+    weight_csv_down = min_weight_csv;
+    weight_csv_up   = max_weight_csv;    
 
     // ##################################################################################################################################
 
@@ -2387,6 +2363,53 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
         sum_charges_3l = sum_charges_3l + vSelectedLeptons.at(i).charge();
     }
     if( fabs(sum_charges_3l) != 1 ) return;
+
+    // #################################
+    // # b-tagging nominal reweighting #
+    // #################################
+
+    std::vector<double> jetPts;
+    std::vector<double> jetEtas;
+    std::vector<double> jetCSVs;
+    std::vector<int>    jetFlavors;
+    int iSys = 0;
+    double wgt_csv, wgt_csv_def, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf, new_weight;
+
+    for(int i=0; i<vSelectedJets.size(); i++)
+    {
+        jetPts.push_back(     vSelectedJets.at(i).pt()                );
+        jetEtas.push_back(    vSelectedJets.at(i).eta()               );
+        jetCSVs.push_back(    vSelectedJets.at(i).CSVv2()             );
+        jetFlavors.push_back( vSelectedJets.at(i).jet_hadronFlavour() );
+    }
+
+    wgt_csv_def = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, iSys, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf);
+    new_weight = weight * wgt_csv_def; // weight = weight * wgt_csv_def;
+
+    // ##################################################################################################################################
+
+    // ##################################
+    // # b-tagging deriving systematics #
+    // ##################################
+
+    std::vector<double> weights_csv;
+    double wgt_csv_def_sys = 0;
+
+    for(int i=7; i<25; i++)
+    {
+        wgt_csv_def_sys = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, i, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf)/wgt_csv_def;
+        weights_csv.push_back(wgt_csv_def_sys);
+    }
+
+    double min_weight_csv = *min_element(weights_csv.begin(),weights_csv.end()); 
+    double max_weight_csv = *max_element(weights_csv.begin(),weights_csv.end()); 
+    theHistoManager->fillHisto("WeightCSV_min",  "",   "ttH2l",   "", min_weight_csv, 1);
+    theHistoManager->fillHisto("WeightCSV_max",  "",   "ttH2l",   "", max_weight_csv, 1);
+
+    weight_csv_down = min_weight_csv;
+    weight_csv_up   = max_weight_csv;
+
+    // ##################################################################################################################################
 
     theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "ttH3l",   "", 8                              , weight);
 
@@ -3246,6 +3269,8 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("weight_scale_muF2",&weight_scale_muF2,"weight_scale_muF2/F");
     tOutput->Branch("weight_scale_muR0p5",&weight_scale_muR0p5,"weight_scale_muR0p5/F");
     tOutput->Branch("weight_scale_muR2",&weight_scale_muR2,"weight_scale_muR2/F");
+    tOutput->Branch("weight_csv_down",&weight_csv_down,"weight_csv_down/F");
+    tOutput->Branch("weight_csv_up",&weight_csv_up,"weight_csv_up/F");
 
     tOutput->Branch("PV_weight",&weight_PV,"PV_weight/F");
     tOutput->Branch("mc_3l_category",&mc_3l_category,"mc_3l_category/I");
