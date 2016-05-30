@@ -1,3 +1,8 @@
-TTWJetsToLNu root://eoscms//eos/cms/store/user/chanon/TTH/FlatTree/Akoula-patch5/testAllCR_mETcov/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8_0.root
-TTZToLLNuNu root://eoscms//eos/cms/store/user/chanon/TTH/FlatTree/Akoula-patch5/testAllCR_mETcov/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8_0.root
-ttHToNonbb root://eoscms//eos/cms/store/user/chanon/TTH/FlatTree/Akoula-patch5/testAllCR_mETcov/ttHToNonbb_M125_13TeV_powheg_pythia8_0.root
+TTWJetsToLNu root://eoscms//eos/cms/store/user/chanon/TTH/FlatTree/Akoula-patch6/test2bAll_new/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8_0.root
+TTZToLLNuNu root://eoscms//eos/cms/store/user/chanon/TTH/FlatTree/Akoula-patch6/test2bAll_new/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8_0.root
+ttHToNonbb root://eoscms//eos/cms/store/user/chanon/TTH/FlatTree/Akoula-patch6/test2bAll_new/ttHToNonbb_M125_13TeV_powheg_pythia8_0.root
+TTGJets root://eoscms//eos/cms/store/user/chanon/TTH/FlatTree/Akoula-patch6/test2bAll_new/TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8_0.root
+TTJets-madgraphMLM root://eoscms//eos/cms/store/user/chanon/TTH/FlatTree/Akoula-patch6/test2bAll_new/TTJets_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_0.root
+WZJets root://eoscms//eos/cms/store/user/chanon/TTH/FlatTree/Akoula-patch6/test2bAll_new/WZJets_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_0.root
+TT-powheg root://eoscms//eos/cms/store/user/chanon/TTH/FlatTree/Akoula-patch6/test2bAll_new/TT_TuneCUETP8M1_13TeV-powheg-pythia8_0.root
+TTJets-amcatnloFXFX root://eoscms//eos/cms/store/user/chanon/TTH/FlatTree/Akoula-patch6/test2bAll_new/TTJets_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_0.root
