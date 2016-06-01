@@ -3457,10 +3457,10 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
 	    tot_id += vSelectedLeptons.at(i).id();
         }
     }
-    if ((is_3l_TTH_SR || is_3l_TTZ_CR) && vSelectedLeptons.size()>=4 && tot_charge==0 && tot_id==0) is4l = true;
+    if ((is_3l_TTH_SR || is_3l_TTZ_CR) && vSelectedLeptons.size()>=4 && tot_charge==0 && (tot_id==0 || abs(tot_id)==2)) is4l = true;
     else if ( ((is_3l_TTH_SR || is_3l_TTZ_CR) && vSelectedLeptons.size()==3)
-	 || (is_Zl_CR && vSelectedLeptons.size() == 2 &&  vFakeLeptons.size() == 1) 
-	 || ((is_3l_TTH_SR || is_3l_TTZ_CR) && vSelectedLeptons.size()>=4 && (tot_charge!=0 || tot_id!=0))) 
+	 || (is_Zl_CR && vSelectedLeptons.size()==2 && vFakeLeptons.size()==1) 
+	 || ((is_3l_TTH_SR || is_3l_TTZ_CR) && vSelectedLeptons.size()>=4) ) 
 	is3l = true;
     else if ( is_2lss_TTH_SR && vSelectedLeptons.size()==2 && vSelectedLeptons.at(0).charge()==vSelectedLeptons.at(1).charge()) is2lss = true;
     if (!is2lss && !is3l && !is4l) return;
@@ -3524,7 +3524,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
         multilepton_Lepton3_Id = vFakeLeptons.at(0).id();
     }
 
-    if (vSelectedLeptons.size()>=4 && tot_charge==0)
+    if (vSelectedLeptons.size()>=4 && is4l)
     {
         multilepton_Lepton4_P4 = vSelectedLeptons.at(3).p4();
         multilepton_Lepton4_Id = vSelectedLeptons.at(3).id();
