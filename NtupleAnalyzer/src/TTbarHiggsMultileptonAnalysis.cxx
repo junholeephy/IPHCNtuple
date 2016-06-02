@@ -1074,8 +1074,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         TwoLeptonsSameSignSelection_TTH2l(jentry);
         //TwoLeptonsSameSignSelection_LepMVA_sideband(jentry);
-        //TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
-        DiLeptonSelection_TT_CR(jentry);
+        TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
+        //DiLeptonSelection_TT_CR(jentry);
 
         ThreeLeptonSelection_TTH3l(jentry);
         ThreeLeptonSelection_CR_WZ(jentry);
