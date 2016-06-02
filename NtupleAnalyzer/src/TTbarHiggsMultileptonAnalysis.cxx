@@ -1868,6 +1868,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_LepMVA_sideband(
     // ####################
 
     bool nLep               = ( vSelectedLeptons.size()                   == 2 );
+    bool nLepFake           = ( vFakeLeptons.size()                       == 1 );
     if(!nLep)               return;
 
     bool leading_lep_pt     = ( vSelectedLeptons.at(0).pt()               > 20 );
@@ -1892,6 +1893,9 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_LepMVA_sideband(
     // ###############################
     // # Two leptons event selection #
     // ###############################
+
+    bool same_sign      = ( vSelectedLeptons.at(0).charge() == vSelectedLeptons.at(1).charge() );
+    if(!same_sign)      return;
 
     // ##########
     // # Z veto #
@@ -2034,10 +2038,12 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_JetMultiplicity_
     bool nMediumBtag        = ( nMediumBJets                              >= 1 );
     if(!nLooseBtag && !nMediumBtag)      return;
 
-
     // ###############################
     // # Two leptons event selection #
     // ###############################
+
+    bool same_sign      = ( vSelectedLeptons.at(0).charge() == vSelectedLeptons.at(1).charge() );
+    if(!same_sign)      return;
 
     // ##########
     // # Z veto #
