@@ -68,6 +68,7 @@ class TTbarHiggsMultileptonAnalysis
         std::vector<Muon>	  vFakeMuons;     // inverted MVA cut
         std::vector<Electron> vFakeElectrons; // inverted MVA cut
         std::vector<Lepton>   vFakeLeptons;   // inverted MVA cut
+        std::vector<Lepton>   vInclusiveFakeLeptons;
         std::vector<Jet>	  vSelectedNonBTagJets;
         std::vector<Jet>	  vSelectedBTagJets;
         std::vector<Jet>      vSelectedMediumBTagJets;
