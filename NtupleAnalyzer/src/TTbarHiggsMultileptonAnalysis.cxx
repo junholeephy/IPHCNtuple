@@ -1074,18 +1074,19 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         TwoLeptonsSameSignSelection_TTH2l(jentry);
         //TwoLeptonsSameSignSelection_LepMVA_sideband(jentry);
-        TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
+        //TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
         //DiLeptonSelection_TT_CR(jentry);
 
         ThreeLeptonSelection_TTH3l(jentry);
-        ThreeLeptonSelection_CR_WZ(jentry);
+        //ThreeLeptonSelection_CR_WZ(jentry);
         ThreeLeptonSelection_CR_WZrelaxed(jentry);
-        ThreeLeptonSelection_CR_Zl(jentry);
+        //ThreeLeptonSelection_CR_Zl(jentry);
         ThreeLeptonSelection_TTZ(jentry);
 
         //std::cout <<is_CR_TTl<<" "<< is_Zl_CR <<" " << is_CR_WZ<<" " << is_TTH3l<< std::endl;
         //if (is_TTH3l==true ) std::cout <<"is_TTH3l" << std::endl;
-        if ( is_2lss_TTH_SR || is_3l_TTH_SR ) fillOutputTree();
+        //if ( is_2lss_TTH_SR || is_3l_TTH_SR ) fillOutputTree();
+	if ( is_2lss_TTH_SR || is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR ) fillOutputTree();
 
         // ########################################################################################################
         // #  __  __           _              _       _     _     _     _   _  ____ ___        _          __  __  #
@@ -3299,6 +3300,7 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
 
     tOutput->Branch("is_emu_TT_CR",&is_emu_TT_CR,"is_emu_TT_CR/B");
     //tOutput->Branch("is_3l_WZ_CR",&is_3l_WZ_CR,"is_3l_WZ_CR/B");
+    tOutput->Branch("is_3l_WZrel_CR",&is_3l_WZrel_CR,"is_3l_WZrel_CR/B");
     tOutput->Branch("is_3l_TTZ_CR",&is_3l_TTZ_CR,"is_3l_TTZ_CR/B");
     tOutput->Branch("is_Zl_CR",&is_Zl_CR,"is_Zl_CR/B");
 
@@ -3463,10 +3465,10 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
 	    tot_id += vSelectedLeptons.at(i).id();
         }
     }
-    if ((is_3l_TTH_SR || is_3l_TTZ_CR) && vSelectedLeptons.size()>=4 && tot_charge==0 && (tot_id==0 || abs(tot_id)==2)) is4l = true;
-    else if ( ((is_3l_TTH_SR || is_3l_TTZ_CR) && vSelectedLeptons.size()==3)
+    if ((is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR) && vSelectedLeptons.size()>=4 && tot_charge==0 && (tot_id==0 || abs(tot_id)==2)) is4l = true;
+    else if ( ((is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR) && vSelectedLeptons.size()==3)
 	 || (is_Zl_CR && vSelectedLeptons.size()==2 && vFakeLeptons.size()==1) 
-	 || ((is_3l_TTH_SR || is_3l_TTZ_CR) && vSelectedLeptons.size()>=4) ) 
+	 || ((is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR) && vSelectedLeptons.size()>=4) ) 
 	is3l = true;
     else if ( is_2lss_TTH_SR && vSelectedLeptons.size()==2 && vSelectedLeptons.at(0).charge()==vSelectedLeptons.at(1).charge()) is2lss = true;
     if (!is2lss && !is3l && !is4l) return;
