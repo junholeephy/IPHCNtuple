@@ -1074,8 +1074,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         TwoLeptonsSameSignSelection_TTH2l(jentry);
         //TwoLeptonsSameSignSelection_LepMVA_sideband(jentry);
-        //TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
-        DiLeptonSelection_TT_CR(jentry);
+        TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
+        //DiLeptonSelection_TT_CR(jentry);
 
         ThreeLeptonSelection_TTH3l(jentry);
         ThreeLeptonSelection_CR_WZ(jentry);
@@ -2038,6 +2038,9 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_JetMultiplicity_
     // ###############################
     // # Two leptons event selection #
     // ###############################
+
+    bool same_sign      = ( vSelectedLeptons.at(0).charge() == vSelectedLeptons.at(1).charge() );
+    if(!same_sign)      return;
 
     // ##########
     // # Z veto #
