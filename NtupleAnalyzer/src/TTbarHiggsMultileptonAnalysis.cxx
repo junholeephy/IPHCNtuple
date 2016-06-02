@@ -1893,6 +1893,9 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_LepMVA_sideband(
     // # Two leptons event selection #
     // ###############################
 
+    bool same_sign      = ( vSelectedLeptons.at(0).charge() == vSelectedLeptons.at(1).charge() );
+    if(!same_sign)      return;
+
     // ##########
     // # Z veto #
     // ##########
