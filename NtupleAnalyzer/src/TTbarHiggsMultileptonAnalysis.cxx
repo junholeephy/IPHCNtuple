@@ -1878,7 +1878,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_LepMVA_sideband(
     // ####################
 
     bool nLep               = ( vInclusiveFakeLeptons.size()              == 2 );
-    bool nLepTight          = ( vSelectedLeptons.size()                   == 1 );
+    bool nLepTight          = ( vFakeLeptons.size()                   == 1 );
     if(!nLep)               return;
     if(!nLepTight)          return;
 
