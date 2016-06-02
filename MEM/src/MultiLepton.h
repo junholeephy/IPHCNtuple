@@ -27,6 +27,11 @@
 
 struct Particle {
   int Id;
+  float CSV;
+  float JEC_Up;
+  float JEC_Down;
+  float JER_Up;
+  float JER_Down;
   TLorentzVector P4;
 };
 
@@ -69,12 +74,16 @@ class MultiLepton
   int iperm_jmiss;
   int iperm_bmiss_max;
   int iperm_jmiss_max;
+  
+  //int iperm_jsyst;
 
   int kCatJets;
 
   void FillParticle(string, int, TLorentzVector);
-  void FillParticlesHypothesis(int, MEPhaseSpace**);   
+  void FillParticle(string, int, float, float, float, float, float, TLorentzVector);
 
+  void FillParticlesHypothesis(int, MEPhaseSpace**);   
+  
   void DoSort(vector<Particle>*);
   int DoPermutation(vector<Particle>*);
   int DoPermutationLinear(vector<Particle>*);
@@ -85,6 +94,7 @@ class MultiLepton
   void SetPresenceBandJets(MEPhaseSpace**, int, int);
 
   void SwitchJetsFromAllJets(int);
+  void SwitchJetSyst(int);
 
   void FillTTHFullyLepHyp(MEPhaseSpace**);
   void FillTTLLHyp(MEPhaseSpace**);
@@ -133,6 +143,7 @@ MultiLepton::MultiLepton(){
   iperm_bmiss_max = 0;
   iperm_jmiss_max = 0;
 
+  //iperm_jsyst = 0;
 }
 
 MultiLepton::~MultiLepton(){
@@ -145,6 +156,27 @@ void MultiLepton::FillParticle(string Type, int id, TLorentzVector p4){
   p.Id = id;
   p.P4 = p4;
   if (Type=="lepton") Leptons.push_back(p);
+  if (Type=="jet") Jets.push_back(p);
+  if (Type=="bjet") Bjets.push_back(p);
+  if (Type=="alljet") AllJets.push_back(p);
+  if (Type=="jetHighestPt") JetsHighestPt.push_back(p);
+  if (Type=="jetClosestMw") JetsClosestMw.push_back(p);
+  if (Type=="jetLowestMjj") JetsLowestMjj.push_back(p);
+
+  return;
+}
+
+void MultiLepton::FillParticle(string Type, int id, float csv, float jec_up, float jec_down, float jer_up, float jer_down, TLorentzVector p4){
+
+  Particle p;
+  p.Id = id;
+  p.P4 = p4;
+  p.CSV = csv;
+  p.JEC_Up = jec_up;
+  p.JEC_Down = jec_down;
+  p.JER_Up = jer_up;
+  p.JER_Down = jer_down;
+
   if (Type=="jet") Jets.push_back(p);
   if (Type=="bjet") Bjets.push_back(p);
   if (Type=="alljet") AllJets.push_back(p);
@@ -217,8 +249,6 @@ void MultiLepton::FillParticlesHypothesis(int kMode, MEPhaseSpace** meIntegrator
   if (kMode==kMEM_TTbar_TopAntitopFullyLepDecay) FillTTbarFullyLepHyp(meIntegrator); 
   if (kMode==kMEM_TTbar_TopAntitopSemiLepDecay) FillTTbarSemiLepHyp(meIntegrator);
 
-  (*meIntegrator)->transferFunctions->MeasuredVarForTF.Recoil_Px = -Ptot.Px();
-  (*meIntegrator)->transferFunctions->MeasuredVarForTF.Recoil_Py = -Ptot.Py();
   (*meIntegrator)->transferFunctions->MeasuredVarForTF.mET_Px = mET.Px();
   (*meIntegrator)->transferFunctions->MeasuredVarForTF.mET_Py = mET.Py();
   (*meIntegrator)->transferFunctions->MeasuredVarForTF.mHT = mHT;
@@ -226,6 +256,15 @@ void MultiLepton::FillParticlesHypothesis(int kMode, MEPhaseSpace** meIntegrator
   (*meIntegrator)->transferFunctions->MeasuredVarForTF.mET_cov01 = mET_cov01;
   (*meIntegrator)->transferFunctions->MeasuredVarForTF.mET_cov10 = mET_cov10;
   (*meIntegrator)->transferFunctions->MeasuredVarForTF.mET_cov11 = mET_cov11;
+
+  Ptot.SetPxPyPzE(0,0,0,0);
+  for (unsigned int i=0; i<Bjets.size(); i++) Ptot += Bjets[i].P4;
+  for (unsigned int i=0; i<Jets.size(); i++) Ptot += Jets[i].P4;
+  for (unsigned int i=0; i<Leptons.size(); i++) Ptot += Leptons[i].P4;
+  Ptot += mET;
+
+  (*meIntegrator)->transferFunctions->MeasuredVarForTF.Recoil_Px = -Ptot.Px();
+  (*meIntegrator)->transferFunctions->MeasuredVarForTF.Recoil_Py = -Ptot.Py();
 
   ReadIntegrationBoundaries(kMode, meIntegrator);
 
@@ -350,6 +389,31 @@ void MultiLepton::SwitchJetsFromAllJets(int kMode){
   cout << "Using Jets mode "<<kMode<<endl;
 
   return;
+}
+
+void MultiLepton::SwitchJetSyst(int iperm_jsyst){
+
+  float pt, energy;
+  for (unsigned int i=0; i<Bjets.size(); i++){
+    pt = Bjets[i].P4.Pt();
+    energy = Bjets[i].P4.E();
+    if (iperm_jsyst==0);
+    if (iperm_jsyst==1) Bjets[i].P4.SetPtEtaPhiE(pt*Bjets[i].JEC_Up/energy, Bjets[i].P4.Theta(), Bjets[i].P4.Phi(), energy*Bjets[i].JEC_Up/energy);
+    if (iperm_jsyst==2) Bjets[i].P4.SetPtEtaPhiE(pt*Bjets[i].JEC_Down/energy, Bjets[i].P4.Theta(), Bjets[i].P4.Phi(), energy*Bjets[i].JEC_Down/energy);
+    if (iperm_jsyst==3) Bjets[i].P4.SetPtEtaPhiE(pt*Bjets[i].JER_Up/energy, Bjets[i].P4.Theta(), Bjets[i].P4.Phi(), energy*Bjets[i].JER_Up/energy);
+    if (iperm_jsyst==4) Bjets[i].P4.SetPtEtaPhiE(pt*Bjets[i].JER_Down/energy, Bjets[i].P4.Theta(), Bjets[i].P4.Phi(), energy*Bjets[i].JER_Down/energy);
+  }
+
+  for (unsigned int i=0; i<Jets.size(); i++){
+    pt = Jets[i].P4.Pt();
+    energy = Jets[i].P4.E();
+    if (iperm_jsyst==0);
+    if (iperm_jsyst==1) Jets[i].P4.SetPtEtaPhiE(pt*Jets[i].JEC_Up/energy, Jets[i].P4.Theta(), Jets[i].P4.Phi(), energy*Jets[i].JEC_Up/energy);
+    if (iperm_jsyst==2) Jets[i].P4.SetPtEtaPhiE(pt*Jets[i].JEC_Down/energy, Jets[i].P4.Theta(), Jets[i].P4.Phi(), energy*Jets[i].JEC_Down/energy);
+    if (iperm_jsyst==3) Jets[i].P4.SetPtEtaPhiE(pt*Jets[i].JER_Up/energy, Jets[i].P4.Theta(), Jets[i].P4.Phi(), energy*Jets[i].JER_Up/energy);
+    if (iperm_jsyst==4) Jets[i].P4.SetPtEtaPhiE(pt*Jets[i].JER_Down/energy, Jets[i].P4.Theta(), Jets[i].P4.Phi(), energy*Jets[i].JER_Down/energy);
+  }
+
 }
 
 void MultiLepton::FillTTHFullyLepHyp(MEPhaseSpace** meIntegrator)
