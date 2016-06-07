@@ -854,6 +854,10 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         is_3l_WZrel_CR    = false;
         is_3l_TTZ_CR      = false;
         is_Zl_CR          = false;
+	
+	flag_cat_2LSS = -1;
+	flag_cat_3L   = -1;
+	
 
         // ######################################
         // #  _        _                        #
@@ -1783,7 +1787,22 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
             && ( !pass_Zveto || met_ld < 0.2)         ) return;
 
     is_2lss_TTH_SR = true;   
-
+    
+    //if ( is_2lss_TTH_SR == true && nLooseBJets >= 2 && nMediumBJets < 2 ) flag_cat_2LSS += 0;
+    
+    if ( is_2lss_TTH_SR == true && nMediumBJets >= 2 )  flag_cat_2LSS += 1;
+    
+    if ( is_2lss_TTH_SR == true && vSelectedLeptons.at(0).id() == 11  && vSelectedLeptons.at(1).id() ==  11 )               flag_cat_2LSS += 10;
+    if ( is_2lss_TTH_SR == true && vSelectedLeptons.at(0).id() == -11 && vSelectedLeptons.at(1).id() == -11 )               flag_cat_2LSS += -10;
+    if ( is_2lss_TTH_SR == true && vSelectedLeptons.at(0).id() == 13  && vSelectedLeptons.at(1).id() ==  13 )               flag_cat_2LSS += 30;
+    if ( is_2lss_TTH_SR == true && vSelectedLeptons.at(0).id() == -13 && vSelectedLeptons.at(1).id() == -13 )               flag_cat_2LSS += -30;
+    if ( is_2lss_TTH_SR == true && (vSelectedLeptons.at(0).id() == -11 && vSelectedLeptons.at(1).id() == -13) || 
+                                   (vSelectedLeptons.at(0).id() == -13 && vSelectedLeptons.at(1).id() == -11) )             flag_cat_2LSS += -20;
+    if ( is_2lss_TTH_SR == true && (vSelectedLeptons.at(0).id() == 11  && vSelectedLeptons.at(1).id() == 13) || 
+                                   (vSelectedLeptons.at(0).id() == 13  && vSelectedLeptons.at(1).id() == 11) )              flag_cat_2LSS += 20;
+    if ( is_2lss_TTH_SR == true && ( abs(vSelectedLeptons.at(0).id()) == 15  || abs(vSelectedLeptons.at(1).id()) == 15 ))   flag_cat_2LSS += 40;
+  
+   
     // ####################################
     // #  ____  ____    ____  ____ _____  #
     // # |___ \|  _ \  | __ )|  _ \_   _| #
@@ -2445,7 +2464,9 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
 
     is_3l_TTH_SR = true;   
 
-
+    if ( is_3l_TTH_SR && nLooseBtag >= 2 && nMediumBJets <2 ) flag_cat_3L = 0;
+    if ( is_3l_TTH_SR && nMediumBJets >= 2 )                  flag_cat_3L = 1;
+ 
     // ####################################
     // #  ____  ____    ____  ____ _____  #
     // # |___ \|  _ \  | __ )|  _ \_   _| #
@@ -3312,6 +3333,9 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("is_3l_WZrel_CR",&is_3l_WZrel_CR,"is_3l_WZrel_CR/B");
     tOutput->Branch("is_3l_TTZ_CR",&is_3l_TTZ_CR,"is_3l_TTZ_CR/B");
     tOutput->Branch("is_Zl_CR",&is_Zl_CR,"is_Zl_CR/B");
+    
+    tOutput->Branch("flag_cat_2LSS",&flag_cat_2LSS,"flag_cat_2LSS/I");
+    tOutput->Branch("flag_cat_3L",&flag_cat_3L,"flag_cat_3L/I");
 
     tOutput->Branch("is_trigger",&is_trigger,"is_trigger/B");
 
