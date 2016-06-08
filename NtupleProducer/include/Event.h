@@ -40,11 +40,12 @@ class Event : public Base
         float weight_scale_muF2()           {return _weight_scale_muF2;};
         float weight_scale_muR0p5()         {return _weight_scale_muR0p5;};
         float weight_scale_muR2()           {return _weight_scale_muR2;};
+        std::vector<float> pdf_weights()    {return _pdf_weights;};
 
         float mc_weight()                   {return _mc_weight;};
         float mc_ptHat()                    {return _mc_ptHat;};
         int mc_pu_trueNumInt()              {return _mc_pu_trueNumInt;};
-
+  
         int ev_trigger_pass()               {return _trigger_pass;};
         int ev_trigger_pass_byname()        {return _trigger_pass_byname;};
         int ev_trigger_pass_byname_1()      {return _trigger_pass_byname_1;};
