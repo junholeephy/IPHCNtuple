@@ -690,6 +690,9 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         theHistoManager->fillHisto("NumberOfPrimaryVertex", "noSel", "", "",  pvn, 1);
 
 	mc_event = vEvent->at(0).id();
+        
+	weights_pdf.clear();
+        ids_pdf.clear();
 
         if ( !_isdata )
         {
@@ -702,6 +705,10 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 	    weight_scale_muF2 = vEvent->at(0).weight_scale_muF2();
 	    weight_scale_muR0p5 = vEvent->at(0).weight_scale_muR0p5();
 	    weight_scale_muR2 = vEvent->at(0).weight_scale_muR2();
+	    
+	    weights_pdf = vEvent->at(0).pdf_weights();
+            //ids_pdf = vEvent->at(0).pdf_ids();
+
         }
         else 
         {
@@ -4007,7 +4014,9 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("weight_scale_muR2",&weight_scale_muR2,"weight_scale_muR2/F");
     tOutput->Branch("weight_csv_down",&weight_csv_down,"weight_csv_down/F");
     tOutput->Branch("weight_csv_up",&weight_csv_up,"weight_csv_up/F");
-
+    tOutput->Branch("weights_pdf","std::vector<float>",&weights_pdf);
+    tOutput->Branch("ids_pdf","std::vector<float>",&ids_pdf);
+ 
     tOutput->Branch("PV_weight",&weight_PV,"PV_weight/F");
     tOutput->Branch("mc_3l_category",&mc_3l_category,"mc_3l_category/I");
     tOutput->Branch("mc_ttbar_decay",&mc_ttbar_decay,"mc_ttbar_decay/I");
