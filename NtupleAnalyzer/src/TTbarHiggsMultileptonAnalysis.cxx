@@ -3,6 +3,8 @@
 #include "SignalExtractionMVA.cxx"
 #include "Helper.cxx"
 #include "BTagging.cxx"
+#include "FakeRate.cxx"
+#include "ChargeFlip.cxx"
 
 #define kCat_3l_2b_2j 0
 #define kCat_3l_1b_2j 1
@@ -598,13 +600,24 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("Signal_3l_TT_MVA",                         "FinalCut",   "ttH3l",   "",  20,   -1,     1);
     theHistoManager->addHisto("Signal_3l_TTV_MVA",                        "FinalCut",   "ttH3l",   "",  20,   -1,     1);
 
+    // Loading weight files and creating corrsponding histograms
+
+    // b-tagging
     std::string inputFileHF = "/opt/sbg/scratch1/cms/TTH/weight/csv_rwt_fit_hf_76x_2016_02_08.root";
     std::string inputFileLF = "/opt/sbg/scratch1/cms/TTH/weight/csv_rwt_fit_lf_76x_2016_02_08.root";
-
     TFile* f_CSVwgt_HF = new TFile ((inputFileHF).c_str());
     TFile* f_CSVwgt_LF = new TFile ((inputFileLF).c_str());
-
     fillCSVhistos(f_CSVwgt_HF, f_CSVwgt_LF);
+
+    // charge flip
+    std::string inputFileQF = "/opt/sbg/scratch1/cms/TTH/weight/QF_data_el.root";
+    TFile * f_QFwgt    = new TFile ((inputFileQF).c_str());
+    fillQFhistos(f_QFwgt);
+
+    // fake rate
+    std::string inputFileFR = "/opt/sbg/scratch1/cms/TTH/weight/FR_data_ttH_mva.root";
+    TFile * f_FRwgt    = new TFile ((inputFileFR).c_str());
+    fillFRhistos(f_FRwgt);
 }
 
 
@@ -1026,12 +1039,12 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         {
 
             // version for 74x as in the AN...:
-            if( vJet->at(ijet).CSVv2() > 0.423 ) nLooseBJets++;
-            if( vJet->at(ijet).CSVv2() > 0.814 ) nMediumBJets++;
+            if( vJet->at(ijet).CSVv2() > 0.605 ) nLooseBJets++;
+            if( vJet->at(ijet).CSVv2() > 0.890  ) nMediumBJets++;
 
-            if(vJet->at(ijet).CSVv2() >= 0.423 ) vSelectedBTagJets.push_back(vJet->at(ijet));
+            if(vJet->at(ijet).CSVv2() >= 0.605 ) vSelectedBTagJets.push_back(vJet->at(ijet));
             else                                 vSelectedNonBTagJets.push_back(vJet->at(ijet));
-            if(vJet->at(ijet).CSVv2() >= 0.814 ) vSelectedMediumBTagJets.push_back(vJet->at(ijet));
+            if(vJet->at(ijet).CSVv2() >= 0.890 ) vSelectedMediumBTagJets.push_back(vJet->at(ijet));
 
             // to be updated for 76x ???
             //             if( vJet->at(ijet).CSVv2() > 0.460 ) nLooseBJets++;
