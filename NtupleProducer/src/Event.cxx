@@ -50,6 +50,7 @@ void Event::read(bool isdata)
         _mc_pu_trueNumInt    = ntP->mc_pu_trueNumInt;
 	
         _pdf_weights = *ntP->mc_pdfweights;
+	//_pdf_ids = *ntP->mc_pdfids;
 	
 	}
 
@@ -227,4 +228,5 @@ void Event::init()
     _disc_TT               = -888;
     
     _pdf_weights.clear();
+    //_pdf_ids.clear();
 }
