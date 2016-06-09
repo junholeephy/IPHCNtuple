@@ -32,6 +32,8 @@ struct Particle {
   float JEC_Down;
   float JER_Up;
   float JER_Down;
+  float pt_ref;
+  float energy_ref;
   TLorentzVector P4;
 };
 
@@ -393,25 +395,25 @@ void MultiLepton::SwitchJetsFromAllJets(int kMode){
 
 void MultiLepton::SwitchJetSyst(int iperm_jsyst){
 
-  float pt, energy;
+  //float pt, energy;
   for (unsigned int i=0; i<Bjets.size(); i++){
-    pt = Bjets[i].P4.Pt();
-    energy = Bjets[i].P4.E();
-    if (iperm_jsyst==0);
-    if (iperm_jsyst==1) Bjets[i].P4.SetPtEtaPhiE(pt*Bjets[i].JEC_Up/energy, Bjets[i].P4.Theta(), Bjets[i].P4.Phi(), energy*Bjets[i].JEC_Up/energy);
-    if (iperm_jsyst==2) Bjets[i].P4.SetPtEtaPhiE(pt*Bjets[i].JEC_Down/energy, Bjets[i].P4.Theta(), Bjets[i].P4.Phi(), energy*Bjets[i].JEC_Down/energy);
-    if (iperm_jsyst==3) Bjets[i].P4.SetPtEtaPhiE(pt*Bjets[i].JER_Up/energy, Bjets[i].P4.Theta(), Bjets[i].P4.Phi(), energy*Bjets[i].JER_Up/energy);
-    if (iperm_jsyst==4) Bjets[i].P4.SetPtEtaPhiE(pt*Bjets[i].JER_Down/energy, Bjets[i].P4.Theta(), Bjets[i].P4.Phi(), energy*Bjets[i].JER_Down/energy);
+    //pt = Bjets[i].P4.Pt();
+    //energy = Bjets[i].P4.E();
+    if (iperm_jsyst==0) { Bjets[i].pt_ref = Bjets[i].P4.Pt(); Bjets[i].energy_ref = Bjets[i].P4.E(); };
+    if (iperm_jsyst==1) Bjets[i].P4.SetPtEtaPhiE(Bjets[i].pt_ref*Bjets[i].JEC_Up/Bjets[i].energy_ref, Bjets[i].P4.Theta(), Bjets[i].P4.Phi(), Bjets[i].JEC_Up);
+    if (iperm_jsyst==2) Bjets[i].P4.SetPtEtaPhiE(Bjets[i].pt_ref*Bjets[i].JEC_Down/Bjets[i].energy_ref, Bjets[i].P4.Theta(), Bjets[i].P4.Phi(), Bjets[i].JEC_Down);
+    if (iperm_jsyst==3) Bjets[i].P4.SetPtEtaPhiE(Bjets[i].pt_ref*Bjets[i].JER_Up/Bjets[i].energy_ref, Bjets[i].P4.Theta(), Bjets[i].P4.Phi(), Bjets[i].JER_Up);
+    if (iperm_jsyst==4) Bjets[i].P4.SetPtEtaPhiE(Bjets[i].pt_ref*Bjets[i].JER_Down/Bjets[i].energy_ref, Bjets[i].P4.Theta(), Bjets[i].P4.Phi(), Bjets[i].JER_Down);
   }
 
   for (unsigned int i=0; i<Jets.size(); i++){
-    pt = Jets[i].P4.Pt();
-    energy = Jets[i].P4.E();
-    if (iperm_jsyst==0);
-    if (iperm_jsyst==1) Jets[i].P4.SetPtEtaPhiE(pt*Jets[i].JEC_Up/energy, Jets[i].P4.Theta(), Jets[i].P4.Phi(), energy*Jets[i].JEC_Up/energy);
-    if (iperm_jsyst==2) Jets[i].P4.SetPtEtaPhiE(pt*Jets[i].JEC_Down/energy, Jets[i].P4.Theta(), Jets[i].P4.Phi(), energy*Jets[i].JEC_Down/energy);
-    if (iperm_jsyst==3) Jets[i].P4.SetPtEtaPhiE(pt*Jets[i].JER_Up/energy, Jets[i].P4.Theta(), Jets[i].P4.Phi(), energy*Jets[i].JER_Up/energy);
-    if (iperm_jsyst==4) Jets[i].P4.SetPtEtaPhiE(pt*Jets[i].JER_Down/energy, Jets[i].P4.Theta(), Jets[i].P4.Phi(), energy*Jets[i].JER_Down/energy);
+    //pt = Jets[i].P4.Pt();
+    //energy = Jets[i].P4.E();
+    if (iperm_jsyst==0) { Jets[i].pt_ref = Jets[i].P4.Pt(); Jets[i].energy_ref = Jets[i].P4.E();};
+    if (iperm_jsyst==1) Jets[i].P4.SetPtEtaPhiE(Jets[i].pt_ref*Jets[i].JEC_Up/Bjets[i].energy_ref, Jets[i].P4.Theta(), Jets[i].P4.Phi(), Jets[i].JEC_Up);
+    if (iperm_jsyst==2) Jets[i].P4.SetPtEtaPhiE(Jets[i].pt_ref*Jets[i].JEC_Down/Bjets[i].energy_ref, Jets[i].P4.Theta(), Jets[i].P4.Phi(), Jets[i].JEC_Down);
+    if (iperm_jsyst==3) Jets[i].P4.SetPtEtaPhiE(Jets[i].pt_ref*Jets[i].JER_Up/Bjets[i].energy_ref, Jets[i].P4.Theta(), Jets[i].P4.Phi(), Jets[i].JER_Up);
+    if (iperm_jsyst==4) Jets[i].P4.SetPtEtaPhiE(Jets[i].pt_ref*Jets[i].JER_Down/Bjets[i].energy_ref, Jets[i].P4.Theta(), Jets[i].P4.Phi(), Jets[i].JER_Down);
   }
 
 }
