@@ -41,6 +41,7 @@ class Event : public Base
         float weight_scale_muR0p5()         {return _weight_scale_muR0p5;};
         float weight_scale_muR2()           {return _weight_scale_muR2;};
         std::vector<float> pdf_weights()    {return _pdf_weights;};
+        //std::vector<std::string> pdf_ids()  {return _pdf_ids;};
 
         float mc_weight()                   {return _mc_weight;};
         float mc_ptHat()                    {return _mc_ptHat;};
@@ -88,6 +89,7 @@ class Event : public Base
         float _weight_scale_muR2;
 	
         std::vector<float> _pdf_weights;
+        //std::vector<std::string> _pdf_ids;
 
         float _mc_weight;
         float _mc_ptHat;
