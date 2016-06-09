@@ -2186,6 +2186,25 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFlips
 
     // ##################################################################################################################################
 
+    // ###########################
+    // # charge flip reweighting #
+    // ###########################
+
+    std::vector<double> leptonsPts;
+    std::vector<double> leptonsEtas;
+    double wgt_QF_def;
+
+    for(int i=0; i<vSelectedLeptons.size(); i++)
+    {
+        leptonsPts.push_back(     vSelectedLeptons.at(i).pt()                );
+        leptonsEtas.push_back(    vSelectedLeptons.at(i).eta()               );
+    }
+
+    wgt_QF_def = get_QF_wgt_2l(leptonsPts, leptonsEtas);
+    new_weight = weight * wgt_QF_def; // weight = weight * wgt_csv_def;
+
+    // ##################################################################################################################################
+
     if(  (abs(vSelectedLeptons.at(0).id()) == 11)
             && (abs(vSelectedLeptons.at(1).id()) == 11)
             && (pass_Zveto                            )
@@ -4837,7 +4856,7 @@ void TTbarHiggsMultileptonAnalysis::selectBjets(std::string BjetSel, int* ibsel1
     if (BjetSel=="HighestBtagDiscrim"){
         float btag_max=-999, btag_max2=-999;
         for (unsigned int ib=0; ib<vSelectedJets.size(); ib++){
-            if (doSelectOnlyBjets && (vSelectedJets.at(ib).CSVv2()<0.423)) continue;
+            if (doSelectOnlyBjets && (vSelectedJets.at(ib).CSVv2()<0.605)) continue;
             if (vSelectedJets.at(ib).CSVv2()>btag_max){
                 btag_max2 = btag_max;
                 ib2 = ib1;
