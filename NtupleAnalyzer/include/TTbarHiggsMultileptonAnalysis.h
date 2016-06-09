@@ -35,12 +35,15 @@ class TTbarHiggsMultileptonAnalysis
         void writeHistograms();
 
         void TwoLeptonsSameSignSelection_TTH2l(int evt);
+        void TwoLeptonsSameSignSelection_ApplicationFakes(int evt);
+        void TwoLeptonsSameSignSelection_ApplicationFlips(int evt);
 
         void TwoLeptonsSameSignSelection_LepMVA_sideband(int evt);
         void TwoLeptonsSameSignSelection_JetMultiplicity_sideband(int evt);
         void DiLeptonSelection_TT_CR(int evt);
 
         void ThreeLeptonSelection_TTH3l(int evt);
+        void ThreeLeptonSelection_ApplicationFakes(int evt);
 
         void ThreeLeptonSelection_CR_WZ(int evt);
         void ThreeLeptonSelection_CR_WZrelaxed(int evt);
@@ -78,11 +81,14 @@ class TTbarHiggsMultileptonAnalysis
         int nMediumBJets;
 
         bool is_2lss_TTH_SR;
+        bool is_2lss_AppFakes_SR;
+        bool is_2lss_AppFlips_SR;
         bool is_2lss_JM_SB;
         bool is_2lss_LepMVA_SB;
         bool is_emu_TT_CR;
 
         bool is_3l_TTH_SR;    // TTH 3l analysis
+        bool is_3l_AppFakes_SR;
         bool is_3l_WZ_CR;     // WZ CR w/ 3l (selected) or more, no b-jets, Z peak
         bool is_3l_WZrel_CR;  // WZ CR w/ 3l (loose) or more, no medium b-jets, Z peak
         bool is_3l_TTZ_CR;    // TTZ 3l analysis (for the future..)
