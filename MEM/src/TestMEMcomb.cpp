@@ -20,6 +20,7 @@
 #include "MultiLepton.h"
 #include "ReadGenFlatTree.h"
 #include "ConfigParser.h"
+#include "TestMEMcomb.h"
 
 #include <iostream>
 #include <ctime>
@@ -99,18 +100,9 @@ int main(int argc, char *argv[])
     cfgParser.LoadOptim(&doOptimTopHad, &doOptimTopLep, &doOptimHiggs, &doOptimW);
 
     HypIntegrator hypIntegrator;
-    //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFGaussian, kTFRecoilPtot, 10000, kOptimizeNone);
-    //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonB_GausRecoil, kTFRecoilmET, 10000, kOptimizeNone);
-    //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, kOptimizeNone);
-    //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, kOptimizeMw);
-    //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, doOptim);
-    //hypIntegrator.InitializeIntegrator(13000, kMadgraph, kTFHistoBnonBmET, kTFRecoilmET, 10000, &cfgParser);
     hypIntegrator.InitializeIntegrator(&cfgParser);
 
     int doMinimization = cfgParser.valDoMinimization;
-
-    //hypIntegrator.meIntegrator->SetVerbosity(2);
-    //hypIntegrator.meIntegrator->SetVerbosity(1);
 
     string JetChoice;
     cfgParser.LoadJetChoice(&JetChoice);
@@ -125,7 +117,10 @@ int main(int argc, char *argv[])
     bool doPermutationBjet = true;
     bool doPermutationJetSyst = false;
 
+    int stage = 0;
+
     IntegrationResult res;
+    IntegrationResult res_syst[4];
     IntegrationResult resMinimized;
 
     tree.InitializeMEMRun(InputFileName);
@@ -402,7 +397,7 @@ int main(int argc, char *argv[])
 
    int iperm=0;
    for (int ih=0; ih<nhyp; ih++){
-     hypIntegrator.SetupIntegrationHypothesis(hyp[ih], multiLepton.kCatJets, 0, nPointsHyp[ih]);
+     hypIntegrator.SetupIntegrationHypothesis(hyp[ih], multiLepton.kCatJets, nPointsHyp[ih]);
 
      if (doMinimization) hypIntegrator.SetupMinimizerHypothesis(hyp[ih], multiLepton.kCatJets, 0, nPointsHyp[ih]);
 
@@ -489,9 +484,12 @@ int main(int argc, char *argv[])
 		 resMinimized.weight = exp(-kinresweightmin);
 		 cout << "KIN FINAL Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" max=" << resMinimized.weight<<" Time(s)="<<res.time<<endl;
 	       }
-	        
+	       
+	       stage = 0; 
 	       hypIntegrator.meIntegrator->weight_max = 0;
-               res = hypIntegrator.DoIntegration(multiLepton.xL, multiLepton.xU); 
+	       multiLepton.SwitchJetSyst(0);
+
+               res = hypIntegrator.DoIntegration(multiLepton.xL, multiLepton.xU, stage); 
                cout << "MEM Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" Cross section (pb) : " << res.weight<< " +/- "<< res.err<<" chi2/ndof="<< res.chi2<<" Time(s)="<<res.time<<endl;
 	       cout << "KIN from MEM Hyp "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" max=" << hypIntegrator.meIntegrator->weight_max<<" Time(s)="<<res.time<<endl;
 
@@ -529,7 +527,16 @@ int main(int argc, char *argv[])
                  kinweight_maxint[index[ih]] = hypIntegrator.meIntegrator->weight_max;
                  weight_kinmaxint[index[ih]] = res.weight;
                }
-
+/*
+               stage = 0;
+               for (int iSyst=1; iSyst<5; iSyst++){
+		 hypIntegrator.SetupIntegrationHypothesis(hyp[ih], multiLepton.kCatJets, nPointsHyp[ih]);
+                 multiLepton.SwitchJetSyst(iSyst);
+		 multiLepton.FillParticlesHypothesis(hyp[ih], &hypIntegrator.meIntegrator);
+                 res_syst[iSyst-1] = hypIntegrator.DoIntegration(multiLepton.xL, multiLepton.xU, stage);
+		 cout << "MEM Hyp, SYST"<< iSyst-1<<" "<< shyp[ih]<<" Vegas Ncall="<<nPointsHyp[ih] <<" Cross section (pb) : " << res_syst[iSyst-1].weight<< " +/- "<< res_syst[iSyst-1].err<<" chi2/ndof="<< res_syst[iSyst-1].chi2<<" Time(s)="<<res_syst[iSyst-1].time<<endl;
+               }
+*/
 	       if (shyp[ih]=="TTLL"){ 
   		 tree.mc_mem_ttz_weight += res.weight / xsTTLL;
 		 if (res.weight>0) tree.mc_mem_ttz_weight_logmean += log(res.weight / xsTTLL);
@@ -545,6 +552,7 @@ int main(int argc, char *argv[])
 		    tree.MEAllWeights_TTLL_log->push_back(log(1e-300));
 		 }
 	       }
+
                if (shyp[ih]=="TTHfl"){
 	         tree.mc_mem_tthfl_weight += res.weight / xsTTH;
 	         if (res.weight>0) tree.mc_mem_tthfl_weight_logmean += log(res.weight / xsTTH);

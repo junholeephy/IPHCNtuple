@@ -87,7 +87,7 @@ class ReadGenFlatTree {
   std::vector<float>* genJet_phi;
   std::vector<float>* genJet_E;
 
-  Int_t nJet25_Recl;
+  Float_t nJet25_Recl;
   Float_t max_Lep_eta, MT_met_lep1, mindr_lep1_jet, mindr_lep2_jet, LepGood_conePt0, LepGood_conePt1;
   Float_t signal_2lss_TT_MVA;
   Float_t signal_2lss_TTV_MVA;
@@ -1580,7 +1580,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_ttvjj_tth_likelihood_max",&mc_mem_ttvjj_tth_likelihood_max,"mc_mem_ttvjj_tth_likelihood_max/D");
   tOutput->Branch("mc_mem_ttvjj_tth_likelihood_avg",&mc_mem_ttvjj_tth_likelihood_avg,"mc_mem_ttvjj_tth_likelihood_avg/D");
 
-  tOutput->Branch("nJet25_Recl",&nJet25_Recl,"nJet25_Recl/I");
+  tOutput->Branch("nJet25_Recl",&nJet25_Recl,"nJet25_Recl/F");
   tOutput->Branch("max_Lep_eta",&max_Lep_eta,"max_Lep_eta/F");
   tOutput->Branch("MT_met_lep1",&MT_met_lep1,"MT_met_lep1/F");
   tOutput->Branch("mindr_lep1_jet",&mindr_lep1_jet,"mindr_lep1_jet/F");

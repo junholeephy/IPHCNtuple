@@ -51,8 +51,8 @@ class HypIntegrator
   void InitializeIntegrator(ConfigParser*);
   void SetNCalls(int);
   void ResetCounters();
-  void SetupIntegrationHypothesis(int, int, int, int);
-  IntegrationResult DoIntegration(double* , double*);
+  void SetupIntegrationHypothesis(int, int, int);
+  IntegrationResult DoIntegration(double* , double*, int);
   void FillErrHist(TH1F**);
 
   void SetupMinimizerHypothesis(int , int , int , int );
@@ -113,7 +113,7 @@ void HypIntegrator::SetNCalls(int nPoints)
   return;
 }
 
-void HypIntegrator::SetupIntegrationHypothesis(int kMode, int kCat, int stageValue, int nPoints){
+void HypIntegrator::SetupIntegrationHypothesis(int kMode, int kCat, int nPoints){
 
   meIntegrator->SetIntegrationMode(kMode);
 
@@ -122,10 +122,13 @@ void HypIntegrator::SetupIntegrationHypothesis(int kMode, int kCat, int stageVal
   ROOT::Math::Functor* FunctorHyp = NULL;
   FunctorHyp = toIntegrate[nparam];
 
+  //ig2 = new ROOT::Math::GSLMCIntegrator( ROOT::Math::IntegrationMultiDim::kVEGAS, 1.e-12, 1.e-5, intPoints);
+  //param = new ROOT::Math::VegasParameters( *(ig2->ExtraOptions()) );
+
   ig2->SetFunction(*FunctorHyp);
 
-  param->stage      = stageValue;
-  ig2->SetParameters(*param);
+  //param->stage      = stageValue;
+  //ig2->SetParameters(*param);
 
   nPointsCatHyp = nPoints;
   if (meIntegrator->iNleptons==3){
@@ -185,8 +188,11 @@ void HypIntegrator::ResetCounters(){
   return;
 }
 
-IntegrationResult HypIntegrator::DoIntegration(double* xL, double* xU)
+IntegrationResult HypIntegrator::DoIntegration(double* xL, double* xU, int stageValue)
 {
+
+  param->stage      = stageValue;
+  ig2->SetParameters(*param);
 
   ResetCounters();
   IntegrationResult res;
@@ -197,6 +203,9 @@ IntegrationResult HypIntegrator::DoIntegration(double* xL, double* xU)
   res.time = ( std::clock() - click1 ) / (double) CLOCKS_PER_SEC;
   res.err = ig2->Error();
   res.chi2 = ig2->ChiSqr();
+
+  //ig2->~GSLMCIntegrator();
+  //param->~VegasParameters();
 
   return res;
 }
