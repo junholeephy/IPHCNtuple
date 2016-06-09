@@ -27,6 +27,7 @@ class ReadGenFlatTree {
   Float_t weight;
   Float_t PV_weight;
   Float_t weight_scale_muF0p5, weight_scale_muF2, weight_scale_muR0p5, weight_scale_muR2;
+  Float_t weight_csv_down, weight_csv_up;
 
   Int_t mc_truth_h0_id;
   TLorentzVector* mc_truth_h0_p4;
@@ -101,6 +102,8 @@ class ReadGenFlatTree {
   TBranch* b_weight_scale_muF2;
   TBranch* b_weight_scale_muR0p5;
   TBranch* b_weight_scale_muR2;
+  TBranch* b_weight_csv_down;
+  TBranch* b_weight_csv_up;
 
   TBranch* b_mc_truth_h0_id;
   TBranch* b_mc_truth_h0_p4;
@@ -229,7 +232,7 @@ class ReadGenFlatTree {
   Char_t is_emu_TT_CR;
   Char_t is_Zl_CR;
   Char_t is_3l_TTZ_CR;
-
+  Char_t is_3l_WZrel_CR;
 
         Int_t multilepton_Lepton1_Id, multilepton_Lepton2_Id, multilepton_Lepton3_Id, multilepton_Lepton4_Id;
         TLorentzVector multilepton_Lepton1_P4, multilepton_Lepton2_P4, multilepton_Lepton3_P4, multilepton_Lepton4_P4;
@@ -645,6 +648,7 @@ class ReadGenFlatTree {
   TBranch* b_is_emu_TT_CR;
   TBranch* b_is_Zl_CR;
   TBranch* b_is_3l_TTZ_CR;
+  TBranch* b_is_3l_WZrel_CR;
   TBranch* b_mc_3l_category;
   TBranch* b_mc_ttbar_decay;
   TBranch* b_mc_boson_decay;
@@ -1043,6 +1047,8 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tInput->SetBranchAddress("weight_scale_muF2",&weight_scale_muF2,&b_weight_scale_muF2);
   tInput->SetBranchAddress("weight_scale_muR0p5",&weight_scale_muR0p5,&b_weight_scale_muR0p5);
   tInput->SetBranchAddress("weight_scale_muR2",&weight_scale_muR2,&b_weight_scale_muR2);
+  tInput->SetBranchAddress("weight_csv_down",&weight_csv_down,&b_weight_csv_down);
+  tInput->SetBranchAddress("weight_csv_up",&weight_csv_up,&b_weight_csv_up);
 
   tInput->SetBranchAddress("weight",&weight,&b_weight);
   tInput->SetBranchAddress("PV_weight",&PV_weight,&b_PV_weight);
@@ -1053,6 +1059,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tInput->SetBranchAddress("is_emu_TT_CR",&is_emu_TT_CR,&b_is_emu_TT_CR);
   tInput->SetBranchAddress("is_Zl_CR",&is_Zl_CR,&b_is_Zl_CR);
   tInput->SetBranchAddress("is_3l_TTZ_CR",&is_3l_TTZ_CR,&b_is_3l_TTZ_CR);
+  tInput->SetBranchAddress("is_3l_WZrel_CR ",&is_3l_WZrel_CR,&b_is_3l_WZrel_CR);
 
   tInput->SetBranchAddress("mc_3l_category",&mc_3l_category,&b_mc_3l_category);
   tInput->SetBranchAddress("mc_ttbar_decay",&mc_ttbar_decay,&b_mc_ttbar_decay);
@@ -1209,15 +1216,23 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
 
   tOutput->Branch("mc_event",&mc_event,"mc_event/I");
   tOutput->Branch("mc_weight",&mc_weight,"mc_weight/F");
+  tOutput->Branch("weight_scale_muF0p5",&weight_scale_muF0p5,"weight_scale_muF0p5/F");
+  tOutput->Branch("weight_scale_muF2",&weight_scale_muF2,"weight_scale_muF2/F");
+  tOutput->Branch("weight_scale_muR0p5",&weight_scale_muR0p5,"weight_scale_muR0p5/F");
+  tOutput->Branch("weight_scale_muR2",&weight_scale_muR2,"weight_scale_muR2/F");
+  tOutput->Branch("weight_csv_down",&weight_csv_down,"weight_csv_down/F");
+  tOutput->Branch("weight_csv_up",&weight_csv_up,"weight_csv_up/F");
+
   tOutput->Branch("weight",&weight,"weight/F");
   tOutput->Branch("PV_weight",&PV_weight,"PV_weight/F");
-  tOutput->Branch("catJets",&catJets,"catJets/I");
 
+  tOutput->Branch("catJets",&catJets,"catJets/I");
   tOutput->Branch("is_2lss_TTH_SR",&is_2lss_TTH_SR,"is_2lss_TTH_SR/B");
   tOutput->Branch("is_3l_TTH_SR",&is_3l_TTH_SR,"is_3l_TTH_SR/B");
   tOutput->Branch("is_emu_TT_CR",&is_emu_TT_CR,"is_emu_TT_CR/B");
   tOutput->Branch("is_Zl_CR",&is_Zl_CR,"is_Zl_CR/B");
   tOutput->Branch("is_3l_TTZ_CR",&is_3l_TTZ_CR,"is_3l_TTZ_CR/B");
+  tOutput->Branch("is_3l_WZrel_CR",&is_3l_WZrel_CR,"is_3l_WZrel_CR/B");
 
   tOutput->Branch("mc_3l_category",&mc_3l_category,"mc_3l_category/I");
   tOutput->Branch("mc_ttbar_decay",&mc_ttbar_decay,"mc_ttbar_decay/I");

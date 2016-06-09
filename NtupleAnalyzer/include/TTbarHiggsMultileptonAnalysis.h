@@ -155,6 +155,9 @@ class TTbarHiggsMultileptonAnalysis
         Double_t multilepton_mETcov10;
         Double_t multilepton_mETcov11;
 
+	int flag_cat_2LSS; // +-10 (+-mumu b-loose), +-11 (+-mumu b-tight), +-20 (+-emu b-loose), +-21 (+-emu b-tight), +-30 (+-ee), 40 (ltau)
+	int flag_cat_3L; // 0 (b-loose), 1 (b-tight)
+
     private:
 
         HistoManager * theHistoManager;
