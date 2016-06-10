@@ -267,6 +267,10 @@ int main(int argc, char *argv[])
       tree.mc_kin_ttz_weight_logmaxint = 0;
       tree.mc_mem_ttz_weight_kinmax = 0;
       tree.mc_mem_ttz_weight_kinmaxint = 0;
+      tree.mc_mem_ttz_weight_JEC_up = 0;
+      tree.mc_mem_ttz_weight_JEC_down = 0;
+      tree.mc_mem_ttz_weight_JER_up = 0;
+      tree.mc_mem_ttz_weight_JER_down = 0;
 
       tree.mc_mem_ttw_weight_logmean = 0;
       tree.mc_mem_ttw_weight_log = 0;
@@ -280,6 +284,10 @@ int main(int argc, char *argv[])
       tree.mc_kin_ttw_weight_logmaxint = 0;
       tree.mc_mem_ttw_weight_kinmax = 0;
       tree.mc_mem_ttw_weight_kinmaxint = 0;
+      tree.mc_mem_ttw_weight_JEC_up = 0;
+      tree.mc_mem_ttw_weight_JEC_down = 0;
+      tree.mc_mem_ttw_weight_JER_up = 0;
+      tree.mc_mem_ttw_weight_JER_down = 0;
 
       tree.mc_mem_ttwjj_weight_logmean = 0;
       tree.mc_mem_ttwjj_weight_log = 0;
@@ -293,6 +301,10 @@ int main(int argc, char *argv[])
       tree.mc_kin_ttwjj_weight_logmaxint = 0;
       tree.mc_mem_ttwjj_weight_kinmax = 0;
       tree.mc_mem_ttwjj_weight_kinmaxint = 0;
+      tree.mc_mem_ttwjj_weight_JEC_up = 0;
+      tree.mc_mem_ttwjj_weight_JEC_down = 0;
+      tree.mc_mem_ttwjj_weight_JER_up = 0;
+      tree.mc_mem_ttwjj_weight_JER_down = 0;
 
       tree.mc_mem_tthfl_weight_logmean = 0;
       tree.mc_mem_tthfl_weight_log = 0;
@@ -306,6 +318,10 @@ int main(int argc, char *argv[])
       tree.mc_kin_tthfl_weight_logmaxint = 0;
       tree.mc_mem_tthfl_weight_kinmax = 0;
       tree.mc_mem_tthfl_weight_kinmaxint = 0;
+      tree.mc_mem_tthfl_weight_JEC_up = 0;
+      tree.mc_mem_tthfl_weight_JEC_down = 0;
+      tree.mc_mem_tthfl_weight_JER_up = 0;
+      tree.mc_mem_tthfl_weight_JER_down = 0;
 
       tree.mc_mem_tthsl_weight_logmean = 0;
       tree.mc_mem_tthsl_weight_log = 0;
@@ -319,6 +335,10 @@ int main(int argc, char *argv[])
       tree.mc_kin_tthsl_weight_logmaxint = 0;
       tree.mc_mem_tthsl_weight_kinmax = 0;
       tree.mc_mem_tthsl_weight_kinmaxint = 0;
+      tree.mc_mem_tthsl_weight_JEC_up = 0;
+      tree.mc_mem_tthsl_weight_JEC_down = 0;
+      tree.mc_mem_tthsl_weight_JER_up = 0;
+      tree.mc_mem_tthsl_weight_JER_down = 0;
 
       tree.mc_mem_tth_weight_logmean = 0;
       tree.mc_mem_tth_weight_log = 0;
@@ -332,6 +352,10 @@ int main(int argc, char *argv[])
       tree.mc_kin_tth_weight_logmaxint = 0;
       tree.mc_mem_tth_weight_kinmax = 0;
       tree.mc_mem_tth_weight_kinmaxint = 0;
+      tree.mc_mem_tth_weight_JEC_up = 0;
+      tree.mc_mem_tth_weight_JEC_down = 0;
+      tree.mc_mem_tth_weight_JER_up = 0;
+      tree.mc_mem_tth_weight_JER_down = 0;
 
       tree.mc_mem_ttbarfl_weight_logmean = 0;
       tree.mc_mem_ttbarfl_weight_log = 0;
@@ -345,6 +369,10 @@ int main(int argc, char *argv[])
       tree.mc_kin_ttbarfl_weight_logmaxint = 0;
       tree.mc_mem_ttbarfl_weight_kinmax = 0;
       tree.mc_mem_ttbarfl_weight_kinmaxint = 0;
+      tree.mc_mem_ttbarfl_weight_JEC_up = 0;
+      tree.mc_mem_ttbarfl_weight_JEC_down = 0;
+      tree.mc_mem_ttbarfl_weight_JER_up = 0;
+      tree.mc_mem_ttbarfl_weight_JER_down = 0;
 
       tree.mc_mem_ttbarsl_weight_logmean = 0;
       tree.mc_mem_ttbarsl_weight_log = 0;
@@ -358,6 +386,10 @@ int main(int argc, char *argv[])
       tree.mc_kin_ttbarsl_weight_logmaxint = 0;
       tree.mc_mem_ttbarsl_weight_kinmax = 0;
       tree.mc_mem_ttbarsl_weight_kinmaxint = 0;
+      tree.mc_mem_ttbarsl_weight_JEC_up = 0;
+      tree.mc_mem_ttbarsl_weight_JEC_down = 0;
+      tree.mc_mem_ttbarsl_weight_JER_up = 0;
+      tree.mc_mem_ttbarsl_weight_JER_down = 0;
 
       tree.mc_mem_ttbar_weight_logmean = 0;
       tree.mc_mem_ttbar_weight_log = 0;
@@ -371,6 +403,10 @@ int main(int argc, char *argv[])
       tree.mc_kin_ttbar_weight_logmaxint = 0;
       tree.mc_mem_ttbar_weight_kinmax = 0;
       tree.mc_mem_ttbar_weight_kinmaxint = 0;
+      tree.mc_mem_ttbar_weight_JEC_up = 0;
+      tree.mc_mem_ttbar_weight_JEC_down = 0;
+      tree.mc_mem_ttbar_weight_JER_up = 0;
+      tree.mc_mem_ttbar_weight_JER_down = 0;
 
       tree.MEAllWeights_TTLL->clear();
       tree.MEAllWeights_TTHfl->clear();
