@@ -8,12 +8,12 @@ if [[ ${jName} == "" ]]; then
   exit 1
 fi
 
-que="sbg_local"
+que="cms"
 
 export HOME=$(pwd)
 
-dout="/home-pbs/lebihan/someone/ttH_JEC3/ttH/NtupleProducer/test/"
-dout_f="/opt/sbg/scratch1/cms/lebihan/ntuples_JESJEC/"
+dout="/home-pbs/lebihan/someone/prod_ichep/ttH/NtupleProducer/test/"
+dout_f="/opt/sbg/scratch1/cms/lebihan/ntuples_prod_ichep/"
 
 echo "CMSSW_RELEASE_BASE" $CMSSW_RELEASE_BASE
 
