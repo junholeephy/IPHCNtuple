@@ -74,7 +74,7 @@ void Tree::Init(TChain *ch)
     pv_zError = 0;
     
     mc_pdfweights = 0;
-    //mc_pdfids = 0;
+    mc_pdfweightIds = 0;
 
     // ####################################
     // #   ____  _ _                      #
@@ -873,7 +873,7 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("mc_ptHat", &mc_ptHat, &b_mc_ptHat);
     fChain->SetBranchAddress("mc_weight", &mc_weight, &b_mc_weight); 
     fChain->SetBranchAddress("mc_pdfweights", &mc_pdfweights, &b_mc_pdfweights);
-    //fChain->SetBranchAddress("mc_pdfids", &mc_pdfids, &b_mc_pdfids);
+    fChain->SetBranchAddress("mc_pdfweightIds", &mc_pdfweightIds, &b_mc_pdfweightIds);
    
     fChain->SetBranchAddress("mc_pu_intime_NumInt", &mc_pu_intime_NumInt, &b_mc_pu_intime_NumInt);
     fChain->SetBranchAddress("mc_pu_trueNumInt", &mc_pu_trueNumInt, &b_mc_pu_trueNumInt);

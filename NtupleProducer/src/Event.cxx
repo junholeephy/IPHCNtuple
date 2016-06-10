@@ -37,6 +37,7 @@ void Event::read(bool isdata)
     _metNoHF_phi       = ntP->metNoHF_phi;
     _metNoHF_sumet     = ntP->metNoHF_sumet;
 
+
     if (!isdata)
     {
 
@@ -49,8 +50,9 @@ void Event::read(bool isdata)
         _mc_ptHat            = ntP->mc_ptHat;
         _mc_pu_trueNumInt    = ntP->mc_pu_trueNumInt;
 	
-        _pdf_weights = *ntP->mc_pdfweights;
-	//_pdf_ids = *ntP->mc_pdfids;
+        _pdf_weights = *ntP->mc_pdfweights;   
+
+	_pdf_ids = *ntP->mc_pdfweightIds;    
 	
 	}
 
@@ -62,7 +64,7 @@ void Event::read(bool isdata)
         //{
         //    std::cout << "Trigger [" << i << "]: " << ntP->trigger_name->at(i) << std::endl;
         //}
-
+ 
         int trigger_comb        = 0;
 
         if( ntP->trigger_pass->at(19) == 1) {trigger_comb = trigger_comb + 1   ;} // [19]  HLT_Mu17_Mu8_DZ_v1
@@ -132,6 +134,7 @@ void Event::read(bool isdata)
 
         int trigger_pass_byname_1      = 0; 
         int trigger_pass_byname_1_noDz = 0;
+
 
         for( int i = 0; i < ntP->trigger->size(); i++)
         {
@@ -228,5 +231,5 @@ void Event::init()
     _disc_TT               = -888;
     
     _pdf_weights.clear();
-    //_pdf_ids.clear();
+    _pdf_ids.clear();
 }
