@@ -69,8 +69,8 @@ class Tree {
         Float_t         mc_scale;
         Float_t         mc_ptHat;
         Float_t         mc_weight;
-        vector<float>   *mc_pdfweights;
-        //vector<std::string>   *mc_pdfids;
+        vector<float>       *mc_pdfweights;
+        vector<std::string> *mc_pdfweightIds;
 
 
 	// ####################################
@@ -939,7 +939,7 @@ class Tree {
         TBranch        *b_mc_scale;   //!
         TBranch        *b_mc_ptHat;   //!
         TBranch        *b_mc_pdfweights;  //!
-        //TBranch        *b_mc_pdfids;  //!
+        TBranch        *b_mc_pdfweightIds;  //!
 
 	// ####################################
         // #   ____  _ _                      #
