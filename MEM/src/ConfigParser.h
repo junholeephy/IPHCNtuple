@@ -37,6 +37,7 @@ class ConfigParser
   int valVerbosity;
   int valTFChoice, valTFOption;
   int valDoMinimization;
+  int nJetSyst;
 
   void ReadOptionValue(string*, int*);
   void ReadOptionValue(string*, double*);
@@ -82,6 +83,7 @@ void ConfigParser::GetConfigFromFile(string InputFile){
   ReadOptionValue(&option, &valOptimHiggs);
   ReadOptionValue(&option, &valOptimW);
   ReadOptionValue(&option, &valDoMinimization);
+  ReadOptionValue(&option, &nJetSyst);
 
   getline(fconf, line);
   getline(fconf, line);

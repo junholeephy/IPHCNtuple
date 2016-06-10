@@ -318,6 +318,7 @@ class ReadGenFlatTree {
   TLorentzVector* multilepton_Ptot_ptr;
 
   Double_t mc_mem_tthfl_weight;
+  Double_t mc_mem_tthfl_weight_JEC_up, mc_mem_tthfl_weight_JEC_down, mc_mem_tthfl_weight_JER_up, mc_mem_tthfl_weight_JER_down;
   Double_t mc_mem_tthfl_weight_log;
   Double_t mc_mem_tthfl_weight_err;
   Float_t mc_mem_tthfl_weight_chi2;
@@ -372,6 +373,7 @@ class ReadGenFlatTree {
   Float_t mc_kin_tthfl_h2l2nu_Neut2energy;
 
   Double_t mc_mem_tthsl_weight;
+  Double_t mc_mem_tthsl_weight_JEC_up, mc_mem_tthsl_weight_JEC_down, mc_mem_tthsl_weight_JER_up, mc_mem_tthsl_weight_JER_down;
   Double_t mc_mem_tthsl_weight_log;
   Double_t mc_mem_tthsl_weight_err;
   Float_t mc_mem_tthsl_weight_chi2;
@@ -427,6 +429,7 @@ class ReadGenFlatTree {
   Float_t mc_kin_tthsl_hlnujj_Jet2energy;
 
   Double_t mc_mem_tth_weight;
+  Double_t mc_mem_tth_weight_JEC_up, mc_mem_tth_weight_JEC_down, mc_mem_tth_weight_JER_up, mc_mem_tth_weight_JER_down;
   Double_t mc_mem_tth_weight_log;
   Double_t mc_mem_tth_weight_err;
   Float_t mc_mem_tth_weight_chi2;
@@ -440,6 +443,7 @@ class ReadGenFlatTree {
   Double_t mc_mem_tth_weight_kinmaxint;
 
   Double_t mc_mem_ttz_weight;
+  Double_t mc_mem_ttz_weight_JEC_up, mc_mem_ttz_weight_JEC_down, mc_mem_ttz_weight_JER_up, mc_mem_ttz_weight_JER_down;
   Double_t mc_mem_ttz_weight_log;
   Double_t mc_mem_ttz_weight_err;
   Float_t mc_mem_ttz_weight_chi2;
@@ -487,6 +491,7 @@ class ReadGenFlatTree {
   Float_t mc_kin_ttz_zll_Zmass;
 
   Double_t mc_mem_ttw_weight;
+  Double_t mc_mem_ttw_weight_JEC_up, mc_mem_ttw_weight_JEC_down, mc_mem_ttw_weight_JER_up, mc_mem_ttw_weight_JER_down;
   Double_t mc_mem_ttw_weight_log;
   Double_t mc_mem_ttw_weight_err;
   Float_t mc_mem_ttw_weight_chi2;
@@ -535,6 +540,7 @@ class ReadGenFlatTree {
   Float_t mc_kin_ttw_wlnu_Neutenergy;
 
   Double_t mc_mem_ttwjj_weight;
+  Double_t mc_mem_ttwjj_weight_JEC_up, mc_mem_ttwjj_weight_JEC_down, mc_mem_ttwjj_weight_JER_up, mc_mem_ttwjj_weight_JER_down;
   Double_t mc_mem_ttwjj_weight_log;
   Double_t mc_mem_ttwjj_weight_err;
   Float_t mc_mem_ttwjj_weight_chi2;
@@ -548,6 +554,7 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttwjj_weight_kinmaxint;
 
   Double_t mc_mem_ttbarfl_weight;
+  Double_t mc_mem_ttbarfl_weight_JEC_up, mc_mem_ttbarfl_weight_JEC_down, mc_mem_ttbarfl_weight_JER_up, mc_mem_ttbarfl_weight_JER_down;
   Double_t mc_mem_ttbarfl_weight_log;
   Double_t mc_mem_ttbarfl_weight_err;
   Float_t mc_mem_ttbarfl_weight_chi2;
@@ -561,6 +568,7 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttbarfl_weight_kinmaxint;
 
   Double_t mc_mem_ttbarsl_weight;
+  Double_t mc_mem_ttbarsl_weight_JEC_up, mc_mem_ttbarsl_weight_JEC_down, mc_mem_ttbarsl_weight_JER_up, mc_mem_ttbarsl_weight_JER_down;
   Double_t mc_mem_ttbarsl_weight_log;
   Double_t mc_mem_ttbarsl_weight_err;
   Float_t mc_mem_ttbarsl_weight_chi2;
@@ -574,6 +582,7 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttbarsl_weight_kinmaxint;
 
   Double_t mc_mem_ttbar_weight;
+  Double_t mc_mem_ttbar_weight_JEC_up, mc_mem_ttbar_weight_JEC_down, mc_mem_ttbar_weight_JER_up, mc_mem_ttbar_weight_JER_down;
   Double_t mc_mem_ttbar_weight_log;
   Double_t mc_mem_ttbar_weight_err;
   Float_t mc_mem_ttbar_weight_chi2;
@@ -1282,6 +1291,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("multilepton_Ptot","TLorentzVector",&multilepton_Ptot);
 
   tOutput->Branch("mc_mem_tthfl_weight",&mc_mem_tthfl_weight,"mc_mem_tthfl_weight/D");
+  tOutput->Branch("mc_mem_tthfl_weight_JEC_up",&mc_mem_tthfl_weight_JEC_up,"mc_mem_tthfl_weight_JEC_up/D");
+  tOutput->Branch("mc_mem_tthfl_weight_JEC_down",&mc_mem_tthfl_weight_JEC_down,"mc_mem_tthfl_weight_JEC_down/D");
+  tOutput->Branch("mc_mem_tthfl_weight_JER_up",&mc_mem_tthfl_weight_JER_up,"mc_mem_tthfl_weight_JER_up/D");
+  tOutput->Branch("mc_mem_tthfl_weight_JER_down",&mc_mem_tthfl_weight_JER_down,"mc_mem_tthfl_weight_JER_down/D");
   tOutput->Branch("mc_mem_tthfl_weight_log",&mc_mem_tthfl_weight_log,"mc_mem_tthfl_weight_log/D");
   tOutput->Branch("mc_mem_tthfl_weight_err",&mc_mem_tthfl_weight_err,"mc_mem_tthfl_weight_err/D");
   tOutput->Branch("mc_mem_tthfl_weight_chi2",&mc_mem_tthfl_weight_chi2,"mc_mem_tthfl_weight_chi2/F");
@@ -1336,6 +1349,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_kin_tthfl_h2l2nu_Neut2energy",&mc_kin_tthfl_h2l2nu_Neut2energy,"mc_kin_tthfl_h2l2nu_Neut2energy/F");
 
   tOutput->Branch("mc_mem_tthsl_weight",&mc_mem_tthsl_weight,"mc_mem_tthsl_weight/D");
+  tOutput->Branch("mc_mem_tthsl_weight_JEC_up",&mc_mem_tthsl_weight_JEC_up,"mc_mem_tthsl_weight_JEC_up/D");
+  tOutput->Branch("mc_mem_tthsl_weight_JEC_down",&mc_mem_tthsl_weight_JEC_down,"mc_mem_tthsl_weight_JEC_down/D");
+  tOutput->Branch("mc_mem_tthsl_weight_JER_up",&mc_mem_tthsl_weight_JER_up,"mc_mem_tthsl_weight_JER_up/D");
+  tOutput->Branch("mc_mem_tthsl_weight_JER_down",&mc_mem_tthsl_weight_JER_down,"mc_mem_tthsl_weight_JER_down/D");
   tOutput->Branch("mc_mem_tthsl_weight_log",&mc_mem_tthsl_weight_log,"mc_mem_tthsl_weight_log/D");
   tOutput->Branch("mc_mem_tthsl_weight_err",&mc_mem_tthsl_weight_err,"mc_mem_tthsl_weight_err/D");
   tOutput->Branch("mc_mem_tthsl_weight_chi2",&mc_mem_tthsl_weight_chi2,"mc_mem_tthsl_weight_chi2/F");
@@ -1391,6 +1408,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_kin_tthsl_hlnujj_Jet2energy",&mc_kin_tthsl_hlnujj_Jet2energy,"mc_kin_tthsl_hlnujj_Jet2energy/F");
 
   tOutput->Branch("mc_mem_tth_weight",&mc_mem_tth_weight,"mc_mem_tth_weight/D");
+  tOutput->Branch("mc_mem_tth_weight_JEC_up",&mc_mem_tth_weight_JEC_up,"mc_mem_tth_weight_JEC_up/D");
+  tOutput->Branch("mc_mem_tth_weight_JEC_down",&mc_mem_tth_weight_JEC_down,"mc_mem_tth_weight_JEC_down/D");
+  tOutput->Branch("mc_mem_tth_weight_JER_up",&mc_mem_tth_weight_JER_up,"mc_mem_tth_weight_JER_up/D");
+  tOutput->Branch("mc_mem_tth_weight_JER_down",&mc_mem_tth_weight_JER_down,"mc_mem_tth_weight_JER_down/D");
   tOutput->Branch("mc_mem_tth_weight_log",&mc_mem_tth_weight_log,"mc_mem_tth_weight_log/D");
   tOutput->Branch("mc_mem_tth_weight_err",&mc_mem_tth_weight_err,"mc_mem_tth_weight_err/D");
   tOutput->Branch("mc_mem_tth_weight_chi2",&mc_mem_tth_weight_chi2,"mc_mem_tth_weight_chi2/F");
@@ -1404,6 +1425,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_kin_tth_weight_logmaxint",&mc_kin_tth_weight_logmaxint,"mc_kin_tth_weight_logmaxint/D");
 
   tOutput->Branch("mc_mem_ttz_weight",&mc_mem_ttz_weight,"mc_mem_ttz_weight/D");
+  tOutput->Branch("mc_mem_ttz_weight_JEC_up",&mc_mem_ttz_weight_JEC_up,"mc_mem_ttz_weight_JEC_up/D");
+  tOutput->Branch("mc_mem_ttz_weight_JEC_down",&mc_mem_ttz_weight_JEC_down,"mc_mem_ttz_weight_JEC_down/D");
+  tOutput->Branch("mc_mem_ttz_weight_JER_up",&mc_mem_ttz_weight_JER_up,"mc_mem_ttz_weight_JER_up/D");
+  tOutput->Branch("mc_mem_ttz_weight_JER_down",&mc_mem_ttz_weight_JER_down,"mc_mem_ttz_weight_JER_down/D");
   tOutput->Branch("mc_mem_ttz_weight_log",&mc_mem_ttz_weight_log,"mc_mem_ttz_weight_log/D");
   tOutput->Branch("mc_mem_ttz_weight_err",&mc_mem_ttz_weight_err,"mc_mem_ttz_weight_err/D");
   tOutput->Branch("mc_mem_ttz_weight_chi2",&mc_mem_ttz_weight_chi2,"mc_mem_ttz_weight_chi2/F");
@@ -1451,6 +1476,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_kin_ttz_zll_Zmass",&mc_kin_ttz_zll_Zmass,"mc_kin_ttz_zll_Zmass/F");
 
   tOutput->Branch("mc_mem_ttw_weight",&mc_mem_ttw_weight,"mc_mem_ttw_weight/D");
+  tOutput->Branch("mc_mem_ttw_weight_JEC_up",&mc_mem_ttw_weight_JEC_up,"mc_mem_ttw_weight_JEC_up/D");
+  tOutput->Branch("mc_mem_ttw_weight_JEC_down",&mc_mem_ttw_weight_JEC_down,"mc_mem_ttw_weight_JEC_down/D");
+  tOutput->Branch("mc_mem_ttw_weight_JER_up",&mc_mem_ttw_weight_JER_up,"mc_mem_ttw_weight_JER_up/D");
+  tOutput->Branch("mc_mem_ttw_weight_JER_down",&mc_mem_ttw_weight_JER_down,"mc_mem_ttw_weight_JER_down/D");
   tOutput->Branch("mc_mem_ttw_weight_log",&mc_mem_ttw_weight_log,"mc_mem_ttw_weight_log/D");
   tOutput->Branch("mc_mem_ttw_weight_err",&mc_mem_ttw_weight_err,"mc_mem_ttw_weight_err/D");
   tOutput->Branch("mc_mem_ttw_weight_chi2",&mc_mem_ttw_weight_chi2,"mc_mem_ttw_weight_chi2/F");
@@ -1499,6 +1528,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_kin_ttw_wlnu_Neutenergy",&mc_kin_ttw_wlnu_Neutenergy,"mc_kin_ttw_wlnu_Neutenergy/F");
 
   tOutput->Branch("mc_mem_ttwjj_weight",&mc_mem_ttwjj_weight,"mc_mem_ttwjj_weight/D");
+  tOutput->Branch("mc_mem_ttwjj_weight_JEC_up",&mc_mem_ttwjj_weight_JEC_up,"mc_mem_ttwjj_weight_JEC_up/D");
+  tOutput->Branch("mc_mem_ttwjj_weight_JEC_down",&mc_mem_ttwjj_weight_JEC_down,"mc_mem_ttwjj_weight_JEC_down/D");
+  tOutput->Branch("mc_mem_ttwjj_weight_JER_up",&mc_mem_ttwjj_weight_JER_up,"mc_mem_ttwjj_weight_JER_up/D");
+  tOutput->Branch("mc_mem_ttwjj_weight_JER_down",&mc_mem_ttwjj_weight_JER_down,"mc_mem_ttwjj_weight_JER_down/D");
   tOutput->Branch("mc_mem_ttwjj_weight_log",&mc_mem_ttwjj_weight_log,"mc_mem_ttwjj_weight_log/D");
   tOutput->Branch("mc_mem_ttwjj_weight_err",&mc_mem_ttwjj_weight_err,"mc_mem_ttwjj_weight_err/D");
   tOutput->Branch("mc_mem_ttwjj_weight_chi2",&mc_mem_ttwjj_weight_chi2,"mc_mem_ttwjj_weight_chi2/F");
@@ -1512,6 +1545,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_kin_ttwjj_weight_logmaxint",&mc_kin_ttwjj_weight_logmaxint,"mc_kin_ttwjj_weight_logmaxint/D");
 
   tOutput->Branch("mc_mem_ttbarfl_weight",&mc_mem_ttbarfl_weight,"mc_mem_ttbarfl_weight/D");
+  tOutput->Branch("mc_mem_ttbarfl_weight_JEC_up",&mc_mem_ttbarfl_weight_JEC_up,"mc_mem_ttbarfl_weight_JEC_up/D");
+  tOutput->Branch("mc_mem_ttbarfl_weight_JEC_down",&mc_mem_ttbarfl_weight_JEC_down,"mc_mem_ttbarfl_weight_JEC_down/D");
+  tOutput->Branch("mc_mem_ttbarfl_weight_JER_up",&mc_mem_ttbarfl_weight_JER_up,"mc_mem_ttbarfl_weight_JER_up/D");
+  tOutput->Branch("mc_mem_ttbarfl_weight_JER_down",&mc_mem_ttbarfl_weight_JER_down,"mc_mem_ttbarfl_weight_JER_down/D");
   tOutput->Branch("mc_mem_ttbarfl_weight_log",&mc_mem_ttbarfl_weight_log,"mc_mem_ttbarfl_weight_log/D");
   tOutput->Branch("mc_mem_ttbarfl_weight_err",&mc_mem_ttbarfl_weight_err,"mc_mem_ttbarfl_weight_err/D");
   tOutput->Branch("mc_mem_ttbarfl_weight_chi2",&mc_mem_ttbarfl_weight_chi2,"mc_mem_ttbarfl_weight_chi2/F");
@@ -1525,6 +1562,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_kin_ttbarfl_weight_logmaxint",&mc_kin_ttbarfl_weight_logmaxint,"mc_kin_ttbarfl_weight_logmaxint/D");
 
   tOutput->Branch("mc_mem_ttbarsl_weight",&mc_mem_ttbarsl_weight,"mc_mem_ttbarsl_weight/D");
+  tOutput->Branch("mc_mem_ttbarsl_weight_JEC_up",&mc_mem_ttbarsl_weight_JEC_up,"mc_mem_ttbarsl_weight_JEC_up/D");
+  tOutput->Branch("mc_mem_ttbarsl_weight_JEC_down",&mc_mem_ttbarsl_weight_JEC_down,"mc_mem_ttbarsl_weight_JEC_down/D");
+  tOutput->Branch("mc_mem_ttbarsl_weight_JER_up",&mc_mem_ttbarsl_weight_JER_up,"mc_mem_ttbarsl_weight_JER_up/D");
+  tOutput->Branch("mc_mem_ttbarsl_weight_JER_down",&mc_mem_ttbarsl_weight_JER_down,"mc_mem_ttbarsl_weight_JER_down/D");
   tOutput->Branch("mc_mem_ttbarsl_weight_log",&mc_mem_ttbarsl_weight_log,"mc_mem_ttbarsl_weight_log/D");
   tOutput->Branch("mc_mem_ttbarsl_weight_err",&mc_mem_ttbarsl_weight_err,"mc_mem_ttbarsl_weight_err/D");
   tOutput->Branch("mc_mem_ttbarsl_weight_chi2",&mc_mem_ttbarsl_weight_chi2,"mc_mem_ttbarsl_weight_chi2/F");
@@ -1538,6 +1579,10 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_kin_ttbarsl_weight_logmaxint",&mc_kin_ttbarsl_weight_logmaxint,"mc_kin_ttbarsl_weight_logmaxint/D");
 
   tOutput->Branch("mc_mem_ttbar_weight",&mc_mem_ttbar_weight,"mc_mem_ttbar_weight/D");
+  tOutput->Branch("mc_mem_ttbar_weight_JEC_up",&mc_mem_ttbar_weight_JEC_up,"mc_mem_ttbar_weight_JEC_up/D");
+  tOutput->Branch("mc_mem_ttbar_weight_JEC_down",&mc_mem_ttbar_weight_JEC_down,"mc_mem_ttbar_weight_JEC_down/D");
+  tOutput->Branch("mc_mem_ttbar_weight_JER_up",&mc_mem_ttbar_weight_JER_up,"mc_mem_ttbar_weight_JER_up/D");
+  tOutput->Branch("mc_mem_ttbar_weight_JER_down",&mc_mem_ttbar_weight_JER_down,"mc_mem_ttbar_weight_JER_down/D");
   tOutput->Branch("mc_mem_ttbar_weight_log",&mc_mem_ttbar_weight_log,"mc_mem_ttbar_weight_log/D");
   tOutput->Branch("mc_mem_ttbar_weight_err",&mc_mem_ttbar_weight_err,"mc_mem_ttbar_weight_err/D");
   tOutput->Branch("mc_mem_ttbar_weight_chi2",&mc_mem_ttbar_weight_chi2,"mc_mem_ttbar_weight_chi2/F");

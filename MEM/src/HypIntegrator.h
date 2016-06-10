@@ -52,7 +52,7 @@ class HypIntegrator
   void SetNCalls(int);
   void ResetCounters();
   void SetupIntegrationHypothesis(int, int, int);
-  IntegrationResult DoIntegration(double* , double*, int);
+  IntegrationResult DoIntegration(double* , double*, int, int);
   void FillErrHist(TH1F**);
 
   void SetupMinimizerHypothesis(int , int , int , int );
@@ -188,10 +188,11 @@ void HypIntegrator::ResetCounters(){
   return;
 }
 
-IntegrationResult HypIntegrator::DoIntegration(double* xL, double* xU, int stageValue)
+IntegrationResult HypIntegrator::DoIntegration(double* xL, double* xU, int stageValue, int iterationNumber)
 {
 
   param->stage      = stageValue;
+  param->iterations = iterationNumber;
   ig2->SetParameters(*param);
 
   ResetCounters();
