@@ -95,7 +95,14 @@ class TTbarHiggsMultileptonAnalysis
 
         bool is_Zl_CR;
 
+        bool is_ee, is_em, is_mm;
+
         bool is_trigger;
+
+        int stat_2lss_SR_ee, stat_2lss_lepMVA_SB_ee, stat_2lss_os_SB_ee,
+            stat_2lss_SR_em, stat_2lss_lepMVA_SB_em, stat_2lss_os_SB_em,
+            stat_2lss_SR_mm, stat_2lss_lepMVA_SB_mm, stat_2lss_os_SB_mm,
+            stat_3l_SR,      stat_3l_lepMVA_SB;
 
         virtual void     Init(TChain *tree);
         virtual void     Loop();
@@ -103,7 +110,7 @@ class TTbarHiggsMultileptonAnalysis
         void initializeOutputTree();
         void selectBjets(std::string, int*, int*, bool);
         void fillOutputTree();
-	void FillJetInfoOutputTree(int*, int, TLorentzVector*, TLorentzVector, float*, float, float*, float*, float, float*, float*, float, float, float);
+        void FillJetInfoOutputTree(int*, int, TLorentzVector*, TLorentzVector, float*, float, float*, float*, float, float*, float*, float, float, float);
 
         // needed to print info in LHCO text format (madweight)
         void InitLHCO(int process_MC, int process_RECO);
@@ -115,13 +122,21 @@ class TTbarHiggsMultileptonAnalysis
 
         TTree* tOutput;
         Int_t mc_event;
+
+        // all weights
         Float_t weight;
-        Float_t mc_weight;
-    	Float_t weight_scale_muF0p5, weight_scale_muF2, weight_scale_muR0p5, weight_scale_muR2; 
-	std::vector<Float_t> weights_pdf;
-	std::vector<std::string> ids_pdf;
+        Float_t mc_weight;                                                                           // weight MC
+        Float_t weight_PV;                                                                           // PU reweighting from PV distribution
+        Float_t weight_trigger;
+        Float_t weight_QF_ee;                                                                        // weight charge flip (only to 2lss where l=e)
+        Float_t weight_FR_2lss, weight_FR_3l;                                                        // weight fake rate (to 2lss and 3l)
+        Float_t weight_scale_muF0p5, weight_scale_muF2, weight_scale_muR0p5, weight_scale_muR2;
+        std::vector<Float_t> weights_pdf;
+        std::vector<std::string> ids_pdf;
+
         Float_t weight_csv_up, weight_csv_down;
-        Float_t weight_PV; // PU reweighting from PV distribution
+
+
         Int_t mc_3l_category, mc_ttbar_decay, mc_boson_decay, mc_ttZhypAllowed, mc_nJets25, mc_nBtagJets25, mc_nMediumBtagJets25, mc_nNonBtagJets25;
         Int_t catJets;
 
@@ -130,8 +145,8 @@ class TTbarHiggsMultileptonAnalysis
 
         Int_t multilepton_Bjet1_Id, multilepton_Bjet2_Id;
         TLorentzVector multilepton_Bjet1_P4, multilepton_Bjet2_P4;
-	    Float_t multilepton_Bjet1_CSV, multilepton_Bjet2_CSV;
-	    Float_t multilepton_Bjet1_JEC_Up, multilepton_Bjet1_JEC_Down, multilepton_Bjet2_JEC_Up, multilepton_Bjet2_JEC_Down;
+        Float_t multilepton_Bjet1_CSV, multilepton_Bjet2_CSV;
+        Float_t multilepton_Bjet1_JEC_Up, multilepton_Bjet1_JEC_Down, multilepton_Bjet2_JEC_Up, multilepton_Bjet2_JEC_Down;
         Float_t multilepton_Bjet1_JER_Up, multilepton_Bjet1_JER_Down, multilepton_Bjet2_JER_Up, multilepton_Bjet2_JER_Down;
 
         Int_t multilepton_JetHighestPt1_Id, multilepton_JetHighestPt2_Id, multilepton_JetClosestMw1_Id, multilepton_JetClosestMw2_Id, multilepton_JetLowestMjj1_Id, multilepton_JetLowestMjj2_Id;
@@ -151,14 +166,14 @@ class TTbarHiggsMultileptonAnalysis
         Float_t multilepton_JetHighestPt1_2ndPair_JER_Down, multilepton_JetHighestPt2_2ndPair_JER_Down, multilepton_JetClosestMw1_2ndPair_JER_Down, multilepton_JetClosestMw2_2ndPair_JER_Down, multilepton_JetLowestMjj1_2ndPair_JER_Down, multilepton_JetLowestMjj2_2ndPair_JER_Down;
 
         TLorentzVector multilepton_mET, multilepton_Ptot;
-	Float_t multilepton_mHT;
-	Double_t multilepton_mETcov00;
+        Float_t multilepton_mHT;
+        Double_t multilepton_mETcov00;
         Double_t multilepton_mETcov01;
         Double_t multilepton_mETcov10;
         Double_t multilepton_mETcov11;
 
-	int flag_cat_2LSS; // +-10 (+-mumu b-loose), +-11 (+-mumu b-tight), +-20 (+-emu b-loose), +-21 (+-emu b-tight), +-30 (+-ee), 40 (ltau)
-	int flag_cat_3L; // 0 (b-loose), 1 (b-tight)
+        int flag_cat_2LSS; // +-10 (+-mumu b-loose), +-11 (+-mumu b-tight), +-20 (+-emu b-loose), +-21 (+-emu b-tight), +-30 (+-ee), 40 (ltau)
+        int flag_cat_3L; // 0 (b-loose), 1 (b-tight)
 
     private:
 

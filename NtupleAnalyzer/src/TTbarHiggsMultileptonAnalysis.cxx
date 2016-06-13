@@ -618,6 +618,15 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     std::string inputFileFR = "/opt/sbg/scratch1/cms/TTH/weight/FR_data_ttH_mva.root";
     TFile * f_FRwgt    = new TFile ((inputFileFR).c_str());
     fillFRhistos(f_FRwgt);
+
+    // For synchronization
+    stat_2lss_SR_ee = 0; stat_2lss_lepMVA_SB_ee = 0; stat_2lss_os_SB_ee = 0;
+    stat_2lss_SR_em = 0; stat_2lss_lepMVA_SB_em = 0; stat_2lss_os_SB_em = 0;
+    stat_2lss_SR_mm = 0; stat_2lss_lepMVA_SB_mm = 0; stat_2lss_os_SB_mm = 0;
+    stat_3l_SR      = 0; stat_3l_lepMVA_SB      = 0;
+
+    is_ee = false; is_em = false; is_mm = false;
+
 }
 
 
@@ -684,6 +693,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         //if(jentry > 100000) break;
         nb = fChain->GetEntry(jentry);   nbytes += nb;
+
+        is_ee = false; is_em = false; is_mm = false;
 
         //
         int pvn = vEvent->at(0).pv_n();
@@ -878,8 +889,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         is_3l_TTZ_CR        = false;
         is_Zl_CR            = false;
 	
-	flag_cat_2LSS = -1;
-	flag_cat_3L   = -1;
+    	flag_cat_2LSS = -1;
+    	flag_cat_3L   = -1;
 	
         // ######################################
         // #  _        _                        #
@@ -1110,21 +1121,220 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         TwoLeptonsSameSignSelection_TTH2l(jentry);
         TwoLeptonsSameSignSelection_ApplicationFakes(jentry);
         TwoLeptonsSameSignSelection_ApplicationFlips(jentry);
-        TwoLeptonsSameSignSelection_LepMVA_sideband(jentry);
-        TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
+        //TwoLeptonsSameSignSelection_LepMVA_sideband(jentry);
+        //TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
         //DiLeptonSelection_TT_CR(jentry);
 
         ThreeLeptonSelection_TTH3l(jentry);
         ThreeLeptonSelection_ApplicationFakes(jentry);
         //ThreeLeptonSelection_CR_WZ(jentry);
-        ThreeLeptonSelection_CR_WZrelaxed(jentry);
+        //ThreeLeptonSelection_CR_WZrelaxed(jentry);
         //ThreeLeptonSelection_CR_Zl(jentry);
-        ThreeLeptonSelection_TTZ(jentry);
+        //ThreeLeptonSelection_TTZ(jentry);
 
         //std::cout <<is_CR_TTl<<" "<< is_Zl_CR <<" " << is_CR_WZ<<" " << is_TTH3l<< std::endl;
         //if (is_TTH3l==true ) std::cout <<"is_TTH3l" << std::endl;
         //if ( is_2lss_TTH_SR || is_3l_TTH_SR ) fillOutputTree();
-	if ( is_2lss_TTH_SR || is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR ) fillOutputTree();
+	    if ( is_2lss_TTH_SR || is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR ) fillOutputTree();
+
+        // #####################################################################################################
+        // #                             .__                        .__                __   .__                #
+        // #   _________.__. ____   ____ |  |_________  ____   ____ |__|____________ _/  |_ |__| ____   ____   #
+        // #  /  ___<   |  |/    \_/ ___\|  |  \_  __ \/  _ \ /    \|  \___   /\__  \\   __\|  |/  _ \ /    \  #
+        // #  \___ \ \___  |   |  \  \___|   Y  \  | \(  <_> )   |  \  |/    /  / __ \|  |  |  (  <_> )   |  \ #
+        // # /____  >/ ____|___|  /\___  >___|  /__|   \____/|___|  /__/_____ \(____  /__|  |__|\____/|___|  / #
+        // #      \/ \/         \/     \/     \/                  \/         \/     \/                     \/  #
+        // #                                                                                                   #
+        // #####################################################################################################
+
+        bool test_stat                        = false;
+        bool produce_table_2lss_SR_ee         = true;
+        bool produce_table_2lss_lepMVA_SB_ee  = false;
+        bool produce_table_2lss_os_SB_ee      = false;
+        bool produce_table_2lss_SR_em         = false;
+        bool produce_table_2lss_lepMVA_SB_em  = false;
+        bool produce_table_2lss_SR_mm         = false;
+        bool produce_table_2lss_lepMVA_SB_mm  = false;
+        bool produce_table_3l_SR              = false;
+        bool produce_table_3l_lepMVA_SB       = false;
+
+        if( test_stat)
+        {
+            std::cout << " stat_2lss_SR_ee        = " << stat_2lss_SR_ee         << std::endl;
+            std::cout << " stat_2lss_lepMVA_SB_ee = " << stat_2lss_lepMVA_SB_ee  << std::endl;
+            std::cout << " stat_2lss_os_SB_ee     = " << stat_2lss_os_SB_ee      << std::endl;
+            std::cout << " stat_2lss_SR_em        = " << stat_2lss_SR_em         << std::endl;
+            std::cout << " stat_2lss_lepMVA_SB_em = " << stat_2lss_lepMVA_SB_em  << std::endl;
+            std::cout << " stat_2lss_os_SB_em     = " << stat_2lss_os_SB_em      << std::endl;
+            std::cout << " stat_2lss_SR_mm        = " << stat_2lss_SR_mm         << std::endl;
+            std::cout << " stat_2lss_lepMVA_SB_mm = " << stat_2lss_lepMVA_SB_mm  << std::endl;
+            std::cout << " stat_2lss_os_SB_mm     = " << stat_2lss_os_SB_mm      << std::endl;
+            std::cout << " stat_3l_SR             = " << stat_3l_SR              << std::endl;
+            std::cout << " stat_3l_lepMVA_SB      = " << stat_3l_lepMVA_SB       << std::endl;
+        }
+
+        if(is_2lss_TTH_SR && is_ee && produce_table_2lss_SR_ee)
+        {
+            std::cout << vEvent->at(0).id()     << " " 
+                      << 1.                     << " " 
+                      << max_Lep_eta            << " "
+                      << nJet25_Recl            << " "
+                      << mindr_lep1_jet         << " "
+                      << mindr_lep2_jet         << " "
+                      << met                    << " "
+                      << avg_dr_jet             << " "
+                      << MT_met_lep1            << " "
+                      << LepGood_conePt0        << " "
+                      << LepGood_conePt1        << " "
+                      << signal_2lss_TT_MVA     << " "
+                      << signal_2lss_TTV_MVA    << " "
+                      << std::endl;
+        }
+
+        if(is_2lss_AppFakes_SR && is_ee && produce_table_2lss_lepMVA_SB_ee)
+        {
+            std::cout << vEvent->at(0).id()     << " "
+                      << weight_FR_2lss         << " "
+                      << max_Lep_eta            << " "
+                      << nJet25_Recl            << " "
+                      << mindr_lep1_jet         << " "
+                      << mindr_lep2_jet         << " "
+                      << met                    << " "
+                      << avg_dr_jet             << " "
+                      << MT_met_lep1            << " "
+                      << LepGood_conePt0        << " "
+                      << LepGood_conePt1        << " "
+                      << signal_2lss_TT_MVA     << " "
+                      << signal_2lss_TTV_MVA    << " "
+                      << std::endl;
+        }
+
+        if(is_2lss_AppFlips_SR && is_ee && produce_table_2lss_os_SB_ee)
+        {
+            std::cout << vEvent->at(0).id()     << " "
+                      << weight_QF_ee           << " "
+                      << max_Lep_eta            << " "
+                      << nJet25_Recl            << " "
+                      << mindr_lep1_jet         << " "
+                      << mindr_lep2_jet         << " "
+                      << met                    << " "
+                      << avg_dr_jet             << " "
+                      << MT_met_lep1            << " "
+                      << LepGood_conePt0        << " "
+                      << LepGood_conePt1        << " "
+                      << signal_2lss_TT_MVA     << " "
+                      << signal_2lss_TTV_MVA    << " "
+                      << std::endl;
+        }
+       
+        if(is_2lss_TTH_SR && is_em && produce_table_2lss_SR_em)
+        {
+            std::cout << vEvent->at(0).id()     << " "
+                      << 1.                     << " "
+                      << max_Lep_eta            << " "
+                      << nJet25_Recl            << " "
+                      << mindr_lep1_jet         << " "
+                      << mindr_lep2_jet         << " "
+                      << met                    << " "
+                      << avg_dr_jet             << " "
+                      << MT_met_lep1            << " "
+                      << LepGood_conePt0        << " "
+                      << LepGood_conePt1        << " "
+                      << signal_2lss_TT_MVA     << " "
+                      << signal_2lss_TTV_MVA    << " "
+                      << std::endl;
+        }
+
+        if(is_2lss_AppFakes_SR && is_em && produce_table_2lss_lepMVA_SB_em)
+        {
+            std::cout << vEvent->at(0).id()     << " "
+                      << weight_FR_2lss         << " "
+                      << max_Lep_eta            << " "
+                      << nJet25_Recl            << " "
+                      << mindr_lep1_jet         << " "
+                      << mindr_lep2_jet         << " "
+                      << met                    << " "
+                      << avg_dr_jet             << " "
+                      << MT_met_lep1            << " "
+                      << LepGood_conePt0        << " "
+                      << LepGood_conePt1        << " "
+                      << signal_2lss_TT_MVA     << " "
+                      << signal_2lss_TTV_MVA    << " "
+                      << std::endl;
+        }
+
+        if(is_2lss_TTH_SR && is_mm && produce_table_2lss_SR_mm)
+        {
+            std::cout << vEvent->at(0).id()     << " "
+                      << 1.                     << " "
+                      << max_Lep_eta            << " "
+                      << nJet25_Recl            << " "
+                      << mindr_lep1_jet         << " "
+                      << mindr_lep2_jet         << " "
+                      << met                    << " "
+                      << avg_dr_jet             << " "
+                      << MT_met_lep1            << " "
+                      << LepGood_conePt0        << " "
+                      << LepGood_conePt1        << " "
+                      << signal_2lss_TT_MVA     << " "
+                      << signal_2lss_TTV_MVA    << " "
+                      << std::endl;
+        }
+
+        if(is_2lss_AppFakes_SR && is_mm && produce_table_2lss_lepMVA_SB_mm)
+        {
+            std::cout << vEvent->at(0).id()     << " "
+                      << weight_FR_2lss         << " "
+                      << max_Lep_eta            << " "
+                      << nJet25_Recl            << " "
+                      << mindr_lep1_jet         << " "
+                      << mindr_lep2_jet         << " "
+                      << met                    << " "
+                      << avg_dr_jet             << " "
+                      << MT_met_lep1            << " "
+                      << LepGood_conePt0        << " "
+                      << LepGood_conePt1        << " "
+                      << signal_2lss_TT_MVA     << " "
+                      << signal_2lss_TTV_MVA    << " "
+                      << std::endl;
+        }
+
+        if(is_3l_TTH_SR && produce_table_3l_SR)
+        {
+            std::cout << vEvent->at(0).id()     << " "
+                      << 1.                     << " "
+                      << max_Lep_eta            << " "
+                      << nJet25_Recl            << " "
+                      << mindr_lep1_jet         << " "
+                      << mindr_lep2_jet         << " "
+                      << met                    << " "
+                      << avg_dr_jet             << " "
+                      << MT_met_lep1            << " "
+                      << LepGood_conePt0        << " "
+                      << LepGood_conePt1        << " "
+                      << signal_2lss_TT_MVA     << " "
+                      << signal_2lss_TTV_MVA    << " "
+                      << std::endl;
+        }
+
+        if(is_3l_AppFakes_SR && produce_table_3l_lepMVA_SB)
+        {
+            std::cout << vEvent->at(0).id()     << " "
+                      << weight_FR_3l           << " "
+                      << max_Lep_eta            << " "
+                      << nJet25_Recl            << " "
+                      << mindr_lep1_jet         << " "
+                      << mindr_lep2_jet         << " "
+                      << met                    << " "
+                      << avg_dr_jet             << " "
+                      << MT_met_lep1            << " "
+                      << LepGood_conePt0        << " "
+                      << LepGood_conePt1        << " "
+                      << signal_2lss_TT_MVA     << " "
+                      << signal_2lss_TTV_MVA    << " "
+                      << std::endl;
+        }
+
 
         // ########################################################################################################
         // #  __  __           _              _       _     _     _     _   _  ____ ___        _          __  __  #
@@ -1755,6 +1965,10 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
             && (met_ld                           > 0.2) // remaining conditions for ee       
       )
     {
+        is_ee = true;
+
+        stat_2lss_SR_ee = stat_2lss_SR_ee + 1;
+
         theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "ttH2lee",   "", 8                              , weight);
 
         theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "ttH2lee",   "", vSelectedLeptons.at(0).pt()    , weight);
@@ -1774,6 +1988,10 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
             && true                                      // remaining conditions for ee       
       )
     {
+        is_em = true;
+
+        stat_2lss_SR_em = stat_2lss_SR_em + 1;
+        
         theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "ttH2lem",   "", 8                              , weight);
 
         theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "ttH2lem",   "", vSelectedLeptons.at(0).pt()    , weight);
@@ -1793,6 +2011,10 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
             && true                                      // remaining conditions for ee       
       )
     {
+        is_mm = true;
+
+        stat_2lss_SR_mm = stat_2lss_SR_mm + 1;
+
         theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "ttH2lmm",   "", 8                              , weight);
 
         theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "ttH2lmm",   "", vSelectedLeptons.at(0).pt()    , weight);
@@ -1996,12 +2218,28 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFakes
 
     if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "LepMVA_2l_SB", _sampleName.Data(),   3, weight);
 
+    // ##################################################################################################################################
+
+    // #########################
+    // # fake rate reweighting #
+    // #########################
+
+
+
+
+
+    weight_FR_2lss = 1. ;
+
+    // ##################################################################################################################################
+
     if(  (abs(vInclusiveFakeLeptons.at(0).id()) == 11)
             && (abs(vInclusiveFakeLeptons.at(1).id()) == 11)
             && (pass_Zveto                            )
             && (met_ld                           > 0.2) // remaining conditions for ee       
       )
     {
+        stat_2lss_lepMVA_SB_ee = stat_2lss_lepMVA_SB_ee + 1;
+
         theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "LepMVA_2l_SB",   "", 8                              , weight);
 
         theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "LepMVA_2l_SB",   "", vInclusiveFakeLeptons.at(0).pt()    , weight);
@@ -2021,6 +2259,8 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFakes
             && true                                      // remaining conditions for ee       
       )
     {
+        stat_2lss_lepMVA_SB_em = stat_2lss_lepMVA_SB_em + 1;
+
         theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "LepMVA_2l_SB",   "", 8                              , weight);
 
         theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "LepMVA_2l_SB",   "", vInclusiveFakeLeptons.at(0).pt()    , weight);
@@ -2039,6 +2279,8 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFakes
             && true                                      // remaining conditions for ee       
       )
     {
+        stat_2lss_lepMVA_SB_mm = stat_2lss_lepMVA_SB_mm + 1;
+
         theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "LepMVA_2l_SB",   "", 8                              , weight);
 
         theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "LepMVA_2l_SB",   "", vInclusiveFakeLeptons.at(0).pt()    , weight);
@@ -2199,7 +2441,6 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFlips
 
     std::vector<double> leptonsPts;
     std::vector<double> leptonsEtas;
-    double wgt_QF_def;
 
     for(int i=0; i<vSelectedLeptons.size(); i++)
     {
@@ -2207,8 +2448,8 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFlips
         leptonsEtas.push_back(    vSelectedLeptons.at(i).eta()               );
     }
 
-    wgt_QF_def = get_QF_wgt_2l(leptonsPts, leptonsEtas);
-    new_weight = weight * wgt_QF_def; // weight = weight * wgt_csv_def;
+    weight_QF_ee = get_QF_wgt_2l(leptonsPts, leptonsEtas);
+    
 
     // ##################################################################################################################################
 
@@ -2218,6 +2459,8 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFlips
             && (met_ld                           > 0.2) // remaining conditions for ee       
       )
     {
+        stat_2lss_os_SB_ee = stat_2lss_os_SB_ee + 1;
+
         theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "ttH2lee",   "", 8                              , weight);
 
         theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "ttH2lee",   "", vSelectedLeptons.at(0).pt()    , weight);
@@ -2881,6 +3124,8 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
 
     // ##################################################################################################################################
 
+    stat_3l_SR = stat_3l_SR + 1;
+
     theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "ttH3l",   "", 8                              , weight);
 
     theHistoManager->fillHisto("LeadingLeptonPt",                  "FullThreeLeptons",   "ttH3l",   "", vSelectedLeptons.at(0).pt()    , weight);
@@ -3152,6 +3397,8 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_ApplicationFakes(int ev
     weight_csv_up   = max_weight_csv;
 
     // ##################################################################################################################################
+
+    stat_3l_lepMVA_SB = stat_3l_lepMVA_SB + 1;
 
     theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "ttH3l",   "", 8                              , weight);
 
