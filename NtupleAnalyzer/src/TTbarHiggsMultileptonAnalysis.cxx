@@ -1148,8 +1148,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // #####################################################################################################
 
         bool test_stat                        = false;
-        bool produce_table_2lss_SR_ee         = true;
-        bool produce_table_2lss_lepMVA_SB_ee  = false;
+        bool produce_table_2lss_SR_ee         = false;
+        bool produce_table_2lss_lepMVA_SB_ee  = true;
         bool produce_table_2lss_os_SB_ee      = false;
         bool produce_table_2lss_SR_em         = false;
         bool produce_table_2lss_lepMVA_SB_em  = false;
@@ -2224,11 +2224,18 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFakes
     // # fake rate reweighting #
     // #########################
 
+    std::vector<double> leptonsPts;
+    std::vector<double> leptonsEtas;
+    std::vector<int>    leptonsIds;
 
+    for(int i=0; i<vFakeLeptons.size(); i++)
+    {
+        leptonsPts.push_back(     vFakeLeptons.at(i).pt()                );
+        leptonsEtas.push_back(    vFakeLeptons.at(i).eta()               );
+        leptonsIds.push_back(     vFakeLeptons.at(i).id()                );
+    }
 
-
-
-    weight_FR_2lss = 1. ;
+    weight_FR_2lss = get_FR_wgt_2l(leptonsPts, leptonsEtas, leptonsIds);
 
     // ##################################################################################################################################
 
@@ -2238,6 +2245,8 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFakes
             && (met_ld                           > 0.2) // remaining conditions for ee       
       )
     {
+        is_ee = true;
+        
         stat_2lss_lepMVA_SB_ee = stat_2lss_lepMVA_SB_ee + 1;
 
         theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "LepMVA_2l_SB",   "", 8                              , weight);
@@ -2259,6 +2268,8 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFakes
             && true                                      // remaining conditions for ee       
       )
     {
+        is_em = true;
+
         stat_2lss_lepMVA_SB_em = stat_2lss_lepMVA_SB_em + 1;
 
         theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "LepMVA_2l_SB",   "", 8                              , weight);
@@ -2279,6 +2290,8 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFakes
             && true                                      // remaining conditions for ee       
       )
     {
+        is_mm = true;
+
         stat_2lss_lepMVA_SB_mm = stat_2lss_lepMVA_SB_mm + 1;
 
         theHistoManager->fillHisto("CutFlow",                          "FullThreeLeptons",   "LepMVA_2l_SB",   "", 8                              , weight);
