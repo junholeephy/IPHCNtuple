@@ -27,7 +27,7 @@ class TTbarHiggsMultileptonAnalysis
 
         TTbarHiggsMultileptonAnalysis();
         TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString sampleName, TString treeName,
-                TString outputFileName, bool isdata, float xsec, float lumi, int nowe, int nmax);
+                TString outputFileName, bool isdata, bool doSystCombine, float xsec, float lumi, int nowe, int nmax);
 
         ~TTbarHiggsMultileptonAnalysis();
 
@@ -178,13 +178,37 @@ class TTbarHiggsMultileptonAnalysis
     private:
 
         HistoManager * theHistoManager;
-
+	
+	//Combine
+        HistoManager * histoManager_2lss_mm_0tau_bl_neg;
+        HistoManager * histoManager_2lss_mm_0tau_bt_neg;
+        HistoManager * histoManager_2lss_ee_0tau_bl_neg;
+        HistoManager * histoManager_2lss_ee_0tau_bt_neg;
+        HistoManager * histoManager_2lss_em_0tau_bl_neg;
+        HistoManager * histoManager_2lss_em_0tau_bt_neg;
+        
+	HistoManager * histoManager_2lss_mm_0tau_bl_pos;
+        HistoManager * histoManager_2lss_mm_0tau_bt_pos;
+        HistoManager * histoManager_2lss_ee_0tau_bl_pos;
+        HistoManager * histoManager_2lss_ee_0tau_bt_pos;
+        HistoManager * histoManager_2lss_em_0tau_bl_pos;
+        HistoManager * histoManager_2lss_em_0tau_bt_pos;
+	
+        HistoManager * histoManager_3l_bl_neg;
+	HistoManager * histoManager_3l_bt_neg;
+	
+	HistoManager * histoManager_3l_bl_pos;
+	HistoManager * histoManager_3l_bt_pos;
+	
+	
         TFile * outputfile;
 
         TString _sampleName;
+	TString _process; // Needed for Combine
         TString _outputFileName;
 
-        bool _isdata;
+        bool _isdata; 
+	bool _doSystCombine;
         float _xsec;
         float _lumi;
         int   _nowe; // number of weighted events

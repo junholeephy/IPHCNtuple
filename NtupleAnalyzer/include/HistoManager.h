@@ -19,9 +19,11 @@ class HistoManager
    
    void addHisto(TString var, TString selstep, TString channel, TString sample, int nbins, float min, float max);
    void addHisto2D( TString var, TString selstep, TString channel, TString sample, int nbins1, float min1, float max1, int nbins2, float min2, float max2);
+   void addHisto(TString process, TString syst, int nbins, float min, float max);
    
    void fillHisto(TString var, TString selstep, TString channel, TString sample, float val, float weight);
    void fillHisto2D(TString var, TString selstep, TString channel, TString sample,float val1, float val2, float weight);
+   void fillHisto(TString process, TString syst, float val, float weight);
   
    void writeHisto();
 
@@ -34,6 +36,7 @@ class HistoManager
       
    TH1F* getHisto1D(TString var, TString selstep, TString channel, TString sample);
    void addHisto1D(TH1F* h1);
+   TH1F* getHisto1D(TString process, TString syst);
      
    TH2F* getHisto2D(TString var, TString selstep, TString channel, TString sample);
    void addHisto2D(TH2F* h2);
