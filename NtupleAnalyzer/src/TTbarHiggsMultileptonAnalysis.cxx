@@ -31,7 +31,8 @@ TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis()
 
 }
 
-TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString sampleName, TString treeName, TString outputFileName, bool isdata, float xsec, float lumi, int nowe, int nmax)
+TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree,
+TString sampleName, TString treeName, TString outputFileName, bool isdata, bool doSystCombine, float xsec, float lumi, int nowe, int nmax)
 {    
 
     //
@@ -42,6 +43,9 @@ TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileNa
     _nmax = nmax;
     _outputFileName = outputFileName;
     _sampleName = sampleName;
+    _process = "toto";
+    _doSystCombine = doSystCombine;
+    if (_isdata) _doSystCombine = false;
 
     //
     _printLHCO_MC = false;
@@ -69,7 +73,48 @@ TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileNa
     Init(tree);
 
     theHistoManager = new HistoManager();
+    
+    if (_doSystCombine)
+    {
+      histoManager_2lss_mm_0tau_bl_neg = new HistoManager();
+      histoManager_2lss_mm_0tau_bt_neg = new HistoManager();
+      histoManager_2lss_ee_0tau_bl_neg = new HistoManager();
+      histoManager_2lss_ee_0tau_bt_neg = new HistoManager();
+      histoManager_2lss_em_0tau_bl_neg = new HistoManager();
+      histoManager_2lss_em_0tau_bt_neg = new HistoManager();
+      
+      histoManager_2lss_mm_0tau_bl_pos = new HistoManager();
+      histoManager_2lss_mm_0tau_bt_pos = new HistoManager();
+      histoManager_2lss_ee_0tau_bl_pos = new HistoManager();
+      histoManager_2lss_ee_0tau_bt_pos = new HistoManager();
+      histoManager_2lss_em_0tau_bl_pos = new HistoManager();
+      histoManager_2lss_em_0tau_bt_pos = new HistoManager();
 
+      histoManager_3l_bl_neg = new HistoManager();
+      histoManager_3l_bt_neg = new HistoManager();
+      histoManager_3l_bl_pos = new HistoManager();
+      histoManager_3l_bt_pos = new HistoManager();
+     		  
+      histoManager_2lss_mm_0tau_bl_neg = new HistoManager();
+      histoManager_2lss_mm_0tau_bt_neg = new HistoManager();
+      histoManager_2lss_ee_0tau_bl_neg = new HistoManager();
+      histoManager_2lss_ee_0tau_bt_neg = new HistoManager();
+      histoManager_2lss_em_0tau_bl_neg = new HistoManager();
+      histoManager_2lss_em_0tau_bt_neg = new HistoManager();
+      
+      histoManager_2lss_mm_0tau_bl_pos = new HistoManager();
+      histoManager_2lss_mm_0tau_bt_pos = new HistoManager();
+      histoManager_2lss_ee_0tau_bl_pos = new HistoManager();
+      histoManager_2lss_ee_0tau_bt_pos = new HistoManager();
+      histoManager_2lss_em_0tau_bl_pos = new HistoManager();
+      histoManager_2lss_em_0tau_bt_pos = new HistoManager();
+
+      histoManager_3l_bl_neg = new HistoManager();
+      histoManager_3l_bt_neg = new HistoManager();
+      histoManager_3l_bl_pos = new HistoManager();
+      histoManager_3l_bt_pos = new HistoManager();
+    }
+      
     TString outputfileNameRoot = _outputFileName+".root";
     outputfile = new TFile(outputfileNameRoot.Data(), "recreate");  
 
@@ -599,7 +644,51 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("Signal_2lss_TTV_MVA",                      "FinalCut", "ttH2lss",   "",  20,   -1,     1);
     theHistoManager->addHisto("Signal_3l_TT_MVA",                         "FinalCut",   "ttH3l",   "",  20,   -1,     1);
     theHistoManager->addHisto("Signal_3l_TTV_MVA",                        "FinalCut",   "ttH3l",   "",  20,   -1,     1);
+    
+    
+    // "Unrolled" 2D MVAs for Combine   
+    
+    if (_doSystCombine)
+    {
+      histoManager_2lss_mm_0tau_bl_neg->addHisto(_process, "",6,0,7);
+      histoManager_2lss_mm_0tau_bt_neg->addHisto(_process, "",6,0,7);
+      histoManager_2lss_ee_0tau_bl_neg->addHisto(_process, "",6,0,7);
+      histoManager_2lss_ee_0tau_bt_neg->addHisto(_process, "",6,0,7);
+      histoManager_2lss_em_0tau_bl_neg->addHisto(_process, "",6,0,7);
+      histoManager_2lss_em_0tau_bt_neg->addHisto(_process, "",6,0,7);
+      
+      histoManager_2lss_mm_0tau_bl_pos->addHisto(_process, "",6,0,7);
+      histoManager_2lss_mm_0tau_bt_pos->addHisto(_process, "",6,0,7);
+      histoManager_2lss_ee_0tau_bl_pos->addHisto(_process, "",6,0,7);
+      histoManager_2lss_ee_0tau_bt_pos->addHisto(_process, "",6,0,7);
+      histoManager_2lss_em_0tau_bl_pos->addHisto(_process, "",6,0,7);
+      histoManager_2lss_em_0tau_bt_pos->addHisto(_process, "",6,0,7);
 
+      histoManager_3l_bl_neg->addHisto(_process, "",6,0,7);
+      histoManager_3l_bt_neg->addHisto(_process, "",6,0,7);
+      histoManager_3l_bl_pos->addHisto(_process, "",6,0,7);
+      histoManager_3l_bt_pos->addHisto(_process, "",6,0,7);
+   	  	  
+      histoManager_2lss_mm_0tau_bl_neg->addHisto(_process, "JES", 6,0,7);
+      histoManager_2lss_mm_0tau_bt_neg->addHisto(_process, "JES", 6,0,7);
+      histoManager_2lss_ee_0tau_bl_neg->addHisto(_process, "JES", 6,0,7);
+      histoManager_2lss_ee_0tau_bt_neg->addHisto(_process, "JES", 6,0,7);
+      histoManager_2lss_em_0tau_bl_neg->addHisto(_process, "JES", 6,0,7);
+      histoManager_2lss_em_0tau_bt_neg->addHisto(_process, "JES", 6,0,7);
+      
+      histoManager_2lss_mm_0tau_bl_pos->addHisto(_process, "JES", 6,0,7);
+      histoManager_2lss_mm_0tau_bt_pos->addHisto(_process, "JES", 6,0,7);
+      histoManager_2lss_ee_0tau_bl_pos->addHisto(_process, "JES", 6,0,7);
+      histoManager_2lss_ee_0tau_bt_pos->addHisto(_process, "JES", 6,0,7);
+      histoManager_2lss_em_0tau_bl_pos->addHisto(_process, "JES", 6,0,7);
+      histoManager_2lss_em_0tau_bt_pos->addHisto(_process, "JES", 6,0,7);
+
+      histoManager_3l_bl_neg->addHisto(_process, "JES", 6,0,7);
+      histoManager_3l_bt_neg->addHisto(_process, "JES", 6,0,7);
+      histoManager_3l_bl_pos->addHisto(_process, "JES", 6,0,7);
+      histoManager_3l_bt_pos->addHisto(_process, "JES", 6,0,7);
+    }
+	
     // Loading weight files and creating corrsponding histograms
 
     // b-tagging
@@ -639,8 +728,106 @@ void TTbarHiggsMultileptonAnalysis::writeHistograms()
 
     for(unsigned int i=0; i<the1DHisto.size(); i++)  the1DHisto[i]->Write();
     for(unsigned int i=0; i<the2DHisto.size(); i++)  the2DHisto[i]->Write();
-
+    
     tOutput->Write();
+    
+    //COMBINE
+    if (_doSystCombine)
+    { 
+      //
+      outputfile->mkdir("ttH_2lss_mm_0tau_bl_neg");
+      outputfile->cd("ttH_2lss_mm_0tau_bl_neg");
+      std::vector<TH1F*> h_2lss_mm_0tau_bl_neg = histoManager_2lss_mm_0tau_bl_neg->getHisto1D_list();
+      for(unsigned int i=0; i<h_2lss_mm_0tau_bl_neg.size(); i++)  h_2lss_mm_0tau_bl_neg[i]->Write();
+      
+      outputfile->cd();
+      outputfile->mkdir("ttH_2lss_mm_0tau_bt_neg");
+      outputfile->cd("ttH_2lss_mm_0tau_bt_neg");
+      std::vector<TH1F*> h_2lss_mm_0tau_bt_neg = histoManager_2lss_mm_0tau_bt_neg->getHisto1D_list();
+      for(unsigned int i=0; i<h_2lss_mm_0tau_bt_neg.size(); i++)  h_2lss_mm_0tau_bt_neg[i]->Write();
+      
+      outputfile->mkdir("ttH_2lss_ee_0tau_bl_neg");
+      outputfile->cd("ttH_2lss_ee_0tau_bl_neg");
+      std::vector<TH1F*> h_2lss_ee_0tau_bl_neg = histoManager_2lss_ee_0tau_bl_neg->getHisto1D_list();
+      for(unsigned int i=0; i<h_2lss_ee_0tau_bl_neg.size(); i++)  h_2lss_ee_0tau_bl_neg[i]->Write();
+      
+      outputfile->cd();
+      outputfile->mkdir("ttH_2lss_ee_0tau_bt_neg");
+      outputfile->cd("ttH_2lss_ee_0tau_bt_neg");
+      std::vector<TH1F*> h_2lss_ee_0tau_bt_neg = histoManager_2lss_ee_0tau_bt_neg->getHisto1D_list();
+      for(unsigned int i=0; i<h_2lss_ee_0tau_bt_neg.size(); i++)  h_2lss_ee_0tau_bt_neg[i]->Write();
+      
+      outputfile->mkdir("ttH_2lss_em_0tau_bl_neg");
+      outputfile->cd("ttH_2lss_em_0tau_bl_neg");
+      std::vector<TH1F*> h_2lss_em_0tau_bl_neg = histoManager_2lss_em_0tau_bl_neg->getHisto1D_list();
+      for(unsigned int i=0; i<h_2lss_em_0tau_bl_neg.size(); i++)  h_2lss_em_0tau_bl_neg[i]->Write();
+      
+      outputfile->cd();
+      outputfile->mkdir("ttH_2lss_em_0tau_bt_neg");
+      outputfile->cd("ttH_2lss_em_0tau_bt_neg");
+      std::vector<TH1F*> h_2lss_em_0tau_bt_neg = histoManager_2lss_em_0tau_bt_neg->getHisto1D_list();
+      for(unsigned int i=0; i<h_2lss_em_0tau_bt_neg.size(); i++)  h_2lss_em_0tau_bt_neg[i]->Write();
+      
+      //
+      outputfile->mkdir("ttH_2lss_mm_0tau_bl_pos");
+      outputfile->cd("ttH_2lss_mm_0tau_bl_pos");
+      std::vector<TH1F*> h_2lss_mm_0tau_bl_pos = histoManager_2lss_mm_0tau_bl_pos->getHisto1D_list();
+      for(unsigned int i=0; i<h_2lss_mm_0tau_bl_pos.size(); i++)  h_2lss_mm_0tau_bl_pos[i]->Write();
+      
+      outputfile->cd();
+      outputfile->mkdir("ttH_2lss_mm_0tau_bt_pos");
+      outputfile->cd("ttH_2lss_mm_0tau_bt_pos");
+      std::vector<TH1F*> h_2lss_mm_0tau_bt_pos = histoManager_2lss_mm_0tau_bt_pos->getHisto1D_list();
+      for(unsigned int i=0; i<h_2lss_mm_0tau_bt_pos.size(); i++)  h_2lss_mm_0tau_bt_pos[i]->Write();
+      
+      outputfile->mkdir("ttH_2lss_ee_0tau_bl_pos");
+      outputfile->cd("ttH_2lss_ee_0tau_bl_pos");
+      std::vector<TH1F*> h_2lss_ee_0tau_bl_pos = histoManager_2lss_ee_0tau_bl_pos->getHisto1D_list();
+      for(unsigned int i=0; i<h_2lss_ee_0tau_bl_pos.size(); i++)  h_2lss_ee_0tau_bl_pos[i]->Write();
+      
+      outputfile->cd();
+      outputfile->mkdir("ttH_2lss_ee_0tau_bt_pos");
+      outputfile->cd("ttH_2lss_ee_0tau_bt_pos");
+      std::vector<TH1F*> h_2lss_ee_0tau_bt_pos = histoManager_2lss_ee_0tau_bt_pos->getHisto1D_list();
+      for(unsigned int i=0; i<h_2lss_ee_0tau_bt_pos.size(); i++)  h_2lss_ee_0tau_bt_pos[i]->Write();
+      
+      outputfile->mkdir("ttH_2lss_em_0tau_bl_pos");
+      outputfile->cd("ttH_2lss_em_0tau_bl_pos");
+      std::vector<TH1F*> h_2lss_em_0tau_bl_pos = histoManager_2lss_em_0tau_bl_pos->getHisto1D_list();
+      for(unsigned int i=0; i<h_2lss_em_0tau_bl_pos.size(); i++)  h_2lss_em_0tau_bl_pos[i]->Write();
+      
+      outputfile->cd();
+      outputfile->mkdir("ttH_2lss_em_0tau_bt_pos");
+      outputfile->cd("ttH_2lss_em_0tau_bt_pos");
+      std::vector<TH1F*> h_2lss_em_0tau_bt_pos = histoManager_2lss_em_0tau_bt_pos->getHisto1D_list();
+      for(unsigned int i=0; i<h_2lss_em_0tau_bt_pos.size(); i++)  h_2lss_em_0tau_bt_pos[i]->Write();
+       
+      //    
+      outputfile->cd();
+      outputfile->mkdir("ttH_3l_bl_neg");
+      outputfile->cd("ttH_3l_bl_neg");
+      std::vector<TH1F*> h_3l_bl_neg = histoManager_3l_bl_neg->getHisto1D_list();
+      for(unsigned int i=0; i<h_3l_bl_neg.size(); i++)  h_3l_bl_neg[i]->Write();
+      
+      outputfile->cd();
+      outputfile->mkdir("ttH_3l_bt_neg");
+      outputfile->cd("ttH_3l_bt_neg");
+      std::vector<TH1F*> h_3l_bt_neg = histoManager_3l_bt_neg->getHisto1D_list();
+      for(unsigned int i=0; i<h_3l_bt_neg.size(); i++)  h_3l_bt_neg[i]->Write();
+      
+      outputfile->cd();
+      outputfile->mkdir("ttH_3l_bl_pos");
+      outputfile->cd("ttH_3l_bl_pos");
+      std::vector<TH1F*> h_3l_bl_pos = histoManager_3l_bl_pos->getHisto1D_list();
+      for(unsigned int i=0; i<h_3l_bl_pos.size(); i++)  h_3l_bl_pos[i]->Write();
+      
+      outputfile->cd();
+      outputfile->mkdir("ttH_3l_bt_pos");
+      outputfile->cd("ttH_3l_bt_pos");
+      std::vector<TH1F*> h_3l_bt_pos = histoManager_3l_bt_pos->getHisto1D_list();
+      for(unsigned int i=0; i<h_3l_bt_pos.size(); i++)  h_3l_bt_pos[i]->Write();
+    }
+    
     outputfile->Close();
 }
 
@@ -1149,7 +1336,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         bool test_stat                        = false;
         bool produce_table_2lss_SR_ee         = false;
-        bool produce_table_2lss_lepMVA_SB_ee  = true;
+        bool produce_table_2lss_lepMVA_SB_ee  = false;
         bool produce_table_2lss_os_SB_ee      = false;
         bool produce_table_2lss_SR_em         = false;
         bool produce_table_2lss_lepMVA_SB_em  = false;
@@ -4275,7 +4462,7 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("weight_csv_down",&weight_csv_down,"weight_csv_down/F");
     tOutput->Branch("weight_csv_up",&weight_csv_up,"weight_csv_up/F");
     tOutput->Branch("weights_pdf","std::vector<float>",&weights_pdf);
-    tOutput->Branch("ids_pdf","std::vector<float>",&ids_pdf);
+    tOutput->Branch("ids_pdf","std::vector<std::string>",&ids_pdf);
  
     tOutput->Branch("PV_weight",&weight_PV,"PV_weight/F");
     tOutput->Branch("mc_3l_category",&mc_3l_category,"mc_3l_category/I");

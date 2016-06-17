@@ -11,16 +11,17 @@ int main(int argc, char *argv[])
 {
     if( argc < 3 )                                                                                                          
     {
-        std::cout << "NtupleAnalyzer usage:"         	 << std::endl;
-        std::cout << "--file: input filename"        	 << std::endl;
-        std::cout << "--tree: TTree name"            	 << std::endl; 
-        std::cout << "--outfile: output path"            << std::endl;
-        std::cout << "--nmax: max number of events"      << std::endl;
-        std::cout << "--nowe: number of weighted events" << std::endl;
-        std::cout << "--xsec: cross section (pb)"    	 << std::endl;
-        std::cout << "--lumi: luminosity in (pb-1)"  	 << std::endl;
-        std::cout << "--isdata: is data or not"      	 << std::endl;
-        std::cout << "--dataset: dataset name"      	 << std::endl;
+        std::cout << "NtupleAnalyzer usage:"         	  	   << std::endl;
+        std::cout << "--file: input filename"        	  	   << std::endl;
+        std::cout << "--tree: TTree name"            	  	   << std::endl; 
+        std::cout << "--outfile: output path"             	   << std::endl;
+        std::cout << "--nmax: max number of events"       	   << std::endl;
+        std::cout << "--nowe: number of weighted events"  	   << std::endl;
+        std::cout << "--xsec: cross section (pb)"    	  	   << std::endl;
+        std::cout << "--lumi: luminosity in (pb-1)"  	  	   << std::endl;
+        std::cout << "--isdata: is data or not"      	  	   << std::endl;
+	std::cout << "--doSystCombine: do systematics for combine" << std::endl;
+        std::cout << "--dataset: dataset name"      	           << std::endl;
         exit(1);
     }
 
@@ -31,20 +32,22 @@ int main(int argc, char *argv[])
     float lumi = -1.;
     float xsec = -1.;
     bool isdata = 0;
+    bool doSystCombine = 0;
     const char *outfile_str = "./";
     const char *dataset_str = "";
  
     for(int i=0;i<argc;i++)
     {
-        if( ! strcmp(argv[i],"--file") )    fname_str  = argv[i+1];
-        if( ! strcmp(argv[i],"--tree") )    stream_str = argv[i+1];
-        if( ! strcmp(argv[i],"--outfile") ) outfile_str = argv[i+1];
-        if( ! strcmp(argv[i],"--nmax") )    nmax = atoi(argv[i+1]);
-        if( ! strcmp(argv[i],"--nowe") )    nowe = atoi(argv[i+1]);
-        if( ! strcmp(argv[i],"--lumi") )    lumi = atoi(argv[i+1]);
-        if( ! strcmp(argv[i],"--xsec") )    xsec = atof(argv[i+1]);
-        if( ! strcmp(argv[i],"--isdata") )  isdata = (bool) atoi(argv[i+1]);
-        if( ! strcmp(argv[i],"--dataset") ) dataset_str = argv[i+1];
+        if( ! strcmp(argv[i],"--file") )          fname_str  = argv[i+1];
+        if( ! strcmp(argv[i],"--tree") )          stream_str = argv[i+1];
+        if( ! strcmp(argv[i],"--outfile") )       outfile_str = argv[i+1];
+        if( ! strcmp(argv[i],"--nmax") )          nmax = atoi(argv[i+1]);
+        if( ! strcmp(argv[i],"--nowe") )          nowe = atoi(argv[i+1]);
+        if( ! strcmp(argv[i],"--lumi") )          lumi = atoi(argv[i+1]);
+        if( ! strcmp(argv[i],"--xsec") )          xsec = atof(argv[i+1]);
+        if( ! strcmp(argv[i],"--isdata") )        isdata = (bool) atoi(argv[i+1]);
+	if( ! strcmp(argv[i],"--doSystCombine") ) doSystCombine = (bool) atoi(argv[i+1]);
+        if( ! strcmp(argv[i],"--dataset") )       dataset_str = argv[i+1];
     }
 
     const char *fname = fname_str;                                                                                         
@@ -60,6 +63,7 @@ int main(int argc, char *argv[])
     std::cout << "--lumi=" << lumi   << std::endl;
     std::cout << "--outfile=" << outfile << std::endl;
     std::cout << "--isdata="  << isdata  << std::endl;
+    std::cout << "--doSystCombine=" << doSystCombine  << std::endl;
     std::cout << "--dataset=" << dataset  << std::endl;
 
     TChain *thetree = 0;
@@ -84,7 +88,7 @@ int main(int argc, char *argv[])
     // TTbar...
 
     //TTH MEM analysis
-    TTbarHiggsMultileptonAnalysis *TTHanalysis = new TTbarHiggsMultileptonAnalysis(fname,thetree,dataset,stream,outfile,isdata,xsec,lumi,nowe,nmax);
+    TTbarHiggsMultileptonAnalysis *TTHanalysis = new TTbarHiggsMultileptonAnalysis(fname,thetree,dataset,stream,outfile,isdata,doSystCombine,xsec,lumi,nowe,nmax);
     // TTHanalysis->InitLHCO(1,1); // to print LHCO files
     TTHanalysis->createHistograms();
     TTHanalysis->Loop();
