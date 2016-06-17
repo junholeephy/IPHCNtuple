@@ -26,5 +26,5 @@ dataset=${dataset}
 
 
 
-echo "Executing .././NtupleAnalyzer --file ${line2} --outfile ${dout_f}${fout} --isdata ${isdata} --nowe ${nowe} --xsec ${xsec} --lumi ${lumi} --nmax ${nmax} --dataset ${dataset}"
-${dout}/../Analyzer --file ${line2} --outfile ${dout_f}${fout} --isdata ${isdata} --nowe ${nowe} --xsec ${xsec} --lumi ${lumi} --nmax ${nmax} --tree Nt --dataset ${dataset}
+echo "Executing .././NtupleAnalyzer --file ${line2} --outfile ${dout_f}${fout} --isdata ${isdata} --doSystCombine ${doSystCombine} --nowe ${nowe} --xsec ${xsec} --lumi ${lumi} --nmax ${nmax} --dataset ${dataset}"
+${dout}/../Analyzer --file ${line2} --outfile ${dout_f}${fout} --isdata ${isdata} --doSystCombine ${doSystCombine} --nowe ${nowe} --xsec ${xsec} --lumi ${lumi} --nmax ${nmax} --tree Nt --dataset ${dataset}

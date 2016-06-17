@@ -13,6 +13,7 @@ export LD_LIBRARY_PATH=${cdir}:${NtupleDir}:${KinFitDir}:${NtupleDir}/obj:$LD_LI
 --outfile ./output_ttH_MC \
 --nmax 10000 \
 --isdata 0 \
+--doSystCombine 1 \
 --nowe 1 \
 --xsec 1   \
 --lumi 1 \
