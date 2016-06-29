@@ -8,16 +8,12 @@ Install
 # The code is based on ROOT6, setup it manually or via CMSSW:
 
 mkdir MyAnalysis/; cd MyAnalysis/
-export SCRAM_ARCH=slc6_amd64_gcc493
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-cmsrel CMSSW_7_6_3
-cd CMSSW_7_6_3/src/
+cmsrel CMSSW_8_0_9
+cd CMSSW_8_0_9/src/
 cmsenv
 
 # get the code from GIT
-git clone https://github.com/IPHC/IPHCNtuple
-
-OR for 80X :
 git clone -b 80X-branch  https://github.com/IPHC/ttH
 
 
