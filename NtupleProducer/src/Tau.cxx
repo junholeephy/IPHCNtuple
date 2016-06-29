@@ -15,7 +15,7 @@ Tau::~Tau()
 void Tau::read()
 {
     _ID = idx;
-
+  
     // general informations
     if( CHECK(ntP->tau_E)                             ) _E      = ntP->tau_E->at(idx);
     if( CHECK(ntP->tau_pt)                            ) _pt     = ntP->tau_pt->at(idx);
@@ -31,46 +31,54 @@ void Tau::read()
 
     // selection variables
     
-   
+    
     // more variables
     _decayMode = ntP->tau_decayMode->at(idx); 
     _hasLeadChargedHadrCand = ntP->tau_hasLeadChargedHadrCand->at(idx); 
     _leadingTrackPt = ntP->tau_leadingTrackPt->at(idx); 
     _leadingTrackCharge = ntP->tau_leadingTrackCharge->at(idx); 
     
-
+ 
     _decayModeFindingOldDMs = ntP->tau_decayModeFindingOldDMs->at(idx);
     _decayModeFindingOldDMs = ntP->tau_decayModeFindingOldDMs->at(idx);
-
+  
     _byLooseCombinedIsolationDeltaBetaCorr3Hits = ntP->tau_byLooseCombinedIsolationDeltaBetaCorr3Hits->at(idx);
     _byMediumCombinedIsolationDeltaBetaCorr3Hits = ntP->tau_byMediumCombinedIsolationDeltaBetaCorr3Hits->at(idx);
     _byTightCombinedIsolationDeltaBetaCorr3Hits = ntP->tau_byTightCombinedIsolationDeltaBetaCorr3Hits->at(idx);
  
-    _byLooseIsolationMVA3newDMwLT = ntP->tau_byLooseIsolationMVA3newDMwLT->at(idx);
-    _byMediumIsolationMVA3newDMwLT = ntP->tau_byMediumIsolationMVA3newDMwLT->at(idx);
-    _byTightIsolationMVA3newDMwLT = ntP->tau_byTightIsolationMVA3newDMwLT->at(idx);
+    //_byLooseIsolationMVA3newDMwLT = ntP->tau_byLooseIsolationMVA3newDMwLT->at(idx); //byVLooseIsolationMVArun2v1DBnewDMwLT
+    //_byMediumIsolationMVA3newDMwLT = ntP->tau_byMediumIsolationMVA3newDMwLT->at(idx);
+    //_byTightIsolationMVA3newDMwLT = ntP->tau_byTightIsolationMVA3newDMwLT->at(idx);
 
     //_byLooseCombinedIsolationDeltaBetaCorr3HitsdR03  = ntP->tau_byLooseCombinedIsolationDeltaBetaCorr3HitsdR03->at(idx);
     //_byMediumCombinedIsolationDeltaBetaCorr3HitsdR03 = ntP->tau_byMediumCombinedIsolationDeltaBetaCorr3HitsdR03->at(idx);
     //_byTightCombinedIsolationDeltaBetaCorr3HitsdR03  = ntP->tau_byTightCombinedIsolationDeltaBetaCorr3HitsdR03->at(idx);
 
+
+ 
     _byLooseIsolationMVArun2v1DBdR03oldDMwLT         = ntP->tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT->at(idx);
     _byMediumIsolationMVArun2v1DBdR03oldDMwLT        = ntP->tau_byMediumIsolationMVArun2v1DBdR03oldDMwLT->at(idx);
     _byTightIsolationMVArun2v1DBdR03oldDMwLT         = ntP->tau_byTightIsolationMVArun2v1DBdR03oldDMwLT->at(idx);
     _byVTightIsolationMVArun2v1DBdR03oldDMwLT        = ntP->tau_byVTightIsolationMVArun2v1DBdR03oldDMwLT->at(idx);
-
+ 
+ 
     _byCombinedIsolationDeltaBetaCorrRaw3Hits        = ntP->tau_byCombinedIsolationDeltaBetaCorrRaw3Hits->at(idx);
     _chargedIsoPtSum = ntP->tau_chargedIsoPtSum->at(idx);
     _neutralIsoPtSum = ntP->tau_neutralIsoPtSum->at(idx);
     _puCorrPtSum = ntP->tau_puCorrPtSum->at(idx);
- 
+    
+   
     _againstMuonLoose3 = ntP->tau_againstMuonLoose3->at(idx);
     _againstMuonTight3 = ntP->tau_againstMuonTight3->at(idx);
-
-    _againstElectronVLooseMVA5 = ntP->tau_againstElectronVLooseMVA5->at(idx);
-    _againstElectronLooseMVA5 = ntP->tau_againstElectronLooseMVA5->at(idx);
-    _againstElectronMediumMVA5 = ntP->tau_againstElectronMediumMVA5->at(idx);
  
+  
+    //AC8X
+   // _againstElectronVLoose = ntP->tau_againstElectronVLooseMVA6->at(idx);
+   // _againstElectronLoose  = ntP->tau_againstElectronLooseMVA6->at(idx);
+   // _againstElectronMedium = ntP->tau_againstElectronMediumMVA6->at(idx);
+   // _againstElectronTight = ntP->tau_againstElectronMediumMVA6->at(idx);
+    
+  
     _pfEssential_jet_pt 	 = ntP->tau_pfEssential_jet_pt->at(idx);
     _pfEssential_jet_eta	 = ntP->tau_pfEssential_jet_eta->at(idx);
     _pfEssential_jet_phi	 = ntP->tau_pfEssential_jet_phi->at(idx);
@@ -87,6 +95,7 @@ void Tau::read()
     _pfEssential_dxy		 = ntP->tau_pfEssential_dxy->at(idx);
     _pfEssential_dxy_error	 = ntP->tau_pfEssential_dxy_error->at(idx);
     _pfEssential_dxy_Sig	 = ntP->tau_pfEssential_dxy_Sig->at(idx);
+    
     
 }
 
@@ -144,9 +153,10 @@ void Tau::init()
     _againstMuonLoose3 = -1.;
     _againstMuonTight3 = -1.;
 
-    _againstElectronVLooseMVA5 = -1.;
-    _againstElectronLooseMVA5  = -1.;
-    _againstElectronMediumMVA5 = -1.;
+    _againstElectronVLoose = -1.;
+    _againstElectronLoose  = -1.;
+    _againstElectronMedium = -1.;
+    _againstElectronTight = -1.;
 
     _pfEssential_jet_pt          = -1.;
     _pfEssential_jet_eta         = -1.;

@@ -320,9 +320,11 @@ void Tree::Init(TChain *ch)
     tau_puCorrPtSum = 0;
     tau_againstMuonLoose3 = 0;
     tau_againstMuonTight3 = 0;
-    tau_againstElectronVLooseMVA5 = 0;
-    tau_againstElectronLooseMVA5 = 0;
-    tau_againstElectronMediumMVA5 = 0;
+    //AC8X
+    tau_againstElectronVLooseMVA6 = 0;
+    tau_againstElectronLooseMVA6 = 0;
+    tau_againstElectronMediumMVA6 = 0;
+    tau_againstElectronTightMVA6 = 0;
     tau_pfEssential_jet_pt = 0;
     tau_pfEssential_jet_eta = 0;
     tau_pfEssential_jet_phi = 0;
@@ -1115,9 +1117,11 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("tau_puCorrPtSum", &tau_puCorrPtSum, &b_tau_puCorrPtSum);
     fChain->SetBranchAddress("tau_againstMuonLoose3", &tau_againstMuonLoose3, &b_tau_againstMuonLoose3);
     fChain->SetBranchAddress("tau_againstMuonTight3", &tau_againstMuonTight3, &b_tau_againstMuonTight3);
-    fChain->SetBranchAddress("tau_againstElectronVLooseMVA5", &tau_againstElectronVLooseMVA5, &b_tau_againstElectronVLooseMVA5);
-    fChain->SetBranchAddress("tau_againstElectronLooseMVA5", &tau_againstElectronLooseMVA5, &b_tau_againstElectronLooseMVA5);
-    fChain->SetBranchAddress("tau_againstElectronMediumMVA5", &tau_againstElectronMediumMVA5, &b_tau_againstElectronMediumMVA5);
+    //AC8X
+    fChain->SetBranchAddress("tau_againstElectronVLooseMVA6", &tau_againstElectronVLooseMVA6, &b_tau_againstElectronVLooseMVA6);
+    fChain->SetBranchAddress("tau_againstElectronLooseMVA6", &tau_againstElectronLooseMVA6, &b_tau_againstElectronLooseMVA6);
+    fChain->SetBranchAddress("tau_againstElectronMediumMVA6", &tau_againstElectronMediumMVA6, &b_tau_againstElectronMediumMVA6);
+    fChain->SetBranchAddress("tau_againstElectronTightMVA6", &tau_againstElectronTightMVA6, &b_tau_againstElectronTightMVA6);
     fChain->SetBranchAddress("tau_pfEssential_jet_pt", &tau_pfEssential_jet_pt, &b_tau_pfEssential_jet_pt);
     fChain->SetBranchAddress("tau_pfEssential_jet_eta", &tau_pfEssential_jet_eta, &b_tau_pfEssential_jet_eta);
     fChain->SetBranchAddress("tau_pfEssential_jet_phi", &tau_pfEssential_jet_phi, &b_tau_pfEssential_jet_phi);
