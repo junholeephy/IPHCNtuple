@@ -260,7 +260,7 @@ void TTbarHiggsTriggerAnalysis::Loop()
 	//
 	////////////////////////////////////////////////
 	
-	int  trigCode = vEvent->at(0).ev_trigger_pass_byname_1();
+	int  trigCode = 0;//vEvent->at(0).ev_trigger_pass_byname_1();
 	int  trigCode_d = trigCode /10 % 10;
 	int  trigCode_c = trigCode /100 % 10;
 	int  trigCode_m = trigCode /1000 % 10;

@@ -93,5 +93,6 @@ int main(int argc, char *argv[])
     TTHanalysis->createHistograms();
     TTHanalysis->Loop();
     TTHanalysis->writeHistograms();
+    delete TTHanalysis;
 
 }
