@@ -3,7 +3,7 @@
 CC = g++ -g -Wno-writable-strings -Wno-write-strings -fsanitize=address -lTMVA
 
 NTUPLEINC    = -I../NtupleProducer/include -I$(CMSSW_RELEASE_BASE)/src
-NTUPLELIB    = -L../NtupleProducer -L$(CMSSW_RELEASE_BASE)/lib/slc6_amd64_gcc493 -lCondFormatsJetMETObjects \
+NTUPLELIB    = -L../NtupleProducer -L$(CMSSW_RELEASE_BASE)/lib/slc6_amd64_gcc530 -lCondFormatsJetMETObjects \
               -lNtuple
 
 KINFITINC    = -I../../KinFit
