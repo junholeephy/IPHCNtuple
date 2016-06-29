@@ -34,3 +34,7 @@ cd ../
 
 cd ttH/NtupleAnalyzer/
 make
+
+
+# to commit & push 
+git push origin 80X-branch
