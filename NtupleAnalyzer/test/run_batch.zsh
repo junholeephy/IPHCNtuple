@@ -7,7 +7,7 @@ echo "Don't forget to update the lumi and the maximum number of events to run on
 
 isdata=0
 doSystCombine=0
-lumi=2320
+lumi=2070
 
 cp /tmp/x509up_u6155 /home-pbs/lebihan/someone/proxy/.
 
@@ -17,12 +17,12 @@ if [[ ${jName} == "" ]]; then
   exit 1
 fi
 
-que="sbg_local"
+que="cms"
 
 export HOME=$(pwd)
 
-dout="/home-pbs/lebihan/someone/clean/ttH/NtupleAnalyzer/test/"
-dout_f="/opt/sbg/scratch1/cms/lebihan/toto/"
+dout="/home-pbs/lebihan/someone/medusa_patch1_prod/ttH/NtupleAnalyzer/test/"
+dout_f="/opt/sbg/scratch1/cms/lebihan/trees_analyzer_prod_medusa_patch1_v3/"
 
 runName="toy_${jName}"
 logName="log_${jName}"
@@ -34,7 +34,7 @@ mkdir ${logName}
 
 nmax=-1
 
-fxsec="table_MC_Akoula-patch7_20160601.txt"
+fxsec="table_MC_Medusa-patch1_20160624.txt"
 
 fdir=$(ls -d lists*)
 
