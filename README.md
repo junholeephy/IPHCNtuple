@@ -17,6 +17,10 @@ cmsenv
 # get the code from GIT
 git clone https://github.com/IPHC/IPHCNtuple
 
+OR for 80X :
+git clone -b 80X-branch  https://github.com/IPHC/ttH
+
+
 cd IPHCNtuple/
 
 # NtupleProducer: produce Ntuples from FlatTrees
