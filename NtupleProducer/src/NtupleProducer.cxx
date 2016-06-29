@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
     {
         if( i > nmax && nmax >= 0 ) break; 
 
-        //std::cout << "i:" << i << std::endl;
+       
         ch->GetEntry(i);
 
 
@@ -153,7 +153,8 @@ int main(int argc, char *argv[])
             }
         }
         if(mu_presel) n_mu++;
-        
+    
+  
         int n_el_evt = 0;
 
         // electrons
@@ -173,9 +174,10 @@ int main(int argc, char *argv[])
             }
         }
         if(el_presel) n_el++;
-
+	
+   
         // preselection
-        // if ( (n_mu_evt + n_el_evt) < 2 ) continue; 
+        if ( (n_mu_evt + n_el_evt) < 2 ) continue; 
 
         // taus 
         for(int j=0;j<ntP->tau_n;j++)
@@ -195,7 +197,7 @@ int main(int argc, char *argv[])
         }	
         if(tau_presel) n_tau++;
 
-
+  
         // jets
         for(int j=0;j<ntP->jet_n;j++)
         {
@@ -228,7 +230,7 @@ int main(int argc, char *argv[])
 
           if (trigObj.sel()) nt->NtTriggerObj->push_back(trigObj);
           }*/
-
+ 
         if (!isdata)
         {
             // genjets
@@ -246,15 +248,16 @@ int main(int argc, char *argv[])
             truth.init();
             truth.read();
             truth.readMultiLepton();
-
+ 
             nt->NtTruth->push_back(truth);
         }
-/*
-        std::cout << " n_mu :  " << n_mu  << std::endl
+
+        /*
+	std::cout << " n_mu :  " << n_mu  << std::endl
           << " n_el :  " << n_el  << std::endl
           << " n_tau:  " << n_tau << std::endl
-          << " n_jet:  " << n_jet << std::endl;
-*/
+          << " n_jet:  " << n_jet << std::endl;*/
+
         nt->fill();
 	
     }  
