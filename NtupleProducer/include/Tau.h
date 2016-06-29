@@ -114,9 +114,11 @@ class Tau : public Base
 
         // electron discriminators
 
-        float _againstElectronVLooseMVA5;
-        float _againstElectronLooseMVA5;
-        float _againstElectronMediumMVA5;
+        //AC8X
+        float _againstElectronVLoose;
+        float _againstElectronLoose;
+        float _againstElectronMedium;
+        float _againstElectronTight;
 
         float _pfEssential_jet_pt;
         float _pfEssential_jet_eta;

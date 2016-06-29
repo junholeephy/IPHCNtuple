@@ -324,9 +324,10 @@ class Tree {
         vector<float>   *tau_puCorrPtSum;
         vector<float>   *tau_againstMuonLoose3;
         vector<float>   *tau_againstMuonTight3;
-        vector<float>   *tau_againstElectronVLooseMVA5;
-        vector<float>   *tau_againstElectronLooseMVA5;
-        vector<float>   *tau_againstElectronMediumMVA5;
+        vector<float>   *tau_againstElectronVLooseMVA6;
+        vector<float>   *tau_againstElectronLooseMVA6;
+        vector<float>   *tau_againstElectronMediumMVA6; 
+	vector<float>   *tau_againstElectronTightMVA6;
         vector<float>   *tau_pfEssential_jet_pt;
         vector<float>   *tau_pfEssential_jet_eta;
         vector<float>   *tau_pfEssential_jet_phi;
@@ -1191,9 +1192,11 @@ class Tree {
         TBranch   *b_tau_puCorrPtSum;
         TBranch   *b_tau_againstMuonLoose3;
         TBranch   *b_tau_againstMuonTight3;
-        TBranch   *b_tau_againstElectronVLooseMVA5;
-        TBranch   *b_tau_againstElectronLooseMVA5;
-        TBranch   *b_tau_againstElectronMediumMVA5;
+	//AC8X
+        TBranch   *b_tau_againstElectronVLooseMVA6;
+        TBranch   *b_tau_againstElectronLooseMVA6;
+        TBranch   *b_tau_againstElectronMediumMVA6;  
+	TBranch   *b_tau_againstElectronTightMVA6;
         TBranch   *b_tau_pfEssential_jet_pt;
         TBranch   *b_tau_pfEssential_jet_eta;
         TBranch   *b_tau_pfEssential_jet_phi;
