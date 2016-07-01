@@ -1,2 +1,0 @@
-/opt/sbg/scratch1/cms/lebihan/ntuples_prod_medusa_patch1_v2/toymedusa-patch1-v2/ZZ_TuneCUETP8M1_13TeV-pythia8/ZZ_TuneCUETP8M1_13TeV-pythia8_ID0_0.root
-/opt/sbg/scratch1/cms/lebihan/ntuples_prod_medusa_patch1_v2/toymedusa-patch1-v2/ZZ_TuneCUETP8M1_13TeV-pythia8/ZZ_TuneCUETP8M1_13TeV-pythia8_ID1_0.root
