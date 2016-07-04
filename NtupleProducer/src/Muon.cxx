@@ -40,7 +40,8 @@ void Muon::read()
     _bestTrack_ptError = ntP->mu_bestTrack_ptError->at(idx);
     //_dB3D	       = ntP->mu_dB3D->at(idx);
     //_edB3D	       = ntP->mu_edB3D->at(idx);
-   
+    _tightCharge       = ntP->mu_innerTrack_pt->at(idx) / ntP->mu_innerTrack_ptError->at(idx);
+
     // mva-based selection additionnal variables
     _lepMVA	      = ntP->mu_lepMVA->at(idx);
     _lepMVA_Moriond16 = ntP->mu_lepMVA_Moriond16->at(idx);
@@ -96,7 +97,8 @@ void Muon::init()
     _bestTrack_ptError  = -666.;
     //_dB3D               = -666.;
     //_edB3D              = -666.;
-    
+    _tightCharge        = 999;
+
     // more variables
    
     _lepMVA            = -666.; 
@@ -157,6 +159,9 @@ bool Muon::sel()
     // Tight
   
     _isTightTTH = isLooseTTH && pass_lepMVA_Moriond16 && _isMedium && pass_lepMVA_jetBTagCSV089;
+   
+    bool _pass_tightCharge = (_tightCharge < 0.2);
+    _isTightTTH = isLooseTTH && pass_lepMVA_Moriond16 && _isMedium && pass_lepMVA_jetBTagCSV089 && _pass_tightCharge;
 
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     

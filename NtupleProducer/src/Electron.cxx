@@ -68,8 +68,8 @@ void Electron::read()
      _ecalEnergy	             = ntP->el_ecalEnergy->at(idx);
     
      _trackMomentumError	     = ntP->el_trackMomentumError->at(idx);
- 
-    
+     _tightCharge                    = ntP->el_isGsfCtfScPixChargeConsistent->at(idx);
+      
 }
 
 void Electron::init()
@@ -142,7 +142,8 @@ void Electron::init()
     _see                            = -888.;
     _superCluster_eta               = -888.;
 	
-    _trackMomentumError             = -888;                
+    _trackMomentumError             = -888;      
+    _tightCharge                    = 0;
     _mvaNonTrigV0                   = -888;
     
     
@@ -266,7 +267,9 @@ bool Electron::sel()
     // Tight
 
     bool pass_CV       = (_passCV          );
+    bool pass_tightCharge   = (_tightCharge == 1); // >1);// wait for new flattree
 
+  
     bool isTightTTH     = ( pass_pt               &&
                             pass_eta              &&
                             pass_dxy              &&
@@ -279,7 +282,8 @@ bool Electron::sel()
                             cond_closuretest      &&
                             pass_muOverlap        && 
 			    pass_lepMVA_Moriond16 &&
-			    pass_lepMVA_jetBTagCSV089);
+			    pass_lepMVA_jetBTagCSV089 && 
+			    pass_tightCharge);
 
     _isTightTTH = isTightTTH;
 
