@@ -42,6 +42,7 @@ class Electron : public Base
         float dxy()                          {return _dxy;};
         float dz()                           {return _dz;};
         bool passPtEta()                     {return _passPtEta;};
+        float tightCharge()                  {return _tightCharge;};
 
         // MVA
         float lepMVA()                       {return _lepMVA;};
@@ -127,6 +128,7 @@ class Electron : public Base
         bool  _passPtEta;
         float _ip3d;
         float _ip3dErr;
+        float _tightCharge;
 
         // MVA
         float _lepMVA;

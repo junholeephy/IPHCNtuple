@@ -51,7 +51,8 @@ class Muon : public Base
         float bestTrackptError()   {return _bestTrack_ptError;};
         //float dB3D()               {return _dB3D;};
         //float edB3D()              {return _edB3D;};
-	
+	float tightCharge()        {return _tightCharge;};
+
         // MVA
         float lepMVA()             {return _lepMVA;};
         float lepMVA_Moriond16()   {return _lepMVA_Moriond16;};
@@ -105,7 +106,9 @@ class Muon : public Base
         float _bestTrack_ptError;
         //float _dB3D;
         //float _edB3D;
+        float _tightCharge;
 
+       
        
         // MVA
         float _lepMVA; 

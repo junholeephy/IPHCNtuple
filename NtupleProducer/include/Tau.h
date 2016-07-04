@@ -33,7 +33,10 @@ class Tau : public Base
         int   id()        {return _id;};
 
         // Id
-        bool isLoose()    {return _isLoose;};
+        bool isLoose()      {return _isLoose;};
+        bool isFakeableTTH(){return _isFakeableTTH;};
+        bool isTightTTH()   {return _isTightTTH;};
+        float lepMVA()      {return _lepMVA;};
 
         // Variables for Id
         float dxy()       {return _dxy;};
@@ -60,7 +63,9 @@ class Tau : public Base
         float _dz;
 
         bool  _isLoose;
-
+        bool  _isFakeableTTH;
+        bool  _isTightTTH;
+        float _lepMVA;
 
         //-------------------------------
         // http://kskovpen.web.cern.ch/kskovpen/IPHCFlatTree/table_MantaRay-patch7_20150829.html
