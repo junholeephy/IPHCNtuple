@@ -217,7 +217,7 @@ void TTbarHiggsTriggerAnalysis::Loop()
         {             
 	    if ( vMuon->at(imuon).lepMVA() > 0.65 && vMuon->at(imuon).isMedium() == true )
 	    { 
-	      Lepton l; l.setLepton(&vMuon->at(imuon),imuon,1);
+	      Lepton l; l.setLepton(&vMuon->at(imuon),imuon,0,1);
               vSelectedMuons.push_back(vMuon->at(imuon));    
 	      vSelectedLeptons.push_back(l);	    
 	     }
@@ -228,7 +228,7 @@ void TTbarHiggsTriggerAnalysis::Loop()
         {   	 
 	    if ( vElectron->at(ielectron).lepMVA() > 0.65 )
             { 
-	      Lepton l; l.setLepton(&vElectron->at(ielectron),ielectron,1);
+	      Lepton l; l.setLepton(&vElectron->at(ielectron),ielectron,1,0);
               vSelectedElectrons.push_back(vElectron->at(ielectron));
 	      vSelectedLeptons.push_back(l);	     
               }
