@@ -25,10 +25,15 @@ class Lepton
 
         int idx() {return _idx;};
         bool isElectron() {return _isElectron;};
+        bool isMuon() {return _isMuon;};
+        float lepMVA()          {return _lepMVA;};
+
+        bool isFakeableTTH()    {return _isFakeableTTH;};
+        bool isTightTTH()       {return _isTightTTH;};
 
         int charge() {return _charge;};
 
-        template <class T> void setLepton(T *lep, int idx, bool isE)
+        template <class T> void setLepton(T *lep, int idx, bool isE, bool isMu)
         {
             _pt = lep->pt();
             _eta = lep->eta();
@@ -40,8 +45,14 @@ class Lepton
             _id = lep->id();
 
             _idx = idx;
-            _isElectron = isE;
-            _charge = lep->charge();
+            _isElectron = isE;  
+	    _isMuon = isMu;
+         
+            _charge = lep->charge(); 
+	    
+	    _isFakeableTTH = lep->isFakeableTTH();
+            _isTightTTH    = lep->isTightTTH();
+            _lepMVA        = lep->lepMVA();
         }
 
     protected:
@@ -57,6 +68,11 @@ class Lepton
 
         int _idx;
         bool _isElectron;
+        bool _isMuon;
+	
+        bool  _isFakeableTTH;
+        bool  _isTightTTH;
+        float _lepMVA;
 
         int _charge;
 };

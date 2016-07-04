@@ -94,11 +94,18 @@ class TTbarHiggsMultileptonAnalysis
         bool is_3l_TTZ_CR;    // TTZ 3l analysis (for the future..)
 
         bool is_Zl_CR;
-
+        
+	// for sub-categorisation
         bool is_ee, is_em, is_mm;
+        bool is_ee_2lss_QF, is_ee_2lss_FR;
+        bool is_em_2lss_QF, is_em_2lss_FR;
+        bool is_mm_2lss_QF, is_mm_2lss_FR;
+       
+        int n_tight;
 
         bool is_trigger;
-
+        
+	// for synchro
         int stat_2lss_SR_ee, stat_2lss_lepMVA_SB_ee, stat_2lss_os_SB_ee,
             stat_2lss_SR_em, stat_2lss_lepMVA_SB_em, stat_2lss_os_SB_em,
             stat_2lss_SR_mm, stat_2lss_lepMVA_SB_mm, stat_2lss_os_SB_mm,
@@ -172,9 +179,7 @@ class TTbarHiggsMultileptonAnalysis
         Double_t multilepton_mETcov10;
         Double_t multilepton_mETcov11;
 
-        int flag_cat_2LSS; // +-10 (+-mumu b-loose), +-11 (+-mumu b-tight), +-20 (+-emu b-loose), +-21 (+-emu b-tight), +-30 (+-ee), 40 (ltau)
-        int flag_cat_3L; // 0 (b-loose), 1 (b-tight)
-
+      
     private:
 
         HistoManager * theHistoManager;
