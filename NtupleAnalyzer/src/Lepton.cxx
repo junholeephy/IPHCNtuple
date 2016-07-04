@@ -12,7 +12,12 @@ Lepton::Lepton()
     _id         =  0;
 
     _idx        = -1;
-    _isElectron =  0;
+    _isElectron =  0; 
+    _isMuon     =  0;
+    
+    _isFakeableTTH = false;
+    _isTightTTH    = false;
+    _lepMVA        =  0.;
 
     _charge     =  0;
 }
