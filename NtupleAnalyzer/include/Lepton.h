@@ -14,19 +14,19 @@ class Lepton
         Lepton();
         virtual ~Lepton();
 
-        float pt() {return _pt;};
-        float eta() {return _eta;};
-        float phi() {return _phi;};
-        float E() {return _E;};
+        float pt()              {return _pt;};
+        float eta()             {return _eta;};
+        float phi()             {return _phi;};
+        float E()               {return _E;};
 
-        TLorentzVector p4() {return _p4;};
+        TLorentzVector p4()     {return _p4;};
 
-        int id() {return _id;};
+        int id()                {return _id;};
 
-        int idx() {return _idx;};
-        bool isElectron() {return _isElectron;};
-        bool isMuon() {return _isMuon;};
-        float lepMVA()          {return _lepMVA;};
+        int idx()               {return _idx;};
+        bool isElectron()       {return _isElectron;};
+        bool isMuon()           {return _isMuon;};
+        float lepMVA_TTH()      {return _lepMVA_TTH;};
 
         bool isFakeableTTH()    {return _isFakeableTTH;};
         bool isTightTTH()       {return _isTightTTH;};
@@ -45,36 +45,36 @@ class Lepton
             _id = lep->id();
 
             _idx = idx;
-            _isElectron = isE;  
-	    _isMuon = isMu;
-         
-            _charge = lep->charge(); 
-	    
-	    _isFakeableTTH = lep->isFakeableTTH();
+            _isElectron = isE;
+    	    _isMuon = isMu;
+
+            _charge = lep->charge();
+
+    	    _isFakeableTTH = lep->isFakeableTTH();
             _isTightTTH    = lep->isTightTTH();
-            _lepMVA        = lep->lepMVA();
+            _lepMVA_TTH    = lep->lepMVA_TTH();
         }
 
     protected:
 
-        float _pt;
-        float _eta;
-        float _phi;
-        float _E;
+        float           _pt;
+        float           _eta;
+        float           _phi;
+        float           _E;
 
-        int _id;
+        int             _id;
 
-        TLorentzVector _p4;
+        TLorentzVector  _p4;
 
-        int _idx;
-        bool _isElectron;
-        bool _isMuon;
-	
-        bool  _isFakeableTTH;
-        bool  _isTightTTH;
-        float _lepMVA;
+        int             _idx;
+        bool            _isElectron;
+        bool            _isMuon;
 
-        int _charge;
+        bool            _isFakeableTTH;
+        bool            _isTightTTH;
+        float           _lepMVA_TTH;
+
+        int             _charge;
 };
 
 #endif

@@ -167,6 +167,7 @@ void Tree::Init(TChain *ch)
     el_lepMVA_eta = 0;
     el_lepMVA_jetNDauChargedMVASel = 0;         
     el_isGsfCtfScPixChargeConsistent = 0;
+    el_isGsfScPixChargeConsistent = 0;
     el_passConversionVeto = 0;
     el_deltaEtaSuperClusterTrackAtVtx = 0;
     el_deltaPhiSuperClusterTrackAtVtx = 0;
@@ -964,6 +965,7 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("el_lepMVA_eta", &el_lepMVA_eta, &b_el_lepMVA_eta);
     fChain->SetBranchAddress("el_lepMVA_jetNDauChargedMVASel", &el_lepMVA_jetNDauChargedMVASel, &b_el_lepMVA_jetNDauChargedMVASel);   
     fChain->SetBranchAddress("el_isGsfCtfScPixChargeConsistent", &el_isGsfCtfScPixChargeConsistent, &b_el_isGsfCtfScPixChargeConsistent);
+    fChain->SetBranchAddress("el_isGsfScPixChargeConsistent", &el_isGsfScPixChargeConsistent, &b_el_isGsfScPixChargeConsistent);
     fChain->SetBranchAddress("el_passConversionVeto", &el_passConversionVeto, &b_el_passConversionVeto);
     fChain->SetBranchAddress("el_deltaEtaSuperClusterTrackAtVtx", &el_deltaEtaSuperClusterTrackAtVtx, &b_el_deltaEtaSuperClusterTrackAtVtx);
     fChain->SetBranchAddress("el_deltaPhiSuperClusterTrackAtVtx", &el_deltaPhiSuperClusterTrackAtVtx, &b_el_deltaPhiSuperClusterTrackAtVtx);

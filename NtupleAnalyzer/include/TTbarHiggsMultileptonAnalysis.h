@@ -94,18 +94,18 @@ class TTbarHiggsMultileptonAnalysis
         bool is_3l_TTZ_CR;    // TTZ 3l analysis (for the future..)
 
         bool is_Zl_CR;
-        
-	// for sub-categorisation
+
+        // for sub-categorisation
         bool is_ee, is_em, is_mm;
         bool is_ee_2lss_QF, is_ee_2lss_FR;
         bool is_em_2lss_QF, is_em_2lss_FR;
         bool is_mm_2lss_QF, is_mm_2lss_FR;
-       
+
         int n_tight;
 
         bool is_trigger;
-        
-	// for synchro
+
+        // for synchro
         int stat_2lss_SR_ee, stat_2lss_lepMVA_SB_ee, stat_2lss_os_SB_ee,
             stat_2lss_SR_em, stat_2lss_lepMVA_SB_em, stat_2lss_os_SB_em,
             stat_2lss_SR_mm, stat_2lss_lepMVA_SB_mm, stat_2lss_os_SB_mm,
@@ -179,41 +179,41 @@ class TTbarHiggsMultileptonAnalysis
         Double_t multilepton_mETcov10;
         Double_t multilepton_mETcov11;
 
-      
+
     private:
 
         HistoManager * theHistoManager;
-	
-	//Combine
+
+        //Combine
         HistoManager * histoManager_2lss_mm_0tau_bl_neg;
         HistoManager * histoManager_2lss_mm_0tau_bt_neg;
         HistoManager * histoManager_2lss_ee_0tau_bl_neg;
         HistoManager * histoManager_2lss_ee_0tau_bt_neg;
         HistoManager * histoManager_2lss_em_0tau_bl_neg;
         HistoManager * histoManager_2lss_em_0tau_bt_neg;
-        
-	HistoManager * histoManager_2lss_mm_0tau_bl_pos;
+
+        HistoManager * histoManager_2lss_mm_0tau_bl_pos;
         HistoManager * histoManager_2lss_mm_0tau_bt_pos;
         HistoManager * histoManager_2lss_ee_0tau_bl_pos;
         HistoManager * histoManager_2lss_ee_0tau_bt_pos;
         HistoManager * histoManager_2lss_em_0tau_bl_pos;
         HistoManager * histoManager_2lss_em_0tau_bt_pos;
-	
+
         HistoManager * histoManager_3l_bl_neg;
-	HistoManager * histoManager_3l_bt_neg;
-	
-	HistoManager * histoManager_3l_bl_pos;
-	HistoManager * histoManager_3l_bt_pos;
-	
-	
+        HistoManager * histoManager_3l_bt_neg;
+
+        HistoManager * histoManager_3l_bl_pos;
+        HistoManager * histoManager_3l_bt_pos;
+
+
         TFile * outputfile;
 
         TString _sampleName;
-	TString _process; // Needed for Combine
+        TString _process; // Needed for Combine
         TString _outputFileName;
 
-        bool _isdata; 
-	bool _doSystCombine;
+        bool _isdata;
+        bool _doSystCombine;
         float _xsec;
         float _lumi;
         int   _nowe; // number of weighted events

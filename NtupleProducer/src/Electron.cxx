@@ -14,87 +14,82 @@ Electron::~Electron()
 
 void Electron::read()
 {
-     _ID = idx;
+     _ID                                = idx;
     
-     _E 	= ntP->el_E->at(idx);
-     _pt	= ntP->el_pt->at(idx);
-     _eta	= ntP->el_eta->at(idx);
-     _phi	= ntP->el_phi->at(idx);
-     _m 	= ntP->el_m->at(idx);
-     _charge	= ntP->el_charge->at(idx);
-     _id	= ntP->el_id->at(idx);
+     _E 	                            = ntP->el_E->at(idx);
+     _pt	                            = ntP->el_pt->at(idx);
+     _eta	                            = ntP->el_eta->at(idx);
+     _phi	                            = ntP->el_phi->at(idx);
+     _m 	                            = ntP->el_m->at(idx);
+     _charge	                        = ntP->el_charge->at(idx);
+     _id	                            = ntP->el_id->at(idx);
+    
+     _dxy	                            = ntP->el_gsfTrack_PV_dxy->at(idx);
+     _dz	                            = ntP->el_gsfTrack_PV_dz->at(idx);
+     _nlosthits                         = ntP->el_numberOfLostHits->at(idx);
+     _ip3d	                            = ntP->el_ip3d->at(idx);
+     _ip3dErr	                        = ntP->el_ip3dErr->at(idx);
+
+     _isLoose	                        = ntP->el_looseCBId->at(idx);
+     _isMedium                          = ntP->el_mediumCBId->at(idx);
+     _passCV	                        = ntP->el_passConversionVeto->at(idx);
+     _isPCC	                            = ntP->el_isGsfCtfScPixChargeConsistent->at(idx);
+
+     _lepMVA	                        = ntP->el_lepMVA->at(idx);
+     _lepMVA_TTH                        = ntP->el_lepMVA_Moriond16->at(idx);
+     _mvaNonTrigV0                      = ntP->el_mvaNonTrigV0->at(idx);
  
-   
-     _dxy	= ntP->el_gsfTrack_PV_dxy->at(idx);
-     _dz	= ntP->el_gsfTrack_PV_dz->at(idx);
-     _nlosthits = ntP->el_numberOfLostHits->at(idx);
-     _ip3d	= ntP->el_ip3d->at(idx);
-     _ip3dErr	= ntP->el_ip3dErr->at(idx);
+     _lepMVA_miniRelIsoCharged          = ntP->el_lepMVA_miniRelIsoCharged->at(idx);
+     _lepMVA_miniRelIsoNeutral          = ntP->el_lepMVA_miniRelIsoNeutral->at(idx);
+     _lepMVA_jetPtRelv2                 = ntP->el_lepMVA_jetPtRelv2->at(idx);  
+     //_lepMVA_jetDR                    = ntP->el_lepMVA_jetDR->at(idx);
+     _lepMVA_jetPtRatio                 = ntP->el_lepMVA_jetPtRatio->at(idx);
+     _lepMVA_jetBTagCSV                 = ntP->el_lepMVA_jetBTagCSV->at(idx);
+     _lepMVA_sip3d                      = ntP->el_lepMVA_sip3d->at(idx);
+     _lepMVA_dxy                        = ntP->el_lepMVA_dxy->at(idx);
+     _lepMVA_dz                         = ntP->el_lepMVA_dz->at(idx);
+     _lepMVA_mvaId                      = ntP->el_lepMVA_mvaId->at(idx);
+     _lepMVA_eta                        = ntP->el_lepMVA_eta->at(idx);
+     _lepMVA_jetNDauChargedMVASel       = ntP->el_lepMVA_jetNDauChargedMVASel->at(idx);
 
-
-     _isLoose	= ntP->el_looseCBId->at(idx);
-     _isMedium  = ntP->el_mediumCBId->at(idx);
-     _passCV	= ntP->el_passConversionVeto->at(idx);
-     _isPCC	= ntP->el_isGsfCtfScPixChargeConsistent->at(idx);
-
-   
-     _lepMVA	       = ntP->el_lepMVA->at(idx);
-     _lepMVA_Moriond16 = ntP->el_lepMVA_Moriond16->at(idx);
-     _mvaNonTrigV0     = ntP->el_mvaNonTrigV0->at(idx);
- 
-     _lepMVA_miniRelIsoCharged    = ntP->el_lepMVA_miniRelIsoCharged->at(idx);
-     _lepMVA_miniRelIsoNeutral    = ntP->el_lepMVA_miniRelIsoNeutral->at(idx);
-     _lepMVA_jetPtRelv2           = ntP->el_lepMVA_jetPtRelv2->at(idx);  
-     //_lepMVA_jetDR                = ntP->el_lepMVA_jetDR->at(idx);
-     _lepMVA_jetPtRatio           = ntP->el_lepMVA_jetPtRatio->at(idx);
-     _lepMVA_jetBTagCSV           = ntP->el_lepMVA_jetBTagCSV->at(idx);
-     _lepMVA_sip3d                = ntP->el_lepMVA_sip3d->at(idx);
-     _lepMVA_dxy                  = ntP->el_lepMVA_dxy->at(idx);
-     _lepMVA_dz                   = ntP->el_lepMVA_dz->at(idx);
-     _lepMVA_mvaId                = ntP->el_lepMVA_mvaId->at(idx);
-     _lepMVA_eta                  = ntP->el_lepMVA_eta->at(idx);
-     _lepMVA_jetNDauChargedMVASel = ntP->el_lepMVA_jetNDauChargedMVASel->at(idx);
-
- 
-     _miniIso			     = ntP->el_miniIsoTTH->at(idx);
+     _miniIso			                = ntP->el_miniIsoTTH->at(idx);
   
-     _sigmaIetaIeta		     = ntP->el_sigmaIetaIeta->at(idx);    
-     _superCluster_eta  	     = ntP->el_superCluster_eta->at(idx);     
-     _hadronicOverEm		     = ntP->el_hadronicOverEm->at(idx);    
-     _deltaEtaSuperClusterTrackAtVtx = ntP->el_deltaEtaSuperClusterTrackAtVtx->at(idx);
-     _deltaPhiSuperClusterTrackAtVtx = ntP->el_deltaPhiSuperClusterTrackAtVtx->at(idx);
-     _eSuperClusterOverP	     = ntP->el_eSuperClusterOverP->at(idx);	
-     _correctedEcalEnergy	     = ntP->el_correctedEcalEnergy->at(idx);
-     _ecalEnergy	             = ntP->el_ecalEnergy->at(idx);
+     _sigmaIetaIeta		                = ntP->el_sigmaIetaIeta->at(idx);    
+     _superCluster_eta  	            = ntP->el_superCluster_eta->at(idx);     
+     _hadronicOverEm		            = ntP->el_hadronicOverEm->at(idx);    
+     _deltaEtaSuperClusterTrackAtVtx    = ntP->el_deltaEtaSuperClusterTrackAtVtx->at(idx);
+     _deltaPhiSuperClusterTrackAtVtx    = ntP->el_deltaPhiSuperClusterTrackAtVtx->at(idx);
+     _eSuperClusterOverP	            = ntP->el_eSuperClusterOverP->at(idx);	
+     _correctedEcalEnergy	            = ntP->el_correctedEcalEnergy->at(idx);
+     _ecalEnergy	                    = ntP->el_ecalEnergy->at(idx);
     
-     _trackMomentumError	     = ntP->el_trackMomentumError->at(idx);
-     _tightCharge                    = ntP->el_isGsfCtfScPixChargeConsistent->at(idx);
-      
+     _trackMomentumError	            = ntP->el_trackMomentumError->at(idx);
+     _tightCharge                       = ntP->el_isGsfCtfScPixChargeConsistent->at(idx) + ntP->el_isGsfScPixChargeConsistent->at(idx);
 }
 
 void Electron::init()
 {
 
     // general informations
-    _E                              = -888;
-    _pt                             = -888;
+    _E                              = 0.;
+    _pt                             = 0.;
     _eta                            = -888;
     _phi                            = -888;
-    _m                              = -888;
+    _m                              = 0.;
     _charge                         = 0;
     _id                             = 0;
 
     // Id
-    _isLooseCBId           	    = 0;
-    _isMediumCBId          	    = 0;
-    _isLoose               	    = 0;
-    _isMedium              	    = 0;
-    _isTight               	    = 0;
-    _isLooseMVA            	    = 0;
-    _isTightMVA            	    = 0;
-    _isLooseTTH            	    = 0;
-    _isFakeableTTH         	    = 0;
-    _isTightTTH            	    = 0;
+    _isLooseCBId           	        = 0;
+    _isMediumCBId          	        = 0;
+    _isLoose               	        = 0;
+    _isMedium                  	    = 0;
+    _isTight                   	    = 0;
+    _isLooseMVA                	    = 0;
+    _isTightMVA             	    = 0;
+    _isLooseTTH            	        = 0;
+    _isFakeableTTH             	    = 0;
+    _isTightTTH                	    = 0;
 
 
     // variables for Id
@@ -111,7 +106,7 @@ void Electron::init()
 
     // more variables
     _lepMVA                         = -888; 
-    _lepMVA_Moriond16               = -888;  
+    _lepMVA_TTH                     = -888;  
     
     
     _lepMVA_miniRelIsoCharged       = -888.;
@@ -145,8 +140,6 @@ void Electron::init()
     _trackMomentumError             = -888;      
     _tightCharge                    = 0;
     _mvaNonTrigV0                   = -888;
-    
-    
 }
 
 bool Electron::sel()
@@ -204,8 +197,6 @@ bool Electron::sel()
     //if (abs((1.0/lep.ecalEnergy() - lep.eSuperClusterOverP()/lep.ecalEnergy()) if lep.ecalEnergy()>0. else 9e9)>=0.01): return False
     //return True
 
-   
-
     bool cond_closuretest = true;
     if ( _pt > 30 )
     {
@@ -240,14 +231,14 @@ bool Electron::sel()
     pass_losthits = (_nlosthits == 0 );
     pass_pt       = (_pt        >  10); // should be 0.85 * pt(jet) for fakeable object cf v4 of note
 
-    bool pass_lepMVA_Moriond16  = _lepMVA_Moriond16 > 0.75 ;
+    bool pass_lepMVA_TTH  = _lepMVA_TTH > 0.75 ;
     
     bool pass_lepMVA_jetBTagCSV089 = _lepMVA_jetBTagCSV < 0.89;
     
     bool pass_lepMVA_jetBtagCSVPtRatio = false;
     
-    if (!pass_lepMVA_Moriond16 && _lepMVA_jetPtRatio > 0.3 && _lepMVA_jetBTagCSV < 0.605) pass_lepMVA_jetBtagCSVPtRatio = true;
-    if ( pass_lepMVA_Moriond16 && pass_lepMVA_jetBTagCSV089) pass_lepMVA_jetBtagCSVPtRatio = true;
+    if (!pass_lepMVA_TTH && _lepMVA_jetPtRatio > 0.3 && _lepMVA_jetBTagCSV < 0.605) pass_lepMVA_jetBtagCSVPtRatio = true;
+    if ( pass_lepMVA_TTH && pass_lepMVA_jetBTagCSV089) pass_lepMVA_jetBtagCSVPtRatio = true;
     
     bool isFakeableTTH     = ( pass_pt          &&
                                pass_eta         &&
@@ -259,16 +250,15 @@ bool Electron::sel()
                                pass_losthits    &&
                                cond_closuretest &&
                                pass_muOverlap   && 
-			       pass_lepMVA_jetBtagCSVPtRatio
-			       );
+            			       pass_lepMVA_jetBtagCSVPtRatio
+			                 );
     
     _isFakeableTTH = isFakeableTTH;
 
     // Tight
 
-    bool pass_CV       = (_passCV          );
-    bool pass_tightCharge   = (_tightCharge == 1); // >1);// wait for new flattree
-
+    bool pass_CV            = (_passCV         );
+    bool pass_tightCharge   = (_tightCharge  >1);
   
     bool isTightTTH     = ( pass_pt               &&
                             pass_eta              &&
@@ -281,48 +271,55 @@ bool Electron::sel()
                             pass_CV               &&
                             cond_closuretest      &&
                             pass_muOverlap        && 
-			    pass_lepMVA_Moriond16 &&
-			    pass_lepMVA_jetBTagCSV089 && 
-			    pass_tightCharge);
+			                pass_lepMVA_TTH       &&
+			                pass_lepMVA_jetBTagCSV089 && 
+			                pass_tightCharge);
 
     _isTightTTH = isTightTTH;
 
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     
     // synchronization printout
-    //if( isPreselectionElectron ) 
-    /*std::cout                                                     << std::setw(10)
-                                           << nt->NtEvent->at(0).id()                          << std::setw(10)
-                                           << _pt                                              << std::setw(10)
-                                           << _eta                                             << std::setw(10)
-                                           << _phi                                             << std::setw(10)
-                                           << _E                                               << std::setw(5)
-                                           << ntP->el_id->at(idx)                              << std::setw(5)
-                                           << ntP->el_charge->at(idx)                          << std::setw(15)
-                                           << ntP->el_miniIsoTTH->at(idx)                      << std::setw(15)
-                                           << ntP->el_lepMVA_miniRelIsoCharged->at(idx)        << std::setw(15)
-                                           << ntP->el_lepMVA_miniRelIsoNeutral->at(idx)        << std::setw(10)
-                                           << ntP->el_lepMVA_jetPtRelv2->at(idx)               << std::setw(10)
-                                           //<< 0.0                                              << std::setw(10)
-                                           << ntP->el_lepMVA_jetBTagCSV->at(idx)               << std::setw(10)
-                                           << ntP->el_lepMVA_jetPtRatio->at(idx)               << std::setw(10)
-                                           << SIP                                              << std::setw(10)
-                                           << fabs(_dxy)                                       << std::setw(10)
-                                           << fabs(_dz)                                        << std::setw(21)
-                                           << fabs( ntP->el_mvaNonTrigV0->at(idx) )            << std::endl;
-     */
+    if( false ) //isLooseTTH )
+    {
+        std::cout   << nt->NtEvent->at(0).id()                          << " "
+                    << _pt                                              << " "
+                    << _eta                                             << " "
+                    << _phi                                             << " "
+                    << _E                                               << " "
+                    << ntP->el_id->at(idx)                              << " "
+                    << ntP->el_charge->at(idx)                          << " "
+                    << ntP->el_miniIsoTTH->at(idx)                      << " "
+                    << ntP->el_lepMVA_miniRelIsoCharged->at(idx)        << " "
+                    << ntP->el_lepMVA_miniRelIsoNeutral->at(idx)        << " "
+                    << ntP->el_lepMVA_jetPtRelv2->at(idx)               << " "
+                    //<< 0.0                                              << " "
+                    << ntP->el_lepMVA_jetBTagCSV->at(idx)               << " "
+                    << ntP->el_lepMVA_jetPtRatio->at(idx)               << " "
+                    << SIP                                              << " "
+                    << fabs(_dxy)                                       << " "
+                    << fabs(_dz)                                        << " "
+                    << fabs( ntP->el_mvaNonTrigV0->at(idx) )            << " "
+                    << _lepMVA_TTH                                      << " "
+                    << std::endl;
     
-     /*std::cout << "Event:           " << nt->NtEvent->at(0).id()
-               << " pass_pt:        " << pass_pt
-               << " pass_eta:       " << pass_eta
-               << " pass_dxy:       " << pass_dxy
-               << " pass_dz:        " << pass_dz
-               << " pass_miniIso:   " << pass_miniIso
-               << " pass_SIP:       " << pass_SIP
-               << " pass_isLoose:   " << pass_isLoose
-               << " pass_losthits:  " << pass_losthits
-               << " pass_CV:        " << pass_CV
-               << " pass_muOverlap: " << pass_muOverlap << std::endl;*/
+        /*std::cout   << "Event:           "              << nt->NtEvent->at(0).id()
+                    << " pass_pt:        "              << pass_pt
+                    << " pass_eta:       "              << pass_eta
+                    << " pass_dxy:       "              << pass_dxy
+                    << " pass_dz:        "              << pass_dz
+                    << " pass_miniIso:   "              << pass_miniIso
+                    << " pass_SIP:       "              << pass_SIP
+                    << " pass_isLoose:   "              << pass_isLoose
+                    << " pass_losthits:  "              << pass_losthits
+                    << " pass_CV:        "              << pass_CV
+                    << " pass_muOverlap: "              << pass_muOverlap 
+                    << " pass_lepMVA_TTH: "             << pass_lepMVA_TTH
+                    << " pass_lepMVA_jetBTagCSV089: "   << pass_lepMVA_jetBTagCSV089
+                    << " pass_tightCharge: "            << pass_tightCharge
+                    << " is Tight: "                    << isTightTTH
+                    << std::endl;*/
+    }
 
     return isLooseTTH;
 }

@@ -19,6 +19,8 @@ void Event::read(bool isdata)
     _lumi             = ntP->ev_lumi;
     _rho              = ntP->ev_rho;
 
+    //std::cout << "id: " << _id << std::endl;
+
     // pv
     _pv_n             = ntP->nvertex;
     _pv_z             = ntP->pv_z;

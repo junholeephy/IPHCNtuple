@@ -17,7 +17,7 @@ Lepton::Lepton()
     
     _isFakeableTTH = false;
     _isTightTTH    = false;
-    _lepMVA        =  0.;
+    _lepMVA_TTH    =  0.;
 
     _charge     =  0;
 }

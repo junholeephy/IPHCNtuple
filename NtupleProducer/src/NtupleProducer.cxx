@@ -79,12 +79,12 @@ int main(int argc, char *argv[])
     Muon      mu;
     Tau      tau; 
     Jet      jet; 
-  
+
     Truth  truth;
     GenJet genjet;
     TriggerObj trigObj;
-    
-   
+
+
     evdebug = new std::vector<int>();
     //   evdebug->push_back(120);
 
@@ -95,19 +95,19 @@ int main(int argc, char *argv[])
     int n_el  = 0;
     int n_tau = 0;
     int n_jet = 0;
-   
-  
+
+
     JetCorrectionUncertainty *jesTotal;
-  
-   
+
+
     if (isdata == false) jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_MC/Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
     else		 jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_DATA/Fall15_25nsV2_DATA_UncertaintySources_AK4PFchs.txt", "Total")));
-    
+
     for(Long64_t i=0;i<nentries;i++)
     {
         if( i > nmax && nmax >= 0 ) break; 
 
-       
+
         ch->GetEntry(i);
 
 
@@ -118,10 +118,7 @@ int main(int argc, char *argv[])
 
         // event
         ev.init();
-
-
         ev.read(isdata); 
-	
 
         //	if( isHtoWW ) ev._tth_channel = 0;
         //	else if( isHtoZZ ) ev._tth_channel = 1;
@@ -151,10 +148,10 @@ int main(int argc, char *argv[])
                 mu_presel = true;
                 n_mu_evt ++;
             }
+            if(n_mu_evt==1) break;
         }
         if(mu_presel) n_mu++;
-    
-  
+
         int n_el_evt = 0;
 
         // electrons
@@ -164,18 +161,18 @@ int main(int argc, char *argv[])
 
             el.init();
             el.read();
-            if( el.sel() ) nlep++;
 
-            if( el.sel()) 
+            if( el.sel()  ) 
             {    
                 nt->NtElectron->push_back(el);
                 el_presel = true;
                 n_el_evt++;
             }
+            //if(n_el_evt==1) break;
         }
         if(el_presel) n_el++;
-	
-   
+
+
         // preselection
         if ( (n_mu_evt + n_el_evt) < 2 ) continue; 
 
@@ -185,10 +182,8 @@ int main(int argc, char *argv[])
             idx = j;
 
             tau.init();
-	    
             tau.read();
-            tau.init();
-   
+
             if (tau.sel()) 
             {    
                 nt->NtTau->push_back(tau);
@@ -197,7 +192,7 @@ int main(int argc, char *argv[])
         }	
         if(tau_presel) n_tau++;
 
-  
+
         // jets
         for(int j=0;j<ntP->jet_n;j++)
         {
@@ -205,13 +200,13 @@ int main(int argc, char *argv[])
 
             jet.init();
             jet.read(isdata);
-	    
-	    jesTotal->setJetPt(ntP->jet_pt->at(idx));
+
+            jesTotal->setJetPt(ntP->jet_pt->at(idx));
             jesTotal->setJetEta(ntP->jet_eta->at(idx));
-            
-	    jet.setJESUncertainty(jesTotal->getUncertainty(true));
+
+            jet.setJESUncertainty(jesTotal->getUncertainty(true));
             //jet.setJESUncertainty(0.);
-  
+
             if (jet.sel()) 
             {    
                 nt->NtJet->push_back(jet);
@@ -230,7 +225,7 @@ int main(int argc, char *argv[])
 
           if (trigObj.sel()) nt->NtTriggerObj->push_back(trigObj);
           }*/
- 
+
         if (!isdata)
         {
             // genjets
@@ -248,18 +243,18 @@ int main(int argc, char *argv[])
             truth.init();
             truth.read();
             truth.readMultiLepton();
- 
+
             nt->NtTruth->push_back(truth);
         }
 
         /*
-	std::cout << " n_mu :  " << n_mu  << std::endl
-          << " n_el :  " << n_el  << std::endl
-          << " n_tau:  " << n_tau << std::endl
-          << " n_jet:  " << n_jet << std::endl;*/
+           std::cout << " n_mu :  " << n_mu  << std::endl
+           << " n_el :  " << n_el  << std::endl
+           << " n_tau:  " << n_tau << std::endl
+           << " n_jet:  " << n_jet << std::endl;*/
 
         nt->fill();
-	
+
     }  
 
     delete evdebug;

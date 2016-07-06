@@ -73,7 +73,7 @@ class Tree {
         vector<std::string> *mc_pdfweightIds;
 
 
-	// ####################################
+        // ####################################
         // #   ____  _ _                      #
         // #  |  _ \(_) | ___   _   _ _ __    #
         // #  | |_) | | |/ _ \ | | | | '_ \   #
@@ -170,6 +170,7 @@ class Tree {
         vector<float>   *el_lepMVA_jetNDauChargedMVASel;
         vector<float>   *el_lepMVA_Moriond16;
         vector<int>     *el_isGsfCtfScPixChargeConsistent;
+        vector<int>     *el_isGsfScPixChargeConsistent;
         vector<int>     *el_passConversionVeto;
         vector<float>   *el_deltaEtaSuperClusterTrackAtVtx;
         vector<float>   *el_deltaPhiSuperClusterTrackAtVtx;
@@ -182,7 +183,7 @@ class Tree {
         vector<float>   *el_sigmaIetaIeta;
         vector<float>   *el_superCluster_eta;
         vector<float>   *el_correctedEcalEnergy;
-	vector<float>   *el_ecalEnergy;
+        vector<float>   *el_ecalEnergy;
         vector<float>   *el_eSuperClusterOverP;
         vector<float>   *el_trackMomentumError;
 
@@ -326,8 +327,8 @@ class Tree {
         vector<float>   *tau_againstMuonTight3;
         vector<float>   *tau_againstElectronVLooseMVA6;
         vector<float>   *tau_againstElectronLooseMVA6;
-        vector<float>   *tau_againstElectronMediumMVA6; 
-	vector<float>   *tau_againstElectronTightMVA6;
+        vector<float>   *tau_againstElectronMediumMVA6;
+        vector<float>   *tau_againstElectronTightMVA6;
         vector<float>   *tau_pfEssential_jet_pt;
         vector<float>   *tau_pfEssential_jet_eta;
         vector<float>   *tau_pfEssential_jet_phi;
@@ -942,7 +943,7 @@ class Tree {
         TBranch        *b_mc_pdfweights;  //!
         TBranch        *b_mc_pdfweightIds;  //!
 
-	// ####################################
+        // ####################################
         // #   ____  _ _                      #
         // #  |  _ \(_) | ___   _   _ _ __    #
         // #  | |_) | | |/ _ \ | | | | '_ \   #
@@ -1039,6 +1040,7 @@ class Tree {
         TBranch        *b_el_lepMVA_eta;   //!
         TBranch        *b_el_lepMVA_jetNDauChargedMVASel;   //!
         TBranch        *b_el_isGsfCtfScPixChargeConsistent;   //!
+        TBranch        *b_el_isGsfScPixChargeConsistent;
         TBranch        *b_el_passConversionVeto;   //!
         TBranch        *b_el_deltaEtaSuperClusterTrackAtVtx;
         TBranch        *b_el_deltaPhiSuperClusterTrackAtVtx;
@@ -1051,7 +1053,7 @@ class Tree {
         TBranch        *b_el_sigmaIetaIeta;
         TBranch        *b_el_superCluster_eta;
         TBranch        *b_el_correctedEcalEnergy;
-	TBranch        *b_el_ecalEnergy;
+        TBranch        *b_el_ecalEnergy;
         TBranch        *b_el_eSuperClusterOverP;
         TBranch        *b_el_trackMomentumError;
 
@@ -1192,11 +1194,11 @@ class Tree {
         TBranch   *b_tau_puCorrPtSum;
         TBranch   *b_tau_againstMuonLoose3;
         TBranch   *b_tau_againstMuonTight3;
-	//AC8X
+        //AC8X
         TBranch   *b_tau_againstElectronVLooseMVA6;
         TBranch   *b_tau_againstElectronLooseMVA6;
-        TBranch   *b_tau_againstElectronMediumMVA6;  
-	TBranch   *b_tau_againstElectronTightMVA6;
+        TBranch   *b_tau_againstElectronMediumMVA6;
+        TBranch   *b_tau_againstElectronTightMVA6;
         TBranch   *b_tau_pfEssential_jet_pt;
         TBranch   *b_tau_pfEssential_jet_eta;
         TBranch   *b_tau_pfEssential_jet_phi;
