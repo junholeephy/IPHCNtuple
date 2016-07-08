@@ -108,7 +108,7 @@ bool Jet::sel()
     for(int im=0;im<nMuon;im++)
     {
         float dr = GetDeltaR(_eta,_phi,nt->NtMuon->at(im).eta(),nt->NtMuon->at(im).phi());
-        if( dr < 0.4 && nt->NtMuon->at(im).pt() > 10. ) pass_muOverlap = 0; //&& nt->NtMuon->at(im).isTight() ) pass_muOverlap = 0;
+        if( dr < 0.4 && nt->NtMuon->at(im).pt() > 10. && nt->NtMuon->at(im).isFakeableTTH() ) pass_muOverlap = 0;
     }  
 
     bool pass_elOverlap = 1;
@@ -116,7 +116,7 @@ bool Jet::sel()
     for(int ie=0;ie<nElectron;ie++)
     {
         float dr = GetDeltaR(_eta,_phi,nt->NtElectron->at(ie).eta(),nt->NtElectron->at(ie).phi());
-        if( dr < 0.4 && nt->NtElectron->at(ie).pt() > 10. ) pass_elOverlap = 0; //&& nt->NtElectron->at(ie).isTight() ) pass_elOverlap = 0;
+        if( dr < 0.4 && nt->NtElectron->at(ie).pt() > 10. && nt->NtElectron->at(ie).isFakeableTTH() ) pass_elOverlap = 0;
     }
 
     bool pass_tauOverlap = 1;
@@ -124,29 +124,34 @@ bool Jet::sel()
     for(int it=0;it<nTau;it++)
     {
         float dr = GetDeltaR(_eta,_phi,nt->NtTau->at(it).eta(),nt->NtTau->at(it).phi());
-        if( dr < 0.4 && nt->NtTau->at(it).pt() > 10. ) pass_tauOverlap = 0; //&& nt->NtTau->at(it).isTight() ) pass_tauOverlap = 0;
+        if( dr < 0.4 && nt->NtTau->at(it).pt() > 10. ) 
+        {
+            pass_tauOverlap = 0; //&& nt->NtTau->at(it).isTight() ) pass_tauOverlap = 0;
+            std::cout << nt->NtTau->at(it).pt() << std::endl;
+        }
     }
 
     bool isSelectionJet = ( pass_pt         &&
-            pass_eta        &&
-            pass_isLoose    &&
-            pass_muOverlap  &&
-            pass_elOverlap  &&
-            pass_tauOverlap 
-            );
+                            pass_eta        &&
+                            pass_isLoose    &&
+                            pass_muOverlap  &&
+                            pass_elOverlap  &&
+                            pass_tauOverlap 
+                          );
 
-    cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     // synchronization printout
-    /*if( isSelectionJet ) std::cout  << nt->NtEvent->at(0).id()                                      << std::setw(10)
-      << _pt                                                          << std::setw(10)
-      << _eta                                                         << std::setw(10)
-      << _phi                                                         << std::setw(10)
-    //<< _isLoose                                                     << std::setw(10)
-    << _E                                                           << std::setw(10)
-    << _CSVv2                                                       << std::setw(10)
-    << _metpt                                                       << std::setw(10)
-    << _metphi                                                      << std::endl;
-    */
+    if( true ) std::cout    << "Jet "
+                            << nt->NtEvent->at(0).id()          << " "
+                            << _pt                              << " "
+                            << _eta                             << " "
+                            << _phi                             << " "
+                            << _isLoose                         << " "
+                            << _E                               << " "
+                            << pass_muOverlap                   << " "
+                            << pass_elOverlap                   << " "
+                            << pass_tauOverlap
+                            << std::endl;
+
     return isSelectionJet;
 }
 

@@ -19,6 +19,7 @@ void Tau::read()
     // general informations
     if( CHECK(ntP->tau_E)                             ) _E      = ntP->tau_E->at(idx);
     if( CHECK(ntP->tau_pt)                            ) _pt     = ntP->tau_pt->at(idx);
+    if( CHECK(ntP->tau_pt)                            ) _ptUnc  = ntP->tau_pt->at(idx);
     if( CHECK(ntP->tau_eta)                           ) _eta    = ntP->tau_eta->at(idx);
     if( CHECK(ntP->tau_phi)                           ) _phi    = ntP->tau_phi->at(idx);
     if( CHECK(ntP->tau_m)                             ) _m      = ntP->tau_m->at(idx);
@@ -104,11 +105,12 @@ void Tau::init()
     _fakeType = -1;
 
     // general informations
-    _E        = -666;
-    _pt       = -666;
-    _eta      = -666;
-    _phi      = -666;
-    _m        = -666;
+    _E        = -100;
+    _pt       = -100;
+    _ptUnc    = -100;
+    _eta      = -100;
+    _phi      = -100;
+    _m        = -100;
     _charge   =    0;
     _id       =    0;
 
@@ -119,8 +121,8 @@ void Tau::init()
     _lepMVA_TTH     = 0.; //dummy !!!
 
     // variables for Id
-    _dxy      = -666;
-    _dz       = -666;
+    _dxy      = -100;
+    _dz       = -100;
 
     // more variables
     _decayMode              = -1;
@@ -188,10 +190,8 @@ bool Tau::sel()
     bool pass_dxy = (fabs(_dxy) < 1000 );
     bool pass_dz  = (fabs(_dz)  < 0.2  );
 
-    bool pass_decayModeFindingOldDMs                     = ( ntP->tau_decayModeFindingOldDMs->at(idx)                     > 0.5 );
-    //bool pass_byLooseCombinedIsolationDeltaBetaCorr3Hits = ( ntP->tau_byLooseCombinedIsolationDeltaBetaCorr3Hits->at(idx) > 0.5 );
-    //bool pass_byLooseCombinedIsolationDeltaBetaCorr3Hits = ( ntP->tau_byLooseIsolationMVA3newDMwLT->at(idx)               > 0.5 );
-    bool pass_byLooseIsolationMVArun2v1DBdR03oldDMwLT = (ntP->tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT->at(idx)         > 0.5 );
+    bool pass_decayModeFindingOldDMs                        = ( ntP->tau_decayModeFindingOldDMs->at(idx)                          > 0.5 );
+    bool pass_byLooseIsolationMVArun2v1DBdR03oldDMwLT       = ( ntP->tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT->at(idx)         > 0.5 );
 
     bool pass_muOverlap = 1;
     int nMuon = nt->NtMuon->size();
@@ -214,23 +214,30 @@ bool Tau::sel()
                                 pass_dxy                                        &&
                                 pass_dz                                         &&
                                 pass_decayModeFindingOldDMs                     &&
-                                //pass_byLooseCombinedIsolationDeltaBetaCorr3Hits &&
                                 pass_byLooseIsolationMVArun2v1DBdR03oldDMwLT    &&
                                 pass_muOverlap                                  &&
                                 pass_elOverlap                                   );
 
+    bool pass_byMediumIsolationMVArun2v1DBdR03oldDMwLT = (ntP->tau_byMediumIsolationMVArun2v1DBdR03oldDMwLT->at(idx)         > 0.5 );
+
+    _isTightTTH         = ( isSelectionTau                                  &&
+                            pass_byMediumIsolationMVArun2v1DBdR03oldDMwLT   );
+
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     // synchronization printout
-    /*if( isSelectionTau ) std::cout << nt->NtEvent->at(0).id()                                      << std::setw(10)
-                                   << _pt                                                          << std::setw(10)
-                                   << _eta                                                         << std::setw(10)
-                                   << _phi                                                         << std::setw(10)
-                                   << _E                                                           << std::setw(10)
-                                   << _dxy                                                         << std::setw(10)
-                                   << _dz                                                          << std::setw(10)
-                                   << ntP->tau_decayModeFindingOldDMs->at(idx)                     << std::setw(10)
-                                   << ntP->tau_byLooseCombinedIsolationDeltaBetaCorr3Hits->at(idx) << std::endl;
-    */
+    if( true )      std::cout   << "Taus: "
+                                << nt->NtEvent->at(0).id()                                      << " "
+                                << _pt                                                          << " "
+                                << _eta                                                         << " "
+                                << _phi                                                         << " "
+                                << _E                                                           << " "
+                                << _dxy                                                         << " "
+                                << _dz                                                          << " "
+                                << ntP->tau_decayModeFindingOldDMs->at(idx)                     << " "
+                                << ntP->tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT->at(idx)    << " "
+                                << ntP->tau_byMediumIsolationMVArun2v1DBdR03oldDMwLT->at(idx)   << std::endl;
+
+
     return isSelectionTau;
 }
 

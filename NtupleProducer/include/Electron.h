@@ -23,6 +23,7 @@ class Electron : public Base
         // General informations
         float E()                            {return _E;};
         float pt()                           {return _pt;};
+        float ptUnc()                        {return _ptUnc;};
         float eta()                          {return _eta;};
         float phi()                          {return _phi;};
         float m()                            {return _m;};
@@ -43,6 +44,7 @@ class Electron : public Base
         float dz()                              {return _dz;};
         bool  passPtEta()                       {return _passPtEta;};
         int   tightCharge()                     {return _tightCharge;};
+        bool passTightCharge()                  {return _passTightCharge;};
 
         // MVA
         float lepMVA()                          {return _lepMVA;};
@@ -93,42 +95,44 @@ class Electron : public Base
 
     protected:
 
-        int _ID;
+        int     _ID;
 
-        int _fakeType;
+        int     _fakeType;
 
         // General informations
-        float _E;
-        float _pt;
-        float _eta;
-        float _phi;
-        float _m;
-        int   _charge;
-        int   _id;
+        float   _E;
+        float   _pt;
+        float   _ptUnc;
+        float   _eta;
+        float   _phi;
+        float   _m;
+        int     _charge;
+        int     _id;
 
         // Id
-        bool _isLooseCBId;
-        bool _isMediumCBId;
-        bool _isLoose;
-        bool _isMedium;
-        bool _isTight;
-        bool _isLooseMVA;
-        bool _isTightMVA;
-        bool _isLooseTTH;
-        bool _isFakeableTTH;
-        bool _isTightTTH;
+        bool    _isLooseCBId;
+        bool    _isMediumCBId;
+        bool    _isLoose;
+        bool    _isMedium;
+        bool    _isTight;
+        bool    _isLooseMVA;
+        bool    _isTightMVA;
+        bool    _isLooseTTH;
+        bool    _isFakeableTTH;
+        bool    _isTightTTH;
 
         // Variables for Id
-        float _dxy;
-        float _dz;
-        float _miniIso;
-        int   _nlosthits;
-        bool  _passCV;
-        bool  _isPCC;
-        bool  _passPtEta;
-        float _ip3d;
-        float _ip3dErr;
-        int   _tightCharge;
+        float   _dxy;
+        float   _dz;
+        float   _miniIso;
+        int     _nlosthits;
+        bool    _passCV;
+        bool    _isPCC;
+        bool    _passPtEta;
+        float   _ip3d;
+        float   _ip3dErr;
+        int     _tightCharge;
+        bool    _passTightCharge;
 
         // MVA
         float _lepMVA;

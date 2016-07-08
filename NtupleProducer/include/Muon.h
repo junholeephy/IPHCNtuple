@@ -26,6 +26,7 @@ class Muon : public Base
         // General informations
         float E()                  {return _E;};
         float pt()                 {return _pt;};
+        float ptUnc()              {return _ptUnc;};
         float eta()                {return _eta;};
         float phi()                {return _phi;};
         float m()                  {return _m;};
@@ -52,6 +53,7 @@ class Muon : public Base
         //float dB3D()               {return _dB3D;};
         //float edB3D()              {return _edB3D;};
         float tightCharge()        {return _tightCharge;};
+        bool  passTightCharge()    {return _passTightCharge;};
 
         // MVA
         float lepMVA()             {return _lepMVA;};
@@ -80,6 +82,7 @@ class Muon : public Base
         // General informations
         float _E;
         float _pt;
+        float _ptUnc;
         float _eta;
         float _phi;
         float _m;
@@ -107,8 +110,7 @@ class Muon : public Base
         //float _dB3D;
         //float _edB3D;
         float _tightCharge;
-
-
+        bool  _passTightCharge;
 
         // MVA
         float _lepMVA;

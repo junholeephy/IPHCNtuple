@@ -18,6 +18,7 @@ void Electron::read()
     
      _E 	                            = ntP->el_E->at(idx);
      _pt	                            = ntP->el_pt->at(idx);
+     _ptUnc                             = ntP->el_pt->at(idx);
      _eta	                            = ntP->el_eta->at(idx);
      _phi	                            = ntP->el_phi->at(idx);
      _m 	                            = ntP->el_m->at(idx);
@@ -71,11 +72,12 @@ void Electron::init()
 {
 
     // general informations
-    _E                              = 0.;
-    _pt                             = 0.;
-    _eta                            = -888;
-    _phi                            = -888;
-    _m                              = 0.;
+    _E                              = -100.;
+    _pt                             = -100.;
+    _ptUnc                          = -100.;
+    _eta                            = -100.;
+    _phi                            = -100.;
+    _m                              = -100.;
     _charge                         = 0;
     _id                             = 0;
 
@@ -93,53 +95,53 @@ void Electron::init()
 
 
     // variables for Id
-    _dxy                            = -888;
-    _dz                             = -888; 
-    _miniIso                        = -888;
-    _nlosthits                      = -888;
+    _dxy                            = -100;
+    _dz                             = -100; 
+    _miniIso                        = -100;
+    _nlosthits                      = -100;
    
     _passCV                         = 0;
     _isPCC                          = 0;
     _passPtEta                      = 0;
-    _ip3d                           = -888.;
-    _ip3dErr                        = -888.;
+    _ip3d                           = -100.;
+    _ip3dErr                        = -100.;
 
     // more variables
-    _lepMVA                         = -888; 
-    _lepMVA_TTH                     = -888;  
+    _lepMVA                         = -100; 
+    _lepMVA_TTH                     = -100;  
     
     
-    _lepMVA_miniRelIsoCharged       = -888.;
-    _lepMVA_miniRelIsoNeutral       = -888.;
-    _lepMVA_jetPtRelv2              = -888.;  
-    //_lepMVA_jetDR                   = -888.;
-    _lepMVA_jetPtRatio              = -888.;
-    _lepMVA_jetBTagCSV              = -888.;
-    _lepMVA_sip3d                   = -888.;
-    _lepMVA_dxy                     = -888.;
-    _lepMVA_dz                      = -888.;
-    _lepMVA_mvaId                   = -888.;
+    _lepMVA_miniRelIsoCharged       = -100.;
+    _lepMVA_miniRelIsoNeutral       = -100.;
+    _lepMVA_jetPtRelv2              = -100.;  
+    //_lepMVA_jetDR                   = -100.;
+    _lepMVA_jetPtRatio              = -100.;
+    _lepMVA_jetBTagCSV              = -100.;
+    _lepMVA_sip3d                   = -100.;
+    _lepMVA_dxy                     = -100.;
+    _lepMVA_dz                      = -100.;
+    _lepMVA_mvaId                   = -100.;
     
-    _lepMVA_eta                     = -888.;
-    _lepMVA_jetNDauChargedMVASel    = -888.;
+    _lepMVA_eta                     = -100.;
+    _lepMVA_jetNDauChargedMVASel    = -100.;
     
     _passChargeFlip                 = 0;
     _hasMatchedConversion           = 0;
     _isGsfCtfScPixChargeConsistent  = 0;
    
-    _sigmaIetaIeta                  = -888.;
-    _hadronicOverEm                 = -888.;
-    _correctedEcalEnergy            = -888.; 
-    _ecalEnergy                     = -888.;
-    _eSuperClusterOverP             = -888.;
-    _deltaEtaSuperClusterTrackAtVtx = -888.;
-    _deltaPhiSuperClusterTrackAtVtx = -888.;
-    _see                            = -888.;
-    _superCluster_eta               = -888.;
+    _sigmaIetaIeta                  = -100.;
+    _hadronicOverEm                 = -100.;
+    _correctedEcalEnergy            = -100.; 
+    _ecalEnergy                     = -100.;
+    _eSuperClusterOverP             = -100.;
+    _deltaEtaSuperClusterTrackAtVtx = -100.;
+    _deltaPhiSuperClusterTrackAtVtx = -100.;
+    _see                            = -100.;
+    _superCluster_eta               = -100.;
 	
-    _trackMomentumError             = -888;      
-    _tightCharge                    = 0;
-    _mvaNonTrigV0                   = -888;
+    _trackMomentumError             = -100;      
+    _tightCharge                    = -100;
+    _mvaNonTrigV0                   = -100;
 }
 
 bool Electron::sel()
@@ -203,11 +205,12 @@ bool Electron::sel()
         if (  ( _sigmaIetaIeta >= 0.011 && fabs(_superCluster_eta) <  1.479 )
            || ( _sigmaIetaIeta >= 0.030 && fabs(_superCluster_eta) >= 1.479 )  ) cond_closuretest = false;
 
-        if (  ( ntP->el_hadronicOverEm->at(idx) >= 0.10 && fabs(_superCluster_eta) <  1.479 )
-           || ( ntP->el_hadronicOverEm->at(idx) >= 0.07 && fabs(_superCluster_eta) >= 1.479 )  ) cond_closuretest = false;
+        if (  ( ntP->el_hadronicOverEm->at(idx) >= 0.10 && fabs(_superCluster_eta) <  1.479 ) ) cond_closuretest = false;
+           //|| ( ntP->el_hadronicOverEm->at(idx) >= 0.07 && fabs(_superCluster_eta) >= 1.479 )  ) cond_closuretest = false;
 
         if (  ( fabs(_deltaEtaSuperClusterTrackAtVtx) >= 0.010 && fabs(_superCluster_eta) <  1.479 ) 
            || ( fabs(_deltaEtaSuperClusterTrackAtVtx) >= 0.008 && fabs(_superCluster_eta) >= 1.479 )  ) cond_closuretest = false;
+
         if (  ( fabs(_deltaPhiSuperClusterTrackAtVtx) >= 0.04  && fabs(_superCluster_eta) <  1.479 ) 
            || ( fabs(_deltaPhiSuperClusterTrackAtVtx) >= 0.07  && fabs(_superCluster_eta) >= 1.479 )  ) cond_closuretest = false;
 
@@ -247,7 +250,7 @@ bool Electron::sel()
                                pass_miniIso     &&
                                pass_SIP         &&
                                pass_isLoose     &&
-                               pass_losthits    &&
+                               //pass_losthits    &&
                                cond_closuretest &&
                                pass_muOverlap   && 
             			       pass_lepMVA_jetBtagCSVPtRatio
@@ -258,7 +261,7 @@ bool Electron::sel()
     // Tight
 
     bool pass_CV            = (_passCV         );
-    bool pass_tightCharge   = (_tightCharge  >1);
+    _passTightCharge        = (_tightCharge  >1);
   
     bool isTightTTH     = ( pass_pt               &&
                             pass_eta              &&
@@ -267,23 +270,39 @@ bool Electron::sel()
                             pass_miniIso          &&
                             pass_SIP              &&
                             pass_isLoose          &&
-                            pass_losthits         &&
+                            //pass_losthits         &&
                             pass_CV               &&
                             cond_closuretest      &&
                             pass_muOverlap        && 
 			                pass_lepMVA_TTH       &&
-			                pass_lepMVA_jetBTagCSV089 && 
-			                pass_tightCharge);
+			                pass_lepMVA_jetBTagCSV089 //&& 
+			                //_passTightCharge
+                            );
 
     _isTightTTH = isTightTTH;
+
+    if(_isFakeableTTH && !_isTightTTH)
+    {
+        float dr_min = 0.5, new_pt = -100;
+        int n_jets = ntP->jet_pt->size();
+        for(int ij=0;ij<n_jets;ij++)
+        {
+            float dr = GetDeltaR(_eta,_phi,ntP->jet_eta->at(ij),ntP->jet_phi->at(ij));
+            if( dr < dr_min ) new_pt = ntP->jet_pt->at(ij) * 0.85;
+            std::cout << "jet[" << ij << "]  dr: " << dr << "  pt: " << ntP->jet_pt->at(ij) << std::endl;
+        }
+        _pt = new_pt;
+    }
 
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     
     // synchronization printout
-    if( false ) //isLooseTTH )
+    if( true )
     {
-        std::cout   << nt->NtEvent->at(0).id()                          << " "
+        std::cout   << "Electrons: "
+                    << nt->NtEvent->at(0).id()                          << " "
                     << _pt                                              << " "
+                    << _ptUnc                                           << " "
                     << _eta                                             << " "
                     << _phi                                             << " "
                     << _E                                               << " "
@@ -303,7 +322,7 @@ bool Electron::sel()
                     << _lepMVA_TTH                                      << " "
                     << std::endl;
     
-        /*std::cout   << "Event:           "              << nt->NtEvent->at(0).id()
+        std::cout   << "Event:           "              << nt->NtEvent->at(0).id()
                     << " pass_pt:        "              << pass_pt
                     << " pass_eta:       "              << pass_eta
                     << " pass_dxy:       "              << pass_dxy
@@ -313,12 +332,13 @@ bool Electron::sel()
                     << " pass_isLoose:   "              << pass_isLoose
                     << " pass_losthits:  "              << pass_losthits
                     << " pass_CV:        "              << pass_CV
+                    << " cond_closuretest: "            << cond_closuretest
                     << " pass_muOverlap: "              << pass_muOverlap 
                     << " pass_lepMVA_TTH: "             << pass_lepMVA_TTH
                     << " pass_lepMVA_jetBTagCSV089: "   << pass_lepMVA_jetBTagCSV089
-                    << " pass_tightCharge: "            << pass_tightCharge
+                    << " pass_tightCharge: "            << _passTightCharge
                     << " is Tight: "                    << isTightTTH
-                    << std::endl;*/
+                    << std::endl;
     }
 
     return isLooseTTH;

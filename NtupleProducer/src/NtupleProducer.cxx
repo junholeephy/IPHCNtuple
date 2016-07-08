@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
                 mu_presel = true;
                 n_mu_evt ++;
             }
-            if(n_mu_evt==1) break;
+            //if(n_mu_evt==1) break;
         }
         if(mu_presel) n_mu++;
 

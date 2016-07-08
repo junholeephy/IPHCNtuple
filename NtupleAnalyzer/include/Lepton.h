@@ -15,6 +15,7 @@ class Lepton
         virtual ~Lepton();
 
         float pt()              {return _pt;};
+        float ptUnc()           {return _ptUnc;};
         float eta()             {return _eta;};
         float phi()             {return _phi;};
         float E()               {return _E;};
@@ -27,6 +28,7 @@ class Lepton
         bool isElectron()       {return _isElectron;};
         bool isMuon()           {return _isMuon;};
         float lepMVA_TTH()      {return _lepMVA_TTH;};
+        bool passTightCharge()  {return _passTightCharge;};
 
         bool isFakeableTTH()    {return _isFakeableTTH;};
         bool isTightTTH()       {return _isTightTTH;};
@@ -35,29 +37,33 @@ class Lepton
 
         template <class T> void setLepton(T *lep, int idx, bool isE, bool isMu)
         {
-            _pt = lep->pt();
-            _eta = lep->eta();
-            _phi = lep->phi();
-            _E = lep->E();
+            _pt             = lep->pt();
+            _ptUnc         = lep->ptUnc();
+            _eta            = lep->eta();
+            _phi            = lep->phi();
+            _E              = lep->E();
 
             _p4.SetPtEtaPhiE(_pt,_eta,_phi,_E);
 
-            _id = lep->id();
+            _id             = lep->id();
 
-            _idx = idx;
-            _isElectron = isE;
-    	    _isMuon = isMu;
+            _idx            = idx;
+            _isElectron     = isE;
+    	    _isMuon         = isMu;
 
-            _charge = lep->charge();
+            _charge         = lep->charge();
 
-    	    _isFakeableTTH = lep->isFakeableTTH();
-            _isTightTTH    = lep->isTightTTH();
-            _lepMVA_TTH    = lep->lepMVA_TTH();
+    	    _isFakeableTTH  = lep->isFakeableTTH();
+            _isTightTTH     = lep->isTightTTH();
+            _lepMVA_TTH     = lep->lepMVA_TTH();
+
+            _passTightCharge = lep->passTightCharge();
         }
 
     protected:
 
         float           _pt;
+        float           _ptUnc;
         float           _eta;
         float           _phi;
         float           _E;
@@ -73,6 +79,7 @@ class Lepton
         bool            _isFakeableTTH;
         bool            _isTightTTH;
         float           _lepMVA_TTH;
+        bool            _passTightCharge;
 
         int             _charge;
 };

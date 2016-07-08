@@ -19,6 +19,7 @@ void Muon::read()
     // general informations
     _E                              = ntP->mu_E->at(idx);
     _pt                             = ntP->mu_pt->at(idx);
+    _ptUnc                          = ntP->mu_pt->at(idx);
     _eta                            = ntP->mu_eta->at(idx);	
     _phi                            = ntP->mu_phi->at(idx);	
     _m                              = ntP->mu_m->at(idx);
@@ -65,13 +66,14 @@ void Muon::init()
 {
     // general informations
     
-    _fakeType          = -666.;
+    _fakeType          = -100.;
     
-    _E                 = -666.;
-    _pt                = -666.;
-    _eta               = -666.;
-    _phi               = -666.;
-    _m                 = -666.;
+    _E                 = -100.;
+    _pt                = -100.;
+    _ptUnc             = -100.;
+    _eta               = -100.;
+    _phi               = -100.;
+    _m                 = -100.;
     _charge            = 0;
     _id                = 0;    
 
@@ -87,34 +89,34 @@ void Muon::init()
     
     // variables for Id
     
-    _dxy                = -666.;
-    _dz                 = -666.;
-    _iso                = -666.; 
-    _sip3d              = -666.;   
-    _bestTrack_pt       = -666.;
-    _bestTrack_ptError  = -666.;
-    //_dB3D               = -666.;
-    //_edB3D              = -666.;
+    _dxy                = -100.;
+    _dz                 = -100.;
+    _iso                = -100.; 
+    _sip3d              = -100.;   
+    _bestTrack_pt       = -100.;
+    _bestTrack_ptError  = -100.;
+    //_dB3D               = -100.;
+    //_edB3D              = -100.;
     _tightCharge        = 999;
 
     // more variables
    
-    _lepMVA            = -666.; 
-    _lepMVA_TTH  = -666.; 
+    _lepMVA            = -100.; 
+    _lepMVA_TTH  = -100.; 
     
       
-    _lepMVA_miniRelIsoCharged    = -666.;
-    _lepMVA_miniRelIsoNeutral    = -666.;
-    _lepMVA_jetPtRelv2           = -666.;
-    //_lepMVA_jetDR                = -666.;
-    _lepMVA_jetPtRatio           = -666.;
-    _lepMVA_jetBTagCSV           = -666.;
-    _lepMVA_sip3d                = -666.;
-    _lepMVA_dxy                  = -666.;
-    _lepMVA_dz                   = -666.;
-    _lepMVA_mvaId                = -666.;
-    _lepMVA_eta                  = -666.;
-    _lepMVA_jetNDauChargedMVASel = -666.;
+    _lepMVA_miniRelIsoCharged    = -100.;
+    _lepMVA_miniRelIsoNeutral    = -100.;
+    _lepMVA_jetPtRelv2           = -100.;
+    //_lepMVA_jetDR                = -100.;
+    _lepMVA_jetPtRatio           = -100.;
+    _lepMVA_jetBTagCSV           = -100.;
+    _lepMVA_sip3d                = -100.;
+    _lepMVA_dxy                  = -100.;
+    _lepMVA_dz                   = -100.;
+    _lepMVA_mvaId                = -100.;
+    _lepMVA_eta                  = -100.;
+    _lepMVA_jetNDauChargedMVASel = -100.;
            
 }
 
@@ -158,32 +160,49 @@ bool Muon::sel()
   
     _isTightTTH = isLooseTTH && pass_lepMVA_TTH && _isMedium && pass_lepMVA_jetBTagCSV089;
    
-    bool _pass_tightCharge = (_tightCharge < 0.2);
-    _isTightTTH = isLooseTTH && pass_lepMVA_TTH && _isMedium && pass_lepMVA_jetBTagCSV089 && _pass_tightCharge;
+    _passTightCharge = (_tightCharge < 0.2);
+    //_isTightTTH = isLooseTTH && pass_lepMVA_TTH && _isMedium && pass_lepMVA_jetBTagCSV089 && _pass_tightCharge;
+
+    if(_isFakeableTTH && !_isTightTTH)
+    {
+        float dr_min = 0.5, new_pt = -100;
+        int n_jets = ntP->jet_pt->size();
+        for(int ij=0;ij<n_jets;ij++)
+        {
+            float dr = GetDeltaR(_eta,_phi,ntP->jet_eta->at(ij),ntP->jet_phi->at(ij));
+            if( dr < dr_min ) new_pt = ntP->jet_pt->at(ij) * 0.85;
+            std::cout << "jet[" << ij << "]  dr: " << dr << "  pt: " << ntP->jet_pt->at(ij) << std::endl;
+        }
+        _pt = new_pt;
+    }
 
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     
     // synchronization printout
-    if( isLooseTTH ) std::cout         << nt->NtEvent->at(0).id()                       << " "
+    if( false )//isLooseTTH ) 
+    {    
+        std::cout                      << nt->NtEvent->at(0).id()                       << " "
                                        << _pt                                           << " "
+                                       << _ptUnc                                        << " "
                                        << _eta                                          << " "
                                        << _phi                                          << " "
                                        << _E                                            << " "
                                        << ntP->mu_id->at(idx)                           << " "
                                        << ntP->mu_charge->at(idx)                       << " "
                                        << ntP->mu_lepMVA_jetNDauChargedMVASel->at(idx)  << " "
-                                       << "miniIso"                                       << " "
+                                       << "miniIso"                                     << " "
                                        << ntP->mu_lepMVA_miniRelIsoCharged->at(idx)     << " "
                                        << ntP->mu_lepMVA_miniRelIsoNeutral->at(idx)     << " "
                                        << ntP->mu_lepMVA_jetPtRelv2->at(idx)            << " "
                                        << ntP->mu_lepMVA_jetBTagCSV->at(idx)            << " "
                                        << ntP->mu_lepMVA_jetPtRatio->at(idx)            << " "
-                                       << fabs(_sip3d)                                   << " "
+                                       << fabs(_sip3d)                                  << " "
                                        << fabs(_dxy)                                    << " "
                                        << _dz                                           << " "
                                        << ntP->mu_segmentCompatibility->at(idx)         << " "
                                        << _lepMVA_TTH                                   << std::endl;
-    
+    }
+
     return isLooseTTH;
 }
 
