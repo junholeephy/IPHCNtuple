@@ -21,8 +21,8 @@ que="cms"
 
 export HOME=$(pwd)
 
-dout="/home-pbs/lebihan/someone/medusa_patch1_prod/ttH/NtupleAnalyzer/test/"
-dout_f="/opt/sbg/scratch1/cms/lebihan/trees_analyzer_prod_medusa_patch1_v3/"
+dout="/home-pbs/lebihan/someone/medusa_patch2_prod/ttH/NtupleAnalyzer/test/"
+dout_f="/opt/sbg/scratch1/cms/lebihan/trees_analyzer_prod_medusa_patch2/"
 
 runName="toy_${jName}"
 logName="log_${jName}"
@@ -34,7 +34,7 @@ mkdir ${logName}
 
 nmax=-1
 
-fxsec="table_MC_Medusa-patch1_20160624.txt"
+fxsec="table_MC_Medusa-patch2_20160705.txt"
 
 fdir=$(ls -d lists*)
 
