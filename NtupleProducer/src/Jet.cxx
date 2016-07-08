@@ -140,7 +140,7 @@ bool Jet::sel()
                           );
 
     // synchronization printout
-    if( true ) std::cout    << "Jet "
+    if( false ) std::cout   << "Jet "
                             << nt->NtEvent->at(0).id()          << " "
                             << _pt                              << " "
                             << _eta                             << " "

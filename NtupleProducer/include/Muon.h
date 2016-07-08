@@ -54,6 +54,7 @@ class Muon : public Base
         //float edB3D()              {return _edB3D;};
         float tightCharge()        {return _tightCharge;};
         bool  passTightCharge()    {return _passTightCharge;};
+        bool  cutEventSel()        {return _cutEventSel;};
 
         // MVA
         float lepMVA()             {return _lepMVA;};
@@ -99,7 +100,6 @@ class Muon : public Base
         bool _isFakeableTTH;
         bool _isTightTTH;
 
-
         // Variables for Id
         float _dxy;
         float _dz;
@@ -111,6 +111,7 @@ class Muon : public Base
         //float _edB3D;
         float _tightCharge;
         bool  _passTightCharge;
+        bool _cutEventSel;
 
         // MVA
         float _lepMVA;

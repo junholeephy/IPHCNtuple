@@ -45,6 +45,7 @@ class Electron : public Base
         bool  passPtEta()                       {return _passPtEta;};
         int   tightCharge()                     {return _tightCharge;};
         bool passTightCharge()                  {return _passTightCharge;};
+        bool cutEventSel()                      {return _cutEventSel;};
 
         // MVA
         float lepMVA()                          {return _lepMVA;};
@@ -133,6 +134,7 @@ class Electron : public Base
         float   _ip3dErr;
         int     _tightCharge;
         bool    _passTightCharge;
+        bool    _cutEventSel;
 
         // MVA
         float _lepMVA;
@@ -156,7 +158,6 @@ class Electron : public Base
         bool _passChargeFlip;
         bool _hasMatchedConversion;
         bool _isGsfCtfScPixChargeConsistent;
-
 
         //float _dB3D;
         //float _edB3D;

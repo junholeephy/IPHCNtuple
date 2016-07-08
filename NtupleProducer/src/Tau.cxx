@@ -124,6 +124,9 @@ void Tau::init()
     _dxy      = -100;
     _dz       = -100;
 
+    _passTightCharge = true;
+    _cutEventSel        = true;
+
     // more variables
     _decayMode              = -1;
     _hasLeadChargedHadrCand = false;
@@ -225,7 +228,7 @@ bool Tau::sel()
 
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     // synchronization printout
-    if( true )      std::cout   << "Taus: "
+    if( false )     std::cout   << "Taus: "
                                 << nt->NtEvent->at(0).id()                                      << " "
                                 << _pt                                                          << " "
                                 << _eta                                                         << " "

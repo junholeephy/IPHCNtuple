@@ -141,6 +141,7 @@ void Electron::init()
 	
     _trackMomentumError             = -100;      
     _tightCharge                    = -100;
+    _cutEventSel                    = false;
     _mvaNonTrigV0                   = -100;
 }
 
@@ -247,6 +248,8 @@ bool Electron::sel()
     bool pass_CV            = (_passCV         );
     _passTightCharge        = (_tightCharge  >1);
   
+    _cutEventSel            = ( (_tightCharge > 1) && _passCV && pass_losthits);
+
     bool isTightTTH     = ( pass_pt               &&
                             pass_eta              &&
                             pass_dxy              &&
@@ -254,13 +257,10 @@ bool Electron::sel()
                             pass_miniIso          &&
                             pass_SIP              &&
                             pass_isLoose          &&
-                            //pass_losthits         &&
-                            pass_CV               &&
                             cond_closuretest      &&
                             pass_muOverlap        && 
 			                pass_lepMVA_TTH       &&
-			                pass_lepMVA_jetBTagCSV089 //&& 
-			                //_passTightCharge
+			                pass_lepMVA_jetBTagCSV089 
                             );
 
     _isTightTTH = isTightTTH;
@@ -281,7 +281,7 @@ bool Electron::sel()
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     
     // synchronization printout
-    if( false )
+    if( true )
     {
         std::cout   << "Electrons: "
                     << nt->NtEvent->at(0).id()                          << " "
@@ -322,6 +322,7 @@ bool Electron::sel()
                     << " pass_lepMVA_jetBTagCSV089: "   << pass_lepMVA_jetBTagCSV089
                     << " pass_tightCharge: "            << _passTightCharge
                     << " is Tight: "                    << isTightTTH
+                    << " cutEventSel: "                 << _cutEventSel
                     << std::endl;
     }
 

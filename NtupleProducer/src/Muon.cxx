@@ -98,6 +98,7 @@ void Muon::init()
     //_dB3D               = -100.;
     //_edB3D              = -100.;
     _tightCharge        = 999;
+    _cutEventSel        = true;
 
     // more variables
    

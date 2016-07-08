@@ -1254,8 +1254,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         //TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
         //DiLeptonSelection_TT_CR(jentry);
 
-        //ThreeLeptonSelection_TTH3l(jentry);
-        //ThreeLeptonSelection_ApplicationFakes(jentry);
+        ThreeLeptonSelection_TTH3l(jentry);
+        ThreeLeptonSelection_ApplicationFakes(jentry);
         //ThreeLeptonSelection_CR_WZ(jentry);
         //ThreeLeptonSelection_CR_WZrelaxed(jentry);
         //ThreeLeptonSelection_CR_Zl(jentry);
@@ -1277,7 +1277,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // #####################################################################################################
 
         bool print_all                        = true;
-        bool test_stat                        = true;
+        bool test_stat                        = false;
         bool produce_table_2lss_SR_ee         = false;
         bool produce_table_2lss_lepMVA_SB_ee  = false;
         bool produce_table_2lss_os_SB_ee      = false;
@@ -2058,6 +2058,9 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
     bool are_fullytight     = ( vSelectedLeptons.at(0).passTightCharge() && vSelectedLeptons.at(1).passTightCharge() );
     if(!are_fullytight)     return;
 
+    bool cut_eventsel       = ( vSelectedLeptons.at(0).cutEventSel() && vSelectedLeptons.at(1).cutEventSel() );
+    if(!cut_eventsel)       return;
+
     if(DEBUG) std::cout << "are_tight Ok... ";
 
     bool leading_lep_pt     = (  ( (vSelectedLeptons.at(0).isElectron() ) && (vSelectedLeptons.at(0).pt() > 25) )
@@ -2091,6 +2094,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
         {
             if ( fabs( ( vLeptons.at(i).p4() + vLeptons.at(j).p4() ).M() ) < 12 )
             { pass_invariantemasscut = false ;}
+            //std::cout << fabs( ( vLeptons.at(i).p4() + vLeptons.at(j).p4() ).M() ) << " " ; 
         }
     }
     if(!pass_invariantemasscut) return;
@@ -2368,6 +2372,12 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFakes
     bool nLep               = ( vSelectedLeptons.size()                   >= 2 );
     if(!nLep)               return;
     if(DEBUG) std::cout << "nLep Ok... ";
+
+    bool are_fullytight     = ( vSelectedLeptons.at(0).passTightCharge() && vSelectedLeptons.at(1).passTightCharge() );
+    if(!are_fullytight)     return;
+
+    bool cut_eventsel       = ( vSelectedLeptons.at(0).cutEventSel() && vSelectedLeptons.at(1).cutEventSel() );
+    if(!cut_eventsel)       return;
 
     bool nLepTight          = ( vSelectedLeptons.at(0).isTightTTH() && vSelectedLeptons.at(1).isTightTTH());
     if(nLepTight)           return;
@@ -2658,6 +2668,9 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFlips
     bool are_tight          = ( vSelectedLeptons.at(0).isTightTTH() && vSelectedLeptons.at(1).isTightTTH() );
     if(!are_tight)          return;
     if(DEBUG) std::cout << "are_tight Ok... ";
+
+    bool cut_eventsel       = ( vSelectedLeptons.at(0).cutEventSel() && vSelectedLeptons.at(1).cutEventSel() );
+    if(!cut_eventsel)       return;
 
     bool are_electrons      = ( vSelectedLeptons.at(0).isElectron() && vSelectedLeptons.at(1).isElectron() );
     if(!are_electrons)      return;

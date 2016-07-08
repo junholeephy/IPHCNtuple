@@ -39,6 +39,7 @@ class Tau : public Base
         bool isTightTTH()       {return _isTightTTH;};
         float lepMVA_TTH()      {return _lepMVA_TTH;};
         bool passTightCharge()  {return _passTightCharge;};
+        bool cutEventSel()      {return _cutEventSel;};
 
         // Variables for Id
         float dxy()             {return _dxy;};
@@ -70,6 +71,7 @@ class Tau : public Base
         bool  _isTightTTH;
         float _lepMVA_TTH;
         bool _passTightCharge;
+        bool _cutEventSel;
 
         //-------------------------------
         // http://kskovpen.web.cern.ch/kskovpen/IPHCFlatTree/table_MantaRay-patch7_20150829.html
