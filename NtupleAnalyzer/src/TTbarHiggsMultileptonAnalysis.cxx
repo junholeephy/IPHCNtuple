@@ -1027,7 +1027,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         vSelectedBTagJets.clear();
         vSelectedMediumBTagJets.clear();
         vSelectedJets.clear();
-
+        vSelectedTaus.clear();
 
         is_2lss_TTH_SR      = false;
         is_2lss_AppFakes_SR = false;
