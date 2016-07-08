@@ -19,7 +19,7 @@
 #define kCat_2lss_1b_3j 10
 #define kCat_2lss_2b_2j 11
 
-#define DEBUG false
+#define DEBUG true
 
 using namespace std;
 
@@ -1276,7 +1276,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // #                                                                                                   #
         // #####################################################################################################
 
-        bool print_all                        = false;
+        bool print_all                        = true;
         bool test_stat                        = true;
         bool produce_table_2lss_SR_ee         = false;
         bool produce_table_2lss_lepMVA_SB_ee  = false;
@@ -4034,11 +4034,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
 
     bool nJets              = ( vSelectedJets.size()        >= 2 );
     if(!nJets)              return;
-
-    bool nLooseBtag         = ( nLooseBJets                 >= 2 );
-    bool nMediumBtag        = ( nMediumBJets                >= 1 );
-    if(!nLooseBtag && !nMediumBtag)      return;
-
+    
     // Adding invariant mass cut on loose leptons pairs
     bool pass_invariantemasscut = true;
     for(int i=0; i<vLeptons.size()-1; i++)

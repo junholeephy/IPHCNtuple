@@ -202,31 +202,15 @@ bool Electron::sel()
     bool cond_closuretest = true;
     if ( _pt > 30 )
     {
-        if (  ( _sigmaIetaIeta >= 0.011 && fabs(_superCluster_eta) <  1.479 )
-           || ( _sigmaIetaIeta >= 0.030 && fabs(_superCluster_eta) >= 1.479 )  ) cond_closuretest = false;
 
-        if (  ( ntP->el_hadronicOverEm->at(idx) >= 0.10 && fabs(_superCluster_eta) <  1.479 ) ) cond_closuretest = false;
-           //|| ( ntP->el_hadronicOverEm->at(idx) >= 0.07 && fabs(_superCluster_eta) >= 1.479 )  ) cond_closuretest = false;
-
-        if (  ( fabs(_deltaEtaSuperClusterTrackAtVtx) >= 0.010 && fabs(_superCluster_eta) <  1.479 ) 
-           || ( fabs(_deltaEtaSuperClusterTrackAtVtx) >= 0.008 && fabs(_superCluster_eta) >= 1.479 )  ) cond_closuretest = false;
-
-        if (  ( fabs(_deltaPhiSuperClusterTrackAtVtx) >= 0.04  && fabs(_superCluster_eta) <  1.479 ) 
-           || ( fabs(_deltaPhiSuperClusterTrackAtVtx) >= 0.07  && fabs(_superCluster_eta) >= 1.479 )  ) cond_closuretest = false;
-
-        if (_ecalEnergy == 0.)
-        {
-            cond_closuretest = false;
-        }
-        else
-        {
-            if ( ( 1. / _ecalEnergy - _eSuperClusterOverP / _ecalEnergy ) < -0.005 )
-            {cond_closuretest = false;}
-            if ( ( 1. / _ecalEnergy - _eSuperClusterOverP / _ecalEnergy ) >= 0.010 && fabs(_superCluster_eta) <  1.479)
-            {cond_closuretest = false;}
-            if ( ( 1. / _ecalEnergy - _eSuperClusterOverP / _ecalEnergy ) >= 0.005 && fabs(_superCluster_eta) >= 1.479)
-            {cond_closuretest = false;}
-        }
+        float eInvMinusPinv  = ( _ecalEnergy > 0 ) ?  (1. / _ecalEnergy - _eSuperClusterOverP / _ecalEnergy) : 99;
+        std::cout << eInvMinusPinv << " ";
+        if ( ntP->el_hadronicOverEm->at(idx)        >= ( 0.10 - 0.03 * ( abs(_superCluster_eta) > 1.479 ) ) )   {cond_closuretest = false;}// std::cout << "H/E nope ";} 
+        if ( fabs(_deltaEtaSuperClusterTrackAtVtx)  >= ( 0.01 - 0.002 * ( abs(_superCluster_eta) > 1.479 ) ) )  {cond_closuretest = false;}// std::cout << "Eta nope ";}
+        if ( fabs(_deltaPhiSuperClusterTrackAtVtx)  >= ( 0.04 + 0.03 * ( abs(_superCluster_eta) > 1.479  ) ) )  {cond_closuretest = false;}// std::cout << "Phi nope ";}
+        if ( eInvMinusPinv                          <= ( -0.05) )                                               {cond_closuretest = false;}// std::cout << "1/. inf nope ";}
+        if ( eInvMinusPinv                          >= ( 0.01 - 0.005 * ( abs(_superCluster_eta) > 1.479  ) ) ) {cond_closuretest = false;}// std::cout << "1/. sup nope ";}
+        if ( _sigmaIetaIeta                         >= ( 0.011 + 0.019 * ( abs(_superCluster_eta) > 1.479 ) ) ) {cond_closuretest = false;}// std::cout << "See nope ";}
     }
 
     // Fakeable
@@ -297,7 +281,7 @@ bool Electron::sel()
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     
     // synchronization printout
-    if( true )
+    if( false )
     {
         std::cout   << "Electrons: "
                     << nt->NtEvent->at(0).id()                          << " "
