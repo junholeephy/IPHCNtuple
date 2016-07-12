@@ -48,7 +48,7 @@ class Lepton
             _phi                = lep->phi();
             _E                  = lep->E();
 
-            _p4.SetPtEtaPhiE(_pt,_eta,_phi,_E);
+            _p4.SetPtEtaPhiE(_ptUnc,_eta,_phi,_E);
 
             _id                 = lep->id();
 

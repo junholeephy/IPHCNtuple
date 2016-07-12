@@ -3570,7 +3570,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     // # MET LD #
     // ##########
 
-    float jet_px = 0, jet_py = 0, lepton_px = 0, lepton_py = 0, MHT = 0, met_ld = 0;
+    float jet_px = 0, jet_py = 0, lepton_px = 0, lepton_py = 0, tau_px = 0, tau_py = 0, MHT = 0, met_ld = 0;
 
     TLorentzVector jetp4;
     for(int i=0; i<vSelectedJets.size(); i++)
@@ -3586,12 +3586,22 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
         lepton_py = lepton_py + vSelectedLeptons.at(i).p4().Py();
     }
 
-    MHT = sqrt( (jet_px + lepton_px) * (jet_px + lepton_px) + (jet_py + lepton_py) * (jet_py + lepton_py) );
+    TLorentzVector taup4;
+    for(int i=0; i<vSelectedTaus.size(); i++)
+    {
+        taup4.SetPtEtaPhiE(vSelectedTaus.at(i).pt(), vSelectedTaus.at(i).eta(), vSelectedTaus.at(i).phi(), vSelectedTaus.at(i).E());
+        tau_px = tau_px + taup4.Px();
+        tau_py = tau_py + taup4.Py();
+    }
+
+    MHT = sqrt( (jet_px + lepton_px + tau_px) * (jet_px + lepton_px + tau_px) + (jet_py + lepton_py + tau_py) * (jet_py + lepton_py + tau_py) );
 
     met_ld = 0.00397 * vEvent->at(0).metpt() + 0.00265 * MHT;
 
     if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH3l", _sampleName.Data(),   3, weight);
     if( vSelectedJets.size() >= 4  )  theHistoManager->fillHisto("CutFlow",                "FullThreeLeptons",   "ttH3l", _sampleName.Data(),   4, weight);
+
+    if(DEBUG) std::cout << " MHT =  " << MHT << "MET = " << vEvent->at(0).metpt() << " met_ld = " << met_ld ;
 
     // ########
     // # SFOS #
@@ -4084,24 +4094,37 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     // # Common selection #
     // ####################
 
+    if(DEBUG)             std::cout << std::endl << " 3l ss SR ==================================================================" << std::endl;
+
     bool nLep               = ( vSelectedLeptons.size()     >= 3 );
     if(!nLep)               return;
+
+    if(DEBUG) std::cout << "nLep Ok... ";
 
     bool nTight             = ( n_tight                     >= 3 );
     if(!nTight)             return;
 
-    bool are_tight          = ( vSelectedLeptons.at(0).isTightTTH() && vSelectedLeptons.at(1).isTightTTH() && vSelectedLeptons.at(2).isTightTTH() );
-    if(!are_tight)          return;
+    bool are_fullytight     =  ( vSelectedLeptons.at(0).isTightTTH()        && vSelectedLeptons.at(1).isTightTTH()      && vSelectedLeptons.at(2).isTightTTH()
+                              && vSelectedLeptons.at(0).cutEventSel()       && vSelectedLeptons.at(1).cutEventSel()     && vSelectedLeptons.at(2).cutEventSel()
+                              && vSelectedLeptons.at(0).noLostHits()        && vSelectedLeptons.at(1).noLostHits()      && vSelectedLeptons.at(2).noLostHits()      );
+    if(!are_fullytight)     return;
+    if(DEBUG) std::cout << "nTight Ok... ";
 
     bool leading_lep_pt     = ( vSelectedLeptons.at(0).pt() > 20 );
     if(!leading_lep_pt)     return;
 
+    if(DEBUG) std::cout << "leading_lep_pt Ok... ";
+
     bool following_lep_pt   = ( (vSelectedLeptons.at(1).pt() > 10) && (vSelectedLeptons.at(2).pt() > 10) );
     if(!following_lep_pt)   return;
 
+    if(DEBUG) std::cout << "following_lep_pt Ok... ";
+
     bool nJets              = ( vSelectedJets.size()        >= 2 );
     if(!nJets)              return;
-    
+
+    if(DEBUG) std::cout << "nJets Ok... ";
+
     // Adding invariant mass cut on loose leptons pairs
     bool pass_invariantemasscut = true;
     for(int i=0; i<vLeptons.size()-1; i++)
@@ -4112,7 +4135,9 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
             { pass_invariantemasscut = false ;}
         }
     }
-    if(!pass_invariantemasscut) return;
+    if(!pass_invariantemasscut) return;    
+
+    if(DEBUG) std::cout << "invariantmasscut Ok... ";
 
     // ##########
     // # Z peak #
@@ -4160,7 +4185,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     // # MET LD #
     // ##########
 
-    float jet_px = 0, jet_py = 0, lepton_px = 0, lepton_py = 0, MHT = 0, met_ld = 0;
+    float jet_px = 0, jet_py = 0, lepton_px = 0, lepton_py = 0, tau_px = 0, tau_py = 0, MHT = 0, met_ld = 0;
 
     TLorentzVector jetp4;
     for(int i=0; i<vSelectedJets.size(); i++)
@@ -4176,16 +4201,22 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
         lepton_py = lepton_py + vSelectedLeptons.at(i).p4().Py();
     }
 
-    MHT = sqrt( (jet_px + lepton_px) * (jet_px + lepton_px) + (jet_py + lepton_py) * (jet_py + lepton_py) );
+    TLorentzVector taup4;
+    for(int i=0; i<vSelectedTaus.size(); i++)
+    {
+        taup4.SetPtEtaPhiE(vSelectedTaus.at(i).pt(), vSelectedTaus.at(i).eta(), vSelectedTaus.at(i).phi(), vSelectedTaus.at(i).E());
+        tau_px = tau_px + taup4.Px();
+        tau_py = tau_py + taup4.Py();
+    }
+
+    MHT = sqrt( (jet_px + lepton_px + tau_px) * (jet_px + lepton_px + tau_px) + (jet_py + lepton_py + tau_py) * (jet_py + lepton_py + tau_py) );
 
     met_ld = 0.00397 * vEvent->at(0).metpt() + 0.00265 * MHT;
 
-    if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                    "PassingMETLD", "WZZZ_CR",   "",   1, weight);
-    if( vSelectedJets.size() >= 4  )  theHistoManager->fillHisto("CutFlow",                     "PassingJets", "WZZZ_CR",   "",   1, weight); 
+    if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                "WZZZ_CR",   "", _sampleName.Data(),   3, weight);
+    if( vSelectedJets.size() >= 4  )  theHistoManager->fillHisto("CutFlow",                "WZZZ_CR",   "", _sampleName.Data(),   4, weight);
 
-    if( met_ld < 0.2 && vSelectedJets.size() < 4 ) return;
-    theHistoManager->fillHisto("CutFlow",                 "PassingMETLDorJets", "WZZZ_CR",   "",   1, weight);
-    theHistoManager->fillHisto("ZCandidateInvariantMass", "PassingMETLDorJets", "WZZZ_CR",   "",  ZM, weight);
+    if(DEBUG) std::cout << " MHT =  " << MHT << "MET = " << vEvent->at(0).metpt() << " met_ld = " << met_ld ;
 
     // ########
     // # SFOS #
@@ -4202,10 +4233,23 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
         }
     }
 
-    theHistoManager->fillHisto("CutFlow",                 "PassingMETLDorSFOS", "WZZZ_CR",   "",   1, weight);
-    theHistoManager->fillHisto("ZCandidateInvariantMass", "PassingMETLDorSFOS", "WZZZ_CR",   "",  ZM, weight);
+    if( met_ld               > 0.3 ) theHistoManager->fillHisto("CutFlow",                "WZZZ_CR",   "",   "",   6, weight);
+    if( isSFOS                     ) theHistoManager->fillHisto("CutFlow",                "WZZZ_CR",   "",   "",   7, weight);
+
+    if(DEBUG) std::cout << std::endl << "nJets: " << vSelectedJets.size() << " met_ld: " << met_ld << " isSFOS " << isSFOS << std::endl;
 
     if(vSelectedJets.size() < 4 && (met_ld < (0.2 + 0.1 * isSFOS)) ) return;
+
+    if(DEBUG) std::cout << "nJets and met_ld Ok... ";
+
+    int sum_charges_3l = 0;
+    for(int i=0; i<3; i++)
+    {
+        sum_charges_3l = sum_charges_3l + vSelectedLeptons.at(i).charge();
+    }
+    if( fabs(sum_charges_3l) != 1 ) return;
+
+    if(DEBUG) std::cout << "sumOfCharges Ok... ";
 
     // ##############
     // # b-jet veto #
@@ -4217,13 +4261,6 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
 
     theHistoManager->fillHisto("CutFlow",                 "PassingbJetsVeto", "WZZZ_CR",   "",   1, weight);
     theHistoManager->fillHisto("ZCandidateInvariantMass", "PassingbJetsVeto", "WZZZ_CR",   "",  ZM, weight);
-
-    int sum_charges_3l = 0;
-    for(int i=0; i<3; i++)
-    {
-        sum_charges_3l = sum_charges_3l + vSelectedLeptons.at(i).charge();
-    }
-    if( fabs(sum_charges_3l) != 1 ) return;
 
     // Building arbitrary variables with all leptons...
 
