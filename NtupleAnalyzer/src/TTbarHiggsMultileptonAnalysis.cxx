@@ -1256,7 +1256,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         ThreeLeptonSelection_TTH3l(jentry);
         ThreeLeptonSelection_ApplicationFakes(jentry);
-        //ThreeLeptonSelection_CR_WZ(jentry);
+        ThreeLeptonSelection_CR_WZ(jentry);
         //ThreeLeptonSelection_CR_WZrelaxed(jentry);
         //ThreeLeptonSelection_CR_Zl(jentry);
         //ThreeLeptonSelection_TTZ(jentry);
