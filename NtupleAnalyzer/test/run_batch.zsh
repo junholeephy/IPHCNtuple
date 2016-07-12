@@ -7,7 +7,7 @@ echo "Don't forget to update the lumi and the maximum number of events to run on
 
 isdata=0
 doSystCombine=0
-lumi=2070
+lumi=6300
 
 cp /tmp/x509up_u6155 /home-pbs/lebihan/someone/proxy/.
 
@@ -21,8 +21,8 @@ que="cms"
 
 export HOME=$(pwd)
 
-dout="/home-pbs/lebihan/someone/medusa_patch2_prod/ttH/NtupleAnalyzer/test/"
-dout_f="/opt/sbg/scratch1/cms/lebihan/trees_analyzer_prod_medusa_patch2/"
+dout="/home-pbs/lebihan/someone/medusa_patch3_analyzer/ttH/NtupleAnalyzer/test/"
+dout_f="/opt/sbg/scratch1/cms/lebihan/trees_analyzer_prod_medusa_patch3/"
 
 runName="toy_${jName}"
 logName="log_${jName}"
@@ -34,7 +34,7 @@ mkdir ${logName}
 
 nmax=-1
 
-fxsec="table_MC_Medusa-patch2_20160705.txt"
+fxsec="table_MC_Medusa-patch3_20160707.txt"
 
 fdir=$(ls -d lists*)
 
