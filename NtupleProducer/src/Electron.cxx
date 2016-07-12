@@ -142,6 +142,7 @@ void Electron::init()
     _trackMomentumError             = -100;      
     _tightCharge                    = -100;
     _cutEventSel                    = false;
+    _noLostHits                     = false;
     _mvaNonTrigV0                   = -100;
 }
 
@@ -247,8 +248,8 @@ bool Electron::sel()
 
     bool pass_CV            = (_passCV         );
     _passTightCharge        = (_tightCharge  >1);
-  
-    _cutEventSel            = ( (_tightCharge > 1) && _passCV && pass_losthits);
+    _noLostHits             = pass_losthits;  
+    _cutEventSel            = _passCV;
 
     bool isTightTTH     = ( pass_pt               &&
                             pass_eta              &&

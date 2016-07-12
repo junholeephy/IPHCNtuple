@@ -23,6 +23,7 @@ class Electron : public Base
         // General informations
         float E()                            {return _E;};
         float pt()                           {return _pt;};
+        float ptCor()                        {return _ptCor;};
         float ptUnc()                        {return _ptUnc;};
         float eta()                          {return _eta;};
         float phi()                          {return _phi;};
@@ -46,6 +47,7 @@ class Electron : public Base
         int   tightCharge()                     {return _tightCharge;};
         bool passTightCharge()                  {return _passTightCharge;};
         bool cutEventSel()                      {return _cutEventSel;};
+        bool noLostHits()                       {return _noLostHits;};
 
         // MVA
         float lepMVA()                          {return _lepMVA;};
@@ -103,6 +105,7 @@ class Electron : public Base
         // General informations
         float   _E;
         float   _pt;
+        float   _ptCor;
         float   _ptUnc;
         float   _eta;
         float   _phi;
@@ -135,6 +138,7 @@ class Electron : public Base
         int     _tightCharge;
         bool    _passTightCharge;
         bool    _cutEventSel;
+        bool    _noLostHits;
 
         // MVA
         float _lepMVA;

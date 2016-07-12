@@ -26,6 +26,7 @@ class Tau : public Base
         // kinematics
         float E()               {return _E;};
         float pt()              {return _pt;};
+        float ptCor()           {return _ptCor;};
         float ptUnc()           {return _ptUnc;};
         float eta()             {return _eta;};
         float phi()             {return _phi;};
@@ -40,6 +41,7 @@ class Tau : public Base
         float lepMVA_TTH()      {return _lepMVA_TTH;};
         bool passTightCharge()  {return _passTightCharge;};
         bool cutEventSel()      {return _cutEventSel;};
+        bool noLostHits()       {return _noLostHits;};
 
         // Variables for Id
         float dxy()             {return _dxy;};
@@ -56,6 +58,7 @@ class Tau : public Base
         // General informations
         float _E;
         float _pt;
+        float _ptCor;
         float _ptUnc;
         float _eta;
         float _phi;
@@ -72,6 +75,7 @@ class Tau : public Base
         float _lepMVA_TTH;
         bool _passTightCharge;
         bool _cutEventSel;
+        bool _noLostHits;
 
         //-------------------------------
         // http://kskovpen.web.cern.ch/kskovpen/IPHCFlatTree/table_MantaRay-patch7_20150829.html

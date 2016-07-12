@@ -15,6 +15,7 @@ class Lepton
         virtual ~Lepton();
 
         float pt()                  {return _pt;};
+        float ptCor()               {return _ptCor;};
         float ptUnc()               {return _ptUnc;};
         float eta()                 {return _eta;};
         float phi()                 {return _phi;};
@@ -31,6 +32,7 @@ class Lepton
 
         bool    passTightCharge()   {return _passTightCharge;};
         bool    cutEventSel()       {return _cutEventSel;};
+        bool    noLostHits()        {return _noLostHits;};
 
         bool isFakeableTTH()        {return _isFakeableTTH;};
         bool isTightTTH()           {return _isTightTTH;};
@@ -40,6 +42,7 @@ class Lepton
         template <class T> void setLepton(T *lep, int idx, bool isE, bool isMu)
         {
             _pt                 = lep->pt();
+            _ptCor              = lep->ptCor();
             _ptUnc              = lep->ptUnc();
             _eta                = lep->eta();
             _phi                = lep->phi();
@@ -61,11 +64,13 @@ class Lepton
 
             _passTightCharge    = lep->passTightCharge();
             _cutEventSel        = lep->cutEventSel();       // last set of cuts for electron, used at event selection only
+            _noLostHits         = lep->noLostHits();
         }
 
     protected:
 
         float           _pt;
+        float           _ptCor;
         float           _ptUnc;
         float           _eta;
         float           _phi;
@@ -85,6 +90,7 @@ class Lepton
 
         bool            _passTightCharge;
         bool            _cutEventSel;
+        bool            _noLostHits;
 
         int             _charge;
 };

@@ -19,6 +19,7 @@ void Tau::read()
     // general informations
     if( CHECK(ntP->tau_E)                             ) _E      = ntP->tau_E->at(idx);
     if( CHECK(ntP->tau_pt)                            ) _pt     = ntP->tau_pt->at(idx);
+    if( CHECK(ntP->tau_pt)                            ) _ptCor  = ntP->tau_pt->at(idx);
     if( CHECK(ntP->tau_pt)                            ) _ptUnc  = ntP->tau_pt->at(idx);
     if( CHECK(ntP->tau_eta)                           ) _eta    = ntP->tau_eta->at(idx);
     if( CHECK(ntP->tau_phi)                           ) _phi    = ntP->tau_phi->at(idx);
@@ -124,8 +125,9 @@ void Tau::init()
     _dxy      = -100;
     _dz       = -100;
 
-    _passTightCharge = true;
+    _passTightCharge    = true;
     _cutEventSel        = true;
+    _noLostHits         = true;
 
     // more variables
     _decayMode              = -1;

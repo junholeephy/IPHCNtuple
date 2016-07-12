@@ -180,7 +180,7 @@ bool Muon::sel()
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     
     // synchronization printout
-    if( false )//isLooseTTH ) 
+    if( true )//isLooseTTH ) 
     {    
         std::cout                      << nt->NtEvent->at(0).id()                       << " "
                                        << _pt                                           << " "

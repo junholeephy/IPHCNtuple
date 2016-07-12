@@ -3,6 +3,7 @@
 Lepton::Lepton()
 {
     _pt                 = 0.;
+    _ptCor              = 0.;
     _ptUnc              = 0.;
     _eta                = 0.;
     _phi                = 0.;
