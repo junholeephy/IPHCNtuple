@@ -16,3 +16,7 @@ ttZJets_13TeV_madgraphMLM 0.2529 21948664
 ttWJets_13TeV_madgraphMLM 0.2043 12716511
 TT_TuneCUETP8M1_13TeV-powheg-pythia8_v0_ext4_v1_0000 832.0 93053025
 TT_TuneCUETP8M1_13TeV-powheg-pythia8_v0_ext4_v1_0001 832.0 89068674
+ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8 35.6 984995
+ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8 35.6 998390
+ST_s-channel_4f_leptonDecays_13TeV-amcatnlo-pythia8 3.75 622985
+ST_t-channel_antitop_4f_leptonDecays_13TeV-powheg-pythia8 0.0 1682394
