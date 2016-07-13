@@ -19,7 +19,7 @@
 #define kCat_2lss_1b_3j 10
 #define kCat_2lss_2b_2j 11
 
-#define DEBUG true
+#define DEBUG false
 
 using namespace std;
 
@@ -299,13 +299,13 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
 
     theHistoManager->addHisto("ZCandidateInvariantMass",                  "FinalCut", "WZZZ_CR",   "",  15,   60,   120);
     theHistoManager->addHisto("ZCandidateTransverseMomentum",             "FinalCut", "WZZZ_CR",   "",  12,    0,   500);
-    theHistoManager->addHisto("MET",                                      "FinalCut", "WZZZ_CR",   "",  20,    0,   200);
+    theHistoManager->addHisto("MET",                                      "FinalCut", "WZZZ_CR",   "",  15,    0,   200);
     theHistoManager->addHisto("MHT",                                      "FinalCut", "WZZZ_CR",   "",  20,    0,   200);
     theHistoManager->addHisto("MetLD",                                    "FinalCut", "WZZZ_CR",   "",  15, -0.2,   1.4);
     theHistoManager->addHisto("TauMultiplicity",                          "FinalCut", "WZZZ_CR",   "",   8,    0,     8);
     theHistoManager->addHisto("JetMultiplicity",                          "FinalCut", "WZZZ_CR",   "",   8,    0,     8);
 
-    theHistoManager->addHisto("MTW",                                      "FinalCut", "WZZZ_CR",   "",  15,    0,   300);
+    theHistoManager->addHisto("MTW",                                      "FinalCut", "WZZZ_CR",   "",  20,    0,   300);
     theHistoManager->addHisto("InvariantMassOfSelectedLeptons",           "FinalCut", "WZZZ_CR",   "",  15,    0,   600);
     theHistoManager->addHisto("SumOfSelectedLeptonsCharges",              "FinalCut", "WZZZ_CR",   "",  10,   -5,     5);
     theHistoManager->addHisto("SumVecPtSelectedLeptons",                  "FinalCut", "WZZZ_CR",   "",  12,    0,   500);
@@ -1154,7 +1154,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         std::sort(vLeptons.begin(), vLeptons.end(), SortingLeptonPt);
         std::sort(vSelectedLeptons.begin(), vSelectedLeptons.end(), SortingLeptonPt);
 
-        if ( vLeptons.size() >= 2) {
+      /*  if ( vLeptons.size() >= 2) {
             for (unsigned int ilep = 0; ilep<vLeptons.size()-1; ilep++) {
                 if ( vLeptons.at(ilep).pt() < vLeptons.at(ilep+1).pt() ) {
                     std::cout << "Run Event " << vEvent->at(0).run() <<  " " << vEvent->at(0).id() 
@@ -1174,7 +1174,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                         << " pt[" << ilep+1 << "]: " << vSelectedLeptons.at(ilep+1).pt() << std::endl;
                 }
             }
-        }
+        }*/
 
         // ################################
         // #                              #
@@ -1276,8 +1276,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // #                                                                                                   #
         // #####################################################################################################
 
-        bool print_all                        = true;
-        bool test_stat                        = true;
+        bool print_all                        = false;
+        bool test_stat                        = false;
         bool produce_table_2lss_SR_ee         = false;
         bool produce_table_2lss_lepMVA_SB_ee  = false;
         bool produce_table_2lss_os_SB_ee      = false;
@@ -1285,7 +1285,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         bool produce_table_2lss_lepMVA_SB_em  = false;
         bool produce_table_2lss_SR_mm         = false;
         bool produce_table_2lss_lepMVA_SB_mm  = false;
-        bool produce_table_3l_SR              = true;
+        bool produce_table_3l_SR              = false;
         bool produce_table_3l_lepMVA_SB       = false;
 
         if ( print_all )
