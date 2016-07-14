@@ -206,7 +206,7 @@ bool Electron::sel()
     {
 
         float eInvMinusPinv  = ( _ecalEnergy > 0 ) ?  (1. / _ecalEnergy - _eSuperClusterOverP / _ecalEnergy) : 99;
-        std::cout << eInvMinusPinv << " ";
+        //std::cout << eInvMinusPinv << " ";
         if ( ntP->el_hadronicOverEm->at(idx)        >= ( 0.10 - 0.03 * ( abs(_superCluster_eta) > 1.479 ) ) )   {cond_closuretest = false;}// std::cout << "H/E nope ";} 
         if ( fabs(_deltaEtaSuperClusterTrackAtVtx)  >= ( 0.01 - 0.002 * ( abs(_superCluster_eta) > 1.479 ) ) )  {cond_closuretest = false;}// std::cout << "Eta nope ";}
         if ( fabs(_deltaPhiSuperClusterTrackAtVtx)  >= ( 0.04 + 0.03 * ( abs(_superCluster_eta) > 1.479  ) ) )  {cond_closuretest = false;}// std::cout << "Phi nope ";}
@@ -274,12 +274,12 @@ bool Electron::sel()
         {
             float dr = GetDeltaR(_eta,_phi,ntP->jet_eta->at(ij),ntP->jet_phi->at(ij));
             if( dr < dr_min ) new_pt = ntP->jet_pt->at(ij) * 0.85;
-            std::cout << "jet[" << ij << "]  dr: " << dr << "  pt: " << ntP->jet_pt->at(ij) << std::endl;
+            //std::cout << "jet[" << ij << "]  dr: " << dr << "  pt: " << ntP->jet_pt->at(ij) << std::endl;
         }
         _pt = new_pt;
     }
 
-    cout<<std::setiosflags(ios::fixed)<<setprecision(5);
+    /*cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     
     // synchronization printout
     if( true )
@@ -325,7 +325,7 @@ bool Electron::sel()
                     << " is Tight: "                    << isTightTTH
                     << " cutEventSel: "                 << _cutEventSel
                     << std::endl;
-    }
+    }*/
 
     return isLooseTTH;
 }
