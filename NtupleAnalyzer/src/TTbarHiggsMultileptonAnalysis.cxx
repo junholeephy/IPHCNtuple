@@ -299,13 +299,18 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
 
     theHistoManager->addHisto("ZCandidateInvariantMass",                  "FinalCut", "WZZZ_CR",   "",  15,   60,   120);
     theHistoManager->addHisto("ZCandidateTransverseMomentum",             "FinalCut", "WZZZ_CR",   "",  12,    0,   500);
-    theHistoManager->addHisto("MET",                                      "FinalCut", "WZZZ_CR",   "",  15,    0,   200);
+    theHistoManager->addHisto("MET",                                      "FinalCut", "WZZZ_CR",   "",  8,     0,   200);
+    theHistoManager->addHisto("MET_bin2",                                 "FinalCut", "WZZZ_CR",   "",  25,    0,   200);
+   
     theHistoManager->addHisto("MHT",                                      "FinalCut", "WZZZ_CR",   "",  20,    0,   200);
     theHistoManager->addHisto("MetLD",                                    "FinalCut", "WZZZ_CR",   "",  15, -0.2,   1.4);
     theHistoManager->addHisto("TauMultiplicity",                          "FinalCut", "WZZZ_CR",   "",   8,    0,     8);
     theHistoManager->addHisto("JetMultiplicity",                          "FinalCut", "WZZZ_CR",   "",   8,    0,     8);
 
-    theHistoManager->addHisto("MTW",                                      "FinalCut", "WZZZ_CR",   "",  20,    0,   300);
+    theHistoManager->addHisto("MTW",                                      "FinalCut", "WZZZ_CR",   "",  10,    0,   300);
+    theHistoManager->addHisto("MTW_bin2",                                 "FinalCut", "WZZZ_CR",   "",  30,    0,   300);
+    theHistoManager->addHisto("MTW_bin3",                                 "FinalCut", "WZZZ_CR",   "",  35,    0,   300);
+   
     theHistoManager->addHisto("InvariantMassOfSelectedLeptons",           "FinalCut", "WZZZ_CR",   "",  15,    0,   600);
     theHistoManager->addHisto("SumOfSelectedLeptonsCharges",              "FinalCut", "WZZZ_CR",   "",  10,   -5,     5);
     theHistoManager->addHisto("SumVecPtSelectedLeptons",                  "FinalCut", "WZZZ_CR",   "",  12,    0,   500);
@@ -4172,6 +4177,11 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     if( ( (Lep1Z == 0) && (Lep2Z == 3) ) || ( (Lep1Z == 3) && (Lep2Z == 0) ) ) LepW = 1;
     if( ( (Lep1Z == 1) && (Lep2Z == 3) ) || ( (Lep1Z == 3) && (Lep2Z == 1) ) ) LepW = 0;
     if( ( (Lep1Z == 2) && (Lep2Z == 3) ) || ( (Lep1Z == 3) && (Lep2Z == 2) ) ) LepW = 0;
+    //AC considering cases with 5 leptons, taking lepW w/ highest pT
+    if( ( (Lep1Z == 0) && (Lep2Z == 4) ) || ( (Lep1Z == 4) && (Lep2Z == 0) ) ) LepW = 1;
+    if( ( (Lep1Z == 1) && (Lep2Z == 4) ) || ( (Lep1Z == 4) && (Lep2Z == 1) ) ) LepW = 0;
+    if( ( (Lep1Z == 2) && (Lep2Z == 4) ) || ( (Lep1Z == 4) && (Lep2Z == 2) ) ) LepW = 0;
+    if( ( (Lep1Z == 3) && (Lep2Z == 4) ) || ( (Lep1Z == 4) && (Lep2Z == 3) ) ) LepW = 0;
 
 
     float MTW = 0. ;
@@ -4307,12 +4317,15 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto("ZCandidateInvariantMass",        "FinalCut", "WZZZ_CR",   "",   ZM                    , weight);
     theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "FinalCut", "WZZZ_CR",   "",   Zpt                   , weight);
     theHistoManager->fillHisto("MET",                            "FinalCut", "WZZZ_CR",   "",   vEvent->at(0).metpt() , weight);
+    theHistoManager->fillHisto("MET_bin2",                       "FinalCut", "WZZZ_CR",   "",   vEvent->at(0).metpt() , weight);
     theHistoManager->fillHisto("MHT",                            "FinalCut", "WZZZ_CR",   "",   MHT                   , weight);
     theHistoManager->fillHisto("MetLD",                          "FinalCut", "WZZZ_CR",   "",   met_ld                , weight);
     theHistoManager->fillHisto("TauMultiplicity",                "FinalCut", "WZZZ_CR",   "",   vSelectedTaus.size()  , weight);
     theHistoManager->fillHisto("JetMultiplicity",                "FinalCut", "WZZZ_CR",   "",   vSelectedJets.size()  , weight);
 
     theHistoManager->fillHisto("MTW",                            "FinalCut", "WZZZ_CR",   "",   MTW                   , weight);
+    theHistoManager->fillHisto("MTW_bin2",                       "FinalCut", "WZZZ_CR",   "",   MTW                   , weight);
+    theHistoManager->fillHisto("MTW_bin3",                       "FinalCut", "WZZZ_CR",   "",   MTW                   , weight);
     theHistoManager->fillHisto("InvariantMassOfSelectedLeptons", "FinalCut", "WZZZ_CR",   "",   all_lep_invmass       , weight);
     theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "FinalCut", "WZZZ_CR",   "",   all_lep_sumofcharges  , weight);
     theHistoManager->fillHisto("SumVecPtSelectedLeptons",        "FinalCut", "WZZZ_CR",   "",   all_lep_sumofpt       , weight);
