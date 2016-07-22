@@ -19,6 +19,7 @@
 
 #include "HistoManager.h"
 #include "Lepton.h"
+#include "BTagCalibrationXStandalone.h"
 
 class TTbarHiggsMultileptonAnalysis
 {
@@ -40,7 +41,7 @@ class TTbarHiggsMultileptonAnalysis
 
         void TwoLeptonsSameSignSelection_LepMVA_sideband(int evt);
         void TwoLeptonsSameSignSelection_JetMultiplicity_sideband(int evt);
-        void DiLeptonSelection_TT_CR(int evt);
+        void TwoLeptonsSameSignSelection_TTbar(int evt);
 
         void ThreeLeptonSelection_TTH3l(int evt);
         void ThreeLeptonSelection_ApplicationFakes(int evt);
@@ -129,6 +130,9 @@ class TTbarHiggsMultileptonAnalysis
 
         TTree* tOutput;
         Int_t mc_event;
+
+        BTagCalibrationX       calib;
+        BTagCalibrationXReader reader;
 
         // all weights
         Float_t weight;
