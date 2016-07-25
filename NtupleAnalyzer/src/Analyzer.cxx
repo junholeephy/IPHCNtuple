@@ -2,6 +2,7 @@
 #include "../include/TTbarDileptonAnalysis.h"
 #include "../include/TTbarHiggsMultileptonAnalysis.h"
 #include "../include/TTbarHiggsTFAnalysis.h"
+#include "../include/TTbarHiggsBTagEff.h"
 
 #include "TChain.h"
 
@@ -86,7 +87,13 @@ int main(int argc, char *argv[])
     // TTH Fake Rate Determination
 
     // TTbar...
-
+  
+    //TTH BTag efficiency
+    //TTbarHiggsBTagEff *TTHanalysis = new TTbarHiggsBTagEff(fname,thetree,dataset,stream,outfile,nmax);
+    //TTHanalysis->createHistograms();
+    //TTHanalysis->Loop();
+    //TTHanalysis->writeHistograms();
+  
     //TTH MEM analysis
     TTbarHiggsMultileptonAnalysis *TTHanalysis = new TTbarHiggsMultileptonAnalysis(fname,thetree,dataset,stream,outfile,isdata,doSystCombine,xsec,lumi,nowe,nmax);
     // TTHanalysis->InitLHCO(1,1); // to print LHCO files
