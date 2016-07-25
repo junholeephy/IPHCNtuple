@@ -12,5 +12,8 @@ double get_csv_wgt( std::vector<double> jetPts,
 TH1D* h_csv_wgt_hf[9][5];
 TH1D* c_csv_wgt_hf[9][5];
 TH1D* h_csv_wgt_lf[9][4][3];
+TH2D* h_eff_btagging_b;
+TH2D* h_eff_btagging_c;
+TH2D* h_eff_btagging_l;
 
 #endif

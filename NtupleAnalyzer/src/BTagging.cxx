@@ -1,5 +1,31 @@
 #include "../include/BTagging.h"
 
+// fill histograms
+void fill_eff_btagging_histos(TFile* fileEffBtagging)
+{
+    h_eff_btagging_b = (TH2D*)fileEffBtagging->Get("EffpTvsEtaLoose_b");
+    h_eff_btagging_c = (TH2D*)fileEffBtagging->Get("EffpTvsEtaLoose_c");
+    h_eff_btagging_l = (TH2D*)fileEffBtagging->Get("EffpTvsEtaLoose_l");
+}
+
+// get eff b-tagging
+float get_eff_btagging( float pt, float eta, int flavor)
+{
+   float eff_btagging = 1.; 
+
+   int iEta = ( eta + 2.5 ) * 4;
+   int iPt  = ( pt  / 10  ) - 1;
+
+   std::cout << " eta: " << eta << " iEta: " << iEta << " pt: " << pt << " iPt: " << iPt << std::endl;
+
+   if       ( flavor == 5 ) eff_btagging = h_eff_btagging_b->GetBinContent(iEta,iPt);
+   else if  ( flavor == 4 ) eff_btagging = h_eff_btagging_c->GetBinContent(iEta,iPt);
+   else                     eff_btagging = h_eff_btagging_l->GetBinContent(iEta,iPt);
+
+
+   return eff_btagging;
+}
+
 // fill the histograms (done once)
 void fillCSVhistos(TFile* fileHF, TFile* fileLF){
     for( int iSys=0; iSys<9; iSys++ ){

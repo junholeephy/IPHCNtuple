@@ -776,10 +776,10 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     // new b-tagging (using BTagCalibrationXStandaloneWhatever)
     // setup calibration + reader
     // BTagCalibrationX *      
-        calib = BTagCalibrationX("csvv2", "/opt/sbg/scratch1/cms/TTH/weight/CSVv2_ichep.csv");
+    calib = BTagCalibrationX("csvv2", "/opt/sbg/scratch1/cms/TTH/weight/CSVv2_ichep.csv");
 
     // BTagCalibrationXReader *
-        reader = BTagCalibrationXReader(  BTagEntryX::OP_LOOSE,  // operating point
+    reader = BTagCalibrationXReader(  BTagEntryX::OP_LOOSE,  // operating point
                                                             "central",            // central sys type
                                                             {"up", "down"});      // other sys types
 
@@ -794,6 +794,14 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     reader.load(    calib,                // calibration instance
                     BTagEntryX::FLAV_UDSG, // btag flavour
                     "comb");              // measurement type
+
+
+    // BTag Efficiencies
+    std::string inputFileBTagEff = "/opt/sbg/scratch1/cms/TTH/weight/TT_TuneCUETP8M1_13TeV-powheg-pythia8_0.root";
+    TFile* f_BTag_eff = new TFile ((inputFileBTagEff).c_str());
+    fill_eff_btagging_histos(f_BTag_eff);
+
+    get_eff_btagging( 38., -0.2, 0);
 
     // charge flip
     std::string inputFileQF = "/opt/sbg/scratch1/cms/TTH/weight/QF_data_el.root";
@@ -4380,6 +4388,9 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     std::vector<int>    jetFlavors;
     int iSys = 0;
     double wgt_csv, wgt_csv_def, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf, new_weight;
+    double new_btagSF = 1.;        
+    
+    std::cout << " BTag SF ==========" << std::endl;
 
     for(int i=0; i<vSelectedJets.size(); i++)
     {
@@ -4387,34 +4398,44 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
                     << " eta: "     << vSelectedJets.at(i).eta() 
                     << " flavor: "  << vSelectedJets.at(i).jet_hadronFlavour() << std::endl;
 
-        float  pt_test              = vSelectedJets.at(i).eta();
+        float  pt_test              = vSelectedJets.at(i).pt();
         float  eta_test             = vSelectedJets.at(i).eta();
         float  disc_test            = vSelectedJets.at(i).CSVv2();
 
-        double jet_scalefactor = 1., jet_scalefactor_up = 1., jet_scalefactor_do = 1.;
+        float btag_eff = 1.;
+        float jet_scalefactor = 1., jet_scalefactor_up = 1., jet_scalefactor_do = 1.;
 
-        if ( vSelectedJets.at(i).jet_hadronFlavour() == 0 )
+        if ( vSelectedJets.at(i).jet_hadronFlavour() == 5 )
         {
+            btag_eff = get_eff_btagging( pt_test, eta_test, 5);
             jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_B,     eta_test,   pt_test );
             jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_B,     eta_test,   pt_test );
             jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_B,     eta_test,   pt_test );  
         }
 
-        if ( vSelectedJets.at(i).jet_hadronFlavour() == 2 )
+        if ( vSelectedJets.at(i).jet_hadronFlavour() == 4 )
         {
+            btag_eff = get_eff_btagging( pt_test, eta_test, 4);
             jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_C,     eta_test,   pt_test );
             jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_C,     eta_test,   pt_test );
             jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_C,     eta_test,   pt_test );  
         }
 
-        if ( vSelectedJets.at(i).jet_hadronFlavour() == 5 )
+        if ( vSelectedJets.at(i).jet_hadronFlavour() == 0 )
         {
+            btag_eff = get_eff_btagging( pt_test, eta_test, 0);
             jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );
             jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );
             jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );  
         }
 
+        float prob = ( 1. - (btag_eff * jet_scalefactor) );
+        new_btagSF = prob;
+        
+        std::cout << "Jet[" << i << "]: pt << " << pt_test << " eta " << eta_test <<  " flavor " << vSelectedJets.at(i).jet_hadronFlavour() << std::endl;
+        std::cout << "btag_eff: " << btag_eff << std::endl;
         std::cout << "central: " << jet_scalefactor << " up: " << jet_scalefactor_up << " down: " << jet_scalefactor_do << std::endl;
+        std::cout << "prob: " << prob << " btag_SF: " << new_btagSF << std::endl;
     }
 
     //wgt_csv_def = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, iSys, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf);
