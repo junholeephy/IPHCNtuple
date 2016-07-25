@@ -30,7 +30,8 @@ src/TTbarDileptonAnalysis.cxx src/HistoManager.cxx \
 src/TTbarHiggsMultileptonAnalysis.cxx src/TTbarHiggsTFAnalysis.cxx \
 src/Lepton.cxx \
 src/TTbarHiggsTriggerAnalysis.cxx \
-src/TTbarHiggsBTagEff.cxx
+src/TTbarHiggsBTagEff.cxx \
+src/BTagCalibrationXStandalone.cxx
 
 
 INC = include/Hist.h include/Ranges.h include/Analyzer.h \
@@ -39,15 +40,17 @@ INC = include/Hist.h include/Ranges.h include/Analyzer.h \
       include/TTbarHiggsTFAnalysis.h \
       include/Lepton.h \
       include/TTbarHiggsTriggerAnalysis.h \
-      include/TTbarHiggsBTagEff.h
-      
+      include/TTbarHiggsBTagEff.h \
+      include/BTagCalibrationXStandalone.h
+
 OBJ = Analyzer.o Hist.o \
 TTbarDileptonAnalysis.o HistoManager.o \
 TTbarHiggsMultileptonAnalysis.o \
 TTbarHiggsTFAnalysis.o \
 Lepton.o \
 TTbarHiggsTriggerAnalysis.o \
-TTbarHiggsBTagEff.o
+TTbarHiggsBTagEff.o\
+BTagCalibrationXStandalone.o
 
 EXE = Analyzer
 
