@@ -1321,19 +1321,19 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // #                                          #
         // ############################################
 
-        //TwoLeptonsSameSignSelection_TTH2l(jentry);
-        //TwoLeptonsSameSignSelection_ApplicationFakes(jentry);
-        //TwoLeptonsSameSignSelection_ApplicationFlips(jentry);
+        TwoLeptonsSameSignSelection_TTH2l(jentry);
+        TwoLeptonsSameSignSelection_ApplicationFakes(jentry);
+        TwoLeptonsSameSignSelection_ApplicationFlips(jentry);
         //TwoLeptonsSameSignSelection_LepMVA_sideband(jentry);
         //TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
         //TwoLeptonsSameSignSelection_TTbar(jentry);
 
-        //ThreeLeptonSelection_TTH3l(jentry);
-        //ThreeLeptonSelection_ApplicationFakes(jentry);
+        ThreeLeptonSelection_TTH3l(jentry);
+        ThreeLeptonSelection_ApplicationFakes(jentry);
         ThreeLeptonSelection_CR_WZ(jentry);
         ThreeLeptonSelection_CR_WZrelaxed(jentry);
         //ThreeLeptonSelection_CR_Zl(jentry);
-        //ThreeLeptonSelection_TTZ(jentry);
+        ThreeLeptonSelection_TTZ(jentry);
 
         //std::cout <<is_CR_TTl<<" "<< is_Zl_CR <<" " << is_CR_WZ<<" " << is_TTH3l<< std::endl;
         //if (is_TTH3l==true ) std::cout <<"is_TTH3l" << std::endl;
@@ -4487,250 +4487,57 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZrelaxed(int evt)
     // # Common selection #
     // ####################
 
-    bool nLep             = ( vLeptons.size()                   >= 2 );
-    if(!nLep)             return;
+    if(DEBUG)             std::cout << std::endl << " 3l ss SR ==================================================================" << std::endl;
 
-    bool leading_lep_pt   = ( vLeptons.at(0).pt()               > 20 );
-    if(!leading_lep_pt)   return;
+    bool nLep               = ( vSelectedLeptons.size()     >= 3 );
+    if(!nLep)               return;
 
-    bool following_lep_pt = ( vLeptons.at(1).pt()               > 10 );
-    if(!following_lep_pt) return;
+    if(DEBUG) std::cout << "nLep Ok... ";
 
-    bool passMll12Gt12    = ( ( vLeptons.at(0).p4() + vLeptons.at(1).p4() ).M()  > 12);
-    if(!passMll12Gt12)    return;
+    //bool nTight             = ( n_tight                     >= 3 );
+    //if(!nTight)             return;
 
-    bool nJets            = ( vSelectedJets.size()                      >= 2 );
-    if(!nJets)            return;
+    //bool are_fullytight     =  ( vSelectedLeptons.at(0).isTightTTH()        && vSelectedLeptons.at(1).isTightTTH()      && vSelectedLeptons.at(2).isTightTTH()
+    //                          && vSelectedLeptons.at(0).cutEventSel()       && vSelectedLeptons.at(1).cutEventSel()     && vSelectedLeptons.at(2).cutEventSel()
+    //                          && vSelectedLeptons.at(0).noLostHits()        && vSelectedLeptons.at(1).noLostHits()      && vSelectedLeptons.at(2).noLostHits()      );
+    //if(!are_fullytight)     return;
+    if(DEBUG) std::cout << "nTight Ok... ";
 
-    // #################################
-    // # Three leptons event selection #
-    // #################################
+    bool leading_lep_pt     = ( vSelectedLeptons.at(0).pt() > 20 );
+    if(!leading_lep_pt)     return;
 
-    nLep                  = ( vLeptons.size()				    >= 3 );
-    if(!nLep)             return;
+    if(DEBUG) std::cout << "leading_lep_pt Ok... ";
 
-    bool third_lep_pt     = ( vLeptons.at(2).pt()               > 10 );
-    if(!third_lep_pt)     return;
+    bool following_lep_pt   = ( (vSelectedLeptons.at(1).pt() > 10) && (vSelectedLeptons.at(2).pt() > 10) );
+    if(!following_lep_pt)   return;
 
-    passMll12Gt12  = ( ( vLeptons.at(0).p4() + vLeptons.at(2).p4() ).M()  > 12
-            && ( vLeptons.at(1).p4() + vLeptons.at(2).p4() ).M()  > 12 );
-    if(!passMll12Gt12)    return;
+    if(DEBUG) std::cout << "following_lep_pt Ok... ";
 
-    theHistoManager->fillHisto("CutFlow",                           "noSel", "WZrel_CR",   "",   2, weight);
-    theHistoManager->fillHisto("CutFlow",                 "PassingTightMVA", "WZrel_CR",   "",   1, weight);
+    bool nJets              = ( vSelectedJets.size()        >= 2 );
+    if(!nJets)              return;
 
-    // ##########
-    // # Z peak #
-    // ##########
+    if(DEBUG) std::cout << "nJets Ok... ";
 
-    bool pass_Zpeak = false;
-    float Delta = 10, ZM = -1., Zpt = -1., Lep1Z = -1, Lep2Z = -1;
-
+    // Adding invariant mass cut on loose leptons pairs
+    bool pass_invariantemasscut = true;
     for(int i=0; i<vLeptons.size()-1; i++)
     {
         for(int j=i+1; j<vLeptons.size(); j++)
         {
-            if (  ( vLeptons.at(i).id() == -vLeptons.at(j).id()                               )
-                    && ( fabs( ( vLeptons.at(i).p4() + vLeptons.at(j).p4() ).M() - 91.188) < Delta ) )
-            {
-                Lep1Z      = i;
-                Lep2Z      = j;
-                ZM         = ( vLeptons.at(i).p4() + vLeptons.at(j).p4() ).M();
-                Zpt        = ( vLeptons.at(i).p4() + vLeptons.at(j).p4() ).Pt();
-                Delta      = fabs(ZM - 91.188);
-                pass_Zpeak = true;
-            }
+            if ( fabs( ( vLeptons.at(i).p4() + vLeptons.at(j).p4() ).M() ) < 12 )
+            { pass_invariantemasscut = false ;}
         }
     }
-    if(!pass_Zpeak)       return;
+    if(!pass_invariantemasscut) return;    
 
-    theHistoManager->fillHisto("CutFlow",                           "noSel", "WZrel_CR",   "",   3, weight);
-    theHistoManager->fillHisto("CutFlow",                        "PassingZ", "WZrel_CR",   "",   1, weight);
-    theHistoManager->fillHisto("ZCandidateInvariantMass",        "PassingZ", "WZrel_CR",   "",  ZM, weight);
-
-    // ##########
-    // # MET LD #
-    // ##########
-
-    float jet_px = 0, jet_py = 0, lepton_px = 0, lepton_py = 0, MHT = 0, met_ld = 0;
-
-    TLorentzVector jetp4;
-    for(int i=0; i<vSelectedJets.size(); i++)
-    {
-        jetp4.SetPtEtaPhiE(vSelectedJets.at(i).pt(), vSelectedJets.at(i).eta(), vSelectedJets.at(i).phi(), vSelectedJets.at(i).E());
-        jet_px = jet_px + jetp4.Px();
-        jet_py = jet_py + jetp4.Py();
-    }
-
-    for(int i=0; i<vLeptons.size(); i++)
-    {
-        lepton_px = lepton_px + vLeptons.at(i).p4().Px();
-        lepton_py = lepton_py + vLeptons.at(i).p4().Py();
-    }
-
-    MHT = sqrt( (jet_px + lepton_px) * (jet_px + lepton_px) + (jet_py + lepton_py) * (jet_py + lepton_py) );
-
-    met_ld = 0.00397 * vEvent->at(0).metpt() + 0.00265 * MHT;
-
-    if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                    "PassingMETLD", "WZrel_CR",   "",   1, weight);
-    if( vSelectedJets.size() >= 4  )  theHistoManager->fillHisto("CutFlow",                     "PassingJets", "WZrel_CR",   "",   1, weight); 
-
-    if( met_ld < 0.2 && vSelectedJets.size() < 4 ) return;
-    theHistoManager->fillHisto("CutFlow",                 "PassingMETLDorJets", "WZrel_CR",   "",   1, weight);
-    theHistoManager->fillHisto("ZCandidateInvariantMass", "PassingMETLDorJets", "WZrel_CR",   "",  ZM, weight);
-
-    // ########
-    // # SFOS #
-    // ########
-
-    bool isSFOS = false;
-    for(int i=0; i<vLeptons.size(); i++)
-    {
-        for(int j=0; j<vLeptons.size(); j++)
-        {
-            if (  ( i                   != j                            )
-                    && ( vLeptons.at(i).id() == -vLeptons.at(j).id() ) )
-            { isSFOS = true ;}
-        }
-    }
-
-    theHistoManager->fillHisto("CutFlow",                 "PassingMETLDorSFOS", "WZrel_CR",   "",   1, weight);
-    theHistoManager->fillHisto("ZCandidateInvariantMass", "PassingMETLDorSFOS", "WZrel_CR",   "",  ZM, weight);
-
-    if(vSelectedJets.size() < 4 && (met_ld < (0.2 + 0.1 * isSFOS)) ) return;
-
-    // ##############
-    // # b-jet veto #
-    // ##############
-
-    bool nMediumBtag      = ( nMediumBJets                              == 0 );
-    if(!nMediumBtag)      return;
-
-    theHistoManager->fillHisto("CutFlow",                 "PassingbJetsVeto", "WZrel_CR",   "",   1, weight);
-    theHistoManager->fillHisto("ZCandidateInvariantMass", "PassingbJetsVeto", "WZrel_CR",   "",  ZM, weight);
-
-    int sum_charges_3l = 0;
-    for(int i=0; i<3; i++)
-    {
-        sum_charges_3l = sum_charges_3l + vLeptons.at(i).charge();
-    }
-    if( fabs(sum_charges_3l) != 1 ) return;
-
-    // Building arbitrary variables with all leptons...
-
-    TLorentzVector all_lep_invmass_p4;
-
-    int   all_lep_sumofcharges = 0;
-    float all_lep_invmass      = 0;
-    float all_lep_sumofpt      = 0;
-
-    for(int i=0; i<vLeptons.size(); i++)
-    {
-        all_lep_sumofcharges = all_lep_sumofcharges + vLeptons.at(i).charge();
-        all_lep_invmass_p4   = all_lep_invmass_p4   + vLeptons.at(i).p4();
-    }
-
-    all_lep_invmass = all_lep_invmass_p4.M();
-    all_lep_sumofpt = sqrt( (lepton_px*lepton_px) + (lepton_py*lepton_py) );
-
-    // Building arbitrary variables with remaining (after Z peak determination) leptons...
-
-    TLorentzVector rem_lep_invmass_p4;
-
-    int   rem_lep_sumofcharges = 0;
-    float rem_lep_invmass      = 0;
-    float rem_lep_sumofpt      = 0;
-    float rem_lep_px           = 0;
-    float rem_lep_py           = 0;
-
-
-    for(int i=0; i<vLeptons.size(); i++)
-    {
-        if( i!=Lep1Z && i!=Lep2Z)
-        {
-            rem_lep_sumofcharges = rem_lep_sumofcharges + vLeptons.at(i).charge();
-            rem_lep_px           = rem_lep_px           + vLeptons.at(i).p4().Px();
-            rem_lep_py           = rem_lep_py           + vLeptons.at(i).p4().Py();
-            rem_lep_invmass_p4   = rem_lep_invmass_p4   + vLeptons.at(i).p4();
-        }
-    }
-
-    rem_lep_invmass = rem_lep_invmass_p4.M();
-    rem_lep_sumofpt = sqrt( (rem_lep_px*rem_lep_px) + (rem_lep_py*rem_lep_py) );
-
-    theHistoManager->fillHisto("ZCandidateInvariantMass",        "finalSel", "WZrel_CR",   "",   ZM                    , weight);
-    theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "finalSel", "WZrel_CR",   "",   Zpt                   , weight);
-    theHistoManager->fillHisto("MET",                            "finalSel", "WZrel_CR",   "",   vEvent->at(0).metpt() , weight);
-    theHistoManager->fillHisto("MHT",                            "finalSel", "WZrel_CR",   "",   MHT                   , weight);
-    theHistoManager->fillHisto("MetLD",                          "finalSel", "WZrel_CR",   "",   met_ld                , weight);
-    theHistoManager->fillHisto("TauMultiplicity",                "finalSel", "WZrel_CR",   "",   vSelectedTaus.size()  , weight);
-    theHistoManager->fillHisto("JetMultiplicity",                "finalSel", "WZrel_CR",   "",   vSelectedJets.size()  , weight);
-
-    theHistoManager->fillHisto("InvariantMassOfSelectedLeptons", "finalSel", "WZrel_CR",   "",   all_lep_invmass       , weight);
-    theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "finalSel", "WZrel_CR",   "",   all_lep_sumofcharges  , weight);
-    theHistoManager->fillHisto("SumVecPtSelectedLeptons",        "finalSel", "WZrel_CR",   "",   all_lep_sumofpt       , weight);
-
-    theHistoManager->fillHisto("InvMassRemainingLepton",         "finalSel", "WZrel_CR",   "",   rem_lep_invmass       , weight);
-    theHistoManager->fillHisto("SumOfRemainingLeptonsCharges",   "finalSel", "WZrel_CR",   "",   rem_lep_sumofcharges  , weight);
-    theHistoManager->fillHisto("SumVecPtRemainingLeptons",       "finalSel", "WZrel_CR",   "",   rem_lep_sumofpt       , weight);
-
-    theHistoManager->fillHisto2D("InvMassLastLeptonVSZMass",     "finalSel", "WZrel_CR",   "",   rem_lep_invmass,    ZM, weight);
-    theHistoManager->fillHisto2D("SumPtLepVSZMass",              "finalSel", "WZrel_CR",   "",   rem_lep_sumofpt,    ZM, weight);
-    theHistoManager->fillHisto2D("METLDVSZMass",                 "finalSel", "WZrel_CR",   "",   met_ld,             ZM, weight);
-
-    is_3l_WZrel_CR = true;
-}
-
-void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
-{
-
-    theHistoManager->fillHisto2D("LeptonsVsJets",           "noSel", "TTZ_CR",   "",    vSelectedLeptons.size(),   vSelectedJets.size(),      weight);
-    theHistoManager->fillHisto2D("LeptonsVsBJets",          "noSel", "TTZ_CR",   "",    vSelectedLeptons.size(),   vSelectedBTagJets.size(),  weight);
-
-    if(weight==0)         return; // For data not passing the relevant trigger, clean up the histograms from events with weight 0)
-
-    // ####################
-    // # Common selection # with tight leptons !
-    // ####################
-
-    bool nLep             = ( vSelectedLeptons.size()                   >= 2 );
-    if(!nLep)             return;
-
-    bool leading_lep_pt   = ( vSelectedLeptons.at(0).pt()               > 20 );
-    if(!leading_lep_pt)   return;
-
-    bool following_lep_pt = ( vSelectedLeptons.at(1).pt()               > 10 );
-    if(!following_lep_pt) return;
-
-    bool passMll12Gt12    = ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(1).p4() ).M()  > 12);
-    if(!passMll12Gt12)    return;
-
-    bool nJets            = ( vSelectedJets.size()                      >= 2 );
-    if(!nJets)            return;
-
-    // #################################
-    // # Three leptons event selection #
-    // #################################
-
-    nLep                  = ( vSelectedLeptons.size()			>= 3 );
-    if(!nLep)             return;
-
-    bool third_lep_pt     = ( vSelectedLeptons.at(2).pt()               > 10 );
-    if(!third_lep_pt)     return;
-
-    passMll12Gt12  = ( ( vSelectedLeptons.at(0).p4() + vSelectedLeptons.at(2).p4() ).M()  > 12
-            && ( vSelectedLeptons.at(1).p4() + vSelectedLeptons.at(2).p4() ).M()  > 12 );
-    if(!passMll12Gt12)    return;
-
-    theHistoManager->fillHisto("CutFlow",                           "noSel", "TTZ_CR",   "",   2, weight);
-    theHistoManager->fillHisto("CutFlow",                 "PassingTightMVA", "TTZ_CR",   "",   1, weight);
+    if(DEBUG) std::cout << "invariantmasscut Ok... ";
 
     // ##########
     // # Z peak #
     // ##########
 
     bool pass_Zpeak = false;
-    float Delta = 10, ZM = -1., Zpt = -1., Lep1Z = -1, Lep2Z = -1;
+    float Delta = 10, ZM = -1., Zpt = -1., Lep1Z = -1, Lep2Z = -1, LepW = -1;
 
     for(int i=0; i<vSelectedLeptons.size()-1; i++)
     {
@@ -4750,15 +4557,28 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
     }
     if(!pass_Zpeak)       return;
 
-    theHistoManager->fillHisto("CutFlow",                           "noSel", "TTZ_CR",   "",   3, weight);
-    theHistoManager->fillHisto("CutFlow",                        "PassingZ", "TTZ_CR",   "",   1, weight);
-    theHistoManager->fillHisto("ZCandidateInvariantMass",        "PassingZ", "TTZ_CR",   "",  ZM, weight);
+    // 
+    if( ( (Lep1Z == 0) && (Lep2Z == 1) ) || ( (Lep1Z == 1) && (Lep2Z == 0) ) ) LepW = 2;
+    if( ( (Lep1Z == 0) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 0) ) ) LepW = 1;    
+    if( ( (Lep1Z == 1) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 1) ) ) LepW = 0;
+    //AC considering cases with 4 leptons, taking lepW w/ highest pT
+    if( ( (Lep1Z == 0) && (Lep2Z == 3) ) || ( (Lep1Z == 3) && (Lep2Z == 0) ) ) LepW = 1;
+    if( ( (Lep1Z == 1) && (Lep2Z == 3) ) || ( (Lep1Z == 3) && (Lep2Z == 1) ) ) LepW = 0;
+    if( ( (Lep1Z == 2) && (Lep2Z == 3) ) || ( (Lep1Z == 3) && (Lep2Z == 2) ) ) LepW = 0;
+
+
+    float MTW = 0. ;
+    if (LepW >=0) MTW = sqrt( 2 * vSelectedLeptons.at(LepW).p4().Pt() * vEvent->at(0).metpt() * (1 - cos( vSelectedLeptons.at(LepW).phi() - vEvent->at(0).metphi() )));
+
+    theHistoManager->fillHisto("CutFlow",                           "noSel", "WZ_CR",   "",   3, weight);
+    theHistoManager->fillHisto("CutFlow",                        "PassingZ", "WZ_CR",   "",   1, weight);
+    theHistoManager->fillHisto("ZCandidateInvariantMass",        "PassingZ", "WZ_CR",   "",  ZM, weight);
 
     // ##########
     // # MET LD #
     // ##########
 
-    float jet_px = 0, jet_py = 0, lepton_px = 0, lepton_py = 0, MHT = 0, met_ld = 0;
+    float jet_px = 0, jet_py = 0, lepton_px = 0, lepton_py = 0, tau_px = 0, tau_py = 0, MHT = 0, met_ld = 0;
 
     TLorentzVector jetp4;
     for(int i=0; i<vSelectedJets.size(); i++)
@@ -4774,46 +4594,46 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
         lepton_py = lepton_py + vSelectedLeptons.at(i).p4().Py();
     }
 
-    MHT = sqrt( (jet_px + lepton_px) * (jet_px + lepton_px) + (jet_py + lepton_py) * (jet_py + lepton_py) );
+    TLorentzVector taup4;
+    for(int i=0; i<vSelectedTaus.size(); i++)
+    {
+        taup4.SetPtEtaPhiE(vSelectedTaus.at(i).pt(), vSelectedTaus.at(i).eta(), vSelectedTaus.at(i).phi(), vSelectedTaus.at(i).E());
+        tau_px = tau_px + taup4.Px();
+        tau_py = tau_py + taup4.Py();
+    }
+
+    MHT = sqrt( (jet_px + lepton_px + tau_px) * (jet_px + lepton_px + tau_px) + (jet_py + lepton_py + tau_py) * (jet_py + lepton_py + tau_py) );
 
     met_ld = 0.00397 * vEvent->at(0).metpt() + 0.00265 * MHT;
 
-    if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                    "PassingMETLD", "TTZ_CR",   "",   1, weight);
-    if( vSelectedJets.size() >= 4  )  theHistoManager->fillHisto("CutFlow",                     "PassingJets", "TTZ_CR",   "",   1, weight); 
+    if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                "WZ_CR",   "", _sampleName.Data(),   3, weight);
+    if( vSelectedJets.size() >= 4  )  theHistoManager->fillHisto("CutFlow",                "WZ_CR",   "", _sampleName.Data(),   4, weight);
 
-    if( met_ld < 0.2 && vSelectedJets.size() < 4 ) return;
-    theHistoManager->fillHisto("CutFlow",                 "PassingMETLDorJets", "TTZ_CR",   "",   1, weight);
-    theHistoManager->fillHisto("ZCandidateInvariantMass", "PassingMETLDorJets", "TTZ_CR",   "",  ZM, weight);
+    if(DEBUG) std::cout << " MHT =  " << MHT << "MET = " << vEvent->at(0).metpt() << " met_ld = " << met_ld ;
 
     // ########
     // # SFOS #
     // ########
 
     bool isSFOS = false;
-    for(int i=0; i<vSelectedLeptons.size()-1; i++)
+    for(int i=0; i<vSelectedLeptons.size(); i++)
     {
-        for(int j=i+1; j<vSelectedLeptons.size(); j++)
+        for(int j=0; j<vSelectedLeptons.size(); j++)
         {
-            if (  ( vSelectedLeptons.at(i).id() == -vSelectedLeptons.at(j).id() ) )
+            if (  ( i                           != j                            )
+                    && ( vSelectedLeptons.at(i).id() == -vSelectedLeptons.at(j).id() ) )
             { isSFOS = true ;}
         }
     }
 
-    theHistoManager->fillHisto("CutFlow",                 "PassingMETLDorSFOS", "TTZ_CR",   "",   1, weight);
-    theHistoManager->fillHisto("ZCandidateInvariantMass", "PassingMETLDorSFOS", "TTZ_CR",   "",  ZM, weight);
+    if( met_ld               > 0.3 ) theHistoManager->fillHisto("CutFlow",                "WZ_CR",   "",   "",   6, weight);
+    if( isSFOS                     ) theHistoManager->fillHisto("CutFlow",                "WZ_CR",   "",   "",   7, weight);
+
+    if(DEBUG) std::cout << std::endl << "nJets: " << vSelectedJets.size() << " met_ld: " << met_ld << " isSFOS " << isSFOS << std::endl;
 
     if(vSelectedJets.size() < 4 && (met_ld < (0.2 + 0.1 * isSFOS)) ) return;
 
-    // #####################
-    // # b-jet requirement #
-    // #####################
-
-    bool nLooseBtag       = ( nLooseBJets                               >= 2 );
-    bool nMediumBtag      = ( nMediumBJets                              >= 1 );
-    if(!nLooseBtag || !nMediumBtag)      return;
-
-    theHistoManager->fillHisto("CutFlow",                 "PassingbJetsVeto", "TTZ_CR",   "",   1, weight);
-    theHistoManager->fillHisto("ZCandidateInvariantMass", "PassingbJetsVeto", "TTZ_CR",   "",  ZM, weight);
+    if(DEBUG) std::cout << "nJets and met_ld Ok... ";
 
     int sum_charges_3l = 0;
     for(int i=0; i<3; i++)
@@ -4821,6 +4641,19 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
         sum_charges_3l = sum_charges_3l + vSelectedLeptons.at(i).charge();
     }
     if( fabs(sum_charges_3l) != 1 ) return;
+
+    if(DEBUG) std::cout << "sumOfCharges Ok... ";
+
+    // ##############
+    // # b-jet veto #
+    // ##############
+
+    bool nLooseBtag       = ( nLooseBJets                               == 0 );
+    bool nMediumBtag      = ( nMediumBJets                              == 0 );
+    if(!nLooseBtag || !nMediumBtag)      return;
+
+    theHistoManager->fillHisto("CutFlow",                 "PassingbJetsVeto", "WZ_CR",   "",   1, weight);
+    theHistoManager->fillHisto("ZCandidateInvariantMass", "PassingbJetsVeto", "WZ_CR",   "",  ZM, weight);
 
     // Building arbitrary variables with all leptons...
 
@@ -4863,6 +4696,256 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
 
     rem_lep_invmass = rem_lep_invmass_p4.M();
     rem_lep_sumofpt = sqrt( (rem_lep_px*rem_lep_px) + (rem_lep_py*rem_lep_py) );
+
+    theHistoManager->fillHisto("ZCandidateInvariantMass",        "finalSel", "WZrel_CR",   "",   ZM                    , weight);
+    theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "finalSel", "WZrel_CR",   "",   Zpt                   , weight);
+    theHistoManager->fillHisto("MET",                            "finalSel", "WZrel_CR",   "",   vEvent->at(0).metpt() , weight);
+    theHistoManager->fillHisto("MHT",                            "finalSel", "WZrel_CR",   "",   MHT                   , weight);
+    theHistoManager->fillHisto("MetLD",                          "finalSel", "WZrel_CR",   "",   met_ld                , weight);
+    theHistoManager->fillHisto("TauMultiplicity",                "finalSel", "WZrel_CR",   "",   vSelectedTaus.size()  , weight);
+    theHistoManager->fillHisto("JetMultiplicity",                "finalSel", "WZrel_CR",   "",   vSelectedJets.size()  , weight);
+
+    theHistoManager->fillHisto("InvariantMassOfSelectedLeptons", "finalSel", "WZrel_CR",   "",   all_lep_invmass       , weight);
+    theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "finalSel", "WZrel_CR",   "",   all_lep_sumofcharges  , weight);
+    theHistoManager->fillHisto("SumVecPtSelectedLeptons",        "finalSel", "WZrel_CR",   "",   all_lep_sumofpt       , weight);
+
+    theHistoManager->fillHisto("InvMassRemainingLepton",         "finalSel", "WZrel_CR",   "",   rem_lep_invmass       , weight);
+    theHistoManager->fillHisto("SumOfRemainingLeptonsCharges",   "finalSel", "WZrel_CR",   "",   rem_lep_sumofcharges  , weight);
+    theHistoManager->fillHisto("SumVecPtRemainingLeptons",       "finalSel", "WZrel_CR",   "",   rem_lep_sumofpt       , weight);
+
+    theHistoManager->fillHisto2D("InvMassLastLeptonVSZMass",     "finalSel", "WZrel_CR",   "",   rem_lep_invmass,    ZM, weight);
+    theHistoManager->fillHisto2D("SumPtLepVSZMass",              "finalSel", "WZrel_CR",   "",   rem_lep_sumofpt,    ZM, weight);
+    theHistoManager->fillHisto2D("METLDVSZMass",                 "finalSel", "WZrel_CR",   "",   met_ld,             ZM, weight);
+
+    is_3l_WZrel_CR = true;
+}
+
+void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
+{
+
+    theHistoManager->fillHisto2D("LeptonsVsJets",           "noSel", "TTZ_CR",   "",    vSelectedLeptons.size(),   vSelectedJets.size(),      weight);
+    theHistoManager->fillHisto2D("LeptonsVsBJets",          "noSel", "TTZ_CR",   "",    vSelectedLeptons.size(),   vSelectedBTagJets.size(),  weight);
+
+    if(weight==0)         return; // For data not passing the relevant trigger, clean up the histograms from events with weight 0)
+
+    // ####################
+    // # Common selection #
+    // ####################
+
+    if(DEBUG)             std::cout << std::endl << " 3l ss SR ==================================================================" << std::endl;
+
+    bool nLep               = ( vSelectedLeptons.size()     >= 3 );
+    if(!nLep)               return;
+
+    if(DEBUG) std::cout << "nLep Ok... ";
+
+    bool nTight             = ( n_tight                     >= 3 );
+    if(!nTight)             return;
+
+    bool are_fullytight     =  ( vSelectedLeptons.at(0).isTightTTH()        && vSelectedLeptons.at(1).isTightTTH()      && vSelectedLeptons.at(2).isTightTTH()
+                              && vSelectedLeptons.at(0).cutEventSel()       && vSelectedLeptons.at(1).cutEventSel()     && vSelectedLeptons.at(2).cutEventSel()
+                              && vSelectedLeptons.at(0).noLostHits()        && vSelectedLeptons.at(1).noLostHits()      && vSelectedLeptons.at(2).noLostHits()      );
+    if(!are_fullytight)     return;
+    if(DEBUG) std::cout << "nTight Ok... ";
+
+    bool leading_lep_pt     = ( vSelectedLeptons.at(0).pt() > 20 );
+    if(!leading_lep_pt)     return;
+
+    if(DEBUG) std::cout << "leading_lep_pt Ok... ";
+
+    bool following_lep_pt   = ( (vSelectedLeptons.at(1).pt() > 10) && (vSelectedLeptons.at(2).pt() > 10) );
+    if(!following_lep_pt)   return;
+
+    if(DEBUG) std::cout << "following_lep_pt Ok... ";
+
+    bool nJets              = ( vSelectedJets.size()        >= 2 );
+    if(!nJets)              return;
+
+    if(DEBUG) std::cout << "nJets Ok... ";
+
+    // Adding invariant mass cut on loose leptons pairs
+    bool pass_invariantemasscut = true;
+    for(int i=0; i<vLeptons.size()-1; i++)
+    {
+        for(int j=i+1; j<vLeptons.size(); j++)
+        {
+            if ( fabs( ( vLeptons.at(i).p4() + vLeptons.at(j).p4() ).M() ) < 12 )
+            { pass_invariantemasscut = false ;}
+        }
+    }
+    if(!pass_invariantemasscut) return;    
+
+    if(DEBUG) std::cout << "invariantmasscut Ok... ";
+
+    // ##########
+    // # Z peak #
+    // ##########
+
+    bool pass_Zpeak = false;
+    float Delta = 10, ZM = -1., Zpt = -1., Lep1Z = -1, Lep2Z = -1, LepW = -1;
+
+    for(int i=0; i<vSelectedLeptons.size()-1; i++)
+    {
+        for(int j=i+1; j<vSelectedLeptons.size(); j++)
+        {
+            if (  ( vSelectedLeptons.at(i).id() == -vSelectedLeptons.at(j).id()                               )
+                    && ( fabs( ( vSelectedLeptons.at(i).p4() + vSelectedLeptons.at(j).p4() ).M() - 91.188) < Delta ) )
+            {
+                Lep1Z      = i;
+                Lep2Z      = j;
+                ZM         = ( vSelectedLeptons.at(i).p4() + vSelectedLeptons.at(j).p4() ).M();
+                Zpt        = ( vSelectedLeptons.at(i).p4() + vSelectedLeptons.at(j).p4() ).Pt();
+                Delta      = fabs(ZM - 91.188);
+                pass_Zpeak = true;
+            }
+        }
+    }
+    if(!pass_Zpeak)       return;
+
+    // 
+    if( ( (Lep1Z == 0) && (Lep2Z == 1) ) || ( (Lep1Z == 1) && (Lep2Z == 0) ) ) LepW = 2;
+    if( ( (Lep1Z == 0) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 0) ) ) LepW = 1;    
+    if( ( (Lep1Z == 1) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 1) ) ) LepW = 0;
+    //AC considering cases with 4 leptons, taking lepW w/ highest pT
+    if( ( (Lep1Z == 0) && (Lep2Z == 3) ) || ( (Lep1Z == 3) && (Lep2Z == 0) ) ) LepW = 1;
+    if( ( (Lep1Z == 1) && (Lep2Z == 3) ) || ( (Lep1Z == 3) && (Lep2Z == 1) ) ) LepW = 0;
+    if( ( (Lep1Z == 2) && (Lep2Z == 3) ) || ( (Lep1Z == 3) && (Lep2Z == 2) ) ) LepW = 0;
+
+
+    float MTW = 0. ;
+    if (LepW >=0) MTW = sqrt( 2 * vSelectedLeptons.at(LepW).p4().Pt() * vEvent->at(0).metpt() * (1 - cos( vSelectedLeptons.at(LepW).phi() - vEvent->at(0).metphi() )));
+
+    theHistoManager->fillHisto("CutFlow",                           "noSel", "WZ_CR",   "",   3, weight);
+    theHistoManager->fillHisto("CutFlow",                        "PassingZ", "WZ_CR",   "",   1, weight);
+    theHistoManager->fillHisto("ZCandidateInvariantMass",        "PassingZ", "WZ_CR",   "",  ZM, weight);
+
+    // ##########
+    // # MET LD #
+    // ##########
+
+    float jet_px = 0, jet_py = 0, lepton_px = 0, lepton_py = 0, tau_px = 0, tau_py = 0, MHT = 0, met_ld = 0;
+
+    TLorentzVector jetp4;
+    for(int i=0; i<vSelectedJets.size(); i++)
+    {
+        jetp4.SetPtEtaPhiE(vSelectedJets.at(i).pt(), vSelectedJets.at(i).eta(), vSelectedJets.at(i).phi(), vSelectedJets.at(i).E());
+        jet_px = jet_px + jetp4.Px();
+        jet_py = jet_py + jetp4.Py();
+    }
+
+    for(int i=0; i<vSelectedLeptons.size(); i++)
+    {
+        lepton_px = lepton_px + vSelectedLeptons.at(i).p4().Px();
+        lepton_py = lepton_py + vSelectedLeptons.at(i).p4().Py();
+    }
+
+    TLorentzVector taup4;
+    for(int i=0; i<vSelectedTaus.size(); i++)
+    {
+        taup4.SetPtEtaPhiE(vSelectedTaus.at(i).pt(), vSelectedTaus.at(i).eta(), vSelectedTaus.at(i).phi(), vSelectedTaus.at(i).E());
+        tau_px = tau_px + taup4.Px();
+        tau_py = tau_py + taup4.Py();
+    }
+
+    MHT = sqrt( (jet_px + lepton_px + tau_px) * (jet_px + lepton_px + tau_px) + (jet_py + lepton_py + tau_py) * (jet_py + lepton_py + tau_py) );
+
+    met_ld = 0.00397 * vEvent->at(0).metpt() + 0.00265 * MHT;
+
+    if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                "WZ_CR",   "", _sampleName.Data(),   3, weight);
+    if( vSelectedJets.size() >= 4  )  theHistoManager->fillHisto("CutFlow",                "WZ_CR",   "", _sampleName.Data(),   4, weight);
+
+    if(DEBUG) std::cout << " MHT =  " << MHT << "MET = " << vEvent->at(0).metpt() << " met_ld = " << met_ld ;
+
+    // ########
+    // # SFOS #
+    // ########
+
+    bool isSFOS = false;
+    for(int i=0; i<vSelectedLeptons.size(); i++)
+    {
+        for(int j=0; j<vSelectedLeptons.size(); j++)
+        {
+            if (  ( i                           != j                            )
+                    && ( vSelectedLeptons.at(i).id() == -vSelectedLeptons.at(j).id() ) )
+            { isSFOS = true ;}
+        }
+    }
+
+    if( met_ld               > 0.3 ) theHistoManager->fillHisto("CutFlow",                "WZ_CR",   "",   "",   6, weight);
+    if( isSFOS                     ) theHistoManager->fillHisto("CutFlow",                "WZ_CR",   "",   "",   7, weight);
+
+    if(DEBUG) std::cout << std::endl << "nJets: " << vSelectedJets.size() << " met_ld: " << met_ld << " isSFOS " << isSFOS << std::endl;
+
+    if(vSelectedJets.size() < 4 && (met_ld < (0.2 + 0.1 * isSFOS)) ) return;
+
+    if(DEBUG) std::cout << "nJets and met_ld Ok... ";
+
+    int sum_charges_3l = 0;
+    for(int i=0; i<3; i++)
+    {
+        sum_charges_3l = sum_charges_3l + vSelectedLeptons.at(i).charge();
+    }
+    if( fabs(sum_charges_3l) != 1 ) return;
+
+    if(DEBUG) std::cout << "sumOfCharges Ok... ";
+
+    // #########
+    // # b-jet #
+    // #########
+
+    bool nLooseBtag       = ( nLooseBJets                               >= 2 );
+    bool nMediumBtag      = ( nMediumBJets                              >= 1 );
+    if(!nLooseBtag || !nMediumBtag)      return;
+
+    theHistoManager->fillHisto("CutFlow",                 "PassingbJetsVeto", "WZ_CR",   "",   1, weight);
+    theHistoManager->fillHisto("ZCandidateInvariantMass", "PassingbJetsVeto", "WZ_CR",   "",  ZM, weight);
+
+    // Building arbitrary variables with all leptons...
+
+    TLorentzVector all_lep_invmass_p4;
+
+    int   all_lep_sumofcharges = 0;
+    float all_lep_invmass      = 0;
+    float all_lep_sumofpt      = 0;
+
+    for(int i=0; i<vSelectedLeptons.size(); i++)
+    {
+        all_lep_sumofcharges = all_lep_sumofcharges + vSelectedLeptons.at(i).charge();
+        all_lep_invmass_p4   = all_lep_invmass_p4   + vSelectedLeptons.at(i).p4();
+    }
+
+    all_lep_invmass = all_lep_invmass_p4.M();
+    all_lep_sumofpt = sqrt( (lepton_px*lepton_px) + (lepton_py*lepton_py) );
+
+    // Building arbitrary variables with remaining (after Z peak determination) leptons...
+
+    TLorentzVector rem_lep_invmass_p4;
+
+    int   rem_lep_sumofcharges = 0;
+    float rem_lep_invmass      = 0;
+    float rem_lep_sumofpt      = 0;
+    float rem_lep_px           = 0;
+    float rem_lep_py           = 0;
+
+
+    for(int i=0; i<vSelectedLeptons.size(); i++)
+    {
+        if( i!=Lep1Z && i!=Lep2Z)
+        {
+            rem_lep_sumofcharges = rem_lep_sumofcharges + vSelectedLeptons.at(i).charge();
+            rem_lep_px           = rem_lep_px           + vSelectedLeptons.at(i).p4().Px();
+            rem_lep_py           = rem_lep_py           + vSelectedLeptons.at(i).p4().Py();
+            rem_lep_invmass_p4   = rem_lep_invmass_p4   + vSelectedLeptons.at(i).p4();
+        }
+    }
+
+    rem_lep_invmass = rem_lep_invmass_p4.M();
+    rem_lep_sumofpt = sqrt( (rem_lep_px*rem_lep_px) + (rem_lep_py*rem_lep_py) );
+
+
+
+
+
 
     theHistoManager->fillHisto("LeadingLeptonPt",                "finalSel", "TTZ_CR",   "",   vSelectedLeptons.at(0).pt()   , weight);
     theHistoManager->fillHisto("SubLeadingLeptonPt",             "finalSel", "TTZ_CR",   "",   vSelectedLeptons.at(1).pt()   , weight);    
