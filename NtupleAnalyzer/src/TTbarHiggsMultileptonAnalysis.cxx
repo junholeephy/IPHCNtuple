@@ -5133,6 +5133,14 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("is_3l_TTZ_CR",&is_3l_TTZ_CR,"is_3l_TTZ_CR/B");
     tOutput->Branch("is_Zl_CR",&is_Zl_CR,"is_Zl_CR/B");
 
+    tOutput->Branch("is_2bTight",&is_2bTight,"is_2bTight/B");
+
+    tOutput->Branch("cat_ee",&cat_ee,"cat_ee/I");
+    tOutput->Branch("cat_em",&cat_em,"cat_em/I");
+    tOutput->Branch("cat_mm",&cat_mm,"cat_mm/I");
+    tOutput->Branch("cat_3l",&cat_3l,"cat_3l/I");
+    tOutput->Branch("cat_2ltau",&cat_2ltau,"cat_2ltau/I");
+
 
     tOutput->Branch("is_trigger",&is_trigger,"is_trigger/B");
 
@@ -5573,6 +5581,8 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     mc_nBtagJets25 = vSelectedBTagJets.size();
     mc_nMediumBtagJets25 = vSelectedMediumBTagJets.size();
     mc_nNonBtagJets25 = vSelectedNonBTagJets.size();
+
+    is_2bTight = (vSelectedMediumBTagJets.size()>=2)?true:false;
 
     tOutput->Fill();
 
