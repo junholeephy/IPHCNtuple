@@ -5143,6 +5143,8 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("mindr_lep2_jet",&mindr_lep2_jet,"mindr_lep2_jet/F");
     tOutput->Branch("LepGood_conePt0",&LepGood_conePt0,"LepGood_conePt0/F");
     tOutput->Branch("LepGood_conePt1",&LepGood_conePt1,"LepGood_conePt1/F");
+    tOutput->Branch("met",&met,"met/F");
+    tOutput->Branch("avg_dr_jet",&avg_dr_jet,"avg_dr_jet/F");
 
     tOutput->Branch("signal_2lss_TT_MVA",&signal_2lss_TT_MVA,"signal_2lss_TT_MVA/F");
     tOutput->Branch("signal_2lss_TTV_MVA",&signal_2lss_TTV_MVA,"signal_2lss_TTV_MVA/F");
