@@ -112,6 +112,8 @@ class TTbarHiggsMultileptonAnalysis
             stat_2lss_SR_mm, stat_2lss_lepMVA_SB_mm, stat_2lss_os_SB_mm,
             stat_3l_SR,      stat_3l_lepMVA_SB;
 
+        float zero_btagSF;
+
         virtual void     Init(TChain *tree);
         virtual void     Loop();
 

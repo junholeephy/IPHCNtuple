@@ -16,7 +16,7 @@ float get_eff_btagging( float pt, float eta, int flavor)
    int iEta = ( eta + 2.5 ) * 4;
    int iPt  = ( pt  / 10  ) - 1;
 
-   std::cout << " eta: " << eta << " iEta: " << iEta << " pt: " << pt << " iPt: " << iPt << std::endl;
+   //std::cout << " eta: " << eta << " iEta: " << iEta << " pt: " << pt << " iPt: " << iPt << std::endl;
 
    if       ( flavor == 5 ) eff_btagging = h_eff_btagging_b->GetBinContent(iEta,iPt);
    else if  ( flavor == 4 ) eff_btagging = h_eff_btagging_c->GetBinContent(iEta,iPt);

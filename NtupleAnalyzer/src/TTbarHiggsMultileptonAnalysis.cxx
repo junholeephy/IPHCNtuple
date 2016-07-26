@@ -4388,15 +4388,16 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     std::vector<int>    jetFlavors;
     int iSys = 0;
     double wgt_csv, wgt_csv_def, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf, new_weight;
-    double new_btagSF = 1.;        
-    
-    std::cout << " BTag SF ==========" << std::endl;
+    zero_btagSF = 1.;        
+    float  prob = 1.;
+
+    //std::cout << " BTag SF ==========" << std::endl;
 
     for(int i=0; i<vSelectedJets.size(); i++)
     {
-        std::cout   << "pt: "       << vSelectedJets.at(i).pt() 
-                    << " eta: "     << vSelectedJets.at(i).eta() 
-                    << " flavor: "  << vSelectedJets.at(i).jet_hadronFlavour() << std::endl;
+        //std::cout   << "pt: "       << vSelectedJets.at(i).pt() 
+        //            << " eta: "     << vSelectedJets.at(i).eta() 
+        //            << " flavor: "  << vSelectedJets.at(i).jet_hadronFlavour() << std::endl;
 
         float  pt_test              = vSelectedJets.at(i).pt();
         float  eta_test             = vSelectedJets.at(i).eta();
@@ -4429,13 +4430,13 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
             jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );  
         }
 
-        float prob = ( 1. - (btag_eff * jet_scalefactor) );
-        new_btagSF = prob;
+        prob = ( 1. - (btag_eff * jet_scalefactor) );
+        zero_btagSF *= prob;
         
-        std::cout << "Jet[" << i << "]: pt << " << pt_test << " eta " << eta_test <<  " flavor " << vSelectedJets.at(i).jet_hadronFlavour() << std::endl;
-        std::cout << "btag_eff: " << btag_eff << std::endl;
-        std::cout << "central: " << jet_scalefactor << " up: " << jet_scalefactor_up << " down: " << jet_scalefactor_do << std::endl;
-        std::cout << "prob: " << prob << " btag_SF: " << new_btagSF << std::endl;
+        //std::cout << "Jet[" << i << "]: pt << " << pt_test << " eta " << eta_test <<  " flavor " << vSelectedJets.at(i).jet_hadronFlavour() << std::endl;
+        //std::cout << "btag_eff: " << btag_eff << std::endl;
+        //std::cout << "central: " << jet_scalefactor << " up: " << jet_scalefactor_up << " down: " << jet_scalefactor_do << std::endl;
+        //std::cout << "prob: " << prob << " btag_SF: " << zero_btagSF << std::endl;
     }
 
     //wgt_csv_def = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, iSys, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf);
@@ -4464,12 +4465,11 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto2D("SumPtLepVSZMass",              "finalSel", "WZ_CR",   "",   rem_lep_sumofpt,    ZM, weight);
     theHistoManager->fillHisto2D("METLDVSZMass",                 "finalSel", "WZ_CR",   "",   met_ld,             ZM, weight);
 
-    std::cout << "LepW "<< LepW <<std::endl;
-    std::cout << "vSelectedLeptons.size() " <<vSelectedLeptons.size() << std::endl;
-    std::cout << "phi " << vSelectedLeptons.at(LepW).phi() <<" "<< vEvent->at(0).metphi()<< std::endl;
+    //std::cout << "LepW "<< LepW <<std::endl;
+    //std::cout << "vSelectedLeptons.size() " <<vSelectedLeptons.size() << std::endl;
+    //std::cout << "phi " << vSelectedLeptons.at(LepW).phi() <<" "<< vEvent->at(0).metphi()<< std::endl;
 
-    std::cout <<"evt " << vEvent->at(0).id() <<  std::endl;
-
+    //std::cout <<"evt " << vEvent->at(0).id() <<  std::endl;
 
     is_3l_WZ_CR = true;
 }
