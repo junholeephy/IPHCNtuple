@@ -172,12 +172,12 @@ bool Muon::sel()
         {
             float dr = GetDeltaR(_eta,_phi,ntP->jet_eta->at(ij),ntP->jet_phi->at(ij));
             if( dr < dr_min ) new_pt = ntP->jet_pt->at(ij) * 0.85;
-            std::cout << "jet[" << ij << "]  dr: " << dr << "  pt: " << ntP->jet_pt->at(ij) << std::endl;
+            //std::cout << "jet[" << ij << "]  dr: " << dr << "  pt: " << ntP->jet_pt->at(ij) << std::endl;
         }
         _pt = new_pt;
     }
 
-    cout<<std::setiosflags(ios::fixed)<<setprecision(5);
+    /*cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     
     // synchronization printout
     if( true )//isLooseTTH ) 
@@ -202,7 +202,7 @@ bool Muon::sel()
                                        << _dz                                           << " "
                                        << ntP->mu_segmentCompatibility->at(idx)         << " "
                                        << _lepMVA_TTH                                   << std::endl;
-    }
+    }*/
 
     return isLooseTTH;
 }
