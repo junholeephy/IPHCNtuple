@@ -1150,8 +1150,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             weights_pdf = vEvent->at(0).pdf_weights();
             ids_pdf = vEvent->at(0).pdf_ids();
 	    
-	    std::cout <<"======================PDF"<< std::endl;
-	    
+
 	    
 	    if (weights_pdf.size()<110) std::cout << "problem with size of PDF weights " << weights_pdf.size()<< std::endl;
 	     
@@ -4533,9 +4532,9 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
         zero_btagSF_up *= ( 1. - (btag_eff * jet_scalefactor_up) );
         zero_btagSF_do *= ( 1. - (btag_eff * jet_scalefactor_do) );
         
-        std::cout << "Jet[" << i << "]: pt << " << pt_test << " eta " << eta_test <<  " flavor " << vSelectedJets.at(i).jet_hadronFlavour() << std::endl;
-        std::cout << "btag_eff: " << btag_eff << std::endl;
-        std::cout << "central: " << jet_scalefactor << " up: " << jet_scalefactor_up << " down: " << jet_scalefactor_do << std::endl;
+        //std::cout << "Jet[" << i << "]: pt << " << pt_test << " eta " << eta_test <<  " flavor " << vSelectedJets.at(i).jet_hadronFlavour() << std::endl;
+        //std::cout << "btag_eff: " << btag_eff << std::endl;
+        //std::cout << "central: " << jet_scalefactor << " up: " << jet_scalefactor_up << " down: " << jet_scalefactor_do << std::endl;
         //std::cout << "prob: " << prob << " btag_SF: " << zero_btagSF << std::endl;
     }
 
@@ -4555,7 +4554,6 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
 
     theHistoManager->fillHisto("CutFlow",                 "PassingbJetsVeto", "WZ_CR",   "",   1, weight*zero_btagSF);
     theHistoManager->fillHisto("ZCandidateInvariantMass", "PassingbJetsVeto", "WZ_CR",   "",  ZM, weight*zero_btagSF);
- std::cout <<"ALOA -1"<< std::endl;
 
     // Building arbitrary variables with all leptons...
 
@@ -4601,7 +4599,6 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
 
    
     // ##################################################################################################################################
-std::cout <<"ALOA 0"<< std::endl;
 
     theHistoManager->fillHisto("ZCandidateInvariantMass",        "finalSel", "WZ_CR",   "",   ZM                    , weight*zero_btagSF);
     theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "finalSel", "WZ_CR",   "",   Zpt                   , weight*zero_btagSF);
@@ -4759,13 +4756,12 @@ std::cout <<"ALOA 0"<< std::endl;
     theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "finalSel", "WZ_CR_BSFDo",   "",   all_lep_sumofcharges  , weight*zero_btagSF_do);
     theHistoManager->fillHisto("ZCandidateInvariantMass",        "finalSel", "WZ_CR_BSFDo",   "",   ZM                    , weight*zero_btagSF_do);
     theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "finalSel", "WZ_CR_BSFDo",   "",   Zpt                   , weight*zero_btagSF_do);
-   std::cout <<"ALOA 2"<< std::endl;
+ 
+   //std::cout << "LepW "<< LepW <<std::endl;
+   //std::cout << "vSelectedLeptons.size() " <<vSelectedLeptons.size() << std::endl;
+   //std::cout << "phi " << vSelectedLeptons.at(LepW).phi() <<" "<< vEvent->at(0).metphi()<< std::endl;
 
-   std::cout << "LepW "<< LepW <<std::endl;
-   std::cout << "vSelectedLeptons.size() " <<vSelectedLeptons.size() << std::endl;
-   std::cout << "phi " << vSelectedLeptons.at(LepW).phi() <<" "<< vEvent->at(0).metphi()<< std::endl;
-
-   std::cout <<"evt " << vEvent->at(0).id() <<  std::endl;
+   //std::cout <<"evt " << vEvent->at(0).id() <<  std::endl;
 
     is_3l_WZ_CR = true;
 }
@@ -5428,7 +5424,14 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("is_3l_WZrel_CR",&is_3l_WZrel_CR,"is_3l_WZrel_CR/B");
     tOutput->Branch("is_3l_TTZ_CR",&is_3l_TTZ_CR,"is_3l_TTZ_CR/B");
     tOutput->Branch("is_Zl_CR",&is_Zl_CR,"is_Zl_CR/B");
+     
+    tOutput->Branch("is_2bTight",&is_2bTight,"is_2bTight/B");
 
+    tOutput->Branch("cat_ee",&cat_ee,"cat_ee/I");
+    tOutput->Branch("cat_em",&cat_em,"cat_em/I");
+    tOutput->Branch("cat_mm",&cat_mm,"cat_mm/I");
+    tOutput->Branch("cat_3l",&cat_3l,"cat_3l/I");
+    tOutput->Branch("cat_2ltau",&cat_2ltau,"cat_2ltau/I");
 
     tOutput->Branch("is_trigger",&is_trigger,"is_trigger/B");
 
@@ -5869,6 +5872,8 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     mc_nBtagJets25 = vSelectedBTagJets.size();
     mc_nMediumBtagJets25 = vSelectedMediumBTagJets.size();
     mc_nNonBtagJets25 = vSelectedNonBTagJets.size();
+    
+    is_2bTight = (vSelectedMediumBTagJets.size()>=2)?true:false;
 
     tOutput->Fill();
 
