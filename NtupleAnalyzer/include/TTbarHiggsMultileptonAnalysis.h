@@ -95,21 +95,16 @@ class TTbarHiggsMultileptonAnalysis
         bool is_3l_TTZ_CR;    // TTZ 3l analysis (for the future..)
 
         bool is_Zl_CR;
-	bool is_2bTight;
-
-	// for sub-categorisation
-	int cat_ee, cat_em, cat_mm;
-	int cat_ee_2lss_QF, cat_ee_2lss_FR;
-	int cat_em_2lss_QF, cat_em_2lss_FR;
-	int cat_mm_2lss_QF, cat_mm_2lss_FR;
-	int cat_3l, cat_2ltau;
-
+        bool is_2bTight;
 
         // for sub-categorisation
-        bool is_ee, is_em, is_mm;
-        bool is_ee_2lss_QF, is_ee_2lss_FR;
-        bool is_em_2lss_QF, is_em_2lss_FR;
-        bool is_mm_2lss_QF, is_mm_2lss_FR;
+        int cat_ee, cat_em, cat_mm;
+        int cat_ee_2lss_QF, cat_ee_2lss_FR;
+        int cat_em_2lss_QF, cat_em_2lss_FR;
+        int cat_mm_2lss_QF, cat_mm_2lss_FR;
+        int cat_3l, cat_2ltau;
+
+        bool cat_HtoWW, cat_HtoZZ, cat_Htott;
 
         int n_tight;
 

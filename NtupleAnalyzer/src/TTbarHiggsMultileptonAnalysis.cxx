@@ -939,8 +939,6 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     TFile* f_BTag_eff = new TFile ((inputFileBTagEff).c_str());
     fill_eff_btagging_histos(f_BTag_eff);
 
-    get_eff_btagging( 38., -0.2, 0);
-
     // charge flip
     std::string inputFileQF = "/opt/sbg/scratch1/cms/TTH/weight/QF_data_el.root";
     TFile * f_QFwgt    = new TFile ((inputFileQF).c_str());
@@ -957,7 +955,8 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     stat_2lss_SR_mm = 0; stat_2lss_lepMVA_SB_mm = 0; stat_2lss_os_SB_mm = 0;
     stat_3l_SR      = 0; stat_3l_lepMVA_SB      = 0;
 
-    is_ee = false; is_em = false; is_mm = false;
+    cat_ee      = 0.;   cat_em      = 0.;   cat_mm      = 0.;   cat_3l = 0.;
+    cat_HtoWW   = 0.;   cat_HtoZZ   = 0.;   cat_Htott   = 0.;
 }
 
 
@@ -1124,7 +1123,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         nb = fChain->GetEntry(jentry);   nbytes += nb;
 
 
-        is_ee = false; is_em = false; is_mm = false;
+        cat_ee = false; cat_em = false; cat_mm = false;
 
         //
         int pvn = vEvent->at(0).pv_n();
@@ -1266,9 +1265,12 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         is_3l_TTZ_CR        = false;
         is_Zl_CR            = false;
 
-        is_ee         = false; is_em         = false; is_mm         = false;
-        is_ee_2lss_FR = false; is_em_2lss_FR = false; is_mm_2lss_FR = false;
-        is_ee_2lss_QF = false;
+        cat_ee         = 0.; cat_em         = 0.; cat_mm         = 0.;
+        cat_ee_2lss_FR = 0.; cat_em_2lss_FR = 0.; cat_mm_2lss_FR = 0.;
+        cat_ee_2lss_QF = 0.;
+        cat_3l         = 0.;
+
+        cat_HtoWW = false;      cat_HtoZZ = false;      cat_Htott = false;
 
         n_tight       = 0;
 
@@ -1440,6 +1442,25 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         //    theHistoManager->fillHisto("CutFlow",             "ThreePreselected", "", "", 1, 1);
         //}
 
+        // ###################################
+        // #  _____ ____  _   _ _____ _   _  #
+        // # |_   _|  _ \| | | |_   _| | | | #
+        // #   | | | |_) | | | | | | | |_| | #
+        // #   | | |  _ <| |_| | | | |  _  | #
+        // #   |_| |_| \_\\___/  |_| |_| |_| #
+        // #                                 #
+        // ###################################
+
+        for(unsigned int itruth = 0; itruth < vTruth->at(0).mc_truth_label().size() ; itruth++)
+        {
+            if( vTruth->at(0).mc_truth_label().at(itruth) == 12 )
+            { cat_HtoWW = true; }
+            if( vTruth->at(0).mc_truth_label().at(itruth) == 14 )
+            { cat_HtoZZ = true; }
+            if( vTruth->at(0).mc_truth_label().at(itruth) == 16 )
+            {cat_Htott = true; }
+        }
+
         // ################################################################################
         // #  ____  ____    ____  ____ _____                   _       _     _            #
         // # |___ \|  _ \  | __ )|  _ \_   _| __   ____ _ _ __(_) __ _| |__ | | ___  ___  #
@@ -1471,9 +1492,9 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // ############################################
 
         TwoLeptonsSameSignSelection_TTH2l(jentry);
-       TwoLeptonsSameSignSelection_ApplicationFakes(jentry);
+        TwoLeptonsSameSignSelection_ApplicationFakes(jentry);
         TwoLeptonsSameSignSelection_ApplicationFlips(jentry);
-       //TwoLeptonsSameSignSelection_LepMVA_sideband(jentry);
+        //TwoLeptonsSameSignSelection_LepMVA_sideband(jentry);
         //TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
         //TwoLeptonsSameSignSelection_TTbar(jentry);
 
@@ -1481,7 +1502,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         ThreeLeptonSelection_ApplicationFakes(jentry);
         ThreeLeptonSelection_CR_WZ(jentry);
         ThreeLeptonSelection_CR_WZrelaxed(jentry);
-       //ThreeLeptonSelection_CR_Zl(jentry);
+        //ThreeLeptonSelection_CR_Zl(jentry);
         ThreeLeptonSelection_TTZ(jentry);
 
         //std::cout <<is_CR_TTl<<" "<< is_Zl_CR <<" " << is_CR_WZ<<" " << is_TTH3l<< std::endl;
@@ -1527,28 +1548,28 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
             std::cout << "==== Category ==== " << std::endl;
 
-            std::cout << "Passing [ee ss SR]:  " << (is_2lss_TTH_SR && is_ee)
-                      <<       "  [ee ss FR]:  " << (is_2lss_AppFakes_SR && is_ee_2lss_FR)
-                      <<       "  [ee os QF]:  " << (is_2lss_AppFlips_SR && is_ee_2lss_QF)
-                      <<       "  [em ss SR]:  " << (is_2lss_TTH_SR && is_em)
-                      <<       "  [em ss FR]:  " << (is_2lss_AppFakes_SR && is_em_2lss_FR)
-                      <<       "  [mm ss SR]:  " << (is_2lss_TTH_SR && is_mm)
-                      <<       "  [mm ss FR]:  " << (is_2lss_AppFakes_SR && is_mm_2lss_FR) 
-                      <<       "  [3l    SR]:  " << (is_3l_TTH_SR)
-                      <<       "  [3l    FR]:  " << (is_3l_AppFakes_SR)                     
+            std::cout << "Passing [ee ss SR]:  " << (is_2lss_TTH_SR         && abs(cat_ee)          )
+                      <<       "  [ee ss FR]:  " << (is_2lss_AppFakes_SR    && abs(cat_ee_2lss_FR)  )
+                      <<       "  [ee os QF]:  " << (is_2lss_AppFlips_SR    && abs(cat_ee_2lss_QF)  )
+                      <<       "  [em ss SR]:  " << (is_2lss_TTH_SR         && abs(cat_em)          )
+                      <<       "  [em ss FR]:  " << (is_2lss_AppFakes_SR    && abs(cat_em_2lss_FR)  )
+                      <<       "  [mm ss SR]:  " << (is_2lss_TTH_SR         && abs(cat_mm)          )
+                      <<       "  [mm ss FR]:  " << (is_2lss_AppFakes_SR    && abs(cat_mm_2lss_FR)  )
+                      <<       "  [3l    SR]:  " << (is_3l_TTH_SR                                   )
+                      <<       "  [3l    FR]:  " << (is_3l_AppFakes_SR                              )                     
                       << std::endl;
 
             std::cout << "==== Leptons ==== " << std::endl;
 
             for(int i=0; i<vSelectedLeptons.size() ; i++)
             {
-                std::cout << "Lepton[" << i << "] : pt " << vSelectedLeptons.at(i).pt()
-                                            << "  eta  " << vSelectedLeptons.at(i).eta()
-                                            << "  phi  " << vSelectedLeptons.at(i).phi()
-                                            << "  isE  " << vSelectedLeptons.at(i).isElectron()
-                                            << "  isM  " << vSelectedLeptons.at(i).isMuon()
-                                            << "  istight  " << vSelectedLeptons.at(i).isTightTTH()
-                                            << "  lepMVA   " << vSelectedLeptons.at(i).lepMVA_TTH()     
+                std::cout << "Lepton[" << i << "] : pt "        << vSelectedLeptons.at(i).pt()
+                                            << "  eta  "        << vSelectedLeptons.at(i).eta()
+                                            << "  phi  "        << vSelectedLeptons.at(i).phi()
+                                            << "  isE  "        << vSelectedLeptons.at(i).isElectron()
+                                            << "  isM  "        << vSelectedLeptons.at(i).isMuon()
+                                            << "  istight  "    << vSelectedLeptons.at(i).isTightTTH()
+                                            << "  lepMVA   "    << vSelectedLeptons.at(i).lepMVA_TTH()     
                                             << std::endl;
             }
 
@@ -1556,13 +1577,13 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
             for(int i=0; i<vLeptons.size() ; i++)
             {
-                std::cout << "Lepton[" << i << "] : pt " << vLeptons.at(i).pt()
-                                            << "  eta  " << vLeptons.at(i).eta()
-                                            << "  phi  " << vLeptons.at(i).phi()
-                                            << "  isE  " << vLeptons.at(i).isElectron()
-                                            << "  isM  " << vLeptons.at(i).isMuon()
-                                            << "  istight  " << vLeptons.at(i).isTightTTH()
-                                            << "  lepMVA   " << vLeptons.at(i).lepMVA_TTH()
+                std::cout << "Lepton[" << i << "] : pt "        << vLeptons.at(i).pt()
+                                            << "  eta  "        << vLeptons.at(i).eta()
+                                            << "  phi  "        << vLeptons.at(i).phi()
+                                            << "  isE  "        << vLeptons.at(i).isElectron()
+                                            << "  isM  "        << vLeptons.at(i).isMuon()
+                                            << "  istight  "    << vLeptons.at(i).isTightTTH()
+                                            << "  lepMVA   "    << vLeptons.at(i).lepMVA_TTH()
                                             << std::endl;
             }
 
@@ -1571,10 +1592,10 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             std::cout << "====  Jets   ==== " << std::endl;
             for(int i=0; i<vSelectedJets.size(); i++)
             {
-                std::cout << "Jet[" << i << "] : pt " << vSelectedJets.at(i).pt()
-                                         << "  eta  " << vSelectedJets.at(i).eta()
-                                         << "  phi  " << vSelectedJets.at(i).phi()
-                                         << "  CSV  " << vSelectedJets.at(i).CSVv2()
+                std::cout << "Jet[" << i << "] : pt "           << vSelectedJets.at(i).pt()
+                                         << "  eta  "           << vSelectedJets.at(i).eta()
+                                         << "  phi  "           << vSelectedJets.at(i).phi()
+                                         << "  CSV  "           << vSelectedJets.at(i).CSVv2()
                                          << std::endl;
             }
 
@@ -1582,19 +1603,19 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         if( test_stat )
         {
-            std::cout << " ======================== " <<                            std::endl;
-            std::cout << " stat_2lss_SR_ee        = " << stat_2lss_SR_ee           << std::endl;
-            std::cout << " stat_2lss_lepMVA_SB_ee = " << stat_2lss_lepMVA_SB_ee    << std::endl;
-            std::cout << " stat_2lss_os_SB_ee     = " << stat_2lss_os_SB_ee        << std::endl;
-            std::cout << " stat_2lss_SR_em        = " << stat_2lss_SR_em           << std::endl;
-            std::cout << " stat_2lss_lepMVA_SB_em = " << stat_2lss_lepMVA_SB_em    << std::endl;
-            std::cout << " stat_2lss_SR_mm        = " << stat_2lss_SR_mm           << std::endl;
-            std::cout << " stat_2lss_lepMVA_SB_mm = " << stat_2lss_lepMVA_SB_mm    << std::endl;
-            std::cout << " stat_3l_SR             = " << stat_3l_SR                << std::endl;
-            std::cout << " stat_3l_lepMVA_SB      = " << stat_3l_lepMVA_SB         << std::endl;
+            std::cout << " ======================== "                               << std::endl;
+            std::cout << " stat_2lss_SR_ee        = " << stat_2lss_SR_ee            << std::endl;
+            std::cout << " stat_2lss_lepMVA_SB_ee = " << stat_2lss_lepMVA_SB_ee     << std::endl;
+            std::cout << " stat_2lss_os_SB_ee     = " << stat_2lss_os_SB_ee         << std::endl;
+            std::cout << " stat_2lss_SR_em        = " << stat_2lss_SR_em            << std::endl;
+            std::cout << " stat_2lss_lepMVA_SB_em = " << stat_2lss_lepMVA_SB_em     << std::endl;
+            std::cout << " stat_2lss_SR_mm        = " << stat_2lss_SR_mm            << std::endl;
+            std::cout << " stat_2lss_lepMVA_SB_mm = " << stat_2lss_lepMVA_SB_mm     << std::endl;
+            std::cout << " stat_3l_SR             = " << stat_3l_SR                 << std::endl;
+            std::cout << " stat_3l_lepMVA_SB      = " << stat_3l_lepMVA_SB          << std::endl;
         }
 
-        if(is_2lss_TTH_SR && is_ee && produce_table_2lss_SR_ee)
+        if(is_2lss_TTH_SR && cat_ee && produce_table_2lss_SR_ee)
         {
             std::cout << vEvent->at(0).id()     << " "
                       << 1.                     << " "
@@ -1612,7 +1633,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                       << std::endl;
         }
 
-        if(is_2lss_AppFakes_SR && is_ee_2lss_FR && produce_table_2lss_lepMVA_SB_ee)
+        if(is_2lss_AppFakes_SR && cat_ee_2lss_FR && produce_table_2lss_lepMVA_SB_ee)
         {
             std::cout << vEvent->at(0).id()     << " "
                       << weight_FR_2lss         << " "
@@ -1630,7 +1651,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                       << std::endl;
         }
 
-        if(is_2lss_AppFlips_SR && is_ee_2lss_QF && produce_table_2lss_os_SB_ee)
+        if(is_2lss_AppFlips_SR && cat_ee_2lss_QF && produce_table_2lss_os_SB_ee)
         {
             std::cout << vEvent->at(0).id()     << " "
                       << weight_QF_ee           << " "
@@ -1648,7 +1669,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                       << std::endl;
         }
 
-        if(is_2lss_TTH_SR && is_em && produce_table_2lss_SR_em)
+        if(is_2lss_TTH_SR && cat_em && produce_table_2lss_SR_em)
         {
             std::cout << vEvent->at(0).id()     << " "
                       << 1.                     << " "
@@ -1666,7 +1687,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                       << std::endl;
         }
 
-        if(is_2lss_AppFakes_SR && is_em_2lss_FR && produce_table_2lss_lepMVA_SB_em)
+        if(is_2lss_AppFakes_SR && cat_em_2lss_FR && produce_table_2lss_lepMVA_SB_em)
         {
             std::cout << vEvent->at(0).id()     << " "
                       << weight_FR_2lss         << " "
@@ -1684,7 +1705,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                       << std::endl;
         }
 
-        if(is_2lss_TTH_SR && is_mm && produce_table_2lss_SR_mm)
+        if(is_2lss_TTH_SR && cat_mm && produce_table_2lss_SR_mm)
         {
             std::cout << vEvent->at(0).id()     << " "
                       << 1.                     << " "
@@ -1702,7 +1723,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                       << std::endl;
         }
 
-        if(is_2lss_AppFakes_SR && is_mm_2lss_FR && produce_table_2lss_lepMVA_SB_mm)
+        if(is_2lss_AppFakes_SR && cat_mm_2lss_FR && produce_table_2lss_lepMVA_SB_mm)
         {
             std::cout << vEvent->at(0).id()     << " "
                       << weight_FR_2lss         << " "
@@ -2426,7 +2447,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
     {
         if(DEBUG) std::cout << "ee + Zveto + metld Ok... SELECTED";
 
-        is_ee = true;
+        cat_ee = true;
         is_2lss_TTH_SR = true;
 
         stat_2lss_SR_ee = stat_2lss_SR_ee + 1;
@@ -2449,7 +2470,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
     {
         if(DEBUG) std::cout << "em Ok... SELECTED";
 
-        is_em = true;
+        cat_em = true;
         is_2lss_TTH_SR = true;
 
         stat_2lss_SR_em = stat_2lss_SR_em + 1;
@@ -2473,7 +2494,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
     {
         if(DEBUG) std::cout << "mm Ok... SELECTED";
 
-        is_mm = true;
+        cat_mm = true;
         is_2lss_TTH_SR = true;
 
         stat_2lss_SR_mm = stat_2lss_SR_mm + 1;
@@ -2717,7 +2738,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFakes
 
         stat_2lss_lepMVA_SB_ee = stat_2lss_lepMVA_SB_ee + 1;
         is_2lss_AppFakes_SR = true;
-        is_ee_2lss_FR = true;
+        cat_ee_2lss_FR = true;
 
         theHistoManager->fillHisto("CutFlow",                          "finalSel",   "LepMVA_2l_SB",   "", 8                              , weight);
 
@@ -2739,7 +2760,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFakes
 
         stat_2lss_lepMVA_SB_em = stat_2lss_lepMVA_SB_em + 1;
         is_2lss_AppFakes_SR = true;
-        is_em_2lss_FR = true;
+        cat_em_2lss_FR = true;
 
         theHistoManager->fillHisto("CutFlow",                          "finalSel",   "LepMVA_2l_SB",   "", 8                              , weight);
 
@@ -2761,7 +2782,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFakes
 
         stat_2lss_lepMVA_SB_mm = stat_2lss_lepMVA_SB_mm + 1;
         is_2lss_AppFakes_SR = true;
-        is_mm_2lss_FR = true;
+        cat_mm_2lss_FR = true;
 
         theHistoManager->fillHisto("CutFlow",                          "finalSel",   "LepMVA_2l_SB",   "", 8                              , weight);
 
@@ -3027,7 +3048,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFlips
 
         stat_2lss_os_SB_ee = stat_2lss_os_SB_ee + 1;
         is_2lss_AppFlips_SR = true;
-        is_ee_2lss_QF = true;
+        cat_ee_2lss_QF = true;
 
         theHistoManager->fillHisto("CutFlow",                          "finalSel",   "ttH_2lss_ee",   "", 8                              , weight);
 
@@ -3216,7 +3237,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFlips
     {
         stat_2lss_os_SB_ee = stat_2lss_os_SB_ee + 1;
         is_2lss_AppFlips_SR = true;
-        is_ee_2lss_QF = true;
+        cat_ee_2lss_QF = true;
 
         theHistoManager->fillHisto("CutFlow",                          "finalSel",   "ttH_2lss_ee",   "", 8                              , weight);
 
