@@ -52,27 +52,27 @@ void Jet::read(bool isdata)
 void Jet::init()
 {
     //general information
-    _E       = -666;
-    _pt      = -666;
-    _eta     = -666;
-    _phi     = -666;
-    _m       = -666;
+    _E       = -100;
+    _pt      = -100;
+    _eta     = -100;
+    _phi     = -100;
+    _m       = -100;
 
     // selection variables
     _isLoose = 0;
 
     // other variables
-    _ntrk    = -666;
-    _CSVv2   = -666.;
+    _ntrk    = -100;
+    _CSVv2   = -100.;
 
     // Gen Jet variables
-    _jet_partonFlavour    = -666.;
-    _jet_hadronFlavour    = -666.;
-    _jet_genJet_pt        = -666.;
-    _jet_genParton_pt     = -666.;
-    _jet_genParton_id     = -666.; 
-    _jet_genJet_E         = -666.;
-    _jet_genParton_E      = -666.; 
+    _jet_partonFlavour    = -100.;
+    _jet_hadronFlavour    = -100.;
+    _jet_genJet_pt        = -100.;
+    _jet_genParton_pt     = -100.;
+    _jet_genParton_id     = -100.; 
+    _jet_genJet_E         = -100.;
+    _jet_genParton_E      = -100.; 
     
     _JES_uncert           = 0.;
     _pt_JER               = 0.;
@@ -127,7 +127,7 @@ bool Jet::sel()
         if( dr < 0.4 && nt->NtTau->at(it).pt() > 10. ) 
         {
             pass_tauOverlap = 0; //&& nt->NtTau->at(it).isTight() ) pass_tauOverlap = 0;
-            std::cout << nt->NtTau->at(it).pt() << std::endl;
+            //std::cout << nt->NtTau->at(it).pt() << std::endl;
         }
     }
 

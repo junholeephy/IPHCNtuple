@@ -48,8 +48,10 @@ void Truth::read()
     _mc_truth_n = 0;
     
     int mc_truth_h0_id = ntP->mc_truth_h0_id;
+    //std::cout << "mc_truth_h0_id : " << mc_truth_h0_id << std::endl;
     if( mc_truth_h0_id != UNINT )
     {
+        //std::cout << "is HO" << std::endl;
         _mc_truth_id.push_back(mc_truth_h0_id);
         _mc_truth_pt.push_back(ntP->mc_truth_h0_pt);
         _mc_truth_eta.push_back(ntP->mc_truth_h0_eta);
@@ -59,8 +61,10 @@ void Truth::read()
         _mc_truth_n++;
     }
     int mc_truth_h0W1_id = ntP->mc_truth_h0W1_id;
+    //std::cout << "mc_truth_h0W1_id : " << mc_truth_h0W1_id << std::endl;
     if( mc_truth_h0W1_id != UNINT )
     {
+        //std::cout << "is HO to W" << std::endl;
         _mc_truth_id.push_back(mc_truth_h0W1_id);
         _mc_truth_pt.push_back(ntP->mc_truth_h0W1_pt);
         _mc_truth_eta.push_back(ntP->mc_truth_h0W1_eta);
@@ -191,8 +195,10 @@ void Truth::read()
         _mc_truth_n++;
     }
     int mc_truth_h0Z1_id = ntP->mc_truth_h0Z1_id;
+    //std::cout << "mc_truth_h0Z1_id : " << mc_truth_h0Z1_id << std::endl;
     if( mc_truth_h0Z1_id != UNINT )
     {
+        //std::cout << "is HO Z" << std::endl;
         _mc_truth_id.push_back(mc_truth_h0Z1_id);
         _mc_truth_pt.push_back(ntP->mc_truth_h0Z1_pt);
         _mc_truth_eta.push_back(ntP->mc_truth_h0Z1_eta);
@@ -393,8 +399,10 @@ void Truth::read()
     }
     //AC
     int mc_truth_h0tau1_id = ntP->mc_truth_h0tau1_id;
+    //std::cout << "mc_truth_h0tau1_id : " << mc_truth_h0tau1_id << std::endl;
     if( mc_truth_h0tau1_id != UNINT )
     {
+        //std::cout << "is HO tau" << std::endl;
         _mc_truth_id.push_back(mc_truth_h0tau1_id);
         _mc_truth_pt.push_back(ntP->mc_truth_h0tau1_pt);
         _mc_truth_eta.push_back(ntP->mc_truth_h0tau1_eta);
@@ -869,11 +877,11 @@ void Truth::read()
 
 void Truth::readMultiLepton()
 {  
-  int UNINT = -666;
+  int UNINT = -100;
 
-  if (ntP->mc_truth_t1_id==-666 || ntP->mc_truth_t2_id==-666)  return;
+  if (ntP->mc_truth_t1_id==-100 || ntP->mc_truth_t2_id==-100)  return;
   
-  if (ntP->mc_truth_h0_id>-666 && ntP->mc_truth_h0Wl1_id>-666 && ntP->mc_truth_h0Wl2_id>-666)
+  if (ntP->mc_truth_h0_id>-100 && ntP->mc_truth_h0Wl1_id>-100 && ntP->mc_truth_h0Wl2_id>-100)
   {
   
       _Leptons_id.push_back(ntP->mc_truth_h0Wl1_id);
@@ -892,7 +900,7 @@ void Truth::readMultiLepton()
   }
   
   
-  else if (ntP->mc_truth_h0_id>-666 && ntP->mc_truth_h0Wq11_id>-666 && ntP->mc_truth_h0Wl2_id>-666)
+  else if (ntP->mc_truth_h0_id>-100 && ntP->mc_truth_h0Wq11_id>-100 && ntP->mc_truth_h0Wl2_id>-100)
   {
         
     _Leptons_id.push_back(ntP->mc_truth_h0Wl2_id);
@@ -966,7 +974,7 @@ void Truth::readMultiLepton()
   }
   
   
-  else if (ntP->mc_truth_h0_id>-666 && ntP->mc_truth_h0Wq22_id>-666 && ntP->mc_truth_h0Wl1_id>-666)
+  else if (ntP->mc_truth_h0_id>-100 && ntP->mc_truth_h0Wq22_id>-100 && ntP->mc_truth_h0Wl1_id>-100)
   {
                  
       _Leptons_id.push_back(ntP->mc_truth_h0Wl1_id);
@@ -1040,7 +1048,7 @@ void Truth::readMultiLepton()
     }
     
     
-    else if (ntP->mc_truth_W_id>-666 && ntP->mc_truth_Wl_id>-666)
+    else if (ntP->mc_truth_W_id>-100 && ntP->mc_truth_Wl_id>-100)
     {
        
       _Leptons_id.push_back(ntP->mc_truth_Wl_id);
@@ -1054,7 +1062,7 @@ void Truth::readMultiLepton()
     }
 
 
-    else if (ntP->mc_truth_Z_id>-666 && ntP->mc_truth_Zl1_id>-666 && ntP->mc_truth_Zl2_id>-666)
+    else if (ntP->mc_truth_Z_id>-100 && ntP->mc_truth_Zl1_id>-100 && ntP->mc_truth_Zl2_id>-100)
     {
       
       _Leptons_id.push_back(ntP->mc_truth_Zl1_id);      
@@ -1073,7 +1081,7 @@ void Truth::readMultiLepton()
       
     }
     
-    else if (ntP->mc_truth_gammal1_id>-666 && ntP->mc_truth_gammal2_id>-666)
+    else if (ntP->mc_truth_gammal1_id>-100 && ntP->mc_truth_gammal2_id>-100)
     {
       
       _Leptons_id.push_back(ntP->mc_truth_gammal1_id);      
@@ -1095,7 +1103,7 @@ void Truth::readMultiLepton()
     else return;
 
 
-    if (ntP->mc_truth_tWq11_id>-666 && ntP->mc_truth_tWl2_id>-666)
+    if (ntP->mc_truth_tWq11_id>-100 && ntP->mc_truth_tWl2_id>-100)
     {
      
       _Leptons_id.push_back(ntP->mc_truth_tWl2_id);      
@@ -1181,7 +1189,7 @@ void Truth::readMultiLepton()
     }
     
     
-    else if (ntP->mc_truth_tWq22_id>-666 && ntP->mc_truth_tWl1_id>-666)
+    else if (ntP->mc_truth_tWq22_id>-100 && ntP->mc_truth_tWl1_id>-100)
     {      
       
       _Leptons_id.push_back(ntP->mc_truth_tWl1_id);      
@@ -1266,7 +1274,7 @@ void Truth::readMultiLepton()
       
    }
    
-   else if (ntP->mc_truth_tWl1_id>-666 && ntP->mc_truth_tWl2_id>-666 && (_boson_decay==1 || _boson_decay==3))
+   else if (ntP->mc_truth_tWl1_id>-100 && ntP->mc_truth_tWl2_id>-100 && (_boson_decay==1 || _boson_decay==3))
    {
    
       _Bjets_id.push_back(ntP->mc_truth_tb1_id);	  
@@ -1428,14 +1436,14 @@ void Truth::readMultiLepton()
 
 void Truth::init()
 {   
-    _gen_PVz = -666.;
+    _gen_PVz = -100.;
     
-    _metGen_px = -666.;
-    _metGen_py = -666.;
-    _metGen_pt = -666.;
-    _metGen_phi = -666.;
-    _metGen_sumet = -666.;
-    _metGen_MuonEt = -666.;
+    _metGen_px = -100.;
+    _metGen_py = -100.;
+    _metGen_pt = -100.;
+    _metGen_phi = -100.;
+    _metGen_sumet = -100.;
+    _metGen_MuonEt = -100.;
 	
     _mc_truth_n = 0;
 

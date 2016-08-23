@@ -18,7 +18,6 @@
 
 // Input variables
 float max_Lep_eta;
-//float numJets_float;
 //int nJet25_Recl;
 float mindr_lep1_jet;
 float mindr_lep2_jet;

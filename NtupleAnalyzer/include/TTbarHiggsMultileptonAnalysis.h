@@ -94,15 +94,16 @@ class TTbarHiggsMultileptonAnalysis
         bool is_3l_WZrel_CR;  // WZ CR w/ 3l (loose) or more, no medium b-jets, Z peak
         bool is_3l_TTZ_CR;    // TTZ 3l analysis (for the future..)
 
-        bool is_Zl_CR;
-        bool is_2bTight;
-
         // for sub-categorisation
-        int cat_ee, cat_em, cat_mm;
+        int cat_ee_tau, cat_em_tau, cat_mm_tau, cat_tau;
         int cat_ee_2lss_QF, cat_ee_2lss_FR;
         int cat_em_2lss_QF, cat_em_2lss_FR;
         int cat_mm_2lss_QF, cat_mm_2lss_FR;
-        int cat_3l, cat_2ltau;
+
+        int cat_ee, cat_em, cat_mm, cat_2ltau, cat_3l;
+        int cat_ee_fake, cat_em_fake, cat_mm_fake, cat_3l_fake;
+        int cat_ee_flip, cat_em_flip;
+        int is_2bTight;
 
         bool cat_HtoWW, cat_HtoZZ, cat_Htott;
 
@@ -111,9 +112,10 @@ class TTbarHiggsMultileptonAnalysis
         bool is_trigger;
 
         // for synchro
-        int stat_2lss_SR_ee, stat_2lss_lepMVA_SB_ee, stat_2lss_os_SB_ee,
-            stat_2lss_SR_em, stat_2lss_lepMVA_SB_em, stat_2lss_os_SB_em,
-            stat_2lss_SR_mm, stat_2lss_lepMVA_SB_mm, stat_2lss_os_SB_mm,
+        int stat_2lss_SR_ee, stat_2lss_SR_eetau,    stat_2lss_lepMVA_SB_ee,     stat_2lss_os_SB_ee,
+            stat_2lss_SR_em, stat_2lss_SR_emtau,    stat_2lss_lepMVA_SB_em,     stat_2lss_os_SB_em,
+            stat_2lss_SR_mm, stat_2lss_SR_mmtau,    stat_2lss_lepMVA_SB_mm,     stat_2lss_os_SB_mm,
+            stat_2lss_SR_tau, stat_2lss_fr_tau,
             stat_3l_SR,      stat_3l_lepMVA_SB;
 
         float zero_btagSF;
@@ -144,6 +146,8 @@ class TTbarHiggsMultileptonAnalysis
 
         // all weights
         Float_t weight;
+        Float_t weightfake;
+        Float_t weightflip;
         Float_t mc_weight;                                                                           // weight MC
         Float_t weight_PV;                                                                           // PU reweighting from PV distribution
         Float_t weight_trigger;
@@ -155,18 +159,25 @@ class TTbarHiggsMultileptonAnalysis
 
         Float_t weight_csv_up, weight_csv_down;
 
-
         Int_t mc_3l_category, mc_ttbar_decay, mc_boson_decay, mc_ttZhypAllowed, mc_nJets25, mc_nBtagJets25, mc_nMediumBtagJets25, mc_nNonBtagJets25;
         Int_t catJets;
 
         Int_t multilepton_Lepton1_Id, multilepton_Lepton2_Id, multilepton_Lepton3_Id, multilepton_Lepton4_Id;
         TLorentzVector multilepton_Lepton1_P4, multilepton_Lepton2_P4, multilepton_Lepton3_P4, multilepton_Lepton4_P4;
 
+        Int_t           multilepton_Lepton1_Label_Matched,  multilepton_Lepton2_Label_Matched,  multilepton_Lepton3_Label_Matched,  multilepton_Lepton4_Label_Matched;
+        Int_t           multilepton_Lepton1_Id_Matched,     multilepton_Lepton2_Id_Matched,     multilepton_Lepton3_Id_Matched,     multilepton_Lepton4_Id_Matched;
+        TLorentzVector  multilepton_Lepton1_P4_Matched,     multilepton_Lepton2_P4_Matched,     multilepton_Lepton3_P4_Matched,     multilepton_Lepton4_P4_Matched;
+
         Int_t multilepton_Bjet1_Id, multilepton_Bjet2_Id;
         TLorentzVector multilepton_Bjet1_P4, multilepton_Bjet2_P4;
         Float_t multilepton_Bjet1_CSV, multilepton_Bjet2_CSV;
         Float_t multilepton_Bjet1_JEC_Up, multilepton_Bjet1_JEC_Down, multilepton_Bjet2_JEC_Up, multilepton_Bjet2_JEC_Down;
         Float_t multilepton_Bjet1_JER_Up, multilepton_Bjet1_JER_Down, multilepton_Bjet2_JER_Up, multilepton_Bjet2_JER_Down;
+
+        Int_t           multilepton_Bjet1_Label_Matched,    multilepton_Bjet2_Label_Matched;
+        Int_t           multilepton_Bjet1_Id_Matched,       multilepton_Bjet2_Id_Matched;
+        TLorentzVector  multilepton_Bjet1_P4_Matched,       multilepton_Bjet2_P4_Matched;
 
         Int_t multilepton_JetHighestPt1_Id, multilepton_JetHighestPt2_Id, multilepton_JetClosestMw1_Id, multilepton_JetClosestMw2_Id, multilepton_JetLowestMjj1_Id, multilepton_JetLowestMjj2_Id;
         TLorentzVector multilepton_JetHighestPt1_P4, multilepton_JetHighestPt2_P4, multilepton_JetClosestMw1_P4, multilepton_JetClosestMw2_P4, multilepton_JetLowestMjj1_P4, multilepton_JetLowestMjj2_P4;
@@ -184,13 +195,15 @@ class TTbarHiggsMultileptonAnalysis
         Float_t multilepton_JetHighestPt1_2ndPair_JER_Up, multilepton_JetHighestPt2_2ndPair_JER_Up, multilepton_JetClosestMw1_2ndPair_JER_Up, multilepton_JetClosestMw2_2ndPair_JER_Up, multilepton_JetLowestMjj1_2ndPair_JER_Up, multilepton_JetLowestMjj2_2ndPair_JER_Up;
         Float_t multilepton_JetHighestPt1_2ndPair_JER_Down, multilepton_JetHighestPt2_2ndPair_JER_Down, multilepton_JetClosestMw1_2ndPair_JER_Down, multilepton_JetClosestMw2_2ndPair_JER_Down, multilepton_JetLowestMjj1_2ndPair_JER_Down, multilepton_JetLowestMjj2_2ndPair_JER_Down;
 
+        Int_t multilepton_h0_Id, multilepton_t1_Id;
+        TLorentzVector multilepton_h0_P4, multilepton_t1_P4;
+
         TLorentzVector multilepton_mET, multilepton_Ptot;
         Float_t multilepton_mHT;
         Double_t multilepton_mETcov00;
         Double_t multilepton_mETcov01;
         Double_t multilepton_mETcov10;
         Double_t multilepton_mETcov11;
-
 
     private:
 

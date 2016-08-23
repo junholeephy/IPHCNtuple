@@ -107,14 +107,12 @@ int main(int argc, char *argv[])
     {
         if( i > nmax && nmax >= 0 ) break; 
 
-
         ch->GetEntry(i);
-
-
         nt->clearVar();	
 
-
         //	if( !(isHtoWW || isHtoZZ || isHtoTT) ) continue;
+
+        // std::cout << "Event =========== " << std::endl;
 
         // event
         ev.init();
@@ -251,7 +249,8 @@ int main(int argc, char *argv[])
            std::cout << " n_mu :  " << n_mu  << std::endl
            << " n_el :  " << n_el  << std::endl
            << " n_tau:  " << n_tau << std::endl
-           << " n_jet:  " << n_jet << std::endl;*/
+           << " n_jet:  " << n_jet << std::endl;
+        */
 
         nt->fill();
 
