@@ -162,12 +162,13 @@ class TTbarHiggsMultileptonAnalysis
         Int_t mc_3l_category, mc_ttbar_decay, mc_boson_decay, mc_ttZhypAllowed, mc_nJets25, mc_nBtagJets25, mc_nMediumBtagJets25, mc_nNonBtagJets25;
         Int_t catJets;
 
-        Int_t multilepton_Lepton1_Id, multilepton_Lepton2_Id, multilepton_Lepton3_Id, multilepton_Lepton4_Id;
-        TLorentzVector multilepton_Lepton1_P4, multilepton_Lepton2_P4, multilepton_Lepton3_P4, multilepton_Lepton4_P4;
+        Int_t           multilepton_Lepton1_Id,             multilepton_Lepton2_Id,                 multilepton_Lepton3_Id,             multilepton_Lepton4_Id;
+        TLorentzVector  multilepton_Lepton1_P4,             multilepton_Lepton2_P4,                 multilepton_Lepton3_P4,             multilepton_Lepton4_P4;
 
-        Int_t           multilepton_Lepton1_Label_Matched,  multilepton_Lepton2_Label_Matched,  multilepton_Lepton3_Label_Matched,  multilepton_Lepton4_Label_Matched;
-        Int_t           multilepton_Lepton1_Id_Matched,     multilepton_Lepton2_Id_Matched,     multilepton_Lepton3_Id_Matched,     multilepton_Lepton4_Id_Matched;
-        TLorentzVector  multilepton_Lepton1_P4_Matched,     multilepton_Lepton2_P4_Matched,     multilepton_Lepton3_P4_Matched,     multilepton_Lepton4_P4_Matched;
+        Float_t         multilepton_Lepton1_DeltaR_Matched,  multilepton_Lepton2_DeltaR_Matched,    multilepton_Lepton3_DeltaR_Matched,  multilepton_Lepton4_DeltaR_Matched;
+        Int_t           multilepton_Lepton1_Label_Matched,   multilepton_Lepton2_Label_Matched,     multilepton_Lepton3_Label_Matched,   multilepton_Lepton4_Label_Matched;
+        Int_t           multilepton_Lepton1_Id_Matched,      multilepton_Lepton2_Id_Matched,        multilepton_Lepton3_Id_Matched,      multilepton_Lepton4_Id_Matched;
+        TLorentzVector  multilepton_Lepton1_P4_Matched,      multilepton_Lepton2_P4_Matched,        multilepton_Lepton3_P4_Matched,      multilepton_Lepton4_P4_Matched;
 
         Int_t multilepton_Bjet1_Id, multilepton_Bjet2_Id;
         TLorentzVector multilepton_Bjet1_P4, multilepton_Bjet2_P4;
@@ -175,6 +176,7 @@ class TTbarHiggsMultileptonAnalysis
         Float_t multilepton_Bjet1_JEC_Up, multilepton_Bjet1_JEC_Down, multilepton_Bjet2_JEC_Up, multilepton_Bjet2_JEC_Down;
         Float_t multilepton_Bjet1_JER_Up, multilepton_Bjet1_JER_Down, multilepton_Bjet2_JER_Up, multilepton_Bjet2_JER_Down;
 
+        Float_t         multilepton_Bjet1_DeltaR_Matched,   multilepton_Bjet2_DeltaR_Matched;
         Int_t           multilepton_Bjet1_Label_Matched,    multilepton_Bjet2_Label_Matched;
         Int_t           multilepton_Bjet1_Id_Matched,       multilepton_Bjet2_Id_Matched;
         TLorentzVector  multilepton_Bjet1_P4_Matched,       multilepton_Bjet2_P4_Matched;
@@ -195,8 +197,9 @@ class TTbarHiggsMultileptonAnalysis
         Float_t multilepton_JetHighestPt1_2ndPair_JER_Up, multilepton_JetHighestPt2_2ndPair_JER_Up, multilepton_JetClosestMw1_2ndPair_JER_Up, multilepton_JetClosestMw2_2ndPair_JER_Up, multilepton_JetLowestMjj1_2ndPair_JER_Up, multilepton_JetLowestMjj2_2ndPair_JER_Up;
         Float_t multilepton_JetHighestPt1_2ndPair_JER_Down, multilepton_JetHighestPt2_2ndPair_JER_Down, multilepton_JetClosestMw1_2ndPair_JER_Down, multilepton_JetClosestMw2_2ndPair_JER_Down, multilepton_JetLowestMjj1_2ndPair_JER_Down, multilepton_JetLowestMjj2_2ndPair_JER_Down;
 
-        Int_t multilepton_h0_Id, multilepton_t1_Id;
-        TLorentzVector multilepton_h0_P4, multilepton_t1_P4;
+        Int_t           multilepton_h0_Label,   multilepton_t1_Label,   multilepton_t2_Label;
+        Int_t           multilepton_h0_Id,      multilepton_t1_Id,      multilepton_t2_Id;
+        TLorentzVector  multilepton_h0_P4,      multilepton_t1_P4,      multilepton_t2_P4;
 
         TLorentzVector multilepton_mET, multilepton_Ptot;
         Float_t multilepton_mHT;

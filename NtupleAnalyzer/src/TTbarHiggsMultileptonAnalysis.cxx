@@ -4368,53 +4368,55 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     zero_btagSF_up = 1.;        
     zero_btagSF_do = 1.;        
 
-    for(int i=0; i<vSelectedJets.size(); i++)
+    if(!_isdata)
     {
-        //std::cout   << "pt: "       << vSelectedJets.at(i).pt() 
-        //            << " eta: "     << vSelectedJets.at(i).eta() 
-        //            << " flavor: "  << vSelectedJets.at(i).jet_hadronFlavour() << std::endl;
-
-        float  pt_test              = vSelectedJets.at(i).pt();
-        float  eta_test             = vSelectedJets.at(i).eta();
-        float  disc_test            = vSelectedJets.at(i).CSVv2();
-
-        float btag_eff = 1.;
-        float jet_scalefactor = 1., jet_scalefactor_up = 1., jet_scalefactor_do = 1.;
-
-        if ( vSelectedJets.at(i).jet_hadronFlavour() == 5 )
+        for(int i=0; i<vSelectedJets.size(); i++)
         {
-            btag_eff = get_eff_btagging( pt_test, eta_test, 5);
-            jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_B,     eta_test,   pt_test );
-            jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_B,     eta_test,   pt_test );
-            jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_B,     eta_test,   pt_test );  
-        }
+            //std::cout   << "pt: "       << vSelectedJets.at(i).pt() 
+            //            << " eta: "     << vSelectedJets.at(i).eta() 
+            //            << " flavor: "  << vSelectedJets.at(i).jet_hadronFlavour() << std::endl;
 
-        if ( vSelectedJets.at(i).jet_hadronFlavour() == 4 )
-        {
-            btag_eff = get_eff_btagging( pt_test, eta_test, 4);
-            jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_C,     eta_test,   pt_test );
-            jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_C,     eta_test,   pt_test );
-            jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_C,     eta_test,   pt_test );  
-        }
+            float  pt_test              = vSelectedJets.at(i).pt();
+            float  eta_test             = vSelectedJets.at(i).eta();
+            float  disc_test            = vSelectedJets.at(i).CSVv2();
 
-        if ( vSelectedJets.at(i).jet_hadronFlavour() == 0 )
-        {
-            btag_eff = get_eff_btagging( pt_test, eta_test, 0);
-            jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );
-            jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );
-            jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );  
-        }
+            float btag_eff = 1.;
+            float jet_scalefactor = 1., jet_scalefactor_up = 1., jet_scalefactor_do = 1.;
 
-        zero_btagSF    *= ( 1. - (btag_eff * jet_scalefactor) );
-        zero_btagSF_up *= ( 1. - (btag_eff * jet_scalefactor_up) );
-        zero_btagSF_do *= ( 1. - (btag_eff * jet_scalefactor_do) );
-        
-        //std::cout << "Jet[" << i << "]: pt << " << pt_test << " eta " << eta_test <<  " flavor " << vSelectedJets.at(i).jet_hadronFlavour() << std::endl;
-        //std::cout << "btag_eff: " << btag_eff << std::endl;
-        //std::cout << "central: " << jet_scalefactor << " up: " << jet_scalefactor_up << " down: " << jet_scalefactor_do << std::endl;
-        //std::cout << "prob: " << prob << " btag_SF: " << zero_btagSF << std::endl;
+            if ( vSelectedJets.at(i).jet_hadronFlavour() == 5 )
+            {
+                btag_eff = get_eff_btagging( pt_test, eta_test, 5);
+                jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_B,     eta_test,   pt_test );
+                jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_B,     eta_test,   pt_test );
+                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_B,     eta_test,   pt_test );  
+            }
+
+            if ( vSelectedJets.at(i).jet_hadronFlavour() == 4 )
+            {
+                btag_eff = get_eff_btagging( pt_test, eta_test, 4);
+                jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_C,     eta_test,   pt_test );
+                jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_C,     eta_test,   pt_test );
+                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_C,     eta_test,   pt_test );  
+            }
+
+            if ( vSelectedJets.at(i).jet_hadronFlavour() == 0 )
+            {
+                btag_eff = get_eff_btagging( pt_test, eta_test, 0);
+                jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );
+                jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );
+                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );  
+            }
+
+            zero_btagSF    *= ( 1. - (btag_eff * jet_scalefactor) );
+            zero_btagSF_up *= ( 1. - (btag_eff * jet_scalefactor_up) );
+            zero_btagSF_do *= ( 1. - (btag_eff * jet_scalefactor_do) );
+
+            //std::cout << "Jet[" << i << "]: pt << " << pt_test << " eta " << eta_test <<  " flavor " << vSelectedJets.at(i).jet_hadronFlavour() << std::endl;
+            //std::cout << "btag_eff: " << btag_eff << std::endl;
+            //std::cout << "central: " << jet_scalefactor << " up: " << jet_scalefactor_up << " down: " << jet_scalefactor_do << std::endl;
+            //std::cout << "prob: " << prob << " btag_SF: " << zero_btagSF << std::endl;
+        }
     }
-
 
     // weight *= zero_btagSF;
      
@@ -4429,8 +4431,8 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     //bool nMediumBtag      = ( nMediumBJets                              == 0 );
     //if(!nLooseBtag || !nMediumBtag)      return;
 
-    theHistoManager->fillHisto("CutFlow",                 "PassingbJetsVeto", "WZ_CR",   "",   1, weight);//zero_btagSF);
-    theHistoManager->fillHisto("ZCandidateInvariantMass", "PassingbJetsVeto", "WZ_CR",   "",  ZM, weight);//zero_btagSF);
+    theHistoManager->fillHisto("CutFlow",                 "PassingbJetsVeto", "WZ_CR",   "",   1, weight*zero_btagSF);
+    theHistoManager->fillHisto("ZCandidateInvariantMass", "PassingbJetsVeto", "WZ_CR",   "",  ZM, weight*zero_btagSF);
 
     // Building arbitrary variables with all leptons...
 
@@ -4477,162 +4479,162 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
    
     // ##################################################################################################################################
 
-    theHistoManager->fillHisto("ZCandidateInvariantMass",        "finalSel", "WZ_CR",   "",   ZM                    , weight);//zero_btagSF);
+    theHistoManager->fillHisto("ZCandidateInvariantMass",        "finalSel", "WZ_CR",   "",   ZM                    , weight*zero_btagSF);
     theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "finalSel", "WZ_CR",   "",   Zpt                   , weight);//ero_btagSF);
-    theHistoManager->fillHisto("MET",                            "finalSel", "WZ_CR",   "",   vEvent->at(0).metpt() , weight);//zero_btagSF);
-    theHistoManager->fillHisto("MHT",                            "finalSel", "WZ_CR",   "",   MHT                   , weight);//zero_btagSF);
-    theHistoManager->fillHisto("MetLD",                          "finalSel", "WZ_CR",   "",   met_ld                , weight);//zero_btagSF);
-    theHistoManager->fillHisto("TauMultiplicity",                "finalSel", "WZ_CR",   "",   vSelectedTaus.size()  , weight);//zero_btagSF);
-    theHistoManager->fillHisto("JetMultiplicity",                "finalSel", "WZ_CR",   "",   vSelectedJets.size()  , weight);//zero_btagSF);
+    theHistoManager->fillHisto("MET",                            "finalSel", "WZ_CR",   "",   vEvent->at(0).metpt() , weight*zero_btagSF);
+    theHistoManager->fillHisto("MHT",                            "finalSel", "WZ_CR",   "",   MHT                   , weight*zero_btagSF);
+    theHistoManager->fillHisto("MetLD",                          "finalSel", "WZ_CR",   "",   met_ld                , weight*zero_btagSF);
+    theHistoManager->fillHisto("TauMultiplicity",                "finalSel", "WZ_CR",   "",   vSelectedTaus.size()  , weight*zero_btagSF);
+    theHistoManager->fillHisto("JetMultiplicity",                "finalSel", "WZ_CR",   "",   vSelectedJets.size()  , weight*zero_btagSF);
 
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR",   "",   MTW                   , weight);//zero_btagSF);
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR",   "",   MTW                   , weight*zero_btagSF);
     if(weights_pdf.size()> 110)
     {
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1002",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(1));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1003",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(2));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1004",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(3));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1005",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(4));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1006",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(5));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1007",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(6));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1008",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(7));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1009",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(8));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1002",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(1));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1003",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(2));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1004",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(3));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1005",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(4));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1006",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(5));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1007",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(6));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1008",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(7));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1009",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(8));
     
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2001",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(9));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2002",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(10));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2003",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(11));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2004",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(12));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2005",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(13));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2006",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(14));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2007",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(15));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2008",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(16));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2009",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(17));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2010",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(18));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2011",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(19));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2012",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(20));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2001",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(9));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2002",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(10));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2003",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(11));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2004",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(12));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2005",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(13));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2006",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(14));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2007",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(15));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2008",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(16));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2009",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(17));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2010",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(18));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2011",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(19));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2012",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(20));
    
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2013",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(21));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2014",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(22));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2015",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(23));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2016",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(24));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2017",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(25));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2018",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(26));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2019",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(27));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2020",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(28));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2021",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(29));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2022",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(30));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2013",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(21));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2014",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(22));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2015",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(23));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2016",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(24));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2017",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(25));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2018",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(26));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2019",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(27));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2020",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(28));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2021",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(29));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2022",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(30));
   
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2023",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(31));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2024",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(32));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2025",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(33));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2026",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(34));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2027",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(35));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2028",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(36));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2029",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(37));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2030",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(38));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2031",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(39));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2032",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(40));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2023",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(31));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2024",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(32));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2025",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(33));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2026",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(34));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2027",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(35));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2028",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(36));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2029",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(37));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2030",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(38));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2031",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(39));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2032",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(40));
     
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2033",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(41));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2034",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(42));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2035",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(43));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2036",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(44));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2037",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(45));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2038",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(46));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2039",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(47));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2040",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(48));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2041",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(49));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2042",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(50));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2033",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(41));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2034",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(42));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2035",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(43));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2036",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(44));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2037",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(45));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2038",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(46));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2039",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(47));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2040",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(48));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2041",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(49));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2042",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(50));
     
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2043",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(51));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2044",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(52));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2045",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(53));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2046",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(54));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2047",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(55));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2048",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(56));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2049",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(57));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2050",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(58));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2051",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(59));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2052",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(60));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2043",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(51));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2044",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(52));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2045",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(53));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2046",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(54));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2047",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(55));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2048",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(56));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2049",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(57));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2050",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(58));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2051",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(59));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2052",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(60));
     
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2053",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(61));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2054",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(62));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2055",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(63));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2056",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(64));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2057",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(65));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2058",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(66));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2059",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(67));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2060",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(68));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2061",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(69));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2062",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(70));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2053",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(61));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2054",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(62));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2055",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(63));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2056",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(64));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2057",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(65));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2058",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(66));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2059",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(67));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2060",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(68));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2061",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(69));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2062",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(70));
    
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2063",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(71));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2064",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(72));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2065",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(73));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2066",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(74));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2067",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(75));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2068",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(76));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2069",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(77));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2070",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(78));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2071",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(79));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2072",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(80));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2063",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(71));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2064",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(72));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2065",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(73));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2066",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(74));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2067",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(75));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2068",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(76));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2069",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(77));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2070",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(78));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2071",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(79));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2072",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(80));
    
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2073",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(81));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2074",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(82));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2075",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(83));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2076",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(84));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2077",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(85));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2078",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(86));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2079",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(87));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2080",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(88));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2081",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(89));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2082",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(90));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2073",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(81));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2074",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(82));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2075",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(83));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2076",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(84));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2077",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(85));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2078",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(86));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2079",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(87));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2080",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(88));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2081",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(89));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2082",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(90));
     
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2083",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(91));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2084",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(92));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2085",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(93));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2086",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(94));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2087",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(95));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2088",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(96));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2089",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(97));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2090",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(98));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2091",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(99));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2092",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(100));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2083",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(91));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2084",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(92));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2085",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(93));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2086",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(94));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2087",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(95));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2088",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(96));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2089",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(97));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2090",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(98));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2091",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(99));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2092",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(100));
   
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2093",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(101));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2094",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(102));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2095",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(103));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2096",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(104));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2097",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(105));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2098",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(106));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2099",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(107));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2100",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(108));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2101",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(109));
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2102",   "",   MTW              , weight);//zero_btagSF*weights_pdf.at(110));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2093",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(101));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2094",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(102));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2095",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(103));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2096",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(104));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2097",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(105));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2098",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(106));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2099",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(107));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2100",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(108));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2101",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(109));
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2102",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(110));
     }
     
-    theHistoManager->fillHisto("InvariantMassOfSelectedLeptons", "finalSel", "WZ_CR",   "",   all_lep_invmass       , weight);//zero_btagSF);
-    theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "finalSel", "WZ_CR",   "",   all_lep_sumofcharges  , weight);//zero_btagSF);
-    theHistoManager->fillHisto("SumVecPtSelectedLeptons",        "finalSel", "WZ_CR",   "",   all_lep_sumofpt       , weight);//zero_btagSF);
+    theHistoManager->fillHisto("InvariantMassOfSelectedLeptons", "finalSel", "WZ_CR",   "",   all_lep_invmass       , weight*zero_btagSF);
+    theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "finalSel", "WZ_CR",   "",   all_lep_sumofcharges  , weight*zero_btagSF);
+    theHistoManager->fillHisto("SumVecPtSelectedLeptons",        "finalSel", "WZ_CR",   "",   all_lep_sumofpt       , weight*zero_btagSF);
 
-    theHistoManager->fillHisto("InvMassRemainingLepton",         "finalSel", "WZ_CR",   "",   rem_lep_invmass       , weight);//zero_btagSF);
-    theHistoManager->fillHisto("SumOfRemainingLeptonsCharges",   "finalSel", "WZ_CR",   "",   rem_lep_sumofcharges  , weight);//zero_btagSF);
-    theHistoManager->fillHisto("SumVecPtRemainingLeptons",       "finalSel", "WZ_CR",   "",   rem_lep_sumofpt       , weight);//zero_btagSF);
+    theHistoManager->fillHisto("InvMassRemainingLepton",         "finalSel", "WZ_CR",   "",   rem_lep_invmass       , weight*zero_btagSF);
+    theHistoManager->fillHisto("SumOfRemainingLeptonsCharges",   "finalSel", "WZ_CR",   "",   rem_lep_sumofcharges  , weight*zero_btagSF);
+    theHistoManager->fillHisto("SumVecPtRemainingLeptons",       "finalSel", "WZ_CR",   "",   rem_lep_sumofpt       , weight*zero_btagSF);
 
-    theHistoManager->fillHisto2D("InvMassLastLeptonVSZMass",     "finalSel", "WZ_CR",   "",   rem_lep_invmass,    ZM, weight);//zero_btagSF);
-    theHistoManager->fillHisto2D("SumPtLepVSZMass",              "finalSel", "WZ_CR",   "",   rem_lep_sumofpt,    ZM, weight);//zero_btagSF);
-    theHistoManager->fillHisto2D("METLDVSZMass",                 "finalSel", "WZ_CR",   "",   met_ld,             ZM, weight);//zero_btagSF);
+    theHistoManager->fillHisto2D("InvMassLastLeptonVSZMass",     "finalSel", "WZ_CR",   "",   rem_lep_invmass,    ZM, weight*zero_btagSF);
+    theHistoManager->fillHisto2D("SumPtLepVSZMass",              "finalSel", "WZ_CR",   "",   rem_lep_sumofpt,    ZM, weight*zero_btagSF);
+    theHistoManager->fillHisto2D("METLDVSZMass",                 "finalSel", "WZ_CR",   "",   met_ld,             ZM, weight*zero_btagSF);
     
-    theHistoManager->fillHisto("JetMultiplicity",                "finalSel", "WZ_CR_BSFUp",   "",   vSelectedJets.size()  , weight);//zero_btagSF_up);
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_BSFUp",   "",   MTW                   , weight);//zero_btagSF_up);
-    theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "finalSel", "WZ_CR_BSFUp",   "",   all_lep_sumofcharges  , weight);//zero_btagSF_up);
-    theHistoManager->fillHisto("ZCandidateInvariantMass",        "finalSel", "WZ_CR_BSFUp",   "",   ZM                    , weight);//zero_btagSF_up);
-    theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "finalSel", "WZ_CR_BSFUp",   "",   Zpt                   , weight);//zero_btagSF_up);
+    theHistoManager->fillHisto("JetMultiplicity",                "finalSel", "WZ_CR_BSFUp",   "",   vSelectedJets.size()  , weight*zero_btagSF_up);
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_BSFUp",   "",   MTW                   , weight*zero_btagSF_up);
+    theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "finalSel", "WZ_CR_BSFUp",   "",   all_lep_sumofcharges  , weight*zero_btagSF_up);
+    theHistoManager->fillHisto("ZCandidateInvariantMass",        "finalSel", "WZ_CR_BSFUp",   "",   ZM                    , weight*zero_btagSF_up);
+    theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "finalSel", "WZ_CR_BSFUp",   "",   Zpt                   , weight*zero_btagSF_up);
     
-    theHistoManager->fillHisto("JetMultiplicity",                "finalSel", "WZ_CR_BSFDo",   "",   vSelectedJets.size()  , weight);//zero_btagSF_do);
-    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_BSFDo",   "",   MTW                   , weight);//zero_btagSF_do);
-    theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "finalSel", "WZ_CR_BSFDo",   "",   all_lep_sumofcharges  , weight);//zero_btagSF_do);
-    theHistoManager->fillHisto("ZCandidateInvariantMass",        "finalSel", "WZ_CR_BSFDo",   "",   ZM                    , weight);//zero_btagSF_do);
-    theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "finalSel", "WZ_CR_BSFDo",   "",   Zpt                   , weight);//zero_btagSF_do);
+    theHistoManager->fillHisto("JetMultiplicity",                "finalSel", "WZ_CR_BSFDo",   "",   vSelectedJets.size()  , weight*zero_btagSF_do);
+    theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_BSFDo",   "",   MTW                   , weight*zero_btagSF_do);
+    theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "finalSel", "WZ_CR_BSFDo",   "",   all_lep_sumofcharges  , weight*zero_btagSF_do);
+    theHistoManager->fillHisto("ZCandidateInvariantMass",        "finalSel", "WZ_CR_BSFDo",   "",   ZM                    , weight*zero_btagSF_do);
+    theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "finalSel", "WZ_CR_BSFDo",   "",   Zpt                   , weight*zero_btagSF_do);
  
    //std::cout << "LepW "<< LepW <<std::endl;
    //std::cout << "vSelectedLeptons.size() " <<vSelectedLeptons.size() << std::endl;
@@ -5288,48 +5290,54 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("signal_3l_TT_MVA",&signal_3l_TT_MVA,"signal_3l_TT_MVA/F");
     tOutput->Branch("signal_3l_TTV_MVA",&signal_3l_TTV_MVA,"signal_3l_TTV_MVA/F");
 
-    tOutput->Branch("multilepton_Lepton1_Id",               &multilepton_Lepton1_Id,            "multilepton_Lepton1_Id/I");
-    tOutput->Branch("multilepton_Lepton1_P4",               "TLorentzVector",                   &multilepton_Lepton1_P4);
-    tOutput->Branch("multilepton_Lepton1_Label_Matched",    &multilepton_Lepton1_Label_Matched, "multilepton_Lepton1_Label_Matched/I");
-    tOutput->Branch("multilepton_Lepton1_Id_Matched",       &multilepton_Lepton1_Id_Matched,    "multilepton_Lepton1_Id_Matched/I");
-    tOutput->Branch("multilepton_Lepton1_P4_Matched",       "TLorentzVector",                   &multilepton_Lepton1_P4_Matched);
-    tOutput->Branch("multilepton_Lepton2_Id",               &multilepton_Lepton2_Id,            "multilepton_Lepton2_Id/I");
-    tOutput->Branch("multilepton_Lepton2_P4",               "TLorentzVector",                   &multilepton_Lepton2_P4);
-    tOutput->Branch("multilepton_Lepton2_Label_Matched",    &multilepton_Lepton2_Label_Matched, "multilepton_Lepton2_Label_Matched/I");
-    tOutput->Branch("multilepton_Lepton2_Id_Matched",       &multilepton_Lepton2_Id_Matched,    "multilepton_Lepton2_Id_Matched/I");
-    tOutput->Branch("multilepton_Lepton2_P4_Matched",       "TLorentzVector",                   &multilepton_Lepton2_P4_Matched);
-    tOutput->Branch("multilepton_Lepton3_Id",               &multilepton_Lepton3_Id,            "multilepton_Lepton3_Id/I");
-    tOutput->Branch("multilepton_Lepton3_P4",               "TLorentzVector",                   &multilepton_Lepton3_P4);
-    tOutput->Branch("multilepton_Lepton3_Label_Matched",    &multilepton_Lepton3_Label_Matched, "multilepton_Lepton3_Label_Matched/I");
-    tOutput->Branch("multilepton_Lepton3_Id_Matched",       &multilepton_Lepton3_Id_Matched,    "multilepton_Lepton3_Id_Matched/I");
-    tOutput->Branch("multilepton_Lepton3_P4_Matched",       "TLorentzVector",                   &multilepton_Lepton3_P4_Matched);
-    tOutput->Branch("multilepton_Lepton4_Id",               &multilepton_Lepton4_Id,            "multilepton_Lepton4_Id/I");
-    tOutput->Branch("multilepton_Lepton4_P4",               "TLorentzVector",                   &multilepton_Lepton4_P4);
-    tOutput->Branch("multilepton_Lepton4_Label_Matched",    &multilepton_Lepton4_Label_Matched, "multilepton_Lepton4_Label_Matched/I");
-    tOutput->Branch("multilepton_Lepton4_Id_Matched",       &multilepton_Lepton4_Id_Matched,    "multilepton_Lepton4_Id_Matched/I");
-    tOutput->Branch("multilepton_Lepton4_P4_Matched",       "TLorentzVector",                   &multilepton_Lepton4_P4_Matched);
+    tOutput->Branch("multilepton_Lepton1_Id",               &multilepton_Lepton1_Id,                "multilepton_Lepton1_Id/I");
+    tOutput->Branch("multilepton_Lepton1_P4",               "TLorentzVector",                       &multilepton_Lepton1_P4);
+    tOutput->Branch("multilepton_Lepton1_DeltaR_Matched",   &multilepton_Lepton1_DeltaR_Matched,    "multilepton_Lepton1_DeltaR_Matched/I");
+    tOutput->Branch("multilepton_Lepton1_Label_Matched",    &multilepton_Lepton1_Label_Matched,     "multilepton_Lepton1_Label_Matched/I");
+    tOutput->Branch("multilepton_Lepton1_Id_Matched",       &multilepton_Lepton1_Id_Matched,        "multilepton_Lepton1_Id_Matched/I");
+    tOutput->Branch("multilepton_Lepton1_P4_Matched",       "TLorentzVector",                       &multilepton_Lepton1_P4_Matched);
+    tOutput->Branch("multilepton_Lepton2_Id",               &multilepton_Lepton2_Id,                "multilepton_Lepton2_Id/I");
+    tOutput->Branch("multilepton_Lepton2_P4",               "TLorentzVector",                       &multilepton_Lepton2_P4);
+    tOutput->Branch("multilepton_Lepton2_DeltaR_Matched",   &multilepton_Lepton2_DeltaR_Matched,    "multilepton_Lepton2_DeltaR_Matched/I");
+    tOutput->Branch("multilepton_Lepton2_Label_Matched",    &multilepton_Lepton2_Label_Matched,     "multilepton_Lepton2_Label_Matched/I");
+    tOutput->Branch("multilepton_Lepton2_Id_Matched",       &multilepton_Lepton2_Id_Matched,        "multilepton_Lepton2_Id_Matched/I");
+    tOutput->Branch("multilepton_Lepton2_P4_Matched",       "TLorentzVector",                       &multilepton_Lepton2_P4_Matched);
+    tOutput->Branch("multilepton_Lepton3_Id",               &multilepton_Lepton3_Id,                "multilepton_Lepton3_Id/I");
+    tOutput->Branch("multilepton_Lepton3_P4",               "TLorentzVector",                       &multilepton_Lepton3_P4);
+    tOutput->Branch("multilepton_Lepton3_DeltaR_Matched",   &multilepton_Lepton3_DeltaR_Matched,    "multilepton_Lepton3_DeltaR_Matched/I");
+    tOutput->Branch("multilepton_Lepton3_Label_Matched",    &multilepton_Lepton3_Label_Matched,     "multilepton_Lepton3_Label_Matched/I");
+    tOutput->Branch("multilepton_Lepton3_Id_Matched",       &multilepton_Lepton3_Id_Matched,        "multilepton_Lepton3_Id_Matched/I");
+    tOutput->Branch("multilepton_Lepton3_P4_Matched",       "TLorentzVector",                       &multilepton_Lepton3_P4_Matched);
+    tOutput->Branch("multilepton_Lepton4_Id",               &multilepton_Lepton4_Id,                "multilepton_Lepton4_Id/I");
+    tOutput->Branch("multilepton_Lepton4_P4",               "TLorentzVector",                       &multilepton_Lepton4_P4);
+    tOutput->Branch("multilepton_Lepton4_DeltaR_Matched",   &multilepton_Lepton4_DeltaR_Matched,    "multilepton_Lepton4_DeltaR_Matched/I");
+    tOutput->Branch("multilepton_Lepton4_Label_Matched",    &multilepton_Lepton4_Label_Matched,     "multilepton_Lepton4_Label_Matched/I");
+    tOutput->Branch("multilepton_Lepton4_Id_Matched",       &multilepton_Lepton4_Id_Matched,        "multilepton_Lepton4_Id_Matched/I");
+    tOutput->Branch("multilepton_Lepton4_P4_Matched",       "TLorentzVector",                       &multilepton_Lepton4_P4_Matched);
 
-    tOutput->Branch("multilepton_Bjet1_Id",                 &multilepton_Bjet1_Id,              "multilepton_Bjet1_Id/I");
-    tOutput->Branch("multilepton_Bjet1_P4",                 "TLorentzVector",                   &multilepton_Bjet1_P4);
-    tOutput->Branch("multilepton_Bjet1_CSV",                &multilepton_Bjet1_CSV,             "multilepton_Bjet1_CSV/F");
-    tOutput->Branch("multilepton_Bjet1_JEC_Up",             &multilepton_Bjet1_JEC_Up,          "multilepton_Bjet1_JEC_Up/F");
-    tOutput->Branch("multilepton_Bjet1_JEC_Down",           &multilepton_Bjet1_JEC_Down,        "multilepton_Bjet1_JEC_Down/F");
-    tOutput->Branch("multilepton_Bjet1_JER_Up",             &multilepton_Bjet1_JER_Up,          "multilepton_Bjet1_JER_Up/F");
-    tOutput->Branch("multilepton_Bjet1_JER_Down",           &multilepton_Bjet1_JER_Down,        "multilepton_Bjet1_JER_Down/F");
-    tOutput->Branch("multilepton_Bjet1_Label_Matched",      &multilepton_Bjet1_Label_Matched,   "multilepton_Bjet1_Label_Matched/I");
-    tOutput->Branch("multilepton_Bjet1_Id_Matched",         &multilepton_Bjet1_Id_Matched,      "multilepton_Bjet1_Id_Matched/I");
-    tOutput->Branch("multilepton_Bjet1_P4_Matched",         "TLorentzVector",                   &multilepton_Bjet1_P4_Matched);
+    tOutput->Branch("multilepton_Bjet1_Id",                 &multilepton_Bjet1_Id,                  "multilepton_Bjet1_Id/I");
+    tOutput->Branch("multilepton_Bjet1_P4",                 "TLorentzVector",                       &multilepton_Bjet1_P4);
+    tOutput->Branch("multilepton_Bjet1_CSV",                &multilepton_Bjet1_CSV,                 "multilepton_Bjet1_CSV/F");
+    tOutput->Branch("multilepton_Bjet1_JEC_Up",             &multilepton_Bjet1_JEC_Up,              "multilepton_Bjet1_JEC_Up/F");
+    tOutput->Branch("multilepton_Bjet1_JEC_Down",           &multilepton_Bjet1_JEC_Down,            "multilepton_Bjet1_JEC_Down/F");
+    tOutput->Branch("multilepton_Bjet1_JER_Up",             &multilepton_Bjet1_JER_Up,              "multilepton_Bjet1_JER_Up/F");
+    tOutput->Branch("multilepton_Bjet1_JER_Down",           &multilepton_Bjet1_JER_Down,            "multilepton_Bjet1_JER_Down/F");
+    tOutput->Branch("multilepton_Bjet1_DeltaR_Matched",     &multilepton_Bjet1_DeltaR_Matched,      "multilepton_Bjet1_DeltaR_Matched/I");
+    tOutput->Branch("multilepton_Bjet1_Label_Matched",      &multilepton_Bjet1_Label_Matched,       "multilepton_Bjet1_Label_Matched/I");
+    tOutput->Branch("multilepton_Bjet1_Id_Matched",         &multilepton_Bjet1_Id_Matched,          "multilepton_Bjet1_Id_Matched/I");
+    tOutput->Branch("multilepton_Bjet1_P4_Matched",         "TLorentzVector",                       &multilepton_Bjet1_P4_Matched);
 
-    tOutput->Branch("multilepton_Bjet2_Id",                 &multilepton_Bjet2_Id,              "multilepton_Bjet2_Id/I");
-    tOutput->Branch("multilepton_Bjet2_P4",                 "TLorentzVector",                   &multilepton_Bjet2_P4);
-    tOutput->Branch("multilepton_Bjet2_CSV",                &multilepton_Bjet2_CSV,             "multilepton_Bjet2_CSV/F");
-    tOutput->Branch("multilepton_Bjet2_JEC_Up",             &multilepton_Bjet2_JEC_Up,          "multilepton_Bjet2_JEC_Up/F");
-    tOutput->Branch("multilepton_Bjet2_JEC_Down",           &multilepton_Bjet2_JEC_Down,        "multilepton_Bjet2_JEC_Down/F");
-    tOutput->Branch("multilepton_Bjet2_JER_Up",             &multilepton_Bjet2_JER_Up,          "multilepton_Bjet2_JER_Up/F");
-    tOutput->Branch("multilepton_Bjet2_JER_Down",           &multilepton_Bjet2_JER_Down,        "multilepton_Bjet2_JER_Down/F");
-    tOutput->Branch("multilepton_Bjet2_Label_Matched",      &multilepton_Bjet2_Label_Matched,   "multilepton_Bjet2_Label_Matched/I");
-    tOutput->Branch("multilepton_Bjet2_Id_Matched",         &multilepton_Bjet2_Id_Matched,      "multilepton_Bjet2_Id_Matched/I");
-    tOutput->Branch("multilepton_Bjet2_P4_Matched",         "TLorentzVector",                   &multilepton_Bjet2_P4_Matched);
+    tOutput->Branch("multilepton_Bjet2_Id",                 &multilepton_Bjet2_Id,                  "multilepton_Bjet2_Id/I");
+    tOutput->Branch("multilepton_Bjet2_P4",                 "TLorentzVector",                       &multilepton_Bjet2_P4);
+    tOutput->Branch("multilepton_Bjet2_CSV",                &multilepton_Bjet2_CSV,                 "multilepton_Bjet2_CSV/F");
+    tOutput->Branch("multilepton_Bjet2_JEC_Up",             &multilepton_Bjet2_JEC_Up,              "multilepton_Bjet2_JEC_Up/F");
+    tOutput->Branch("multilepton_Bjet2_JEC_Down",           &multilepton_Bjet2_JEC_Down,            "multilepton_Bjet2_JEC_Down/F");
+    tOutput->Branch("multilepton_Bjet2_JER_Up",             &multilepton_Bjet2_JER_Up,              "multilepton_Bjet2_JER_Up/F");
+    tOutput->Branch("multilepton_Bjet2_JER_Down",           &multilepton_Bjet2_JER_Down,            "multilepton_Bjet2_JER_Down/F");
+    tOutput->Branch("multilepton_Bjet2_DeltaR_Matched",     &multilepton_Bjet2_DeltaR_Matched,      "multilepton_Bjet2_DeltaR_Matched/I");
+    tOutput->Branch("multilepton_Bjet2_Label_Matched",      &multilepton_Bjet2_Label_Matched,       "multilepton_Bjet2_Label_Matched/I");
+    tOutput->Branch("multilepton_Bjet2_Id_Matched",         &multilepton_Bjet2_Id_Matched,          "multilepton_Bjet2_Id_Matched/I");
+    tOutput->Branch("multilepton_Bjet2_P4_Matched",         "TLorentzVector",                       &multilepton_Bjet2_P4_Matched);
 
     tOutput->Branch("multilepton_JetHighestPt1_Id",&multilepton_JetHighestPt1_Id,"multilepton_JetHighestPt1_Id/I");
     tOutput->Branch("multilepton_JetHighestPt1_P4","TLorentzVector",&multilepton_JetHighestPt1_P4);
@@ -5433,6 +5441,8 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("multilepton_h0_P4",                    "TLorentzVector",                   &multilepton_h0_P4);
     tOutput->Branch("multilepton_t1_Id",                    &multilepton_t1_Id,                 "multilepton_t1_Id/I");
     tOutput->Branch("multilepton_t1_P4",                    "TLorentzVector",                   &multilepton_t1_P4);
+    tOutput->Branch("multilepton_t2_Id",                    &multilepton_t2_Id,                 "multilepton_t2_Id/I");
+    tOutput->Branch("multilepton_t2_P4",                    "TLorentzVector",                   &multilepton_t2_P4);
 
     // End test adding truth information
 
@@ -5550,96 +5560,139 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     // ###############################################################################
 
     float lep1_dr_gen       = 100.,     lep2_dr_gen     = 100.,     lep3_dr_gen     = 100.,     lep4_dr_gen     = 100. ;
-    float jet1_dr_gen       = 100.,     jet2_dr_gen     = 100. ;
+    float jet1_dr_gen       = 100.,     jet2_dr_gen     = 100.;
     float lep1_dr_gen_min   = 100.,     lep2_dr_gen_min = 100.,     lep3_dr_gen_min = 100.,     lep4_dr_gen_min = 100. ;
-    float jet1_dr_gen_min   = 100.,     jet2_dr_gen_min = 100. ;
-    int   lep1_matched      = 0,        lep2_matched    = 0,        lep3_matched    = 0,        lep4_matched    = 0;
-    int   jet1_matched      = 0,        jet2_matched    = 0;  
+    float jet1_dr_gen_min   = 100.,     jet2_dr_gen_min = 100.;
+    int   lep1_matched      = -1,       lep2_matched    = -1,       lep3_matched   = -1,       lep4_matched    = -1;
+    int   jet1_matched      = -1,       jet2_matched    = -1;  
 
     TLorentzVector LeptonX;
 
     for(unsigned int itruth = 0; itruth < vTruth->at(0).mc_truth_label().size() ; itruth++)
     {
-        lep1_dr_gen = GetDeltaR(vTruth->at(0).mc_truth_eta().at(itruth),  vTruth->at(0).mc_truth_phi().at(itruth), vSelectedLeptons.at(0).eta(), vSelectedLeptons.at(0).phi() );
-        if( lep1_dr_gen < lep1_dr_gen_min)
-        {   lep1_dr_gen_min = lep1_dr_gen; std::cout << "Delta R = " << lep1_dr_gen << std::endl;  lep1_matched = itruth;  }
 
-        lep2_dr_gen = GetDeltaR(vTruth->at(0).mc_truth_eta().at(itruth),  vTruth->at(0).mc_truth_phi().at(itruth), vSelectedLeptons.at(1).eta(), vSelectedLeptons.at(1).phi() );
-        if( lep2_dr_gen < lep2_dr_gen_min)
-        {   lep2_dr_gen_min = lep2_dr_gen;  lep2_matched = itruth;  }
+        if( abs(vTruth->at(0).mc_truth_id().at(itruth)) < 18 )
+        {
+            lep1_dr_gen = GetDeltaR(vTruth->at(0).mc_truth_eta().at(itruth),  vTruth->at(0).mc_truth_phi().at(itruth), vSelectedLeptons.at(0).eta(), vSelectedLeptons.at(0).phi() );
+            if( lep1_dr_gen < lep1_dr_gen_min)
+            {   lep1_dr_gen_min = lep1_dr_gen;  lep1_matched = itruth;  }
 
-        if(vSelectedLeptons.size()>=3)
-        {    
-            lep3_dr_gen = GetDeltaR(vTruth->at(0).mc_truth_eta().at(itruth),  vTruth->at(0).mc_truth_phi().at(itruth), vSelectedLeptons.at(2).eta(), vSelectedLeptons.at(2).phi() );
-            if( lep3_dr_gen < lep3_dr_gen_min)
-            {   lep3_dr_gen_min = lep3_dr_gen;  lep3_matched = itruth;  }
+            lep2_dr_gen = GetDeltaR(vTruth->at(0).mc_truth_eta().at(itruth),  vTruth->at(0).mc_truth_phi().at(itruth), vSelectedLeptons.at(1).eta(), vSelectedLeptons.at(1).phi() );
+            if( lep2_dr_gen < lep2_dr_gen_min)
+            {   lep2_dr_gen_min = lep2_dr_gen;  lep2_matched = itruth;  }
+
+            if(vSelectedLeptons.size()>=3)
+            {    
+                lep3_dr_gen = GetDeltaR(vTruth->at(0).mc_truth_eta().at(itruth),  vTruth->at(0).mc_truth_phi().at(itruth), vSelectedLeptons.at(2).eta(), vSelectedLeptons.at(2).phi() );
+                if( lep3_dr_gen < lep3_dr_gen_min)
+                {   lep3_dr_gen_min = lep3_dr_gen;  lep3_matched = itruth;  }
+            }
+
+            if(vSelectedLeptons.size()>=4)
+            {
+                lep4_dr_gen = GetDeltaR(vTruth->at(0).mc_truth_eta().at(itruth),  vTruth->at(0).mc_truth_phi().at(itruth), vSelectedLeptons.at(3).eta(), vSelectedLeptons.at(3).phi() );
+                if( lep4_dr_gen < lep4_dr_gen_min)
+                {   lep4_dr_gen_min = lep4_dr_gen;  lep4_matched = itruth;  }
+            }
+
+            jet1_dr_gen = GetDeltaR(vTruth->at(0).mc_truth_eta().at(itruth),  vTruth->at(0).mc_truth_phi().at(itruth), vSelectedJets.at(ib1).eta(), vSelectedJets.at(ib1).phi() );
+            if( jet1_dr_gen < jet1_dr_gen_min)
+            {   jet1_dr_gen_min = jet1_dr_gen;  jet1_matched = itruth;  }        
+
+            jet2_dr_gen = GetDeltaR(vTruth->at(0).mc_truth_eta().at(itruth),  vTruth->at(0).mc_truth_phi().at(itruth), vSelectedJets.at(ib2).eta(), vSelectedJets.at(ib2).phi() );
+            if( jet2_dr_gen < jet2_dr_gen_min)
+            {   jet2_dr_gen_min = jet2_dr_gen;  jet2_matched = itruth;  }
         }
+    }
 
+    if(false)
+    {
+        std::cout << "lep1_matched: "   << lep1_matched                                     << std::endl;
+        std::cout << "pt: "             << vTruth->at(0).mc_truth_pt().at(lep1_matched)     << std::endl;
+        std::cout << "eta: "            << vTruth->at(0).mc_truth_eta().at(lep1_matched)    << std::endl;
+        std::cout << "phi: "            << vTruth->at(0).mc_truth_phi().at(lep1_matched)    << std::endl;
+        std::cout << "E: "              << vTruth->at(0).mc_truth_E().at(lep1_matched)      << std::endl;
+        std::cout << "Id: "             << vTruth->at(0).mc_truth_id().at(lep1_matched)     << std::endl;
+        std::cout << "Label: "          << vTruth->at(0).mc_truth_label().at(lep1_matched)  << std::endl;
+    }
+
+    if(lep1_matched >= 0)
+    {
+        LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(lep1_matched),       vTruth->at(0).mc_truth_eta().at(lep1_matched), 
+                                vTruth->at(0).mc_truth_phi().at(lep1_matched),      vTruth->at(0).mc_truth_E().at(lep1_matched)     );
+        multilepton_Lepton1_P4_Matched      = LeptonX;
+        multilepton_Lepton1_Id_Matched      = vTruth->at(0).mc_truth_id().at(lep1_matched);
+        multilepton_Lepton1_Label_Matched   = vTruth->at(0).mc_truth_label().at(lep1_matched);
+        multilepton_Lepton1_DeltaR_Matched  = lep1_dr_gen_min;
+    }
+
+    if(lep2_matched >= 0)
+    {    
+        LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(lep2_matched),       vTruth->at(0).mc_truth_eta().at(lep2_matched),
+                                vTruth->at(0).mc_truth_phi().at(lep2_matched),      vTruth->at(0).mc_truth_E().at(lep2_matched)     );
+        multilepton_Lepton2_P4_Matched      = LeptonX;
+        multilepton_Lepton2_Id_Matched      = vTruth->at(0).mc_truth_id().at(lep2_matched);
+        multilepton_Lepton2_Label_Matched   = vTruth->at(0).mc_truth_label().at(lep2_matched);
+        multilepton_Lepton2_DeltaR_Matched  = lep2_dr_gen_min;
+    }
+
+    if(lep3_matched >= 0)
+    {
+        if(vSelectedLeptons.size()>=3)
+        {
+            LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(lep3_matched),       vTruth->at(0).mc_truth_eta().at(lep3_matched),
+                                    vTruth->at(0).mc_truth_phi().at(lep3_matched),      vTruth->at(0).mc_truth_E().at(lep3_matched)     );
+            multilepton_Lepton3_P4_Matched      = LeptonX;
+            multilepton_Lepton3_Id_Matched      = vTruth->at(0).mc_truth_id().at(lep3_matched);
+            multilepton_Lepton3_Label_Matched   = vTruth->at(0).mc_truth_label().at(lep3_matched);
+            multilepton_Lepton3_DeltaR_Matched  = lep3_dr_gen_min;
+        }
+    }
+
+    if(lep4_matched >= 0)
+    {
         if(vSelectedLeptons.size()>=4)
         {
-            lep4_dr_gen = GetDeltaR(vTruth->at(0).mc_truth_eta().at(itruth),  vTruth->at(0).mc_truth_phi().at(itruth), vSelectedLeptons.at(3).eta(), vSelectedLeptons.at(3).phi() );
-            if( lep4_dr_gen < lep4_dr_gen_min)
-            {   lep4_dr_gen_min = lep4_dr_gen;  lep4_matched = itruth;  }
+            LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(lep4_matched),       vTruth->at(0).mc_truth_eta().at(lep4_matched),
+                                    vTruth->at(0).mc_truth_phi().at(lep4_matched),      vTruth->at(0).mc_truth_E().at(lep4_matched)     );
+            multilepton_Lepton4_P4_Matched      = LeptonX;
+            multilepton_Lepton4_Id_Matched      = vTruth->at(0).mc_truth_id().at(lep4_matched);
+            multilepton_Lepton4_Label_Matched   = vTruth->at(0).mc_truth_label().at(lep4_matched);
+            multilepton_Lepton4_DeltaR_Matched  = lep4_dr_gen_min;
         }
-
-        jet1_dr_gen = GetDeltaR(vTruth->at(0).mc_truth_eta().at(itruth),  vTruth->at(0).mc_truth_phi().at(itruth), vSelectedJets.at(ib1).eta(), vSelectedJets.at(ib1).phi() );
-        if( jet1_dr_gen < jet1_dr_gen_min)
-        {   jet1_dr_gen_min = jet1_dr_gen;  jet1_matched = itruth;  }        
-
-        jet2_dr_gen = GetDeltaR(vTruth->at(0).mc_truth_eta().at(itruth),  vTruth->at(0).mc_truth_phi().at(itruth), vSelectedJets.at(ib2).eta(), vSelectedJets.at(ib2).phi() );
-        if( jet2_dr_gen < jet2_dr_gen_min)
-        {   jet2_dr_gen_min = jet2_dr_gen;  jet2_matched = itruth;  }
     }
 
-    std::cout << "lep1_matched: "   << lep1_matched                                     << std::endl;
-    std::cout << "pt: "             << vTruth->at(0).mc_truth_pt().at(lep1_matched)     << std::endl;
-    std::cout << "eta: "            << vTruth->at(0).mc_truth_eta().at(lep1_matched)    << std::endl;
-    std::cout << "phi: "            << vTruth->at(0).mc_truth_phi().at(lep1_matched)    << std::endl;
-    std::cout << "E: "              << vTruth->at(0).mc_truth_E().at(lep1_matched)      << std::endl;
-    std::cout << "Id: "             << vTruth->at(0).mc_truth_id().at(lep1_matched)     << std::endl;
-    std::cout << "Label: "          << vTruth->at(0).mc_truth_label().at(lep1_matched)  << std::endl;
-
-    LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(lep1_matched),       vTruth->at(0).mc_truth_eta().at(lep1_matched), 
-                            vTruth->at(0).mc_truth_phi().at(lep1_matched),      vTruth->at(0).mc_truth_E().at(lep1_matched)     );
-    multilepton_Lepton1_P4_Matched      = LeptonX;
-    multilepton_Lepton1_Id_Matched      = vTruth->at(0).mc_truth_id().at(lep1_matched);
-    multilepton_Lepton1_Label_Matched   = vTruth->at(0).mc_truth_label().at(lep1_matched);
-
-    LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(lep2_matched),       vTruth->at(0).mc_truth_eta().at(lep2_matched),
-                            vTruth->at(0).mc_truth_phi().at(lep2_matched),      vTruth->at(0).mc_truth_E().at(lep2_matched)     );
-    multilepton_Lepton2_P4_Matched      = LeptonX;
-    multilepton_Lepton2_Id_Matched      = vTruth->at(0).mc_truth_id().at(lep2_matched);
-    multilepton_Lepton2_Label_Matched   = vTruth->at(0).mc_truth_label().at(lep2_matched);
-
-    if(vSelectedLeptons.size()>=3)
+    if(false)
     {
-        LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(lep3_matched),       vTruth->at(0).mc_truth_eta().at(lep3_matched),
-                                vTruth->at(0).mc_truth_phi().at(lep3_matched),      vTruth->at(0).mc_truth_E().at(lep3_matched)     );
-        multilepton_Lepton3_P4_Matched      = LeptonX;
-        multilepton_Lepton3_Id_Matched      = vTruth->at(0).mc_truth_id().at(lep3_matched);
-        multilepton_Lepton3_Label_Matched   = vTruth->at(0).mc_truth_label().at(lep3_matched);
+        std::cout << " ============ "   << std::endl;
+        std::cout << "jet1_matched: "   << jet1_matched                                     << std::endl;
+        std::cout << "pt: "             << vTruth->at(0).mc_truth_pt().at(jet1_matched)     << std::endl;
+        std::cout << "eta: "            << vTruth->at(0).mc_truth_eta().at(jet1_matched)    << std::endl;
+        std::cout << "phi: "            << vTruth->at(0).mc_truth_phi().at(jet1_matched)    << std::endl;
+        std::cout << "E: "              << vTruth->at(0).mc_truth_E().at(jet1_matched)      << std::endl;
+        std::cout << "Id: "             << vTruth->at(0).mc_truth_id().at(jet1_matched)     << std::endl;
+        std::cout << "Label: "          << vTruth->at(0).mc_truth_label().at(jet1_matched)  << std::endl;    
     }
 
-    if(vSelectedLeptons.size()>=4)
+    if(jet1_matched >= 0)
     {
-        LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(lep4_matched),       vTruth->at(0).mc_truth_eta().at(lep4_matched),
-                                vTruth->at(0).mc_truth_phi().at(lep4_matched),      vTruth->at(0).mc_truth_E().at(lep4_matched)     );
-        multilepton_Lepton4_P4_Matched      = LeptonX;
-        multilepton_Lepton4_Id_Matched      = vTruth->at(0).mc_truth_id().at(lep4_matched);
-        multilepton_Lepton4_Label_Matched   = vTruth->at(0).mc_truth_label().at(lep4_matched);
+        LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(jet1_matched),       vTruth->at(0).mc_truth_eta().at(jet1_matched),
+                                vTruth->at(0).mc_truth_phi().at(jet1_matched),      vTruth->at(0).mc_truth_E().at(jet1_matched)     );
+        multilepton_Bjet1_P4_Matched        = LeptonX;
+        multilepton_Bjet1_Id_Matched        = vTruth->at(0).mc_truth_id().at(jet1_matched);
+        multilepton_Bjet1_Label_Matched     = vTruth->at(0).mc_truth_label().at(jet1_matched);
+        multilepton_Bjet1_DeltaR_Matched    = jet1_dr_gen_min;
     }
 
-    LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(jet1_matched),       vTruth->at(0).mc_truth_eta().at(jet1_matched),
-                            vTruth->at(0).mc_truth_phi().at(jet1_matched),      vTruth->at(0).mc_truth_E().at(jet1_matched)     );
-    multilepton_Bjet1_P4_Matched        = LeptonX;
-    multilepton_Bjet1_Id_Matched        = vTruth->at(0).mc_truth_id().at(jet1_matched);
-    multilepton_Bjet1_Label_Matched     = vTruth->at(0).mc_truth_label().at(jet1_matched);
-
-    LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(jet2_matched),       vTruth->at(0).mc_truth_eta().at(jet2_matched),
-                            vTruth->at(0).mc_truth_phi().at(jet2_matched),      vTruth->at(0).mc_truth_E().at(jet2_matched)     );
-    multilepton_Bjet2_P4_Matched        = LeptonX;
-    multilepton_Bjet2_Id_Matched        = vTruth->at(0).mc_truth_id().at(jet2_matched);
-    multilepton_Bjet2_Label_Matched     = vTruth->at(0).mc_truth_label().at(jet2_matched);
+    if(jet2_matched >= 0)
+    {
+        LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(jet2_matched),       vTruth->at(0).mc_truth_eta().at(jet2_matched),
+                                vTruth->at(0).mc_truth_phi().at(jet2_matched),      vTruth->at(0).mc_truth_E().at(jet2_matched)     );
+        multilepton_Bjet2_P4_Matched        = LeptonX;
+        multilepton_Bjet2_Id_Matched        = vTruth->at(0).mc_truth_id().at(jet2_matched);
+        multilepton_Bjet2_Label_Matched     = vTruth->at(0).mc_truth_label().at(jet2_matched);
+        multilepton_Bjet2_DeltaR_Matched    = jet2_dr_gen_min;
+    }
 
     // ========================
 
@@ -5802,11 +5855,18 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
         }
     }
 
-    /*
+    // ##########################################################################
+    // #      _                  _       _                                      #
+    // #  ___| |_ __ _ _ __   __| | __ _| | ___  _ __   ___    __ _  ___ _ __   #
+    // # / __| __/ _` | '_ \ / _` |/ _` | |/ _ \| '_ \ / _ \  / _` |/ _ \ '_ \  #
+    // # \__ \ || (_| | | | | (_| | (_| | | (_) | | | |  __/ | (_| |  __/ | | | #
+    // # |___/\__\__,_|_| |_|\__,_|\__,_|_|\___/|_| |_|\___|  \__, |\___|_| |_| #
+    // #                                                      |___/             #
+    // #                                                                        #
+    // ##########################################################################
 
     for(unsigned int itruth = 0; itruth < vTruth->at(0).mc_truth_label().size() ; itruth++)
     {
-
         TLorentzVector LeptonX;
 
         if( vTruth->at(0).mc_truth_label().at(itruth) == 1 )
@@ -5831,9 +5891,17 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
             multilepton_t1_Id = vTruth->at(0).mc_truth_id().at(itruth);
         }        
 
-    } 
+        if( vTruth->at(0).mc_truth_label().at(itruth) == 3 )
+        {
+            LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(itruth),
+                                    vTruth->at(0).mc_truth_eta().at(itruth),
+                                    vTruth->at(0).mc_truth_phi().at(itruth),
+                                    vTruth->at(0).mc_truth_E().at(itruth) );
 
-    */
+            multilepton_t2_P4 = LeptonX;
+            multilepton_t2_Id = vTruth->at(0).mc_truth_id().at(itruth);
+        }
+    }
 
     multilepton_mET.SetPtEtaPhiE(vEvent->at(0).metpt(), 0, vEvent->at(0).metphi(), vEvent->at(0).metpt());
     multilepton_mETcov00 = vEvent->at(0).metcov00();
