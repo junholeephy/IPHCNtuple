@@ -26,7 +26,9 @@
 
 
 struct Particle {
-  int Id;
+  int 	Id;
+  int 	Label;
+  float DeltaR;
   float CSV;
   float JEC_Up;
   float JEC_Down;
@@ -44,12 +46,15 @@ class MultiLepton
   ~MultiLepton();
 
   vector<Particle> Bjets;
+  vector<Particle> BjetsMatched;
   vector<Particle> Leptons;
+  vector<Particle> LeptonsMatched;
   vector<Particle> Jets;
   vector<Particle> AllJets;
   vector<Particle> JetsHighestPt;
   vector<Particle> JetsClosestMw;
   vector<Particle> JetsLowestMjj;
+  vector<Particle> ParticleGen;
 
   TLorentzVector Ptot;
   TLorentzVector mET;
@@ -83,6 +88,9 @@ class MultiLepton
 
   void FillParticle(string, int, TLorentzVector);
   void FillParticle(string, int, float, float, float, float, float, TLorentzVector);
+
+  void FillParticleMatched(string, float, int, int, TLorentzVector);
+  void FillParticleGen(string, int, int, TLorentzVector);
 
   void FillParticlesHypothesis(int, MEPhaseSpace**);   
   
@@ -185,6 +193,32 @@ void MultiLepton::FillParticle(string Type, int id, float csv, float jec_up, flo
   if (Type=="jetHighestPt") JetsHighestPt.push_back(p);
   if (Type=="jetClosestMw") JetsClosestMw.push_back(p);
   if (Type=="jetLowestMjj") JetsLowestMjj.push_back(p);
+
+  return;
+}
+
+void MultiLepton::FillParticleMatched(string Type, float deltaR, int label, int id, TLorentzVector p4){
+
+  Particle 	p;
+  p.DeltaR 	= deltaR;
+  p.Label	= label;
+  p.Id 		= id;
+  p.P4 		= p4;
+
+  if (Type=="lepton") 	LeptonsMatched.push_back(p);
+  if (Type=="jet") 	BjetsMatched.push_back(p);
+  
+  return;
+}
+
+void MultiLepton::FillParticleGen(string Type, int label, int id, TLorentzVector p4){
+
+  Particle      p;
+  p.Label       = label;
+  p.Id          = id;
+  p.P4          = p4;
+
+  ParticleGen.push_back(p);
 
   return;
 }

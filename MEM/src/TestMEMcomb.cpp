@@ -100,8 +100,12 @@ int main(int argc, char *argv[])
     int doOptimTopHad, doOptimTopLep, doOptimHiggs, doOptimW;
     cfgParser.LoadOptim(&doOptimTopHad, &doOptimTopLep, &doOptimHiggs, &doOptimW);
 
+    std::cout << "TEST XAVIER" << std::endl;
+
     HypIntegrator hypIntegrator;
     hypIntegrator.InitializeIntegrator(&cfgParser);
+
+    std::cout << "TEST XAVIER" << std::endl;
 
     int doMinimization = cfgParser.valDoMinimization;
 
@@ -204,12 +208,23 @@ int main(int argc, char *argv[])
 
       tree.ReadMultilepton(iEvent, &multiLepton);
 
-      tree.multilepton_Bjet1_P4 = *tree.multilepton_Bjet1_P4_ptr;
-      tree.multilepton_Bjet2_P4 = *tree.multilepton_Bjet2_P4_ptr;
-      tree.multilepton_Lepton1_P4 = *tree.multilepton_Lepton1_P4_ptr;
-      tree.multilepton_Lepton2_P4 = *tree.multilepton_Lepton2_P4_ptr;
-      tree.multilepton_Lepton3_P4 = *tree.multilepton_Lepton3_P4_ptr;
-      tree.multilepton_Lepton4_P4 = *tree.multilepton_Lepton4_P4_ptr;
+      tree.multilepton_Bjet1_P4 		= *tree.multilepton_Bjet1_P4_ptr;
+      tree.multilepton_Bjet1_P4_Matched 	= *tree.multilepton_Bjet1_P4_Matched_ptr;
+      tree.multilepton_Bjet2_P4 		= *tree.multilepton_Bjet2_P4_ptr;
+      tree.multilepton_Bjet2_P4_Matched         = *tree.multilepton_Bjet2_P4_Matched_ptr;
+      tree.multilepton_Lepton1_P4 		= *tree.multilepton_Lepton1_P4_ptr;
+      tree.multilepton_Lepton1_P4_Matched 	= *tree.multilepton_Lepton1_P4_Matched_ptr;
+      tree.multilepton_Lepton2_P4 		= *tree.multilepton_Lepton2_P4_ptr;
+      tree.multilepton_Lepton2_P4_Matched       = *tree.multilepton_Lepton2_P4_Matched_ptr;
+      tree.multilepton_Lepton3_P4 		= *tree.multilepton_Lepton3_P4_ptr;
+      tree.multilepton_Lepton3_P4_Matched       = *tree.multilepton_Lepton3_P4_Matched_ptr;
+      tree.multilepton_Lepton4_P4 		= *tree.multilepton_Lepton4_P4_ptr;
+      tree.multilepton_Lepton4_P4_Matched       = *tree.multilepton_Lepton4_P4_Matched_ptr;
+      
+      tree.multilepton_h0_P4			= *tree.multilepton_h0_P4_ptr;
+      tree.multilepton_t1_P4			= *tree.multilepton_t1_P4_ptr;
+      tree.multilepton_t2_P4			= *tree.multilepton_t2_P4_ptr;
+
       tree.multilepton_JetHighestPt1_P4 = *tree.multilepton_JetHighestPt1_P4_ptr;
       tree.multilepton_JetHighestPt2_P4 = *tree.multilepton_JetHighestPt2_P4_ptr;
       tree.multilepton_JetClosestMw1_P4 = *tree.multilepton_JetClosestMw1_P4_ptr;

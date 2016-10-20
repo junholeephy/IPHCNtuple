@@ -230,34 +230,52 @@ class ReadGenFlatTree {
   Char_t is_2lss_TTH_SR;
   Char_t is_3l_TTH_SR;
   Char_t is_emu_TT_CR;
-  Char_t is_Zl_CR;
+  //Char_t is_Zl_CR;
   Char_t is_3l_TTZ_CR;
   Char_t is_3l_WZrel_CR;
 
-        Int_t multilepton_Lepton1_Id, multilepton_Lepton2_Id, multilepton_Lepton3_Id, multilepton_Lepton4_Id;
-        TLorentzVector multilepton_Lepton1_P4, multilepton_Lepton2_P4, multilepton_Lepton3_P4, multilepton_Lepton4_P4;
+  Char_t cat_HtoWW;
+  Char_t cat_HtoZZ;
+  Char_t cat_Htott;
 
-        Int_t multilepton_Bjet1_Id, multilepton_Bjet2_Id;
-        TLorentzVector multilepton_Bjet1_P4, multilepton_Bjet2_P4;
-        Float_t multilepton_Bjet1_CSV, multilepton_Bjet2_CSV;
-        Float_t multilepton_Bjet1_JEC_Up, multilepton_Bjet1_JEC_Down, multilepton_Bjet2_JEC_Up, multilepton_Bjet2_JEC_Down;
-        Float_t multilepton_Bjet1_JER_Up, multilepton_Bjet1_JER_Down, multilepton_Bjet2_JER_Up, multilepton_Bjet2_JER_Down;
+  Int_t 		multilepton_Lepton1_Id, 		multilepton_Lepton2_Id, 		multilepton_Lepton3_Id, 		multilepton_Lepton4_Id;
+  TLorentzVector 	multilepton_Lepton1_P4, 		multilepton_Lepton2_P4, 		multilepton_Lepton3_P4, 		multilepton_Lepton4_P4;
 
-        Int_t multilepton_JetHighestPt1_Id, multilepton_JetHighestPt2_Id, multilepton_JetClosestMw1_Id, multilepton_JetClosestMw2_Id, multilepton_JetLowestMjj1_Id, multilepton_JetLowestMjj2_Id;
-        TLorentzVector multilepton_JetHighestPt1_P4, multilepton_JetHighestPt2_P4, multilepton_JetClosestMw1_P4, multilepton_JetClosestMw2_P4, multilepton_JetLowestMjj1_P4, multilepton_JetLowestMjj2_P4;
-        Float_t multilepton_JetHighestPt1_CSV, multilepton_JetHighestPt2_CSV, multilepton_JetClosestMw1_CSV, multilepton_JetClosestMw2_CSV, multilepton_JetLowestMjj1_CSV, multilepton_JetLowestMjj2_CSV;
-        Float_t multilepton_JetHighestPt1_JEC_Up, multilepton_JetHighestPt2_JEC_Up, multilepton_JetClosestMw1_JEC_Up, multilepton_JetClosestMw2_JEC_Up, multilepton_JetLowestMjj1_JEC_Up, multilepton_JetLowestMjj2_JEC_Up;
-        Float_t multilepton_JetHighestPt1_JEC_Down, multilepton_JetHighestPt2_JEC_Down, multilepton_JetClosestMw1_JEC_Down, multilepton_JetClosestMw2_JEC_Down, multilepton_JetLowestMjj1_JEC_Down, multilepton_JetLowestMjj2_JEC_Down;
-        Float_t multilepton_JetHighestPt1_JER_Up, multilepton_JetHighestPt2_JER_Up, multilepton_JetClosestMw1_JER_Up, multilepton_JetClosestMw2_JER_Up, multilepton_JetLowestMjj1_JER_Up, multilepton_JetLowestMjj2_JER_Up;
-        Float_t multilepton_JetHighestPt1_JER_Down, multilepton_JetHighestPt2_JER_Down, multilepton_JetClosestMw1_JER_Down, multilepton_JetClosestMw2_JER_Down, multilepton_JetLowestMjj1_JER_Down, multilepton_JetLowestMjj2_JER_Down;
+  Float_t           	multilepton_Lepton1_DeltaR_Matched,  	multilepton_Lepton2_DeltaR_Matched,  	multilepton_Lepton3_DeltaR_Matched,  	multilepton_Lepton4_DeltaR_Matched;
+  Int_t           	multilepton_Lepton1_Label_Matched,   	multilepton_Lepton2_Label_Matched,   	multilepton_Lepton3_Label_Matched,   	multilepton_Lepton4_Label_Matched;
+  Int_t           	multilepton_Lepton1_Id_Matched,      	multilepton_Lepton2_Id_Matched,      	multilepton_Lepton3_Id_Matched,      	multilepton_Lepton4_Id_Matched;
+  TLorentzVector  	multilepton_Lepton1_P4_Matched,      	multilepton_Lepton2_P4_Matched,      	multilepton_Lepton3_P4_Matched,      	multilepton_Lepton4_P4_Matched;
 
-        Int_t multilepton_JetHighestPt1_2ndPair_Id, multilepton_JetHighestPt2_2ndPair_Id, multilepton_JetClosestMw1_2ndPair_Id, multilepton_JetClosestMw2_2ndPair_Id, multilepton_JetLowestMjj1_2ndPair_Id, multilepton_JetLowestMjj2_2ndPair_Id;
-        TLorentzVector  multilepton_JetHighestPt1_2ndPair_P4, multilepton_JetHighestPt2_2ndPair_P4, multilepton_JetClosestMw1_2ndPair_P4, multilepton_JetClosestMw2_2ndPair_P4, multilepton_JetLowestMjj1_2ndPair_P4, multilepton_JetLowestMjj2_2ndPair_P4;
-        Float_t multilepton_JetHighestPt1_2ndPair_CSV, multilepton_JetHighestPt2_2ndPair_CSV, multilepton_JetClosestMw1_2ndPair_CSV, multilepton_JetClosestMw2_2ndPair_CSV, multilepton_JetLowestMjj1_2ndPair_CSV, multilepton_JetLowestMjj2_2ndPair_CSV;
-        Float_t multilepton_JetHighestPt1_2ndPair_JEC_Up, multilepton_JetHighestPt2_2ndPair_JEC_Up, multilepton_JetClosestMw1_2ndPair_JEC_Up, multilepton_JetClosestMw2_2ndPair_JEC_Up, multilepton_JetLowestMjj1_2ndPair_JEC_Up, multilepton_JetLowestMjj2_2ndPair_JEC_Up;
-        Float_t multilepton_JetHighestPt1_2ndPair_JEC_Down, multilepton_JetHighestPt2_2ndPair_JEC_Down, multilepton_JetClosestMw1_2ndPair_JEC_Down, multilepton_JetClosestMw2_2ndPair_JEC_Down, multilepton_JetLowestMjj1_2ndPair_JEC_Down, multilepton_JetLowestMjj2_2ndPair_JEC_Down;
-        Float_t multilepton_JetHighestPt1_2ndPair_JER_Up, multilepton_JetHighestPt2_2ndPair_JER_Up, multilepton_JetClosestMw1_2ndPair_JER_Up, multilepton_JetClosestMw2_2ndPair_JER_Up, multilepton_JetLowestMjj1_2ndPair_JER_Up, multilepton_JetLowestMjj2_2ndPair_JER_Up;
-        Float_t multilepton_JetHighestPt1_2ndPair_JER_Down, multilepton_JetHighestPt2_2ndPair_JER_Down, multilepton_JetClosestMw1_2ndPair_JER_Down, multilepton_JetClosestMw2_2ndPair_JER_Down, multilepton_JetLowestMjj1_2ndPair_JER_Down, multilepton_JetLowestMjj2_2ndPair_JER_Down;
+  Int_t 		multilepton_Bjet1_Id, 								multilepton_Bjet2_Id;
+  TLorentzVector 	multilepton_Bjet1_P4, 								multilepton_Bjet2_P4;
+  Float_t 		multilepton_Bjet1_CSV, 								multilepton_Bjet2_CSV;
+  Float_t		multilepton_Bjet1_JEC_Up, 		multilepton_Bjet1_JEC_Down, 		multilepton_Bjet2_JEC_Up, 		multilepton_Bjet2_JEC_Down;
+  Float_t 		multilepton_Bjet1_JER_Up, 		multilepton_Bjet1_JER_Down, 		multilepton_Bjet2_JER_Up, 		multilepton_Bjet2_JER_Down;
+
+  Float_t           	multilepton_Bjet1_DeltaR_Matched,   						multilepton_Bjet2_DeltaR_Matched;
+  Int_t           	multilepton_Bjet1_Label_Matched,    						multilepton_Bjet2_Label_Matched;
+  Int_t           	multilepton_Bjet1_Id_Matched,       						multilepton_Bjet2_Id_Matched;
+  TLorentzVector  	multilepton_Bjet1_P4_Matched,       						multilepton_Bjet2_P4_Matched;
+
+  Int_t 		multilepton_h0_Id, 			multilepton_t1_Id,			multilepton_t2_Id;
+  Int_t                 multilepton_h0_Label,                   multilepton_t1_Label,                   multilepton_t2_Label;
+  TLorentzVector 	multilepton_h0_P4,			multilepton_t1_P4,			multilepton_t2_P4;
+
+  Int_t multilepton_JetHighestPt1_Id, multilepton_JetHighestPt2_Id, multilepton_JetClosestMw1_Id, multilepton_JetClosestMw2_Id, multilepton_JetLowestMjj1_Id, multilepton_JetLowestMjj2_Id;
+  TLorentzVector multilepton_JetHighestPt1_P4, multilepton_JetHighestPt2_P4, multilepton_JetClosestMw1_P4, multilepton_JetClosestMw2_P4, multilepton_JetLowestMjj1_P4, multilepton_JetLowestMjj2_P4;
+  Float_t multilepton_JetHighestPt1_CSV, multilepton_JetHighestPt2_CSV, multilepton_JetClosestMw1_CSV, multilepton_JetClosestMw2_CSV, multilepton_JetLowestMjj1_CSV, multilepton_JetLowestMjj2_CSV;
+  Float_t multilepton_JetHighestPt1_JEC_Up, multilepton_JetHighestPt2_JEC_Up, multilepton_JetClosestMw1_JEC_Up, multilepton_JetClosestMw2_JEC_Up, multilepton_JetLowestMjj1_JEC_Up, multilepton_JetLowestMjj2_JEC_Up;
+  Float_t multilepton_JetHighestPt1_JEC_Down, multilepton_JetHighestPt2_JEC_Down, multilepton_JetClosestMw1_JEC_Down, multilepton_JetClosestMw2_JEC_Down, multilepton_JetLowestMjj1_JEC_Down, multilepton_JetLowestMjj2_JEC_Down;
+  Float_t multilepton_JetHighestPt1_JER_Up, multilepton_JetHighestPt2_JER_Up, multilepton_JetClosestMw1_JER_Up, multilepton_JetClosestMw2_JER_Up, multilepton_JetLowestMjj1_JER_Up, multilepton_JetLowestMjj2_JER_Up;
+  Float_t multilepton_JetHighestPt1_JER_Down, multilepton_JetHighestPt2_JER_Down, multilepton_JetClosestMw1_JER_Down, multilepton_JetClosestMw2_JER_Down, multilepton_JetLowestMjj1_JER_Down, multilepton_JetLowestMjj2_JER_Down;
+
+  Int_t multilepton_JetHighestPt1_2ndPair_Id, multilepton_JetHighestPt2_2ndPair_Id, multilepton_JetClosestMw1_2ndPair_Id, multilepton_JetClosestMw2_2ndPair_Id, multilepton_JetLowestMjj1_2ndPair_Id, multilepton_JetLowestMjj2_2ndPair_Id;
+  TLorentzVector  multilepton_JetHighestPt1_2ndPair_P4, multilepton_JetHighestPt2_2ndPair_P4, multilepton_JetClosestMw1_2ndPair_P4, multilepton_JetClosestMw2_2ndPair_P4, multilepton_JetLowestMjj1_2ndPair_P4, multilepton_JetLowestMjj2_2ndPair_P4;
+  Float_t multilepton_JetHighestPt1_2ndPair_CSV, multilepton_JetHighestPt2_2ndPair_CSV, multilepton_JetClosestMw1_2ndPair_CSV, multilepton_JetClosestMw2_2ndPair_CSV, multilepton_JetLowestMjj1_2ndPair_CSV, multilepton_JetLowestMjj2_2ndPair_CSV;
+  Float_t multilepton_JetHighestPt1_2ndPair_JEC_Up, multilepton_JetHighestPt2_2ndPair_JEC_Up, multilepton_JetClosestMw1_2ndPair_JEC_Up, multilepton_JetClosestMw2_2ndPair_JEC_Up, multilepton_JetLowestMjj1_2ndPair_JEC_Up, multilepton_JetLowestMjj2_2ndPair_JEC_Up;
+  Float_t multilepton_JetHighestPt1_2ndPair_JEC_Down, multilepton_JetHighestPt2_2ndPair_JEC_Down, multilepton_JetClosestMw1_2ndPair_JEC_Down, multilepton_JetClosestMw2_2ndPair_JEC_Down, multilepton_JetLowestMjj1_2ndPair_JEC_Down, multilepton_JetLowestMjj2_2ndPair_JEC_Down;
+  Float_t multilepton_JetHighestPt1_2ndPair_JER_Up, multilepton_JetHighestPt2_2ndPair_JER_Up, multilepton_JetClosestMw1_2ndPair_JER_Up, multilepton_JetClosestMw2_2ndPair_JER_Up, multilepton_JetLowestMjj1_2ndPair_JER_Up, multilepton_JetLowestMjj2_2ndPair_JER_Up;
+  Float_t multilepton_JetHighestPt1_2ndPair_JER_Down, multilepton_JetHighestPt2_2ndPair_JER_Down, multilepton_JetClosestMw1_2ndPair_JER_Down, multilepton_JetClosestMw2_2ndPair_JER_Down, multilepton_JetLowestMjj1_2ndPair_JER_Down, multilepton_JetLowestMjj2_2ndPair_JER_Down;
 
 /*
   Int_t multilepton_Bjet1_Id;
@@ -296,11 +314,17 @@ class ReadGenFlatTree {
   TLorentzVector multilepton_Ptot;
 
   TLorentzVector* multilepton_Bjet1_P4_ptr;
+  TLorentzVector* multilepton_Bjet1_P4_Matched_ptr;
   TLorentzVector* multilepton_Bjet2_P4_ptr;
+  TLorentzVector* multilepton_Bjet2_P4_Matched_ptr;
   TLorentzVector* multilepton_Lepton1_P4_ptr;
+  TLorentzVector* multilepton_Lepton1_P4_Matched_ptr;
   TLorentzVector* multilepton_Lepton2_P4_ptr;
+  TLorentzVector* multilepton_Lepton2_P4_Matched_ptr;
   TLorentzVector* multilepton_Lepton3_P4_ptr;
+  TLorentzVector* multilepton_Lepton3_P4_Matched_ptr;
   TLorentzVector* multilepton_Lepton4_P4_ptr;
+  TLorentzVector* multilepton_Lepton4_P4_Matched_ptr;
   TLorentzVector* multilepton_JetHighestPt1_P4_ptr;
   TLorentzVector* multilepton_JetHighestPt2_P4_ptr;
   TLorentzVector* multilepton_JetClosestMw1_P4_ptr;
@@ -313,6 +337,9 @@ class ReadGenFlatTree {
   TLorentzVector* multilepton_JetClosestMw2_2ndPair_P4_ptr;
   TLorentzVector* multilepton_JetLowestMjj1_2ndPair_P4_ptr;
   TLorentzVector* multilepton_JetLowestMjj2_2ndPair_P4_ptr;
+  TLorentzVector* multilepton_h0_P4_ptr;
+  TLorentzVector* multilepton_t1_P4_ptr;
+  TLorentzVector* multilepton_t2_P4_ptr;
 
   TLorentzVector* multilepton_mET_ptr;
   TLorentzVector* multilepton_Ptot_ptr;
@@ -655,21 +682,45 @@ class ReadGenFlatTree {
   TBranch* b_is_2lss_TTH_SR;
   TBranch* b_is_3l_TTH_SR;
   TBranch* b_is_emu_TT_CR;
-  TBranch* b_is_Zl_CR;
+  //TBranch* b_is_Zl_CR;
   TBranch* b_is_3l_TTZ_CR;
-  TBranch* b_is_3l_WZrel_CR;
+  //TBranch* b_is_3l_WZrel_CR;
   TBranch* b_mc_3l_category;
   TBranch* b_mc_ttbar_decay;
   TBranch* b_mc_boson_decay;
   TBranch* b_mc_ttZhypAllowed;
+
+  TBranch* b_cat_HtoWW;
+  TBranch* b_cat_HtoZZ;
+  TBranch* b_cat_Htott;
+
   TBranch* b_multilepton_Lepton1_Id;
   TBranch* b_multilepton_Lepton1_P4;
+  TBranch* b_multilepton_Lepton1_DeltaR_Matched;
+  TBranch* b_multilepton_Lepton1_Label_Matched;
+  TBranch* b_multilepton_Lepton1_Id_Matched;
+  TBranch* b_multilepton_Lepton1_P4_Matched;
+
   TBranch* b_multilepton_Lepton2_Id;
   TBranch* b_multilepton_Lepton2_P4;
+  TBranch* b_multilepton_Lepton2_DeltaR_Matched;
+  TBranch* b_multilepton_Lepton2_Label_Matched;
+  TBranch* b_multilepton_Lepton2_Id_Matched;
+  TBranch* b_multilepton_Lepton2_P4_Matched;
+
   TBranch* b_multilepton_Lepton3_Id;
   TBranch* b_multilepton_Lepton3_P4;
+  TBranch* b_multilepton_Lepton3_DeltaR_Matched;
+  TBranch* b_multilepton_Lepton3_Label_Matched;
+  TBranch* b_multilepton_Lepton3_Id_Matched;
+  TBranch* b_multilepton_Lepton3_P4_Matched;
+
   TBranch* b_multilepton_Lepton4_Id;
   TBranch* b_multilepton_Lepton4_P4;
+  TBranch* b_multilepton_Lepton4_DeltaR_Matched;
+  TBranch* b_multilepton_Lepton4_Label_Matched;
+  TBranch* b_multilepton_Lepton4_Id_Matched;
+  TBranch* b_multilepton_Lepton4_P4_Matched;
 
   TBranch* b_multilepton_Bjet1_Id;
   TBranch* b_multilepton_Bjet1_P4;
@@ -678,6 +729,10 @@ class ReadGenFlatTree {
   TBranch* b_multilepton_Bjet1_JEC_Down;
   TBranch* b_multilepton_Bjet1_JER_Up;
   TBranch* b_multilepton_Bjet1_JER_Down;
+  TBranch* b_multilepton_Bjet1_DeltaR_Matched;
+  TBranch* b_multilepton_Bjet1_Label_Matched;
+  TBranch* b_multilepton_Bjet1_Id_Matched;
+  TBranch* b_multilepton_Bjet1_P4_Matched;
 
   TBranch* b_multilepton_Bjet2_Id;
   TBranch* b_multilepton_Bjet2_P4;
@@ -686,6 +741,10 @@ class ReadGenFlatTree {
   TBranch* b_multilepton_Bjet2_JEC_Down;
   TBranch* b_multilepton_Bjet2_JER_Up;
   TBranch* b_multilepton_Bjet2_JER_Down;
+  TBranch* b_multilepton_Bjet2_DeltaR_Matched;
+  TBranch* b_multilepton_Bjet2_Label_Matched;
+  TBranch* b_multilepton_Bjet2_Id_Matched;
+  TBranch* b_multilepton_Bjet2_P4_Matched;
 
   TBranch* b_multilepton_JetHighestPt1_Id;
   TBranch* b_multilepton_JetHighestPt1_P4;
@@ -787,6 +846,16 @@ class ReadGenFlatTree {
   TBranch* b_multilepton_JetLowestMjj2_2ndPair_JER_Up;
   TBranch* b_multilepton_JetLowestMjj2_2ndPair_JER_Down;
 
+  TBranch* b_multilepton_h0_P4;
+  TBranch* b_multilepton_h0_Id;
+  TBranch* b_multilepton_h0_Label;
+  TBranch* b_multilepton_t1_P4;
+  TBranch* b_multilepton_t1_Id;
+  TBranch* b_multilepton_t1_Label;
+  TBranch* b_multilepton_t2_P4;
+  TBranch* b_multilepton_t2_Id;
+  TBranch* b_multilepton_t2_Label;
+
   TBranch* b_multilepton_mET;
   TBranch* b_multilepton_mETcov00;
   TBranch* b_multilepton_mETcov01;
@@ -794,7 +863,6 @@ class ReadGenFlatTree {
   TBranch* b_multilepton_mETcov11;
   TBranch* b_multilepton_mHT;
   TBranch* b_multilepton_Ptot;
-
 
   TH1F** hMEPhaseSpace_Error;
   TH1F** hMEPhaseSpace_ErrorTot;
@@ -970,18 +1038,53 @@ void ReadGenFlatTree::InitializeDryRun(string InputFileName){
   tOutput->Branch("mc_passBjetPresel25",&mc_passBjetPresel25,"mc_passBjetPresel25/I");
 
   cout << "multilepton variables"<<endl;
-  tOutput->Branch("multilepton_Bjet1_Id",&multilepton_Bjet1_Id,"multilepton_Bjet1_Id/I");
-  tOutput->Branch("multilepton_Bjet1_P4","TLorentzVector",&multilepton_Bjet1_P4);
-  tOutput->Branch("multilepton_Bjet2_Id",&multilepton_Bjet2_Id,"multilepton_Bjet2_Id/I");
-  tOutput->Branch("multilepton_Bjet2_P4","TLorentzVector",&multilepton_Bjet2_P4);
-  tOutput->Branch("multilepton_Lepton1_Id",&multilepton_Lepton1_Id,"multilepton_Lepton1_Id/I");
-  tOutput->Branch("multilepton_Lepton1_P4","TLorentzVector",&multilepton_Lepton1_P4);
-  tOutput->Branch("multilepton_Lepton2_Id",&multilepton_Lepton2_Id,"multilepton_Lepton2_Id/I");
-  tOutput->Branch("multilepton_Lepton2_P4","TLorentzVector",&multilepton_Lepton2_P4);
-  tOutput->Branch("multilepton_Lepton3_Id",&multilepton_Lepton3_Id,"multilepton_Lepton3_Id/I");
-  tOutput->Branch("multilepton_Lepton3_P4","TLorentzVector",&multilepton_Lepton3_P4);
-  tOutput->Branch("multilepton_Lepton4_Id",&multilepton_Lepton4_Id,"multilepton_Lepton4_Id/I");
-  tOutput->Branch("multilepton_Lepton4_P4","TLorentzVector",&multilepton_Lepton4_P4);
+  tOutput->Branch("multilepton_Bjet1_Id",			&multilepton_Bjet1_Id,			"multilepton_Bjet1_Id/I");
+  tOutput->Branch("multilepton_Bjet1_P4",			"TLorentzVector",			&multilepton_Bjet1_P4);
+  tOutput->Branch("multilepton_Bjet1_DeltaR_Matched",     	&multilepton_Bjet1_DeltaR_Matched,  	"multilepton_Bjet1_DeltaR_Matched/F");
+  tOutput->Branch("multilepton_Bjet1_Label_Matched",      	&multilepton_Bjet1_Label_Matched,   	"multilepton_Bjet1_Label_Matched/I");
+  tOutput->Branch("multilepton_Bjet1_Id_Matched",         	&multilepton_Bjet1_Id_Matched,      	"multilepton_Bjet1_Id_Matched/I");
+  tOutput->Branch("multilepton_Bjet1_P4_Matched",         	"TLorentzVector",                   	&multilepton_Bjet1_P4_Matched);
+  tOutput->Branch("multilepton_Bjet2_Id",			&multilepton_Bjet2_Id,			"multilepton_Bjet2_Id/I");
+  tOutput->Branch("multilepton_Bjet2_P4",			"TLorentzVector",			&multilepton_Bjet2_P4);
+  tOutput->Branch("multilepton_Bjet2_DeltaR_Matched",     	&multilepton_Bjet2_DeltaR_Matched,  	"multilepton_Bjet2_DeltaR_Matched/F");
+  tOutput->Branch("multilepton_Bjet2_Label_Matched",      	&multilepton_Bjet2_Label_Matched,   	"multilepton_Bjet2_Label_Matched/I");
+  tOutput->Branch("multilepton_Bjet2_Id_Matched",         	&multilepton_Bjet2_Id_Matched,      	"multilepton_Bjet2_Id_Matched/I");
+  tOutput->Branch("multilepton_Bjet2_P4_Matched",         	"TLorentzVector",                   	&multilepton_Bjet2_P4_Matched);
+  tOutput->Branch("multilepton_Lepton1_Id",			&multilepton_Lepton1_Id,		"multilepton_Lepton1_Id/I");
+  tOutput->Branch("multilepton_Lepton1_P4",			"TLorentzVector",			&multilepton_Lepton1_P4);
+  tOutput->Branch("multilepton_Lepton1_DeltaR_Matched",    	&multilepton_Lepton1_DeltaR_Matched, 	"multilepton_Lepton1_DeltaR_Matched/F");
+  tOutput->Branch("multilepton_Lepton1_Label_Matched",    	&multilepton_Lepton1_Label_Matched, 	"multilepton_Lepton1_Label_Matched/I");
+  tOutput->Branch("multilepton_Lepton1_Id_Matched",       	&multilepton_Lepton1_Id_Matched,    	"multilepton_Lepton1_Id_Matched/I");
+  tOutput->Branch("multilepton_Lepton1_P4_Matched",       	"TLorentzVector",                   	&multilepton_Lepton1_P4_Matched);
+  tOutput->Branch("multilepton_Lepton2_Id",			&multilepton_Lepton2_Id,		"multilepton_Lepton2_Id/I");
+  tOutput->Branch("multilepton_Lepton2_P4",			"TLorentzVector",			&multilepton_Lepton2_P4);
+  tOutput->Branch("multilepton_Lepton2_DeltaR_Matched",    	&multilepton_Lepton2_DeltaR_Matched, 	"multilepton_Lepton2_DeltaR_Matched/F");
+  tOutput->Branch("multilepton_Lepton2_Label_Matched",    	&multilepton_Lepton2_Label_Matched, 	"multilepton_Lepton2_Label_Matched/I");
+  tOutput->Branch("multilepton_Lepton2_Id_Matched",       	&multilepton_Lepton2_Id_Matched,    	"multilepton_Lepton2_Id_Matched/I");
+  tOutput->Branch("multilepton_Lepton2_P4_Matched",       	"TLorentzVector",                   	&multilepton_Lepton2_P4_Matched);
+  tOutput->Branch("multilepton_Lepton3_Id",			&multilepton_Lepton3_Id,		"multilepton_Lepton3_Id/I");
+  tOutput->Branch("multilepton_Lepton3_P4",			"TLorentzVector",			&multilepton_Lepton3_P4);
+  tOutput->Branch("multilepton_Lepton3_DeltaR_Matched",    	&multilepton_Lepton3_DeltaR_Matched, 	"multilepton_Lepton3_DeltaR_Matched/F");
+  tOutput->Branch("multilepton_Lepton3_Label_Matched",   	&multilepton_Lepton3_Label_Matched, 	"multilepton_Lepton3_Label_Matched/I");
+  tOutput->Branch("multilepton_Lepton3_Id_Matched",       	&multilepton_Lepton3_Id_Matched,    	"multilepton_Lepton3_Id_Matched/I");
+  tOutput->Branch("multilepton_Lepton3_P4_Matched",       	"TLorentzVector",                   	&multilepton_Lepton3_P4_Matched);
+  tOutput->Branch("multilepton_Lepton4_Id",			&multilepton_Lepton4_Id,		"multilepton_Lepton4_Id/I");
+  tOutput->Branch("multilepton_Lepton4_P4",			"TLorentzVector",			&multilepton_Lepton4_P4);
+  tOutput->Branch("multilepton_Lepton4_DeltaR_Matched",    	&multilepton_Lepton4_DeltaR_Matched, 	"multilepton_Lepton4_DeltaR_Matched/F");
+  tOutput->Branch("multilepton_Lepton4_Label_Matched",    	&multilepton_Lepton4_Label_Matched, 	"multilepton_Lepton4_Label_Matched/I");
+  tOutput->Branch("multilepton_Lepton4_Id_Matched",       	&multilepton_Lepton4_Id_Matched,    	"multilepton_Lepton4_Id_Matched/I");
+  tOutput->Branch("multilepton_Lepton4_P4_Matched",       	"TLorentzVector",                   	&multilepton_Lepton4_P4_Matched);
+
+  tOutput->Branch("multilepton_h0_Label",	            	&multilepton_h0_Label,       		"multilepton_h0_Label/I");
+  tOutput->Branch("multilepton_h0_Id",               		&multilepton_h0_Id,          		"multilepton_h0_Id/I");
+  tOutput->Branch("multilepton_h0_P4",               		"TLorentzVector",                       &multilepton_h0_P4);
+  tOutput->Branch("multilepton_t1_Label",                       &multilepton_t1_Label,                  "multilepton_t1_Label/I");
+  tOutput->Branch("multilepton_t1_Id",                          &multilepton_t1_Id,                     "multilepton_t1_Id/I");
+  tOutput->Branch("multilepton_t1_P4",                          "TLorentzVector",                       &multilepton_t1_P4);
+  tOutput->Branch("multilepton_t2_Label",                       &multilepton_t2_Label,                  "multilepton_t2_Label/I");
+  tOutput->Branch("multilepton_t2_Id",                          &multilepton_t2_Id,                     "multilepton_t2_Id/I");
+  tOutput->Branch("multilepton_t2_P4",                          "TLorentzVector",                       &multilepton_t2_P4);
+
   tOutput->Branch("multilepton_JetHighestPt1_Id",&multilepton_JetHighestPt1_Id,"multilepton_JetHighestPt1_Id/I");
   tOutput->Branch("multilepton_JetHighestPt1_P4","TLorentzVector",&multilepton_JetHighestPt1_P4);
   tOutput->Branch("multilepton_JetHighestPt2_Id",&multilepton_JetHighestPt2_Id,"multilepton_JetHighestPt2_Id/I");
@@ -997,6 +1100,13 @@ void ReadGenFlatTree::InitializeDryRun(string InputFileName){
   tOutput->Branch("multilepton_mET","TLorentzVector",&multilepton_mET);
   tOutput->Branch("multilepton_Ptot","TLorentzVector",&multilepton_Ptot);
 
+  tOutput->Branch("multilepton_h0_Id",			      	&multilepton_h0_Id,        		"multilepton_h0_Id/I");
+  tOutput->Branch("multilepton_h0_P4",             		"TLorentzVector",                       &multilepton_h0_P4);
+  tOutput->Branch("multilepton_t1_Id",                          &multilepton_t1_Id,                     "multilepton_t1_Id/I");
+  tOutput->Branch("multilepton_t1_P4",                          "TLorentzVector",                       &multilepton_t1_P4);
+  tOutput->Branch("multilepton_t2_Id",                          &multilepton_t2_Id,                     "multilepton_t2_Id/I");
+  tOutput->Branch("multilepton_t2_P4",                          "TLorentzVector",                       &multilepton_t2_P4);
+
   cout << "Tree created"<<endl;
 
 }
@@ -1008,12 +1118,21 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   fInput = TFile::Open(InputFileName.c_str(),"READ");
   tInput = (TTree*)fInput->Get("Tree");
 
-   multilepton_Bjet1_P4_ptr = 0;
-   multilepton_Bjet2_P4_ptr = 0;
-   multilepton_Lepton1_P4_ptr = 0;
-   multilepton_Lepton2_P4_ptr = 0;
-   multilepton_Lepton3_P4_ptr = 0;
-   multilepton_Lepton4_P4_ptr = 0;
+   multilepton_Bjet1_P4_ptr 		= 0;
+   multilepton_Bjet1_P4_Matched_ptr 	= 0;
+   multilepton_Bjet2_P4_ptr 		= 0;
+   multilepton_Bjet2_P4_Matched_ptr     = 0;
+   multilepton_Lepton1_P4_ptr 		= 0;
+   multilepton_Lepton1_P4_Matched_ptr 	= 0;
+   multilepton_Lepton2_P4_ptr 		= 0;
+   multilepton_Lepton2_P4_Matched_ptr   = 0;
+   multilepton_Lepton3_P4_ptr 		= 0;
+   multilepton_Lepton3_P4_Matched_ptr   = 0;
+   multilepton_Lepton4_P4_ptr 		= 0;
+   multilepton_Lepton4_P4_Matched_ptr   = 0;
+   multilepton_h0_P4_ptr		= 0;
+   multilepton_t1_P4_ptr                = 0;
+   multilepton_t2_P4_ptr                = 0;
    multilepton_JetHighestPt1_P4_ptr = 0;
    multilepton_JetHighestPt2_P4_ptr = 0;
    multilepton_JetClosestMw1_P4_ptr = 0;
@@ -1066,39 +1185,77 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tInput->SetBranchAddress("is_2lss_TTH_SR",&is_2lss_TTH_SR,&b_is_2lss_TTH_SR);
   tInput->SetBranchAddress("is_3l_TTH_SR",&is_3l_TTH_SR,&b_is_3l_TTH_SR);
   tInput->SetBranchAddress("is_emu_TT_CR",&is_emu_TT_CR,&b_is_emu_TT_CR);
-  tInput->SetBranchAddress("is_Zl_CR",&is_Zl_CR,&b_is_Zl_CR);
+  //tInput->SetBranchAddress("is_Zl_CR",&is_Zl_CR,&b_is_Zl_CR);
   tInput->SetBranchAddress("is_3l_TTZ_CR",&is_3l_TTZ_CR,&b_is_3l_TTZ_CR);
-  tInput->SetBranchAddress("is_3l_WZrel_CR ",&is_3l_WZrel_CR,&b_is_3l_WZrel_CR);
+  //tInput->SetBranchAddress("is_3l_WZrel_CR ",&is_3l_WZrel_CR,&b_is_3l_WZrel_CR);
+
+  tInput->SetBranchAddress("cat_HtoWW",&cat_HtoWW,&b_cat_HtoWW);
+  tInput->SetBranchAddress("cat_HtoZZ",&cat_HtoZZ,&b_cat_HtoZZ);
+  tInput->SetBranchAddress("cat_Htott",&cat_Htott,&b_cat_Htott);
 
   tInput->SetBranchAddress("mc_3l_category",&mc_3l_category,&b_mc_3l_category);
   tInput->SetBranchAddress("mc_ttbar_decay",&mc_ttbar_decay,&b_mc_ttbar_decay);
   tInput->SetBranchAddress("mc_boson_decay",&mc_boson_decay,&b_mc_boson_decay);
   tInput->SetBranchAddress("mc_ttZhypAllowed",&mc_ttZhypAllowed,&b_mc_ttZhypAllowed);
 
-  tInput->SetBranchAddress("multilepton_Lepton1_Id",&multilepton_Lepton1_Id,&b_multilepton_Lepton1_Id);
-  tInput->SetBranchAddress("multilepton_Lepton1_P4",&multilepton_Lepton1_P4_ptr,&b_multilepton_Lepton1_P4);
-  tInput->SetBranchAddress("multilepton_Lepton2_Id",&multilepton_Lepton2_Id,&b_multilepton_Lepton2_Id);
-  tInput->SetBranchAddress("multilepton_Lepton2_P4",&multilepton_Lepton2_P4_ptr,&b_multilepton_Lepton2_P4);
-  tInput->SetBranchAddress("multilepton_Lepton3_Id",&multilepton_Lepton3_Id,&b_multilepton_Lepton3_Id);
-  tInput->SetBranchAddress("multilepton_Lepton3_P4",&multilepton_Lepton3_P4_ptr,&b_multilepton_Lepton3_P4);
-  tInput->SetBranchAddress("multilepton_Lepton4_Id",&multilepton_Lepton4_Id,&b_multilepton_Lepton4_Id);
-  tInput->SetBranchAddress("multilepton_Lepton4_P4",&multilepton_Lepton4_P4_ptr,&b_multilepton_Lepton4_P4);
+  tInput->SetBranchAddress("multilepton_Lepton1_Id",			&multilepton_Lepton1_Id,			&b_multilepton_Lepton1_Id);
+  tInput->SetBranchAddress("multilepton_Lepton1_P4",			&multilepton_Lepton1_P4_ptr,			&b_multilepton_Lepton1_P4);
+  tInput->SetBranchAddress("multilepton_Lepton1_DeltaR_Matched",        &multilepton_Lepton1_DeltaR_Matched,            &b_multilepton_Lepton1_DeltaR_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton1_Label_Matched",         &multilepton_Lepton1_Label_Matched,             &b_multilepton_Lepton1_Label_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton1_Id_Matched",            &multilepton_Lepton1_Id_Matched,                &b_multilepton_Lepton1_Id_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton1_P4_Matched",            &multilepton_Lepton1_P4_Matched_ptr,            &b_multilepton_Lepton1_P4_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton2_Id",			&multilepton_Lepton2_Id,			&b_multilepton_Lepton2_Id);
+  tInput->SetBranchAddress("multilepton_Lepton2_DeltaR_Matched",        &multilepton_Lepton2_DeltaR_Matched,            &b_multilepton_Lepton2_DeltaR_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton2_Label_Matched",         &multilepton_Lepton2_Label_Matched,             &b_multilepton_Lepton2_Label_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton2_Id_Matched",            &multilepton_Lepton2_Id_Matched,                &b_multilepton_Lepton2_Id_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton2_P4_Matched",            &multilepton_Lepton2_P4_Matched_ptr,            &b_multilepton_Lepton2_P4_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton2_P4",			&multilepton_Lepton2_P4_ptr,			&b_multilepton_Lepton2_P4);
+  tInput->SetBranchAddress("multilepton_Lepton3_Id",			&multilepton_Lepton3_Id,			&b_multilepton_Lepton3_Id);
+  tInput->SetBranchAddress("multilepton_Lepton3_P4",			&multilepton_Lepton3_P4_ptr,			&b_multilepton_Lepton3_P4);
+  tInput->SetBranchAddress("multilepton_Lepton3_DeltaR_Matched",        &multilepton_Lepton3_DeltaR_Matched,            &b_multilepton_Lepton3_DeltaR_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton3_Label_Matched",         &multilepton_Lepton3_Label_Matched,             &b_multilepton_Lepton3_Label_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton3_Id_Matched",            &multilepton_Lepton3_Id_Matched,                &b_multilepton_Lepton3_Id_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton3_P4_Matched",            &multilepton_Lepton3_P4_Matched_ptr,            &b_multilepton_Lepton3_P4_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton4_Id",			&multilepton_Lepton4_Id,			&b_multilepton_Lepton4_Id);
+  tInput->SetBranchAddress("multilepton_Lepton4_P4",			&multilepton_Lepton4_P4_ptr,			&b_multilepton_Lepton4_P4);
+  tInput->SetBranchAddress("multilepton_Lepton4_DeltaR_Matched",        &multilepton_Lepton4_DeltaR_Matched,            &b_multilepton_Lepton4_DeltaR_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton4_Label_Matched",         &multilepton_Lepton4_Label_Matched,             &b_multilepton_Lepton4_Label_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton4_Id_Matched",            &multilepton_Lepton4_Id_Matched,                &b_multilepton_Lepton4_Id_Matched);
+  tInput->SetBranchAddress("multilepton_Lepton4_P4_Matched",            &multilepton_Lepton4_P4_Matched_ptr,            &b_multilepton_Lepton4_P4_Matched);
 
-  tInput->SetBranchAddress("multilepton_Bjet1_Id",&multilepton_Bjet1_Id,&b_multilepton_Bjet1_Id);
-  tInput->SetBranchAddress("multilepton_Bjet1_P4",&multilepton_Bjet1_P4_ptr,&b_multilepton_Bjet1_P4);
-  tInput->SetBranchAddress("multilepton_Bjet1_CSV",&multilepton_Bjet1_CSV,&b_multilepton_Bjet1_CSV);
-  tInput->SetBranchAddress("multilepton_Bjet1_JEC_Up",&multilepton_Bjet1_JEC_Up,&b_multilepton_Bjet1_JEC_Up);
-  tInput->SetBranchAddress("multilepton_Bjet1_JEC_Down",&multilepton_Bjet1_JEC_Down,&b_multilepton_Bjet1_JEC_Down);
-  tInput->SetBranchAddress("multilepton_Bjet1_JER_Up",&multilepton_Bjet1_JER_Up,&b_multilepton_Bjet1_JER_Up);
-  tInput->SetBranchAddress("multilepton_Bjet1_JER_Down",&multilepton_Bjet1_JER_Down,&b_multilepton_Bjet1_JER_Down);
+  tInput->SetBranchAddress("multilepton_h0_Label",         		&multilepton_h0_Label,             		&b_multilepton_h0_Label);
+  tInput->SetBranchAddress("multilepton_h0_Id",            		&multilepton_h0_Id,                		&b_multilepton_h0_Id);
+  tInput->SetBranchAddress("multilepton_h0_P4",            		&multilepton_h0_P4_ptr,            		&b_multilepton_h0_P4);
+  tInput->SetBranchAddress("multilepton_t1_Label",                      &multilepton_t1_Label,                          &b_multilepton_t1_Label);
+  tInput->SetBranchAddress("multilepton_t1_Id",                         &multilepton_t1_Id,                             &b_multilepton_t1_Id);
+  tInput->SetBranchAddress("multilepton_t1_P4",                         &multilepton_t1_P4_ptr,                         &b_multilepton_t1_P4);
+  tInput->SetBranchAddress("multilepton_t2_Label",                      &multilepton_t2_Label,                          &b_multilepton_t2_Label);
+  tInput->SetBranchAddress("multilepton_t2_Id",                         &multilepton_t2_Id,                             &b_multilepton_t2_Id);
+  tInput->SetBranchAddress("multilepton_t2_P4",                         &multilepton_t2_P4_ptr,                         &b_multilepton_t2_P4);
 
-  tInput->SetBranchAddress("multilepton_Bjet2_Id",&multilepton_Bjet2_Id,&b_multilepton_Bjet2_Id);
-  tInput->SetBranchAddress("multilepton_Bjet2_P4",&multilepton_Bjet2_P4_ptr,&b_multilepton_Bjet2_P4);
-  tInput->SetBranchAddress("multilepton_Bjet2_CSV",&multilepton_Bjet2_CSV,&b_multilepton_Bjet2_CSV);
-  tInput->SetBranchAddress("multilepton_Bjet2_JEC_Up",&multilepton_Bjet2_JEC_Up,&b_multilepton_Bjet2_JEC_Up);
-  tInput->SetBranchAddress("multilepton_Bjet2_JEC_Down",&multilepton_Bjet2_JEC_Down,&b_multilepton_Bjet2_JEC_Down);
-  tInput->SetBranchAddress("multilepton_Bjet2_JER_Up",&multilepton_Bjet2_JER_Up,&b_multilepton_Bjet2_JER_Up);
-  tInput->SetBranchAddress("multilepton_Bjet2_JER_Down",&multilepton_Bjet2_JER_Down,&b_multilepton_Bjet2_JER_Down);
+  tInput->SetBranchAddress("multilepton_Bjet1_Id",			&multilepton_Bjet1_Id,				&b_multilepton_Bjet1_Id);
+  tInput->SetBranchAddress("multilepton_Bjet1_P4",			&multilepton_Bjet1_P4_ptr,			&b_multilepton_Bjet1_P4);
+  tInput->SetBranchAddress("multilepton_Bjet1_CSV",			&multilepton_Bjet1_CSV,				&b_multilepton_Bjet1_CSV);
+  tInput->SetBranchAddress("multilepton_Bjet1_JEC_Up",			&multilepton_Bjet1_JEC_Up,			&b_multilepton_Bjet1_JEC_Up);
+  tInput->SetBranchAddress("multilepton_Bjet1_JEC_Down",		&multilepton_Bjet1_JEC_Down,			&b_multilepton_Bjet1_JEC_Down);
+  tInput->SetBranchAddress("multilepton_Bjet1_JER_Up",			&multilepton_Bjet1_JER_Up,			&b_multilepton_Bjet1_JER_Up);
+  tInput->SetBranchAddress("multilepton_Bjet1_JER_Down",		&multilepton_Bjet1_JER_Down,			&b_multilepton_Bjet1_JER_Down);
+  tInput->SetBranchAddress("multilepton_Bjet1_DeltaR_Matched",          &multilepton_Bjet1_DeltaR_Matched,              &b_multilepton_Bjet1_DeltaR_Matched);
+  tInput->SetBranchAddress("multilepton_Bjet1_Label_Matched",           &multilepton_Bjet1_Label_Matched,               &b_multilepton_Bjet1_Label_Matched);
+  tInput->SetBranchAddress("multilepton_Bjet1_Id_Matched",         	&multilepton_Bjet1_Id_Matched,          	&b_multilepton_Bjet1_Id_Matched);
+  tInput->SetBranchAddress("multilepton_Bjet1_P4_Matched",         	&multilepton_Bjet1_P4_Matched_ptr,              &b_multilepton_Bjet1_P4_Matched);
+
+  tInput->SetBranchAddress("multilepton_Bjet2_Id",			&multilepton_Bjet2_Id,				&b_multilepton_Bjet2_Id);
+  tInput->SetBranchAddress("multilepton_Bjet2_P4",			&multilepton_Bjet2_P4_ptr,			&b_multilepton_Bjet2_P4);
+  tInput->SetBranchAddress("multilepton_Bjet2_CSV",			&multilepton_Bjet2_CSV,				&b_multilepton_Bjet2_CSV);
+  tInput->SetBranchAddress("multilepton_Bjet2_JEC_Up",			&multilepton_Bjet2_JEC_Up,			&b_multilepton_Bjet2_JEC_Up);
+  tInput->SetBranchAddress("multilepton_Bjet2_JEC_Down",		&multilepton_Bjet2_JEC_Down,			&b_multilepton_Bjet2_JEC_Down);
+  tInput->SetBranchAddress("multilepton_Bjet2_JER_Up",			&multilepton_Bjet2_JER_Up,			&b_multilepton_Bjet2_JER_Up);
+  tInput->SetBranchAddress("multilepton_Bjet2_JER_Down",		&multilepton_Bjet2_JER_Down,			&b_multilepton_Bjet2_JER_Down);
+  tInput->SetBranchAddress("multilepton_Bjet2_DeltaR_Matched",          &multilepton_Bjet2_DeltaR_Matched,              &b_multilepton_Bjet2_DeltaR_Matched);
+  tInput->SetBranchAddress("multilepton_Bjet2_Label_Matched",           &multilepton_Bjet2_Label_Matched,               &b_multilepton_Bjet2_Label_Matched);
+  tInput->SetBranchAddress("multilepton_Bjet2_Id_Matched",              &multilepton_Bjet2_Id_Matched,                  &b_multilepton_Bjet2_Id_Matched);
+  tInput->SetBranchAddress("multilepton_Bjet2_P4_Matched",              &multilepton_Bjet2_P4_Matched_ptr,              &b_multilepton_Bjet2_P4_Matched);
 
   tInput->SetBranchAddress("multilepton_JetHighestPt1_Id",&multilepton_JetHighestPt1_Id,&b_multilepton_JetHighestPt1_Id);
   tInput->SetBranchAddress("multilepton_JetHighestPt1_P4",&multilepton_JetHighestPt1_P4_ptr,&b_multilepton_JetHighestPt1_P4);
@@ -1237,29 +1394,68 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
 
   tOutput->Branch("catJets",&catJets,"catJets/I");
   tOutput->Branch("is_2lss_TTH_SR",&is_2lss_TTH_SR,"is_2lss_TTH_SR/B");
-  tOutput->Branch("is_3l_TTH_SR",&is_3l_TTH_SR,"is_3l_TTH_SR/B");
+  tOutput->Branch("is_3l_TTH_SR",&is_3l_TTH_SR,"is_3l_TTH_SRaB");
   tOutput->Branch("is_emu_TT_CR",&is_emu_TT_CR,"is_emu_TT_CR/B");
-  tOutput->Branch("is_Zl_CR",&is_Zl_CR,"is_Zl_CR/B");
+  //tOutput->Branch("is_Zl_CR",&is_Zl_CR,"is_Zl_CR/B");
   tOutput->Branch("is_3l_TTZ_CR",&is_3l_TTZ_CR,"is_3l_TTZ_CR/B");
-  tOutput->Branch("is_3l_WZrel_CR",&is_3l_WZrel_CR,"is_3l_WZrel_CR/B");
+  //tOutput->Branch("is_3l_WZrel_CR",&is_3l_WZrel_CR,"is_3l_WZrel_CR/B");
+
+  tOutput->Branch("cat_HtoWW",&cat_HtoWW,"cat_HtoWW/B");
+  tOutput->Branch("cat_HtoZZ",&cat_HtoZZ,"cat_HtoZZ/B");
+  tOutput->Branch("cat_Htott",&cat_Htott,"cat_Htott/B");
 
   tOutput->Branch("mc_3l_category",&mc_3l_category,"mc_3l_category/I");
   tOutput->Branch("mc_ttbar_decay",&mc_ttbar_decay,"mc_ttbar_decay/I");
   tOutput->Branch("mc_boson_decay",&mc_boson_decay,"mc_boson_decay/I");
   tOutput->Branch("mc_ttZhypAllowed",&mc_ttZhypAllowed,"mc_ttZhypAllowed/I");
 
-  tOutput->Branch("multilepton_Bjet1_Id",&multilepton_Bjet1_Id,"multilepton_Bjet1_Id/I");
-  tOutput->Branch("multilepton_Bjet1_P4","TLorentzVector",&multilepton_Bjet1_P4);
-  tOutput->Branch("multilepton_Bjet2_Id",&multilepton_Bjet2_Id,"multilepton_Bjet2_Id/I");
-  tOutput->Branch("multilepton_Bjet2_P4","TLorentzVector",&multilepton_Bjet2_P4);
-  tOutput->Branch("multilepton_Lepton1_Id",&multilepton_Lepton1_Id,"multilepton_Lepton1_Id/I");
-  tOutput->Branch("multilepton_Lepton1_P4","TLorentzVector",&multilepton_Lepton1_P4);
-  tOutput->Branch("multilepton_Lepton2_Id",&multilepton_Lepton2_Id,"multilepton_Lepton2_Id/I");
-  tOutput->Branch("multilepton_Lepton2_P4","TLorentzVector",&multilepton_Lepton2_P4);
-  tOutput->Branch("multilepton_Lepton3_Id",&multilepton_Lepton3_Id,"multilepton_Lepton3_Id/I");
-  tOutput->Branch("multilepton_Lepton3_P4","TLorentzVector",&multilepton_Lepton3_P4);
-  tOutput->Branch("multilepton_Lepton4_Id",&multilepton_Lepton4_Id,"multilepton_Lepton4_Id/I");
-  tOutput->Branch("multilepton_Lepton4_P4","TLorentzVector",&multilepton_Lepton4_P4);
+  tOutput->Branch("multilepton_Bjet1_Id",                       &multilepton_Bjet1_Id,                  "multilepton_Bjet1_Id/I");
+  tOutput->Branch("multilepton_Bjet1_P4",                       "TLorentzVector",                       &multilepton_Bjet1_P4);
+  tOutput->Branch("multilepton_Bjet1_DeltaR_Matched",           &multilepton_Bjet1_DeltaR_Matched,      "multilepton_Bjet1_DeltaR_Matched/F");
+  tOutput->Branch("multilepton_Bjet1_Label_Matched",            &multilepton_Bjet1_Label_Matched,       "multilepton_Bjet1_Label_Matched/I");
+  tOutput->Branch("multilepton_Bjet1_Id_Matched",               &multilepton_Bjet1_Id_Matched,          "multilepton_Bjet1_Id_Matched/I");
+  tOutput->Branch("multilepton_Bjet1_P4_Matched",               "TLorentzVector",                       &multilepton_Bjet1_P4_Matched);
+  tOutput->Branch("multilepton_Bjet2_Id",                       &multilepton_Bjet2_Id,                  "multilepton_Bjet2_Id/I");
+  tOutput->Branch("multilepton_Bjet2_P4",                       "TLorentzVector",                       &multilepton_Bjet2_P4);
+  tOutput->Branch("multilepton_Bjet2_DeltaR_Matched",           &multilepton_Bjet2_DeltaR_Matched,      "multilepton_Bjet2_DeltaR_Matched/F");
+  tOutput->Branch("multilepton_Bjet2_Label_Matched",            &multilepton_Bjet2_Label_Matched,       "multilepton_Bjet2_Label_Matched/I");
+  tOutput->Branch("multilepton_Bjet2_Id_Matched",               &multilepton_Bjet2_Id_Matched,          "multilepton_Bjet2_Id_Matched/I");
+  tOutput->Branch("multilepton_Bjet2_P4_Matched",               "TLorentzVector",                       &multilepton_Bjet2_P4_Matched);
+  tOutput->Branch("multilepton_Lepton1_Id",                     &multilepton_Lepton1_Id,                "multilepton_Lepton1_Id/I");
+  tOutput->Branch("multilepton_Lepton1_P4",                     "TLorentzVector",                       &multilepton_Lepton1_P4);
+  tOutput->Branch("multilepton_Lepton1_DeltaR_Matched",         &multilepton_Lepton1_DeltaR_Matched,    "multilepton_Lepton1_DeltaR_Matched/F");
+  tOutput->Branch("multilepton_Lepton1_Label_Matched",          &multilepton_Lepton1_Label_Matched,     "multilepton_Lepton1_Label_Matched/I");
+  tOutput->Branch("multilepton_Lepton1_Id_Matched",             &multilepton_Lepton1_Id_Matched,        "multilepton_Lepton1_Id_Matched/I");
+  tOutput->Branch("multilepton_Lepton1_P4_Matched",             "TLorentzVector",                       &multilepton_Lepton1_P4_Matched);
+  tOutput->Branch("multilepton_Lepton2_Id",                     &multilepton_Lepton2_Id,                "multilepton_Lepton2_Id/I");
+  tOutput->Branch("multilepton_Lepton2_P4",                     "TLorentzVector",                       &multilepton_Lepton2_P4);
+  tOutput->Branch("multilepton_Lepton2_DeltaR_Matched",         &multilepton_Lepton2_DeltaR_Matched,    "multilepton_Lepton2_DeltaR_Matched/F");
+  tOutput->Branch("multilepton_Lepton2_Label_Matched",          &multilepton_Lepton2_Label_Matched,     "multilepton_Lepton2_Label_Matched/I");
+  tOutput->Branch("multilepton_Lepton2_Id_Matched",             &multilepton_Lepton2_Id_Matched,        "multilepton_Lepton2_Id_Matched/I");
+  tOutput->Branch("multilepton_Lepton2_P4_Matched",             "TLorentzVector",                       &multilepton_Lepton2_P4_Matched);
+  tOutput->Branch("multilepton_Lepton3_Id",                     &multilepton_Lepton3_Id,                "multilepton_Lepton3_Id/I");
+  tOutput->Branch("multilepton_Lepton3_P4",                     "TLorentzVector",                       &multilepton_Lepton3_P4);
+  tOutput->Branch("multilepton_Lepton3_DeltaR_Matched",         &multilepton_Lepton3_DeltaR_Matched,    "multilepton_Lepton3_DeltaR_Matched/F");
+  tOutput->Branch("multilepton_Lepton3_Label_Matched",          &multilepton_Lepton3_Label_Matched,     "multilepton_Lepton3_Label_Matched/I");
+  tOutput->Branch("multilepton_Lepton3_Id_Matched",             &multilepton_Lepton3_Id_Matched,        "multilepton_Lepton3_Id_Matched/I");
+  tOutput->Branch("multilepton_Lepton3_P4_Matched",             "TLorentzVector",                       &multilepton_Lepton3_P4_Matched);
+  tOutput->Branch("multilepton_Lepton4_Id",                     &multilepton_Lepton4_Id,                "multilepton_Lepton4_Id/I");
+  tOutput->Branch("multilepton_Lepton4_P4",                     "TLorentzVector",                       &multilepton_Lepton4_P4);
+  tOutput->Branch("multilepton_Lepton4_DeltaR_Matched",         &multilepton_Lepton4_DeltaR_Matched,    "multilepton_Lepton4_DeltaR_Matched/F");
+  tOutput->Branch("multilepton_Lepton4_Label_Matched",          &multilepton_Lepton4_Label_Matched,     "multilepton_Lepton4_Label_Matched/I");
+  tOutput->Branch("multilepton_Lepton4_Id_Matched",             &multilepton_Lepton4_Id_Matched,        "multilepton_Lepton4_Id_Matched/I");
+  tOutput->Branch("multilepton_Lepton4_P4_Matched",             "TLorentzVector",                       &multilepton_Lepton4_P4_Matched);
+
+  tOutput->Branch("multilepton_h0_Label",                       &multilepton_h0_Label,                  "multilepton_h0_Label/I");
+  tOutput->Branch("multilepton_h0_Id",                          &multilepton_h0_Id,                     "multilepton_h0_Id/I");
+  tOutput->Branch("multilepton_h0_P4",                          "TLorentzVector",                       &multilepton_h0_P4);
+  tOutput->Branch("multilepton_t1_Label",                       &multilepton_t1_Label,                  "multilepton_t1_Label/I");
+  tOutput->Branch("multilepton_t1_Id",                          &multilepton_t1_Id,                     "multilepton_t1_Id/I");
+  tOutput->Branch("multilepton_t1_P4",                          "TLorentzVector",                       &multilepton_t1_P4);
+  tOutput->Branch("multilepton_t2_Label",                       &multilepton_t2_Label,                  "multilepton_t2_Label/I");
+  tOutput->Branch("multilepton_t2_Id",                          &multilepton_t2_Id,                     "multilepton_t2_Id/I");
+  tOutput->Branch("multilepton_t2_P4",                          "TLorentzVector",                       &multilepton_t2_P4);
+
   tOutput->Branch("multilepton_JetHighestPt1_Id",&multilepton_JetHighestPt1_Id,"multilepton_JetHighestPt1_Id/I");
   tOutput->Branch("multilepton_JetHighestPt1_P4","TLorentzVector",&multilepton_JetHighestPt1_P4);
   tOutput->Branch("multilepton_JetHighestPt2_Id",&multilepton_JetHighestPt2_Id,"multilepton_JetHighestPt2_Id/I");
@@ -1657,6 +1853,13 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("MEAllWeights_TTbarfl_log","vector<float>",&MEAllWeights_TTbarfl_log);
   tOutput->Branch("MEAllWeights_TTbarsl_log","vector<float>",&MEAllWeights_TTbarsl_log);
   tOutput->Branch("MEAllWeights_TTbar_log","vector<float>",&MEAllWeights_TTbar_log);
+
+  tOutput->Branch("multilepton_h0_Id",                          &multilepton_h0_Id,                     "multilepton_h0_Id/I");
+  tOutput->Branch("multilepton_h0_P4",                          "TLorentzVector",                       &multilepton_h0_P4);
+  tOutput->Branch("multilepton_t1_Id",                          &multilepton_t1_Id,                     "multilepton_t1_Id/I");
+  tOutput->Branch("multilepton_t1_P4",                          "TLorentzVector",                       &multilepton_t1_P4);
+  tOutput->Branch("multilepton_t2_Id",                          &multilepton_t2_Id,                     "multilepton_t2_Id/I");
+  tOutput->Branch("multilepton_t2_P4",                          "TLorentzVector",                       &multilepton_t2_P4);
 }
 
 
@@ -1996,16 +2199,58 @@ void ReadGenFlatTree::WriteMultilepton(MultiLepton* multiLepton){
 
   cout << "WriteMultilepton"<<endl;
 
-  multilepton_Bjet1_Id = (*multiLepton).Bjets[0].Id;
-  multilepton_Bjet1_P4 = (*multiLepton).Bjets[0].P4;
-  multilepton_Bjet2_Id = (*multiLepton).Bjets[1].Id;
-  multilepton_Bjet2_P4 = (*multiLepton).Bjets[1].P4;
-  multilepton_Lepton1_Id = (*multiLepton).Leptons[0].Id;
-  multilepton_Lepton1_P4 = (*multiLepton).Leptons[0].P4;
-  multilepton_Lepton2_Id = (*multiLepton).Leptons[1].Id;
-  multilepton_Lepton2_P4 = (*multiLepton).Leptons[1].P4;
-  multilepton_Lepton3_Id = (*multiLepton).Leptons[2].Id;
-  multilepton_Lepton3_P4 = (*multiLepton).Leptons[2].P4;
+  multilepton_Bjet1_Id 			= (*multiLepton).Bjets[0].Id;
+  multilepton_Bjet1_P4 			= (*multiLepton).Bjets[0].P4;
+  multilepton_Bjet1_DeltaR_Matched      = (*multiLepton).BjetsMatched[0].DeltaR;
+  multilepton_Bjet1_Label_Matched       = (*multiLepton).BjetsMatched[0].Label;
+  multilepton_Bjet1_Id_Matched 		= (*multiLepton).BjetsMatched[0].Id;
+  multilepton_Bjet1_P4_Matched          = (*multiLepton).BjetsMatched[0].P4;
+
+  multilepton_Bjet2_Id 			= (*multiLepton).Bjets[1].Id;
+  multilepton_Bjet2_P4 			= (*multiLepton).Bjets[1].P4;
+  multilepton_Bjet2_DeltaR_Matched      = (*multiLepton).BjetsMatched[1].DeltaR;
+  multilepton_Bjet2_Label_Matched       = (*multiLepton).BjetsMatched[1].Label;
+  multilepton_Bjet2_Id_Matched          = (*multiLepton).BjetsMatched[1].Id;
+  multilepton_Bjet2_P4_Matched          = (*multiLepton).BjetsMatched[1].P4;
+
+  multilepton_Lepton1_Id 		= (*multiLepton).Leptons[0].Id;
+  multilepton_Lepton1_P4 		= (*multiLepton).Leptons[0].P4;
+  multilepton_Lepton1_DeltaR_Matched	= (*multiLepton).LeptonsMatched[0].DeltaR;
+  multilepton_Lepton1_Label_Matched    	= (*multiLepton).LeptonsMatched[0].Label;
+  multilepton_Lepton1_Id_Matched    	= (*multiLepton).LeptonsMatched[0].Id;
+  multilepton_Lepton1_P4_Matched    	= (*multiLepton).LeptonsMatched[0].P4;
+
+  multilepton_Lepton2_Id 		= (*multiLepton).Leptons[1].Id;
+  multilepton_Lepton2_P4 		= (*multiLepton).Leptons[1].P4;
+  multilepton_Lepton2_DeltaR_Matched    = (*multiLepton).LeptonsMatched[1].DeltaR;
+  multilepton_Lepton2_Label_Matched     = (*multiLepton).LeptonsMatched[1].Label;
+  multilepton_Lepton2_Id_Matched        = (*multiLepton).LeptonsMatched[1].Id;
+  multilepton_Lepton2_P4_Matched        = (*multiLepton).LeptonsMatched[1].P4;
+
+  multilepton_Lepton3_Id 		= (*multiLepton).Leptons[2].Id;
+  multilepton_Lepton3_P4 		= (*multiLepton).Leptons[2].P4;
+  multilepton_Lepton3_DeltaR_Matched    = (*multiLepton).LeptonsMatched[2].DeltaR;
+  multilepton_Lepton3_Label_Matched     = (*multiLepton).LeptonsMatched[2].Label;
+  multilepton_Lepton3_Id_Matched        = (*multiLepton).LeptonsMatched[2].Id;
+  multilepton_Lepton3_P4_Matched        = (*multiLepton).LeptonsMatched[2].P4;
+
+  multilepton_Lepton4_Id 		= (*multiLepton).Leptons[3].Id;
+  multilepton_Lepton4_P4 		= (*multiLepton).Leptons[3].P4;
+  multilepton_Lepton4_DeltaR_Matched    = (*multiLepton).LeptonsMatched[3].DeltaR;
+  multilepton_Lepton4_Label_Matched     = (*multiLepton).LeptonsMatched[3].Label;
+  multilepton_Lepton4_Id_Matched        = (*multiLepton).LeptonsMatched[3].Id;
+  multilepton_Lepton4_P4_Matched        = (*multiLepton).LeptonsMatched[3].P4;
+
+  multilepton_h0_Label                  = (*multiLepton).ParticleGen[0].Label;
+  multilepton_h0_Id			= (*multiLepton).ParticleGen[0].Id;
+  multilepton_h0_P4			= (*multiLepton).ParticleGen[0].P4;
+  multilepton_t1_Label                  = (*multiLepton).ParticleGen[1].Label;
+  multilepton_t1_Id                     = (*multiLepton).ParticleGen[1].Id;
+  multilepton_t1_P4                     = (*multiLepton).ParticleGen[1].P4;  
+  multilepton_t2_Label                  = (*multiLepton).ParticleGen[2].Label;
+  multilepton_t2_Id                     = (*multiLepton).ParticleGen[2].Id;
+  multilepton_t2_P4                     = (*multiLepton).ParticleGen[2].P4;
+
   multilepton_JetHighestPt1_Id = (*multiLepton).JetsHighestPt[0].Id;
   multilepton_JetHighestPt1_P4 = (*multiLepton).JetsHighestPt[0].P4;
   multilepton_JetHighestPt2_Id = (*multiLepton).JetsHighestPt[1].Id;
@@ -2024,8 +2269,7 @@ void ReadGenFlatTree::WriteMultilepton(MultiLepton* multiLepton){
   //multilepton_JetHighestPt_Mjj = (multilepton_JetHighestPt1_P4+multilepton_JetHighestPt2_P4).M();
   //multilepton_JetClosestMw_Mjj = (multilepton_JetClosestMw1_P4+multilepton_JetClosestMw2_P4).M();
   //multilepton_JetLowestMjj_Mjj = (multilepton_JetLowestMjj1_P4+multilepton_JetLowestMjj2_P4).M();
-
-
+  
   return;
 }
 
@@ -2043,6 +2287,27 @@ void ReadGenFlatTree::ReadMultilepton(Long64_t iEvent, MultiLepton* multiLepton)
   if (multilepton_Lepton2_Id!=-999) (*multiLepton).FillParticle("lepton", multilepton_Lepton2_Id, *multilepton_Lepton2_P4_ptr);
   if (multilepton_Lepton3_Id!=-999) (*multiLepton).FillParticle("lepton", multilepton_Lepton3_Id, *multilepton_Lepton3_P4_ptr);
   if (multilepton_Lepton4_Id!=-999) (*multiLepton).FillParticle("lepton", multilepton_Lepton4_Id, *multilepton_Lepton4_P4_ptr);
+
+  (*multiLepton).LeptonsMatched.clear();
+  (*multiLepton).FillParticleMatched("lepton", multilepton_Lepton1_DeltaR_Matched, multilepton_Lepton1_Label_Matched, multilepton_Lepton1_Id_Matched, *multilepton_Lepton1_P4_Matched_ptr);
+  (*multiLepton).FillParticleMatched("lepton", multilepton_Lepton2_DeltaR_Matched, multilepton_Lepton2_Label_Matched, multilepton_Lepton2_Id_Matched, *multilepton_Lepton2_P4_Matched_ptr);
+  (*multiLepton).FillParticleMatched("lepton", multilepton_Lepton3_DeltaR_Matched, multilepton_Lepton3_Label_Matched, multilepton_Lepton3_Id_Matched, *multilepton_Lepton3_P4_Matched_ptr);
+  (*multiLepton).FillParticleMatched("lepton", multilepton_Lepton4_DeltaR_Matched, multilepton_Lepton4_Label_Matched, multilepton_Lepton4_Id_Matched, *multilepton_Lepton4_P4_Matched_ptr);
+
+  (*multiLepton).Bjets.clear();
+  //if (multilepton_Bjet1_Id!=-999) (*multiLepton).FillParticle("bjet", multilepton_Bjet1_Id, *multilepton_Bjet1_P4_ptr);
+  if (multilepton_Bjet1_Id!=-999) (*multiLepton).FillParticle("bjet", multilepton_Bjet1_Id, multilepton_Bjet1_CSV, multilepton_Bjet1_JEC_Up, multilepton_Bjet1_JEC_Down, multilepton_Bjet1_JER_Up, multilepton_Bjet1_JER_Down, *multilepton_Bjet1_P4_ptr);
+  //if (multilepton_Bjet2_Id!=-999) (*multiLepton).FillParticle("bjet", multilepton_Bjet2_Id, *multilepton_Bjet2_P4_ptr); 
+  if (multilepton_Bjet2_Id!=-999) (*multiLepton).FillParticle("bjet", multilepton_Bjet2_Id, multilepton_Bjet2_CSV, multilepton_Bjet2_JEC_Up, multilepton_Bjet2_JEC_Down, multilepton_Bjet2_JER_Up, multilepton_Bjet2_JER_Down, *multilepton_Bjet2_P4_ptr);
+
+  (*multiLepton).BjetsMatched.clear();
+  (*multiLepton).FillParticleMatched("jet", multilepton_Bjet1_DeltaR_Matched, multilepton_Bjet1_Label_Matched, multilepton_Bjet1_Id_Matched, *multilepton_Bjet1_P4_Matched_ptr);
+  (*multiLepton).FillParticleMatched("jet", multilepton_Bjet2_DeltaR_Matched, multilepton_Bjet2_Label_Matched, multilepton_Bjet2_Id_Matched, *multilepton_Bjet2_P4_Matched_ptr);
+
+  (*multiLepton).ParticleGen.clear();
+  (*multiLepton).FillParticleGen("whatever", multilepton_h0_Label, multilepton_h0_Id, *multilepton_h0_P4_ptr);
+  (*multiLepton).FillParticleGen("whatever", multilepton_t1_Label, multilepton_t1_Id, *multilepton_t1_P4_ptr);
+  (*multiLepton).FillParticleGen("whatever", multilepton_t2_Label, multilepton_t2_Id, *multilepton_t2_P4_ptr);
 
   (*multiLepton).Jets.clear();
   (*multiLepton).JetsHighestPt.clear();
@@ -2073,12 +2338,6 @@ void ReadGenFlatTree::ReadMultilepton(Long64_t iEvent, MultiLepton* multiLepton)
   if (multilepton_JetLowestMjj1_2ndPair_Id!=-999) (*multiLepton).FillParticle("jetLowestMjj", multilepton_JetLowestMjj1_2ndPair_Id, multilepton_JetLowestMjj1_2ndPair_CSV, multilepton_JetLowestMjj1_2ndPair_JEC_Up, multilepton_JetLowestMjj1_2ndPair_JEC_Down, multilepton_JetLowestMjj1_2ndPair_JER_Up, multilepton_JetLowestMjj1_2ndPair_JER_Down, *multilepton_JetLowestMjj1_2ndPair_P4_ptr);
   //if (multilepton_JetLowestMjj2_2ndPair_Id!=-999) (*multiLepton).FillParticle("jetLowestMjj", multilepton_JetLowestMjj2_2ndPair_Id, *multilepton_JetLowestMjj2_2ndPair_P4_ptr);
   if (multilepton_JetLowestMjj2_2ndPair_Id!=-999) (*multiLepton).FillParticle("jetLowestMjj", multilepton_JetLowestMjj2_2ndPair_Id, multilepton_JetLowestMjj2_2ndPair_CSV, multilepton_JetLowestMjj2_2ndPair_JEC_Up, multilepton_JetLowestMjj2_2ndPair_JEC_Down, multilepton_JetLowestMjj2_2ndPair_JER_Up, multilepton_JetLowestMjj2_2ndPair_JER_Down, *multilepton_JetLowestMjj2_2ndPair_P4_ptr);
-
-  (*multiLepton).Bjets.clear();
-  //if (multilepton_Bjet1_Id!=-999) (*multiLepton).FillParticle("bjet", multilepton_Bjet1_Id, *multilepton_Bjet1_P4_ptr);
-  if (multilepton_Bjet1_Id!=-999) (*multiLepton).FillParticle("bjet", multilepton_Bjet1_Id, multilepton_Bjet1_CSV, multilepton_Bjet1_JEC_Up, multilepton_Bjet1_JEC_Down, multilepton_Bjet1_JER_Up, multilepton_Bjet1_JER_Down, *multilepton_Bjet1_P4_ptr);
-  //if (multilepton_Bjet2_Id!=-999) (*multiLepton).FillParticle("bjet", multilepton_Bjet2_Id, *multilepton_Bjet2_P4_ptr); 
-  if (multilepton_Bjet2_Id!=-999) (*multiLepton).FillParticle("bjet", multilepton_Bjet2_Id, multilepton_Bjet2_CSV, multilepton_Bjet2_JEC_Up, multilepton_Bjet2_JEC_Down, multilepton_Bjet2_JER_Up, multilepton_Bjet2_JER_Down, *multilepton_Bjet2_P4_ptr); 
 
   //(*multiLepton).Ptot = *multilepton_Ptot_ptr;
   (*multiLepton).mET = *multilepton_mET_ptr;
