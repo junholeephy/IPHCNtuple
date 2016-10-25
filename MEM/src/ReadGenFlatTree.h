@@ -1394,7 +1394,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
 
   tOutput->Branch("catJets",&catJets,"catJets/I");
   tOutput->Branch("is_2lss_TTH_SR",&is_2lss_TTH_SR,"is_2lss_TTH_SR/B");
-  tOutput->Branch("is_3l_TTH_SR",&is_3l_TTH_SR,"is_3l_TTH_SRaB");
+  tOutput->Branch("is_3l_TTH_SR",&is_3l_TTH_SR,"is_3l_TTH_SR/B");
   tOutput->Branch("is_emu_TT_CR",&is_emu_TT_CR,"is_emu_TT_CR/B");
   //tOutput->Branch("is_Zl_CR",&is_Zl_CR,"is_Zl_CR/B");
   tOutput->Branch("is_3l_TTZ_CR",&is_3l_TTZ_CR,"is_3l_TTZ_CR/B");
