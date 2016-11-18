@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
  
     cout << "Test MEM weight computation" <<endl;
 
-    int index[7];
+    int index[8];
     for (int ih=0; ih<nhyp; ih++){
       if (shyp[ih]=="TTLL") index[ih] = 0;
       if (shyp[ih]=="TTHfl") index[ih] = 1;
@@ -93,6 +93,7 @@ int main(int argc, char *argv[])
       if (shyp[ih]=="TTWJJ") index[ih] = 4;
       if (shyp[ih]=="TTbarfl") index[ih] = 5;
       if (shyp[ih]=="TTbarsl") index[ih] = 6;
+      if (shyp[ih]=="TLLJ") index[ih] = 7;
     }
  
     int doOptim;
@@ -118,6 +119,7 @@ int main(int argc, char *argv[])
     double xsTTLL = hypIntegrator.meIntegrator->xsTTLL * hypIntegrator.meIntegrator->brTopHad * hypIntegrator.meIntegrator->brTopLep;
     double xsTTW = hypIntegrator.meIntegrator->xsTTW * hypIntegrator.meIntegrator->brTopLep * hypIntegrator.meIntegrator->brTopLep;
     double xsTTbar = hypIntegrator.meIntegrator->xsTTbar * hypIntegrator.meIntegrator->brTopHad * hypIntegrator.meIntegrator->brTopLep;
+    double xsTLLJ = hypIntegrator.meIntegrator->xsTLLJ * hypIntegrator.meIntegrator->brTopLep;
 
     tree.InitializeMEMRun(InputFileName);
     if (atoi(argv[3])==-1 || evMax>tree.tInput->GetEntries()) evMax = tree.tInput->GetEntries();
@@ -178,12 +180,13 @@ int main(int argc, char *argv[])
   index_CatJets[10] = "2lss_1b_3j";
   index_CatJets[11] = "2lss_2b_2j";
 
-  Double_t index_XS[7];
+  Double_t index_XS[8];
   for(int ih=0; ih<nhyp; ih++){
      if(shyp[ih]=="TTLL") index_XS[ih]=xsTTLL;
      if(shyp[ih]=="TTW" || shyp[ih]=="TTWJJ") index_XS[ih]=xsTTW;
      if(shyp[ih]=="TTH" || shyp[ih]=="TTHsl" || shyp[ih]=="TTHfl") index_XS[ih]=xsTTH;
      if(shyp[ih]=="TTbar" || shyp[ih]=="TTbarsl" || shyp[ih]=="TTbarfl") index_XS[ih]=xsTTbar;
+     if (shyp[ih]=="TLLJ") index_XS[ih]=xsTLLJ;
   }
 
   bool sel_tmp=0;
@@ -394,6 +397,24 @@ int main(int argc, char *argv[])
       tree.mc_mem_ttbar_weight_JER_up = 0;
       tree.mc_mem_ttbar_weight_JER_down = 0;
 
+      tree.mc_mem_tllj_weight_logmean = 0;
+      tree.mc_mem_tllj_weight_log = 0;
+      tree.mc_mem_tllj_weight = 0;
+      tree.mc_mem_tllj_weight_time = 0;
+      tree.mc_mem_tllj_weight_err = 0;
+      tree.mc_mem_tllj_weight_chi2 = 0;
+      tree.mc_mem_tllj_weight_max = 0;
+      tree.mc_mem_tllj_weight_avg = 0;
+      tree.mc_kin_tllj_weight_logmax = 0;
+      tree.mc_kin_tllj_weight_logmaxint = 0;
+      tree.mc_mem_tllj_weight_kinmax = 0;
+      tree.mc_mem_tllj_weight_kinmaxint = 0;
+      tree.mc_mem_tllj_weight_JEC_up = 0;
+      tree.mc_mem_tllj_weight_JEC_down = 0;
+      tree.mc_mem_tllj_weight_JER_up = 0;
+      tree.mc_mem_tllj_weight_JER_down = 0;
+
+
       tree.MEAllWeights_TTLL->clear();
       tree.MEAllWeights_TTHfl->clear();
       tree.MEAllWeights_TTHsl->clear();
@@ -403,6 +424,7 @@ int main(int argc, char *argv[])
       tree.MEAllWeights_TTbarfl->clear();
       tree.MEAllWeights_TTbarsl->clear();
       tree.MEAllWeights_TTbar->clear();
+      tree.MEAllWeights_TLLJ->clear();
 
       tree.MEAllWeights_TTLL_log->clear();
       tree.MEAllWeights_TTHfl_log->clear();
@@ -413,6 +435,7 @@ int main(int argc, char *argv[])
       tree.MEAllWeights_TTbarfl_log->clear();
       tree.MEAllWeights_TTbarsl_log->clear();
       tree.MEAllWeights_TTbar_log->clear();
+      tree.MEAllWeights_TLLJ_log->clear();
 
     nHypAllowed_TTH = 0;
     nHypAllowed_TTbar = 0;
@@ -778,6 +801,27 @@ int main(int argc, char *argv[])
        FillWeightVectors(MEMpermutations[index_hyp[6]], tree.MEAllWeights_TTbarsl, tree.MEAllWeights_TTbarsl_log);
       }
     }
+     if (index_hyp[7]!=-1){
+       if (MEMpermutations[index_hyp[7]].computeHyp){
+       tree.mc_mem_tllj_weight = MEMpermutations[index_hyp[7]].resMEM_avgExl0.weight;
+       tree.mc_mem_tllj_weight_err = MEMpermutations[index_hyp[7]].resMEM_avgExl0.err;
+       tree.mc_mem_tllj_weight_chi2 = MEMpermutations[index_hyp[7]].resMEM_avgExl0.chi2;
+       tree.mc_mem_tllj_weight_time = MEMpermutations[index_hyp[7]].resMEM_avgExl0.time;
+       tree.mc_mem_tllj_weight_log = log(MEMpermutations[index_hyp[7]].resMEM_avgExl0.weight);
+       tree.mc_mem_tllj_weight_logmean = MEMpermutations[index_hyp[7]].resMEM_logavgExl0.weight;
+       tree.mc_mem_tllj_weight_avg = MEMpermutations[index_hyp[7]].resMEM_avgIncl0.weight;
+       tree.mc_mem_tllj_weight_max = MEMpermutations[index_hyp[7]].resMEM_max.weight;
+       tree.mc_mem_tllj_weight_JEC_up = MEMpermutations[index_hyp[7]].resMEM_avgExl0_JEC_up.weight;
+       tree.mc_mem_tllj_weight_JEC_down = MEMpermutations[index_hyp[7]].resMEM_avgExl0_JEC_down.weight;
+       tree.mc_mem_tllj_weight_JER_up = MEMpermutations[index_hyp[7]].resMEM_avgExl0_JER_up.weight;
+       tree.mc_mem_tllj_weight_JER_down = MEMpermutations[index_hyp[7]].resMEM_avgExl0_JER_down.weight;
+       tree.mc_kin_tllj_weight_logmax = log(MEMpermutations[index_hyp[7]].resKin_maxKinFit.weight);
+       tree.mc_kin_tllj_weight_logmaxint = log(MEMpermutations[index_hyp[7]].resKin_maxKinFit_Int.weight);
+       tree.mc_mem_tllj_weight_kinmax = MEMpermutations[index_hyp[7]].resMEM_maxKinFit.weight;
+       tree.mc_mem_tllj_weight_kinmaxint = MEMpermutations[index_hyp[7]].resMEM_maxKinFit_Int.weight;
+       FillWeightVectors(MEMpermutations[index_hyp[7]], tree.MEAllWeights_TLLJ, tree.MEAllWeights_TLLJ_log);
+      }
+    }
 
     if (index_hyp[1]!=-1 && index_hyp[2]!=-1) { 
       if (MEMpermutations[index_hyp[1]].computeHyp || MEMpermutations[index_hyp[2]].computeHyp)
@@ -870,6 +914,13 @@ int main(int argc, char *argv[])
        tree.mc_mem_ttbar_tth_likelihood_max = xsTTbar*tree.mc_mem_ttbar_weight_max / (xsTTbar*tree.mc_mem_ttbar_weight_max + xsTTH*tree.mc_mem_tth_weight_max);
        tree.mc_mem_ttbar_tth_likelihood_avg = xsTTbar*tree.mc_mem_ttbar_weight_avg / (xsTTbar*tree.mc_mem_ttbar_weight_avg + xsTTH*tree.mc_mem_tth_weight_avg);
      }
+     if (tree.mc_mem_ttz_weight>0 && tree.mc_mem_tllj_weight>0){
+       tree.mc_mem_ttz_tllj_likelihood = xsTTLL*tree.mc_mem_ttz_weight / (xsTTLL*tree.mc_mem_ttz_weight + xsTLLJ*tree.mc_mem_tllj_weight);
+       tree.mc_mem_ttz_tllj_likelihood_nlog = -log(xsTTLL*tree.mc_mem_ttz_weight / (xsTTLL*tree.mc_mem_ttz_weight + xsTLLJ*tree.mc_mem_tllj_weight));
+       tree.mc_mem_ttz_tllj_likelihood_max = xsTTLL*tree.mc_mem_ttz_weight_max / (xsTTLL*tree.mc_mem_ttz_weight_max + xsTLLJ*tree.mc_mem_tllj_weight_max);
+       tree.mc_mem_ttz_tllj_likelihood_avg = xsTTLL*tree.mc_mem_ttz_weight_avg / (xsTTLL*tree.mc_mem_ttz_weight_avg + xsTLLJ*tree.mc_mem_tllj_weight_avg);
+     }
+
 
      if (tree.mc_mem_ttz_weight>0 && tree.mc_mem_ttw_weight>0 && tree.mc_mem_tth_weight>0){
        tree.mc_mem_ttv_tth_likelihood = (xsTTLL*tree.mc_mem_ttz_weight + xsTTW*tree.mc_mem_ttw_weight) / (xsTTLL*tree.mc_mem_ttz_weight + xsTTW*tree.mc_mem_ttw_weight + xsTTH*tree.mc_mem_tth_weight);
@@ -905,6 +956,11 @@ int main(int argc, char *argv[])
        cout << "TTbar nHypAllowed="<<nHypAllowed_TTbar<<endl;
        cout << "TTbar weight="<<tree.mc_mem_ttbar_weight<<" ; log(weight)="<<tree.mc_mem_ttbar_weight_log<<endl;
      }
+     if (tree.mc_mem_tllj_weight>0){
+       cout << "TLLJ nHypAllowed="<<MEMpermutations[index_hyp[7]].nHypAllowed<<endl;
+       cout << "TLLJ weight="<<tree.mc_mem_tllj_weight<<" ; log(weight)="<<tree.mc_mem_tllj_weight_log<<endl;
+     }
+
      if (tree.mc_mem_tth_weight>0 && tree.mc_mem_ttz_weight>0)
        cout << "TTHvsTTZ discrim="<<tree.mc_mem_ttz_tth_likelihood<<"; -log(discrim)="<< tree.mc_mem_ttz_tth_likelihood_nlog<<endl;
      if (tree.mc_mem_ttw_weight>0 && tree.mc_mem_tth_weight>0)
@@ -915,7 +971,10 @@ int main(int argc, char *argv[])
        cout << "TTHvsTTV discrim="<<tree.mc_mem_ttv_tth_likelihood<<"; -log(discrim)="<< tree.mc_mem_ttv_tth_likelihood_nlog<<endl;
      if (tree.mc_mem_tth_weight>0 && tree.mc_mem_ttz_weight>0 && tree.mc_mem_ttwjj_weight>0)
        cout << "TTHvsTTVjj discrim="<<tree.mc_mem_ttvjj_tth_likelihood<<"; -log(discrim)="<< tree.mc_mem_ttvjj_tth_likelihood_nlog<<endl;
-     
+     if (tree.mc_mem_tllj_weight>0 && tree.mc_mem_ttz_weight>0)
+       cout << "TLLJvsTTZ discrim="<<tree.mc_mem_ttz_tllj_likelihood<<"; -log(discrim)="<< tree.mc_mem_ttz_tllj_likelihood_nlog<<endl;
+    
+ 
      cout << "End of event ---"<<endl;
      cout << endl;
 

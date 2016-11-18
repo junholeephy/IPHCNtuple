@@ -622,6 +622,19 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttbar_weight_kinmax;
   Double_t mc_mem_ttbar_weight_kinmaxint;
 
+  Double_t mc_mem_tllj_weight;
+  Double_t mc_mem_tllj_weight_JEC_up, mc_mem_tllj_weight_JEC_down, mc_mem_tllj_weight_JER_up, mc_mem_tllj_weight_JER_down;
+  Double_t mc_mem_tllj_weight_log;
+  Double_t mc_mem_tllj_weight_err;
+  Float_t mc_mem_tllj_weight_chi2;
+  Float_t mc_mem_tllj_weight_time;
+  Double_t mc_mem_tllj_weight_max;
+  Double_t mc_mem_tllj_weight_avg;
+  Double_t mc_mem_tllj_weight_logmean;
+  Double_t mc_kin_tllj_weight_logmax;
+  Double_t mc_kin_tllj_weight_logmaxint;
+  Double_t mc_mem_tllj_weight_kinmax;
+  Double_t mc_mem_tllj_weight_kinmaxint;
 
   //Double_t mc_mem_ttz_tthfl_likelihood;
   //Double_t mc_mem_ttz_tthsl_likelihood;  
@@ -647,6 +660,10 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttbar_tth_likelihood_max;
   Double_t mc_mem_ttbar_tth_likelihood_avg;
 
+  Double_t mc_mem_ttz_tllj_likelihood;
+  Double_t mc_mem_ttz_tllj_likelihood_nlog;
+  Double_t mc_mem_ttz_tllj_likelihood_max;
+  Double_t mc_mem_ttz_tllj_likelihood_avg;
 
   Double_t mc_mem_ttv_tth_likelihood;
   Double_t mc_mem_ttv_tth_likelihood_nlog;
@@ -667,6 +684,7 @@ class ReadGenFlatTree {
   std::vector<double>* MEAllWeights_TTbarfl;
   std::vector<double>* MEAllWeights_TTbarsl;
   std::vector<double>* MEAllWeights_TTbar;
+  std::vector<double>* MEAllWeights_TLLJ;
 
   std::vector<float>* MEAllWeights_TTLL_log;
   std::vector<float>* MEAllWeights_TTHfl_log;
@@ -677,6 +695,7 @@ class ReadGenFlatTree {
   std::vector<float>* MEAllWeights_TTbarfl_log;
   std::vector<float>* MEAllWeights_TTbarsl_log;
   std::vector<float>* MEAllWeights_TTbar_log;
+  std::vector<float>* MEAllWeights_TLLJ_log;
 
   TBranch* b_catJets;
   TBranch* b_is_2lss_TTH_SR;
@@ -1791,6 +1810,24 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_kin_ttbar_weight_logmax",&mc_kin_ttbar_weight_logmax,"mc_kin_ttbar_weight_logmax/D");
   tOutput->Branch("mc_kin_ttbar_weight_logmaxint",&mc_kin_ttbar_weight_logmaxint,"mc_kin_ttbar_weight_logmaxint/D");
 
+  tOutput->Branch("mc_mem_tllj_weight",&mc_mem_tllj_weight,"mc_mem_tllj_weight/D");
+  tOutput->Branch("mc_mem_tllj_weight_JEC_up",&mc_mem_tllj_weight_JEC_up,"mc_mem_tllj_weight_JEC_up/D");
+  tOutput->Branch("mc_mem_tllj_weight_JEC_down",&mc_mem_tllj_weight_JEC_down,"mc_mem_tllj_weight_JEC_down/D");
+  tOutput->Branch("mc_mem_tllj_weight_JER_up",&mc_mem_tllj_weight_JER_up,"mc_mem_tllj_weight_JER_up/D");
+  tOutput->Branch("mc_mem_tllj_weight_JER_down",&mc_mem_tllj_weight_JER_down,"mc_mem_tllj_weight_JER_down/D");
+  tOutput->Branch("mc_mem_tllj_weight_log",&mc_mem_tllj_weight_log,"mc_mem_tllj_weight_log/D");
+  tOutput->Branch("mc_mem_tllj_weight_err",&mc_mem_tllj_weight_err,"mc_mem_tllj_weight_err/D");
+  tOutput->Branch("mc_mem_tllj_weight_chi2",&mc_mem_tllj_weight_chi2,"mc_mem_tllj_weight_chi2/F");
+  tOutput->Branch("mc_mem_tllj_weight_time",&mc_mem_tllj_weight_time,"mc_mem_tllj_weight_time/F");
+  tOutput->Branch("mc_mem_tllj_weight_max",&mc_mem_tllj_weight_max,"mc_mem_tllj_weight_max/D");
+  tOutput->Branch("mc_mem_tllj_weight_avg",&mc_mem_tllj_weight_avg,"mc_mem_tllj_weight_avg/D");
+  tOutput->Branch("mc_mem_tllj_weight_logmean",&mc_mem_tllj_weight_logmean,"mc_mem_tllj_weight_logmean/D");
+  tOutput->Branch("mc_mem_tllj_weight_kinmax",&mc_mem_tllj_weight_kinmax,"mc_mem_tllj_weight_kinmax/D");
+  tOutput->Branch("mc_mem_tllj_weight_kinmaxint",&mc_mem_tllj_weight_kinmaxint,"mc_mem_tllj_weight_kinmaxint/D");
+  tOutput->Branch("mc_kin_tllj_weight_logmax",&mc_kin_tllj_weight_logmax,"mc_kin_tllj_weight_logmax/D");
+  tOutput->Branch("mc_kin_tllj_weight_logmaxint",&mc_kin_tllj_weight_logmaxint,"mc_kin_tllj_weight_logmaxint/D");
+
+
   tOutput->Branch("mc_mem_ttz_tth_likelihood",&mc_mem_ttz_tth_likelihood,"mc_mem_ttz_tth_likelihood/D");
   tOutput->Branch("mc_mem_ttz_tth_likelihood_nlog",&mc_mem_ttz_tth_likelihood_nlog,"mc_mem_ttz_tth_likelihood_nlog/D");
   tOutput->Branch("mc_mem_ttz_tth_likelihood_max",&mc_mem_ttz_tth_likelihood_max,"mc_mem_ttz_tth_likelihood_max/D");
@@ -1810,6 +1847,11 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_ttbar_tth_likelihood_nlog",&mc_mem_ttbar_tth_likelihood_nlog,"mc_mem_ttbar_tth_likelihood_nlog/D");
   tOutput->Branch("mc_mem_ttbar_tth_likelihood_max",&mc_mem_ttbar_tth_likelihood_max,"mc_mem_ttbar_tth_likelihood_max/D");
   tOutput->Branch("mc_mem_ttbar_tth_likelihood_avg",&mc_mem_ttbar_tth_likelihood_avg,"mc_mem_ttbar_tth_likelihood_avg/D");
+
+  tOutput->Branch("mc_mem_ttz_tllj_likelihood",&mc_mem_ttz_tllj_likelihood,"mc_mem_ttz_tllj_likelihood/D");
+  tOutput->Branch("mc_mem_ttz_tllj_likelihood_nlog",&mc_mem_ttz_tllj_likelihood_nlog,"mc_mem_ttz_tllj_likelihood_nlog/D");
+  tOutput->Branch("mc_mem_ttz_tllj_likelihood_max",&mc_mem_ttz_tllj_likelihood_max,"mc_mem_ttz_tllj_likelihood_max/D");
+  tOutput->Branch("mc_mem_ttz_tllj_likelihood_avg",&mc_mem_ttz_tllj_likelihood_avg,"mc_mem_ttz_tllj_likelihood_avg/D");
 
   tOutput->Branch("mc_mem_ttv_tth_likelihood",&mc_mem_ttv_tth_likelihood,"mc_mem_ttv_tth_likelihood/D");
   tOutput->Branch("mc_mem_ttv_tth_likelihood_nlog",&mc_mem_ttv_tth_likelihood_nlog,"mc_mem_ttv_tth_likelihood_nlog/D");
@@ -1843,6 +1885,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("MEAllWeights_TTbarfl","vector<double>",&MEAllWeights_TTbarfl);
   tOutput->Branch("MEAllWeights_TTbarsl","vector<double>",&MEAllWeights_TTbarsl);
   tOutput->Branch("MEAllWeights_TTbar","vector<double>",&MEAllWeights_TTbar);
+  tOutput->Branch("MEAllWeights_TLLJ","vector<double>",&MEAllWeights_TLLJ);
 
   tOutput->Branch("MEAllWeights_TTLL_log","vector<float>",&MEAllWeights_TTLL_log);
   tOutput->Branch("MEAllWeights_TTHfl_log","vector<float>",&MEAllWeights_TTHfl_log);
@@ -1853,6 +1896,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("MEAllWeights_TTbarfl_log","vector<float>",&MEAllWeights_TTbarfl_log);
   tOutput->Branch("MEAllWeights_TTbarsl_log","vector<float>",&MEAllWeights_TTbarsl_log);
   tOutput->Branch("MEAllWeights_TTbar_log","vector<float>",&MEAllWeights_TTbar_log);
+  tOutput->Branch("MEAllWeights_TLLJ_log","vector<float>",&MEAllWeights_TLLJ_log);
 
   tOutput->Branch("multilepton_h0_Id",                          &multilepton_h0_Id,                     "multilepton_h0_Id/I");
   tOutput->Branch("multilepton_h0_P4",                          "TLorentzVector",                       &multilepton_h0_P4);
