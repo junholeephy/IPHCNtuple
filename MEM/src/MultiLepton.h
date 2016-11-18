@@ -24,7 +24,7 @@
 #define kJet_MissingSecond 2
 #define kJet_MissingBoth 3
 #define kJet_Present 4
-#define kJet_Missing 4
+#define kJet_Missing 5
 
 
 
@@ -119,7 +119,7 @@ class MultiLepton
 
   void AddIntegrationBound_TopLep(MEPhaseSpace**, int*, int, int, int);
   void AddIntegrationBound_TopHad(MEPhaseSpace**, int*, int, int*, int, int);
-  void AddIntegrationBound_HiggsFullyLep(MEPhaseSpace**, int);
+  void AddIntegrationBound_HiggsFullyLep(MEPhaseSpace**, int*);
   void AddIntegrationBound_HiggsSemiLep(MEPhaseSpace**, int*, int, int);
   void AddIntegrationBound_Woffshell(MEPhaseSpace**, int*, int, int, bool);
   void AddIntegrationBound_OneJet(MEPhaseSpace**, int*, int, int);
@@ -318,7 +318,7 @@ void MultiLepton::ReadIntegrationBoundaries(int kMode, MEPhaseSpace** meIntegrat
   int nparam = (*meIntegrator)->GetNumberIntegrationVar(kMode, kCatJets);
 
   for (int i=0; i<nparam; i++) {
-     if ((*meIntegrator)->verbosity>=2) cout << "Var "<<i<<" xL="<<xL[i]<<" xU="<<xU[i]<<endl;
+     if ((*meIntegrator)->verbosity>=1) cout << "Var "<<i<<" xL="<<xL[i]<<" xU="<<xU[i]<<endl;
      if (xU[i] < xL[i]) cout << "Error: xU < xL" << endl;
   }
   return;
@@ -489,7 +489,7 @@ void MultiLepton::FillTTHFullyLepHyp(MEPhaseSpace** meIntegrator)
     int numJet = 0;
     AddIntegrationBound_TopHad(meIntegrator, &pos, 0, &numJet, (*meIntegrator)->MEMFix_TopHad.isBmissing, (*meIntegrator)->MEMFix_TopHad.isJmissing);
     AddIntegrationBound_TopLep(meIntegrator, &pos, 1, 0, (*meIntegrator)->MEMFix_TopLep.isBmissing);
-    AddIntegrationBound_HiggsFullyLep(meIntegrator, pos);
+    AddIntegrationBound_HiggsFullyLep(meIntegrator, &pos);
   }
   if ((*meIntegrator)->iNleptons==4) {
 
@@ -521,7 +521,7 @@ void MultiLepton::FillTTHFullyLepHyp(MEPhaseSpace** meIntegrator)
     int pos = 0;
     AddIntegrationBound_TopLep(meIntegrator, &pos, 0, 0, (*meIntegrator)->MEMFix_TopLep.isBmissing);
     AddIntegrationBound_TopLep(meIntegrator, &pos, 1, 1, (*meIntegrator)->MEMFix_TopLep2.isBmissing);
-    AddIntegrationBound_HiggsFullyLep(meIntegrator, pos);
+    AddIntegrationBound_HiggsFullyLep(meIntegrator, &pos);
   }
 
   return;
@@ -553,7 +553,7 @@ void MultiLepton::FillTLLJHyp(MEPhaseSpace** meIntegrator)
 
     int pos = 0;
     AddIntegrationBound_TopLep(meIntegrator, &pos, 0, 0, (*meIntegrator)->MEMFix_TopLep.isBmissing);
-    AddIntegrationBound_HiggsFullyLep(meIntegrator, pos);
+    //AddIntegrationBound_HiggsFullyLep(meIntegrator, &pos);
     AddIntegrationBound_OneJet(meIntegrator, &pos, 0, (*meIntegrator)->MEMFix_OtherJets.isJmissing);
   }
 
@@ -956,40 +956,41 @@ void MultiLepton::AddIntegrationBound_TopLep(MEPhaseSpace** meIntegrator, int *p
   return;
 }
 
-void MultiLepton::AddIntegrationBound_HiggsFullyLep(MEPhaseSpace** meIntegrator, int pos){
+void MultiLepton::AddIntegrationBound_HiggsFullyLep(MEPhaseSpace** meIntegrator, int* pos){
 
   cout << "HiggsFullyLep"<<endl;
 
   if ((*meIntegrator)->iOptim == kOptimizeNone || (*meIntegrator)->iOptimHiggs==kOptimizeNone){ 
-    xL[pos+0] = 0; //HiggsFullLep, Neut1_E
-    xL[pos+1] = 0; //HiggsFullLep, Neut1_Theta
-    xL[pos+2] = 0; //HiggsFullLep, Neut1_Phi
-    xL[pos+3] = 0; //HiggsFullLep, Neut2_Theta
-    xL[pos+4] = 0; //HiggsFullLep, Neut2_Phi
+    xL[*pos+0] = 0; //HiggsFullLep, Neut1_E
+    xL[*pos+1] = 0; //HiggsFullLep, Neut1_Theta
+    xL[*pos+2] = 0; //HiggsFullLep, Neut1_Phi
+    xL[*pos+3] = 0; //HiggsFullLep, Neut2_Theta
+    xL[*pos+4] = 0; //HiggsFullLep, Neut2_Phi
 
-    xU[pos+0] = NeutMaxE;//meIntegrator->comEnergy; //HiggsFullLep, Neut1_E
-    xU[pos+1] = TMath::Pi(); //HiggsFullLep, Neut1_Theta
-    xU[pos+2] = 2*TMath::Pi(); //HiggsFullLep, Neut1_Phi
-    xU[pos+3] = TMath::Pi(); //HiggsFullLep, Neut2_Theta
-    xU[pos+4] = 2*TMath::Pi(); //HiggsFullLep, Neut2_Phi
+    xU[*pos+0] = NeutMaxE;//meIntegrator->comEnergy; //HiggsFullLep, Neut1_E
+    xU[*pos+1] = TMath::Pi(); //HiggsFullLep, Neut1_Theta
+    xU[*pos+2] = 2*TMath::Pi(); //HiggsFullLep, Neut1_Phi
+    xU[*pos+3] = TMath::Pi(); //HiggsFullLep, Neut2_Theta
+    xU[*pos+4] = 2*TMath::Pi(); //HiggsFullLep, Neut2_Phi
   }
   if ((*meIntegrator)->iOptim == kOptimizeMw || (*meIntegrator)->iOptimHiggs ==kOptimizeHiggsMw || (*meIntegrator)->iOptimHiggs ==kOptimizeHiggsTw){
 
-    xL[pos+0] = 0; //HiggsFullLep, Neut1_E
-    xL[pos+1] = 0; //HiggsFullLep, Neut1_Theta
-    xL[pos+2] = 0; //HiggsFullLep, Neut1_Phi
-    xL[pos+3] = 0; //HiggsFullLep, Neut2_Phi
-    if ((*meIntegrator)->iOptim == kOptimizeMw || (*meIntegrator)->iOptimHiggs ==kOptimizeHiggsTw) xL[pos+4] = tWmin; //HiggsFullLep, tW2
-    if ((*meIntegrator)->iOptimHiggs ==kOptimizeHiggsMw) xL[pos+4] = 0;
+    xL[*pos+0] = 0; //HiggsFullLep, Neut1_E
+    xL[*pos+1] = 0; //HiggsFullLep, Neut1_Theta
+    xL[*pos+2] = 0; //HiggsFullLep, Neut1_Phi
+    xL[*pos+3] = 0; //HiggsFullLep, Neut2_Phi
+    if ((*meIntegrator)->iOptim == kOptimizeMw || (*meIntegrator)->iOptimHiggs ==kOptimizeHiggsTw) xL[*pos+4] = tWmin; //HiggsFullLep, tW2
+    if ((*meIntegrator)->iOptimHiggs ==kOptimizeHiggsMw) xL[*pos+4] = 0;
 
-    xU[pos+0] = NeutMaxE; //HiggsFullLep, Neut1_E
-    xU[pos+1] = TMath::Pi(); //HiggsFullLep, Neut1_Theta
-    xU[pos+2] = 2*TMath::Pi(); //HiggsFullLep, Neut1_Phi
-    xU[pos+3] = 2*TMath::Pi(); //HiggsFullLep, Neut2_Phi
-    if ((*meIntegrator)->iOptim == kOptimizeMw || (*meIntegrator)->iOptimHiggs ==kOptimizeHiggsTw) xU[pos+4] = tWmaxHiggs; //HiggsFullLep, tW2
-    if ((*meIntegrator)->iOptimHiggs ==kOptimizeHiggsMw) xU[pos+4] = 125.;
+    xU[*pos+0] = NeutMaxE; //HiggsFullLep, Neut1_E
+    xU[*pos+1] = TMath::Pi(); //HiggsFullLep, Neut1_Theta
+    xU[*pos+2] = 2*TMath::Pi(); //HiggsFullLep, Neut1_Phi
+    xU[*pos+3] = 2*TMath::Pi(); //HiggsFullLep, Neut2_Phi
+    if ((*meIntegrator)->iOptim == kOptimizeMw || (*meIntegrator)->iOptimHiggs ==kOptimizeHiggsTw) xU[*pos+4] = tWmaxHiggs; //HiggsFullLep, tW2
+    if ((*meIntegrator)->iOptimHiggs ==kOptimizeHiggsMw) xU[*pos+4] = 125.;
   }
 
+  *pos += 5;
 }
 
 void MultiLepton::AddIntegrationBound_HiggsSemiLep(MEPhaseSpace** meIntegrator, int* pos, int numJets, int isJetMissing){
@@ -1267,6 +1268,7 @@ void MultiLepton::AddIntegrationBound_OneJet(MEPhaseSpace** meIntegrator, int* p
       (*meIntegrator)->transferFunctions->MeasuredVarForTF.Jet1_Eta = Jets[numJets+0].P4.Eta();
       (*meIntegrator)->transferFunctions->MeasuredVarForTF.doJet1TF = true;
   }
+  else (*meIntegrator)->transferFunctions->MeasuredVarForTF.doJet1TF = false;
 
   if (isJetMissing==kJet_Present){
       xL[*pos] = Jets[numJets+0].P4.E()*JetTFfracmin; //HiggsSemiLep, Jet1_E
@@ -1286,7 +1288,7 @@ void MultiLepton::AddIntegrationBound_OneJet(MEPhaseSpace** meIntegrator, int* p
 
 void MultiLepton::SetPresenceBandJets(MEPhaseSpace** meIntegrator, int KindTwoTops, int KindBoson) {
 
- //max permutations (default)
+ //max permutations with missing jet/b-jet (default)
   iperm_bmiss_max = 2;
   iperm_jmiss_max = 2;
 
@@ -1332,14 +1334,14 @@ void MultiLepton::SetPresenceBandJets(MEPhaseSpace** meIntegrator, int KindTwoTo
    }
  }
  if (KindTwoTops==-1){ //top lep, no 2nd top
-   if (Bjets.size()==1) (*meIntegrator)->MEMFix_TopLep.isBmissing = kBjet_Present;
+   if (Bjets.size()>=1) (*meIntegrator)->MEMFix_TopLep.isBmissing = kBjet_Present;
    if (Bjets.size()==0) (*meIntegrator)->MEMFix_TopLep.isBmissing = kBjet_Missing;
  }
 
 
   //Jets presence
   if (KindTwoTops==-1){
-    if (Jets.size()==1) (*meIntegrator)->MEMFix_OtherJets.isJmissing = kJet_Present;
+    if (Jets.size()>=1) (*meIntegrator)->MEMFix_OtherJets.isJmissing = kJet_Present;
     if (Jets.size()==0) (*meIntegrator)->MEMFix_OtherJets.isJmissing = kJet_Missing;
   }
   if (KindTwoTops==0 && KindBoson==0){ //has top had  
