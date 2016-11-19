@@ -233,6 +233,7 @@ class ReadGenFlatTree {
   //Char_t is_Zl_CR;
   Char_t is_3l_TTZ_CR;
   Char_t is_3l_WZrel_CR;
+  Char_t is_3l_TZQ_SR;
 
   Char_t cat_HtoWW;
   Char_t cat_HtoZZ;
@@ -674,7 +675,7 @@ class ReadGenFlatTree {
   Double_t mc_mem_ttvjj_tth_likelihood_nlog;
   Double_t mc_mem_ttvjj_tth_likelihood_max;
   Double_t mc_mem_ttvjj_tth_likelihood_avg;
-
+  /*
   std::vector<double>* MEAllWeights_TTLL;
   std::vector<double>* MEAllWeights_TTHfl;
   std::vector<double>* MEAllWeights_TTHsl;
@@ -696,7 +697,7 @@ class ReadGenFlatTree {
   std::vector<float>* MEAllWeights_TTbarsl_log;
   std::vector<float>* MEAllWeights_TTbar_log;
   std::vector<float>* MEAllWeights_TLLJ_log;
-
+  */
   TBranch* b_catJets;
   TBranch* b_is_2lss_TTH_SR;
   TBranch* b_is_3l_TTH_SR;
@@ -704,6 +705,8 @@ class ReadGenFlatTree {
   //TBranch* b_is_Zl_CR;
   TBranch* b_is_3l_TTZ_CR;
   //TBranch* b_is_3l_WZrel_CR;
+  TBranch* b_is_3l_TZQ_SR;
+
   TBranch* b_mc_3l_category;
   TBranch* b_mc_ttbar_decay;
   TBranch* b_mc_boson_decay;
@@ -888,8 +891,8 @@ class ReadGenFlatTree {
   TH1F** hMEPhaseSpace_ErrorTot_Fail;
   TH1F** hMEPhaseSpace_ErrorTot_Pass;
 
-  TH1D* hMEAllWeights[7][12];
-  TH1D* hMEAllWeights_nlog[7][12];
+  TH1D* hMEAllWeights[8][12];
+  TH1D* hMEAllWeights_nlog[8][12];
 
   private:
 };
@@ -1166,7 +1169,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
    multilepton_JetLowestMjj2_2ndPair_P4_ptr = 0;
    multilepton_mET_ptr = 0;
    multilepton_Ptot_ptr = 0;
-
+   /*
    MEAllWeights_TTLL = new std::vector<double>;
    MEAllWeights_TTHfl = new std::vector<double>;
    MEAllWeights_TTHsl = new std::vector<double>;
@@ -1186,7 +1189,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
    MEAllWeights_TTbarfl_log = new std::vector<float>;
    MEAllWeights_TTbarsl_log = new std::vector<float>;
    MEAllWeights_TTbar_log = new std::vector<float>;
-
+   */
   tInput->SetBranchAddress("mc_event",&mc_event,&b_mc_event);
 
   tInput->SetBranchAddress("mc_weight",&mc_weight,&b_mc_weight);
@@ -1207,6 +1210,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   //tInput->SetBranchAddress("is_Zl_CR",&is_Zl_CR,&b_is_Zl_CR);
   tInput->SetBranchAddress("is_3l_TTZ_CR",&is_3l_TTZ_CR,&b_is_3l_TTZ_CR);
   //tInput->SetBranchAddress("is_3l_WZrel_CR ",&is_3l_WZrel_CR,&b_is_3l_WZrel_CR);
+  tInput->SetBranchAddress("is_3l_TZQ_SR",&is_3l_TZQ_SR,&b_is_3l_TZQ_SR);
 
   tInput->SetBranchAddress("cat_HtoWW",&cat_HtoWW,&b_cat_HtoWW);
   tInput->SetBranchAddress("cat_HtoZZ",&cat_HtoZZ,&b_cat_HtoZZ);
@@ -1418,6 +1422,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   //tOutput->Branch("is_Zl_CR",&is_Zl_CR,"is_Zl_CR/B");
   tOutput->Branch("is_3l_TTZ_CR",&is_3l_TTZ_CR,"is_3l_TTZ_CR/B");
   //tOutput->Branch("is_3l_WZrel_CR",&is_3l_WZrel_CR,"is_3l_WZrel_CR/B");
+  tOutput->Branch("is_3l_TZQ_SR",&is_3l_TZQ_SR,"is_3l_TZQ_SR/B");
 
   tOutput->Branch("cat_HtoWW",&cat_HtoWW,"cat_HtoWW/B");
   tOutput->Branch("cat_HtoZZ",&cat_HtoZZ,"cat_HtoZZ/B");
@@ -1875,7 +1880,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("signal_2lss_TTV_MVA",&signal_2lss_TTV_MVA,"signal_2lss_TTV_MVA/F");
   tOutput->Branch("signal_3l_TT_MVA",&signal_3l_TT_MVA,"signal_3l_TT_MVA/F");
   tOutput->Branch("signal_3l_TTV_MVA",&signal_3l_TTV_MVA,"signal_3l_TTV_MVA/F");
-
+  /*
   tOutput->Branch("MEAllWeights_TTLL","vector<double>",&MEAllWeights_TTLL);
   tOutput->Branch("MEAllWeights_TTHfl","vector<double>",&MEAllWeights_TTHfl);
   tOutput->Branch("MEAllWeights_TTHsl","vector<double>",&MEAllWeights_TTHsl);
@@ -1897,7 +1902,7 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("MEAllWeights_TTbarsl_log","vector<float>",&MEAllWeights_TTbarsl_log);
   tOutput->Branch("MEAllWeights_TTbar_log","vector<float>",&MEAllWeights_TTbar_log);
   tOutput->Branch("MEAllWeights_TLLJ_log","vector<float>",&MEAllWeights_TLLJ_log);
-
+  */
   tOutput->Branch("multilepton_h0_Id",                          &multilepton_h0_Id,                     "multilepton_h0_Id/I");
   tOutput->Branch("multilepton_h0_P4",                          "TLorentzVector",                       &multilepton_h0_P4);
   tOutput->Branch("multilepton_t1_Id",                          &multilepton_t1_Id,                     "multilepton_t1_Id/I");
@@ -2397,6 +2402,8 @@ void ReadGenFlatTree::ReadMultilepton(Long64_t iEvent, MultiLepton* multiLepton)
   //cout << "JetClosestMw0Pt="<<(*multiLepton).JetsClosestMw.at(0).P4.Pt() << " JetClosestMw1Pt="<<(*multiLepton).JetsClosestMw.at(1).P4.Pt() << endl;
   //cout << "JetLowestMjj0Pt="<<(*multiLepton).JetsLowestMjj.at(0).P4.Pt() << " JetLowestMjj1Pt="<<(*multiLepton).JetsLowestMjj.at(1).P4.Pt() << endl;
 
+  cout << "MultiLepton loaded"<<endl;
+  
   return;
 }
 
