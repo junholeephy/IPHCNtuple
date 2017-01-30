@@ -357,8 +357,10 @@ void Tree::Init(TChain *ch)
     jet_phi = 0;
     jet_m = 0;
     jet_E = 0;
+    jet_qgtag = 0;
     jet_ntrk = 0;
     jet_CSVv2 = 0;
+    jet_cMVAv2 = 0;
     jet_looseJetID = 0;
     jet_partonFlavour = 0;
     jet_hadronFlavour = 0;
@@ -1156,8 +1158,10 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("jet_phi", &jet_phi, &b_jet_phi);
     fChain->SetBranchAddress("jet_m", &jet_m, &b_jet_m);
     fChain->SetBranchAddress("jet_E", &jet_E, &b_jet_E);
+    fChain->SetBranchAddress("jet_qgtag", &jet_qgtag, &b_jet_qgtag);
     fChain->SetBranchAddress("jet_ntrk", &jet_ntrk, &b_jet_ntrk);
     fChain->SetBranchAddress("jet_CSVv2", &jet_CSVv2, &b_jet_CSVv2);
+    fChain->SetBranchAddress("jet_cMVAv2", &jet_cMVAv2, &b_jet_cMVAv2);
     fChain->SetBranchAddress("jet_looseJetID", &jet_looseJetID, &b_jet_looseJetID);
     fChain->SetBranchAddress("jet_partonFlavour", &jet_partonFlavour, &b_jet_partonFlavour);
     fChain->SetBranchAddress("jet_hadronFlavour", &jet_hadronFlavour, &b_jet_hadronFlavour);

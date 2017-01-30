@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
 
             mu.init();
             mu.read();
-
+            //if(n_mu_evt==1) break;
             if( mu.sel())
             {
                 nt->NtMuon->push_back(mu);
@@ -159,20 +159,21 @@ int main(int argc, char *argv[])
 
             el.init();
             el.read();
-
+            //if(n_el_evt==1) break;
             if( el.sel()  ) 
             {    
                 nt->NtElectron->push_back(el);
                 el_presel = true;
                 n_el_evt++;
             }
-            //if(n_el_evt==1) break;
         }
         if(el_presel) n_el++;
 
 
         // preselection
-        if ( (n_mu_evt + n_el_evt) < 2 ) continue; 
+        //if ( (n_mu_evt + n_el_evt) < 2 ) continue; 
+
+        int n_tau_evt = 0;
 
         // taus 
         for(int j=0;j<ntP->tau_n;j++)
@@ -181,15 +182,17 @@ int main(int argc, char *argv[])
 
             tau.init();
             tau.read();
-
+            //if(n_tau_evt==1) break;
             if (tau.sel()) 
             {    
                 nt->NtTau->push_back(tau);
                 tau_presel = true;
+                n_tau_evt++;
             }
         }	
         if(tau_presel) n_tau++;
 
+        int n_jet_evt = 0;
 
         // jets
         for(int j=0;j<ntP->jet_n;j++)
@@ -204,11 +207,14 @@ int main(int argc, char *argv[])
 
             jet.setJESUncertainty(jesTotal->getUncertainty(true));
             //jet.setJESUncertainty(0.);
-
+            //std::cout << "Test ===================" << std::endl;
+            //std::cout << "n_jet_evt: " << n_jet_evt << std::endl;
+            //if(n_jet_evt==1) break;
             if (jet.sel()) 
             {    
                 nt->NtJet->push_back(jet);
                 jet_presel = true;
+                n_jet_evt++;
             }    
         }
         if(jet_presel) n_jet++;

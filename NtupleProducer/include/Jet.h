@@ -14,29 +14,32 @@ class Jet : public Base
 
         static bool sortPtPredicate(Jet lhs, Jet rhs) {return (lhs.pt() > rhs.pt());};
 
-        int   ID()       {return _ID;};
+        int   ID()          {return _ID;};
 
         bool  sel();
 
         // kinematics
-        float E()        {return _E;};
-        float pt()       {return _pt;};
-        float eta()      {return _eta;};
-        float phi()      {return _phi;};
-        float m()        {return _m;};
+        float E()           {return _E;};
+        float pt()          {return _pt;};
+        float eta()         {return _eta;};
+        float phi()         {return _phi;};
+        float m()           {return _m;};
+        float qg()          {return _qg;};
 
-        bool  isTight()  {return _isTight;};
-        bool  isLoose()  {return _isLoose;};
+        bool  isTight()     {return _isTight;};
+        bool  isLoose()     {return _isLoose;};
 
-        int   ntrk()     {return _ntrk;};
+        int   ntrk()        {return _ntrk;};
 
-        float CSVv2()    {return _CSVv2;};
+        float CSVv2()       {return _CSVv2;};
+        float cMVAv2()      {return _cMVAv2;};
+        float deepCSV()     {return _deepCSV;};
 
         float jet_partonFlavour() {return _jet_partonFlavour  ;};
         float jet_hadronFlavour() {return _jet_hadronFlavour  ;};
 
         float jet_genJet_pt()     {return  _jet_genJet_pt    ;};
-	float jet_genJet_E()      {return  _jet_genJet_E   ;};
+	    float jet_genJet_E()      {return  _jet_genJet_E   ;};
         /*float jet_genJet_eta()    {return  _jet_genJet_eta ;};
           float jet_genJet_phi()    {return  _jet_genJet_phi ;};
           float jet_genJet_m()      {return  _jet_genJet_m   ;};
@@ -45,24 +48,24 @@ class Jet : public Base
           float jet_genJet_id()     {return  _jet_genJet_id  ;};*/
 
         float jet_genParton_pt()     {return  _jet_genParton_pt     ;};
-	float jet_genParton_E()      {return  _jet_genParton_E      ;};
+	    float jet_genParton_E()      {return  _jet_genParton_E      ;};
         /*float jet_genParton_eta()    {return  _jet_genParton_eta    ;};
           float jet_genParton_phi()    {return  _jet_genParton_phi    ;};
           float jet_genParton_m()      {return  _jet_genParton_m      ;};
           float jet_genParton_E()      {return  _jet_genParton_E      ;};
           float jet_genParton_status() {return  _jet_genParton_status ;};*/
-          float jet_genParton_id()     {return  _jet_genParton_id     ;};
+        float jet_genParton_id()     {return  _jet_genParton_id     ;};
 
-	float JES_uncert()	{return _JES_uncert;}
-	float pt_JER()		{return _pt_JER;}
-	float pt_JER_down()	{return _pt_JER_down;}
-	float pt_JER_up()	{return _pt_JER_up;}
+	    float JES_uncert()	{return _JES_uncert;}
+	    float pt_JER()		{return _pt_JER;}
+	    float pt_JER_down()	{return _pt_JER_down;}
+	    float pt_JER_up()	{return _pt_JER_up;}
 
         void  read(bool isdata);
         void  init();
-	void  setJESUncertainty(float JES_uncert);
+	    void  setJESUncertainty(float JES_uncert);
         void  JECUncertainty();
-    
+
     protected:
 
         int _ID;
@@ -72,6 +75,7 @@ class Jet : public Base
         float _eta;
         float _phi;
         float _m;
+        float _qg;
 
         bool _isTight;
         bool _isLoose;
@@ -79,13 +83,14 @@ class Jet : public Base
         int _ntrk;
 
         float _CSVv2;
-
+        float _cMVAv2;
+        float _deepCSV;
 
         float _jet_partonFlavour  ;
         float _jet_hadronFlavour  ;
 
         float _jet_genJet_pt      ;
-	float _jet_genJet_E       ;
+	    float _jet_genJet_E       ;
         /*float _jet_genJet_eta     ;
           float _jet_genJet_phi     ;
           float _jet_genJet_m       ;
@@ -93,8 +98,8 @@ class Jet : public Base
           float _jet_genJet_status  ;
           float _jet_genJet_id      ;*/
 
-        float _jet_genParton_pt     ; 
-	float _jet_genParton_E      ;
+        float _jet_genParton_pt     ;
+	    float _jet_genParton_E      ;
         /*float _jet_genParton_eta    ;
           float _jet_genParton_phi    ;
           float _jet_genParton_m      ;
@@ -103,11 +108,11 @@ class Jet : public Base
         float _jet_genParton_id     ;
 
         float _JES_uncert; // to be used with pt(1+/-uncert), E(1+/-uncert)
-	
+
         float _pt_JER;
         float _pt_JER_down;
         float _pt_JER_up;
-        
+
         ClassDef(Jet,1)
 };
 

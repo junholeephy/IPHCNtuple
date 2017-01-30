@@ -17,19 +17,21 @@ void Jet::read(bool isdata)
     _ID = idx;
 
     // general informations
-    if( CHECK(ntP->jet_E)     )       _E       = ntP->jet_E->at(idx);
-    if( CHECK(ntP->jet_pt)    )       _pt      = ntP->jet_pt->at(idx);
-    if( CHECK(ntP->jet_eta)   )       _eta     = ntP->jet_eta->at(idx);   
-    if( CHECK(ntP->jet_phi)   )       _phi     = ntP->jet_phi->at(idx);   
-    if( CHECK(ntP->jet_m)     )       _m       = ntP->jet_m->at(idx);
+    if( CHECK(ntP->jet_E)       )       _E      = ntP->jet_E->at(idx);
+    if( CHECK(ntP->jet_pt)      )       _pt     = ntP->jet_pt->at(idx);
+    if( CHECK(ntP->jet_eta)     )       _eta    = ntP->jet_eta->at(idx);   
+    if( CHECK(ntP->jet_phi)     )       _phi    = ntP->jet_phi->at(idx);   
+    if( CHECK(ntP->jet_m)       )       _m      = ntP->jet_m->at(idx);
+    if( CHECK(ntP->jet_qgtag)   )       _qg     = ntP->jet_qgtag->at(idx);
+
 
     // selection variables
     if( CHECK(ntP->jet_looseJetID) )  _isLoose = ntP->jet_looseJetID->at(idx);
 
     // other variables
-    if( CHECK(ntP->jet_ntrk) )        _ntrk  = ntP->jet_ntrk->at(idx);
-    if( CHECK(ntP->jet_CSVv2) )       _CSVv2 = ntP->jet_CSVv2->at(idx);
-
+    if( CHECK(ntP->jet_ntrk) )        _ntrk   = ntP->jet_ntrk->at(idx);
+    if( CHECK(ntP->jet_CSVv2) )       _CSVv2  = ntP->jet_CSVv2->at(idx);
+    if (CHECK(ntP->jet_cMVAv2) )      _cMVAv2 = ntP->jet_cMVAv2->at(idx);
 
     // Gen Jets variables
 
@@ -44,7 +46,6 @@ void Jet::read(bool isdata)
         _jet_genParton_E      = ntP->jet_genParton_E->at(idx);      
     }
     
-    
     JECUncertainty();
 
 }
@@ -52,11 +53,12 @@ void Jet::read(bool isdata)
 void Jet::init()
 {
     //general information
-    _E       = -100;
-    _pt      = -100;
-    _eta     = -100;
-    _phi     = -100;
-    _m       = -100;
+    _E       = -100.;
+    _pt      = -100.;
+    _eta     = -100.;
+    _phi     = -100.;
+    _m       = -100.;
+    _qg      = -100.;
 
     // selection variables
     _isLoose = 0;
@@ -64,6 +66,8 @@ void Jet::init()
     // other variables
     _ntrk    = -100;
     _CSVv2   = -100.;
+    _cMVAv2  = -100.;
+    _deepCSV = -100.;
 
     // Gen Jet variables
     _jet_partonFlavour    = -100.;
@@ -78,9 +82,6 @@ void Jet::init()
     _pt_JER               = 0.;
     _pt_JER_down          = 0.;
     _pt_JER_up            = 0.;
-    
-   
-    
 }
 
 
@@ -140,7 +141,8 @@ bool Jet::sel()
                           );
 
     // synchronization printout
-    if( false ) std::cout   << "Jet "
+    //if( false ) std::cout
+    if( isSelectionJet) std::cout
                             << nt->NtEvent->at(0).id()          << " "
                             << _pt                              << " "
                             << _eta                             << " "

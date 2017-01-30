@@ -1,0 +1,1 @@
+/opt/sbg/scratch1/cms/xcoubez/ntuples_prod_medusa_patch4/toyMC/WW_DoubleScattering_13TeV-pythia8/WW_DoubleScattering_13TeV-pythia8_ID0_0.root

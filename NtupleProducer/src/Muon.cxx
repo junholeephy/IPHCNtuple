@@ -97,14 +97,15 @@ void Muon::init()
     _bestTrack_ptError  = -100.;
     //_dB3D               = -100.;
     //_edB3D              = -100.;
-    _tightCharge        = 999;
+
+    _passTightCharge    = false;
     _cutEventSel        = true;
+    _noLostHits         = true;
 
     // more variables
    
-    _lepMVA            = -100.; 
-    _lepMVA_TTH  = -100.; 
-    
+    _lepMVA                      = -100.; 
+    _lepMVA_TTH                  = -100.; 
       
     _lepMVA_miniRelIsoCharged    = -100.;
     _lepMVA_miniRelIsoNeutral    = -100.;
@@ -177,14 +178,14 @@ bool Muon::sel()
         _pt = new_pt;
     }
 
-    /*cout<<std::setiosflags(ios::fixed)<<setprecision(5);
+    cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     
     // synchronization printout
-    if( true )//isLooseTTH ) 
+    if( false )
+    //if( isLooseTTH ) 
     {    
         std::cout                      << nt->NtEvent->at(0).id()                       << " "
                                        << _pt                                           << " "
-                                       << _ptUnc                                        << " "
                                        << _eta                                          << " "
                                        << _phi                                          << " "
                                        << _E                                            << " "
@@ -202,7 +203,7 @@ bool Muon::sel()
                                        << _dz                                           << " "
                                        << ntP->mu_segmentCompatibility->at(idx)         << " "
                                        << _lepMVA_TTH                                   << std::endl;
-    }*/
+    }
 
     return isLooseTTH;
 }

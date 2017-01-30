@@ -16,7 +16,7 @@ void Truth::read()
 
     int gen_n = ntP->gen_n;
 
-    bool  print_gen = true;
+    bool  print_gen = false;
 
     int gen_n_sel = 0;
     for(int i=0;i<gen_n;i++)

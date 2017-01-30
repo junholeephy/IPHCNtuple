@@ -361,8 +361,10 @@ class Tree {
         vector<float>   *jet_phi;
         vector<float>   *jet_m;
         vector<float>   *jet_E;
+        vector<float>   *jet_qgtag;
         vector<int>     *jet_ntrk;
         vector<float>   *jet_CSVv2;
+        vector<float>   *jet_cMVAv2;
         vector<bool>    *jet_looseJetID;
         vector<int>     *jet_partonFlavour;
         vector<int>     *jet_hadronFlavour;
@@ -1231,8 +1233,10 @@ class Tree {
         TBranch        *b_jet_phi;   //!
         TBranch        *b_jet_m;   //!
         TBranch        *b_jet_E;   //!
+        TBranch        *b_jet_qgtag;
         TBranch        *b_jet_ntrk;   //!
         TBranch        *b_jet_CSVv2;   //!
+        TBranch        *b_jet_cMVAv2;
         TBranch        *b_jet_looseJetID;
         TBranch        *b_jet_partonFlavour;   //!
         TBranch        *b_jet_hadronFlavour;   //!

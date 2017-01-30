@@ -8,14 +8,15 @@ dirName=${1}
 #fi
 
 #fpath="/user/kskovpen/analysis/tHFCNC/CMSSW_8_0_12/src/tHFCNC/NtupleProducer/test/toy${dirName}/"
-fpath="/opt/sbg/scratch1/cms/xcoubez/ntuples_prod_medusa_patch4/toyMC_${dirName}/"
+fpath="/opt/sbg/scratch1/cms/xcoubez/ntuples_prod_medusa_patch4/toyMC/"
+#fpath="/opt/sbg/scratch1/cms/nchanon/ntuples_prod_medusa_patch4_MC/toyMCmore/"
 
 liDATA=($(ls ${fpath} | grep "Run2016"))
 liMC=($(ls ${fpath}))
 
 nFilesDATA=2 # per job
 nFilesMC=1
-outDir="lists"
+outDir="lists_ttH"
 
 rm -rf ${outDir}
 mkdir ${outDir}

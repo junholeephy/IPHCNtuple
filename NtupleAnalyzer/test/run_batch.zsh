@@ -2,14 +2,13 @@
 
 # don't forget /opt/sbg/scratch1/cms
 
-
 echo "Don't forget to update the lumi and the maximum number of events to run on in this script if needed !"
 
 isdata=0
 doSystCombine=0
-lumi=6300
+lumi=12900
 
-cp /tmp/x509up_u6155 /home-pbs/lebihan/someone/proxy/.
+cp /tmp/x509up_u7650 /home-pbs/xcoubez/proxy/.
 
 jName=${1}
 if [[ ${jName} == "" ]]; then
@@ -17,12 +16,13 @@ if [[ ${jName} == "" ]]; then
   exit 1
 fi
 
-que="cms"
+#que="cms_local"
+que="cms_local_mdm"
 
 export HOME=$(pwd)
 
-dout="/home-pbs/lebihan/someone/medusa_patch3_analyzer/ttH/NtupleAnalyzer/test/"
-dout_f="/opt/sbg/scratch1/cms/lebihan/trees_analyzer_prod_medusa_patch3/"
+dout="/home-pbs/xcoubez/2016/ttH/80X/MyAnalysis/CMSSW_8_0_20/src/ttH/NtupleAnalyzer/test/"
+dout_f="/home-pbs/xcoubez/2016/ttH/80X/MyAnalysis/CMSSW_8_0_20/src/ttH/NtupleAnalyzer/test/"
 
 runName="toy_${jName}"
 logName="log_${jName}"
@@ -34,9 +34,11 @@ mkdir ${logName}
 
 nmax=-1
 
-fxsec="table_MC_Medusa-patch3_20160707.txt"
+fxsec="table_MC_Medusa-patch4_20160726_TTLep.txt"
 
-fdir=$(ls -d lists*)
+fdir=$(ls -d lists)
+#fdir=$(ls -d list_Medusa_patch4_MC_WZ)
+#fdir=$(ls -d list_Medusa_patch4_DATA)
 
 echo $fdir
 

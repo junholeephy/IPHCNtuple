@@ -104,6 +104,7 @@ class TTbarHiggsMultileptonAnalysis
         int cat_ee_fake, cat_em_fake, cat_mm_fake, cat_3l_fake;
         int cat_ee_flip, cat_em_flip;
         int is_2bTight;
+        float is_2bTight_float;
 
         bool cat_HtoWW, cat_HtoZZ, cat_Htott;
 

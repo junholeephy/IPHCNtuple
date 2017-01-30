@@ -1,1 +1,1 @@
-/opt/sbg/scratch1/cms/xcoubez/ntuples_prod_medusa_patch4/toyMC_TT/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8_ID0_0.root
+/opt/sbg/scratch1/cms/xcoubez/ntuples_prod_medusa_patch4/toyMC/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8_ID0_0.root

@@ -196,7 +196,8 @@ bool Tau::sel()
     bool pass_dz  = (fabs(_dz)  < 0.2  );
 
     bool pass_decayModeFindingOldDMs                        = ( ntP->tau_decayModeFindingOldDMs->at(idx)                          > 0.5 );
-    bool pass_byLooseIsolationMVArun2v1DBdR03oldDMwLT       = ( ntP->tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT->at(idx)         > 0.5 );
+    //bool pass_decayModeFinding                              = ( ntP->tau_decayModeFinding->at(idx)                              > 0.5 );
+    bool pass_byLooseIsolationMVArun2v1DBdR03oldDMwLT       = ( ntP->tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT->at(idx)       > 0.5 );
 
     bool pass_muOverlap = 1;
     int nMuon = nt->NtMuon->size();
@@ -230,17 +231,17 @@ bool Tau::sel()
 
     cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     // synchronization printout
-    if( false )     std::cout   << "Taus: "
-                                << nt->NtEvent->at(0).id()                                      << " "
-                                << _pt                                                          << " "
-                                << _eta                                                         << " "
-                                << _phi                                                         << " "
-                                << _E                                                           << " "
-                                << _dxy                                                         << " "
-                                << _dz                                                          << " "
-                                << ntP->tau_decayModeFindingOldDMs->at(idx)                     << " "
-                                << ntP->tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT->at(idx)    << " "
-                                << ntP->tau_byMediumIsolationMVArun2v1DBdR03oldDMwLT->at(idx)   << std::endl;
+    //if( isSelectionTau) std::cout  << nt->NtEvent->at(0).id()                                      << " "
+    if( false ) std::cout         << nt->NtEvent->at(0).id()                                      << " "
+                                    << _pt                                                          << " "
+                                    << _eta                                                         << " "
+                                    << _phi                                                         << " "
+                                    << _E                                                           << " "
+                                    << _dxy                                                         << " "
+                                    << _dz                                                          << " "
+                                    << ntP->tau_decayModeFindingOldDMs->at(idx)                     << " "
+                                    << ntP->tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT->at(idx)    << " "
+                                    << ntP->tau_byMediumIsolationMVArun2v1DBdR03oldDMwLT->at(idx)   << std::endl;
 
 
     return isSelectionTau;

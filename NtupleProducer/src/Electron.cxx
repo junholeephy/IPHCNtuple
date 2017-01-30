@@ -279,12 +279,13 @@ bool Electron::sel()
         _pt = new_pt;
     }
 
-    /*cout<<std::setiosflags(ios::fixed)<<setprecision(5);
+    cout<<std::setiosflags(ios::fixed)<<setprecision(5);
     
     // synchronization printout
-    if( true )
+    if( false )
+    //if( isLooseTTH )
     {
-        std::cout   << "Electrons: "
+        std::cout   //<< "Electrons: "
                     << nt->NtEvent->at(0).id()                          << " "
                     << _pt                                              << " "
                     << _ptUnc                                           << " "
@@ -306,7 +307,7 @@ bool Electron::sel()
                     << fabs( ntP->el_mvaNonTrigV0->at(idx) )            << " "
                     << _lepMVA_TTH                                      << " "
                     << std::endl;
-    
+        /*
         std::cout   << "Event:           "              << nt->NtEvent->at(0).id()
                     << " pass_pt:        "              << pass_pt
                     << " pass_eta:       "              << pass_eta
@@ -325,7 +326,9 @@ bool Electron::sel()
                     << " is Tight: "                    << isTightTTH
                     << " cutEventSel: "                 << _cutEventSel
                     << std::endl;
-    }*/
+        */
+                    
+    }
 
     return isLooseTTH;
 }

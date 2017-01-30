@@ -1,1 +1,1 @@
-./InputFile/outputnew.root
+./input_synch_2.root

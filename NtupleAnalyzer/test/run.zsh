@@ -8,12 +8,12 @@ export LD_LIBRARY_PATH=${cdir}:${NtupleDir}:${KinFitDir}:${NtupleDir}/obj:$LD_LI
 # tools: plot, tran
 
 ./../Analyzer \
---file test.txt \
+--file input.txt \
 --tree Nt \
 --outfile ./output_ttH_MC \
---nmax 10000 \
+--nmax 100000 \
 --isdata 0 \
---doSystCombine 1 \
+--doSystCombine 0 \
 --nowe 1 \
 --xsec 1   \
 --lumi 1 \

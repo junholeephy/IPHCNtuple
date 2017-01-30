@@ -25,37 +25,33 @@ LDLIBS  = $(ROOTLIBS) $(NTUPLELIB) $(KINFITLIB)
 
 ADDINC = $(NTUPLEINC) $(KINFITINC) 
 
-SRC = src/Analyzer.cxx  src/Hist.cxx \
-src/TTbarDileptonAnalysis.cxx src/HistoManager.cxx \
-src/TTbarHiggsMultileptonAnalysis.cxx src/TTbarHiggsTFAnalysis.cxx \
-src/Lepton.cxx \
-src/TTbarHiggsTriggerAnalysis.cxx \
-src/TTbarHiggsBTagEff.cxx \
-src/BTagCalibrationXStandalone.cxx
+SRC = src/TTbarHiggsMultileptonAnalysis.cxx \
+ src/Analyzer.cxx \
+ src/HistoManager.cxx src/Hist.cxx \
+ src/Lepton.cxx \
+ src/TTbarHiggsBTagEff.cxx \
+ src/BTagCalibrationXStandalone.cxx
 
 
-INC = include/Hist.h include/Ranges.h include/Analyzer.h \
-      include/TTbarDileptonAnalysis.h \
-      include/HistoManager.h include/TTbarHiggsMultileptonAnalysis.h \
-      include/TTbarHiggsTFAnalysis.h \
-      include/Lepton.h \
-      include/TTbarHiggsTriggerAnalysis.h \
-      include/TTbarHiggsBTagEff.h \
-      include/BTagCalibrationXStandalone.h
+INC = include/TTbarHiggsMultileptonAnalysis.h \
+ include/Analyzer.h \
+ include/HistoManager.h include/Hist.h \
+ include/Lepton.h \
+ include/TTbarHiggsBTagEff.h \
+ include/BTagCalibrationXStandalone.h \
+ include/Ranges.h
 
-OBJ = Analyzer.o Hist.o \
-TTbarDileptonAnalysis.o HistoManager.o \
-TTbarHiggsMultileptonAnalysis.o \
-TTbarHiggsTFAnalysis.o \
-Lepton.o \
-TTbarHiggsTriggerAnalysis.o \
-TTbarHiggsBTagEff.o\
-BTagCalibrationXStandalone.o
+OBJ = TTbarHiggsMultileptonAnalysis.o \
+ Analyzer.o\
+ HistoManager.o Hist.o\
+ Lepton.o \
+ TTbarHiggsBTagEff.o\
+ BTagCalibrationXStandalone.o
 
 EXE = Analyzer
 
 all:  	     		$(EXE)
-#			@rm -f *.o
+			@rm -f *.o
 
 $(EXE):     	 	$(OBJ) $@
 
