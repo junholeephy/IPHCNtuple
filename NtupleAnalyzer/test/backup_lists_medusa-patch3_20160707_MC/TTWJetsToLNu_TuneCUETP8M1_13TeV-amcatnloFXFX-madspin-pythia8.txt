@@ -1,1 +1,0 @@
-/opt/sbg/scratch1/cms/lebihan/ntuples_prod_medusa_patch3/toyMC/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8_ID0_0.root

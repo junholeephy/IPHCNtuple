@@ -1,1 +1,0 @@
-/opt/sbg/scratch1/cms/nchanon/ntuples_prod_medusa_patch4_MC/toyMCmore/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_ID22_0.root

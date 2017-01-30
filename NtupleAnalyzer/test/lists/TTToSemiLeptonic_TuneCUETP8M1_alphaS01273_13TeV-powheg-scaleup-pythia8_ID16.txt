@@ -1,1 +1,0 @@
-/opt/sbg/scratch1/cms/xcoubez/ntuples_prod_medusa_patch4/toyMC_TT/TTToSemiLeptonic_TuneCUETP8M1_alphaS01273_13TeV-powheg-scaleup-pythia8/TTToSemiLeptonic_TuneCUETP8M1_alphaS01273_13TeV-powheg-scaleup-pythia8_ID23_0.root

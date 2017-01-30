@@ -1,1 +1,0 @@
-/opt/sbg/scratch1/cms/xcoubez/ntuples_prod_medusa_patch4/toyMC_TT/TTTo2L2Nu_13TeV-powheg/TTTo2L2Nu_13TeV-powheg_ID51_0.root
