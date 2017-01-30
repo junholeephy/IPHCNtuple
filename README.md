@@ -9,12 +9,12 @@ Install
 
 mkdir MyAnalysis/; cd MyAnalysis/
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-cmsrel CMSSW_8_0_9
-cd CMSSW_8_0_9/src/
+cmsrel CMSSW_8_0_20
+cd CMSSW_8_0_20/src/
 cmsenv
 
 # get the code from GIT
-git clone -b 80X-branch  https://github.com/IPHC/ttH
+git clone -b Moriond2017-branch  https://github.com/IPHC/ttH
 
 
 cd IPHCNtuple/
@@ -37,4 +37,4 @@ make
 
 
 # to commit & push 
-git push origin 80X-branch
+git push origin Moriond2017-branch
