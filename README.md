@@ -14,7 +14,7 @@ cd CMSSW_8_0_20/src/
 cmsenv
 
 # get the code from GIT
-git clone -b Moriond2017-branch  https://github.com/IPHC/ttH
+git clone -b Moriond2017  https://github.com/IPHC/ttH
 
 
 cd IPHCNtuple/
@@ -37,4 +37,4 @@ make
 
 
 # to commit & push 
-git push origin Moriond2017-branch
+git push origin Moriond2017
