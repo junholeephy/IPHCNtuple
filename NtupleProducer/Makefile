@@ -14,7 +14,7 @@ ROOTCFLAGS    = $(shell root-config --cflags | sed -e "s%-std=c++0x %%g")
 ROOTLIBS      = $(shell root-config --libs)
 ROOTGLIBS     = $(shell root-config --glibs)
 
-CXX           = g++ -fPIC -Wno-write-strings -Wno-writable-strings
+CXX           = g++ -fPIC -Wno-write-strings -Wno-writable-strings -Wno-attributes
 LD            = g++
 LDFLAGS       = -g
 SOFLAGS       = -shared

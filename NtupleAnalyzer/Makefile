@@ -6,10 +6,6 @@ NTUPLEINC    = -I../NtupleProducer/include -I$(CMSSW_RELEASE_BASE)/src
 NTUPLELIB    = -L../NtupleProducer -L$(CMSSW_RELEASE_BASE)/lib/slc6_amd64_gcc530 -lCondFormatsJetMETObjects \
               -lNtuple
 
-KINFITINC    = -I../../KinFit
-KINFITLIB    = -L../../KinFit \
-              -lKinFit
-
 SOVERSION               = $(shell echo $(VERSION) | \
                                sed 's/\(.*\)\.\(.*\)\.\(.*\)/\1:\2:0/')
 ROOTCONF                = root-config
