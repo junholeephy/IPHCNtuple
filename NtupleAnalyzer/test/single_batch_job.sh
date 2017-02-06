@@ -8,7 +8,7 @@ export SCRAM_ARCH=slc6_amd64_gcc530
 eval `scramv1 runtime -sh`
 cd -
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${dout}/../:${dout}/../../NtupleProducer/:${dout}/../../../KinFit/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${dout}/../:${dout}/../../NtupleProducer/
 
 echo ${xsec}
 

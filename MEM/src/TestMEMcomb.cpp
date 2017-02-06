@@ -211,6 +211,8 @@ int main(int argc, char *argv[])
 
       tree.ReadMultilepton(iEvent, &multiLepton);
 
+      cout << "Event number: " << tree.mc_event << endl;
+
       cout << "A"<<endl;
 
       tree.multilepton_Bjet1_P4 		= *tree.multilepton_Bjet1_P4_ptr;
@@ -865,6 +867,10 @@ int main(int argc, char *argv[])
       tree.mc_mem_tth_weight_kinmaxint = tree.mc_mem_tthfl_weight_kinmaxint;
     }
 
+    if (cfgParser.valVerbosity>=1) cout << "mc_mem_tthsl_weight_kinmaxint: " << tree.mc_mem_tthsl_weight_kinmaxint << "   log(weight)" << log(tree.mc_mem_tthsl_weight_kinmaxint)  << endl;
+    if (cfgParser.valVerbosity>=1) cout << "mc_mem_tthfl_weight_kinmaxint: " << tree.mc_mem_tthfl_weight_kinmaxint << "   log(weight)" << log(tree.mc_mem_tthfl_weight_kinmaxint)  << endl;
+    if (cfgParser.valVerbosity>=1) cout << "mc_mem_tth_weight_kinmaxint: " << tree.mc_mem_tth_weight_kinmaxint << "   log(weight)" << log(tree.mc_mem_tth_weight_kinmaxint)  << endl;
+
     if (index_hyp[5]!=-1 && index_hyp[6]!=-1) { 
       if (MEMpermutations[index_hyp[5]].computeHyp || MEMpermutations[index_hyp[6]].computeHyp)
         CombineHypotheses(MEMpermutations[index_hyp[5]], MEMpermutations[index_hyp[6]], &tree.mc_mem_ttbar_weight, &tree.mc_mem_ttbar_weight_log, &tree.mc_mem_ttbar_weight_err, &tree.mc_mem_ttbar_weight_chi2, &tree.mc_mem_ttbar_weight_time, &tree.mc_mem_ttbar_weight_avg, &tree.mc_mem_ttbar_weight_max, &tree.mc_mem_ttbar_weight_logmean, &tree.mc_kin_ttbar_weight_logmax, &tree.mc_kin_ttbar_weight_logmaxint, &tree.mc_mem_ttbar_weight_kinmax, &tree.mc_mem_ttbar_weight_kinmaxint, &tree.mc_mem_ttbar_weight_JEC_up, &tree.mc_mem_ttbar_weight_JEC_down, &tree.mc_mem_ttbar_weight_JER_up, &tree.mc_mem_ttbar_weight_JER_down);
@@ -898,6 +904,7 @@ int main(int argc, char *argv[])
       tree.mc_mem_ttbar_weight_kinmaxint = tree.mc_mem_ttbarsl_weight_kinmaxint;
     }
 
+    if (cfgParser.valVerbosity>=1) cout << "mc_mem_ttbar_weight_kinmaxint: " << tree.mc_mem_ttbar_weight_kinmaxint << "   log(weight)" << log(tree.mc_mem_ttbar_weight_kinmaxint)  << endl;
 
      if (tree.mc_mem_ttz_weight>0 && tree.mc_mem_tth_weight>0){
        tree.mc_mem_ttz_tth_likelihood = xsTTLL*tree.mc_mem_ttz_weight / (xsTTLL*tree.mc_mem_ttz_weight + xsTTH*tree.mc_mem_tth_weight);

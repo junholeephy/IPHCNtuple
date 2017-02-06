@@ -27,11 +27,6 @@ cd ../../
 
 # NtupleAnalyzer: create histograms, TTrees, ASCII, etc output from Ntuples
 
-git clone https://github.com/kskovpen/KinFit
-cd KinFit/
-make
-cd ../
-
 cd ttH/NtupleAnalyzer/
 make
 
