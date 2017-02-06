@@ -1,9 +1,9 @@
 #!/bin/sh
 
-export X509_USER_PROXY=/home-pbs/lebihan/someone/proxy/x509up_u6155
+export X509_USER_PROXY=/home-pbs/xcoubez/proxy/x509up_u7650
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-cd /home-pbs/lebihan/someone/CMSSW_8_0_9/src
+cd /home-pbs/xcoubez/Renovatio/Analysis/ttH/CMSSW_8_0_20/src/
 export SCRAM_ARCH=slc6_amd64_gcc530
 eval `scramv1 runtime -sh`
 cd -

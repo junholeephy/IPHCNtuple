@@ -46,13 +46,7 @@ class Event : public Base
         float mc_weight()                   {return _mc_weight;};
         float mc_ptHat()                    {return _mc_ptHat;};
         int mc_pu_trueNumInt()              {return _mc_pu_trueNumInt;};
-  
-        /*
-	int ev_trigger_pass()               {return _trigger_pass;};
-        int ev_trigger_pass_byname()        {return _trigger_pass_byname;};
-        int ev_trigger_pass_byname_1()      {return _trigger_pass_byname_1;};
-        int ev_trigger_pass_byname_1_noDz() {return _trigger_pass_byname_1_noDz;};*/
-       
+
         bool  is_TRIGm()    {return  _TRIGm;   };
         bool  is_TRIGe()    {return  _TRIGe;   };
         bool  is_TRIGmTk()  {return  _TRIGmTk; };
@@ -68,7 +62,6 @@ class Event : public Base
         bool  is_TRIGee_noDz()  {return  _TRIGee_noDz;   };
         bool  is_TRIGmm_noDz()  {return  _TRIGmm_noDz;   };
         bool  is_TRIGmmTk_noDz(){return  _TRIGmmTk_noDz; };
-
 
         int tth_channel()                   {return _tth_channel;};
 
@@ -88,7 +81,7 @@ class Event : public Base
         float _metpt;
         float _metphi;
         float _metsumet;
-	double _metcov00;
+        double _metcov00;
         double _metcov01;
         double _metcov10;
         double _metcov11;
@@ -105,7 +98,7 @@ class Event : public Base
         float _weight_scale_muF2;
         float _weight_scale_muR0p5;
         float _weight_scale_muR2;
-	
+
         std::vector<float> _pdf_weights;
         std::vector<std::string> _pdf_ids;
 
@@ -117,24 +110,22 @@ class Event : public Base
         int   _trigger_pass_byname;
         int   _trigger_pass_byname_1;
         int   _trigger_pass_byname_1_noDz;*/
-        
-	bool _TRIGm;
-	bool _TRIGe;
-	bool _TRIGmTk;	
+
+	    bool _TRIGm;
+	    bool _TRIGe;
+	    bool _TRIGmTk;
         bool _TRIGee;
-	bool _TRIGmm;
-	bool _TRIGme; 
-	bool _TRIGem;
-	bool _TRIGmmTk;
+	    bool _TRIGmm;
+	    bool _TRIGme;
+	    bool _TRIGem;
+	    bool _TRIGmmTk;
         bool _TRIGeee;
-	bool _TRIGmme;
-	bool _TRIGeem;
-	bool _TRIGmmm;
+	    bool _TRIGmme;
+	    bool _TRIGeem;
+	    bool _TRIGmmm;
         bool _TRIGee_noDz;
         bool _TRIGmm_noDz;
         bool _TRIGmmTk_noDz;
-
-
 
         float _disc_TT;
 

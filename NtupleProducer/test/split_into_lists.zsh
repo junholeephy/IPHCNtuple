@@ -1,6 +1,6 @@
 #!/bin/env zsh
 
-fpath="/dpm/in2p3.fr/home/cms/phedex/store/user/kskovpen/FlatTree/Akoula-patch2-v20160128//"
+fpath="/dpm/in2p3.fr/home/cms/phedex/store/user/kskovpen/FlatTree/Walrus-patch1-v20170127/"
 
 dataStr="SingleElectron|SingleMuon|DoubleEG|DoubleMuon|MuonEG"
 
