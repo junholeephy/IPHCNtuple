@@ -1,1 +1,0 @@
-/opt/sbg/scratch1/cms/xcoubez/ntuples_prod_medusa_patch4/toyMC/ttHToTT_M125_13TeV_powheg_pythia8/ttHToTT_M125_13TeV_powheg_pythia8_ID0_0.root

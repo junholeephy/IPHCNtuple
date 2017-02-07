@@ -1,1 +1,0 @@
-/opt/sbg/scratch1/cms/xcoubez/ntuples_prod_medusa_patch4/toyMC/ZZTo2L2Q_13TeV_amcatnloFXFX_madspin_pythia8/ZZTo2L2Q_13TeV_amcatnloFXFX_madspin_pythia8_ID18_0.root
