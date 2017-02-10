@@ -19,7 +19,9 @@ void Event::read(bool isdata)
     _lumi             = ntP->ev_lumi;
     _rho              = ntP->ev_rho;
 
-    //std::cout << "id: " << _id << std::endl;
+    std::cout << "id: "   << _id << std::endl;
+    std::cout << "run: "  << _run << std::endl;
+    std::cout << "lumi: " << _lumi << std::endl;
 
     // pv
     _pv_n             = ntP->nvertex;
@@ -42,7 +44,6 @@ void Event::read(bool isdata)
 
     if (!isdata)
     {
-
         _weight_scale_muF0p5 = ntP->weight_scale_muF0p5;
         _weight_scale_muF2   = ntP->weight_scale_muF2;
         _weight_scale_muR0p5 = ntP->weight_scale_muR0p5;
@@ -55,7 +56,6 @@ void Event::read(bool isdata)
         _pdf_weights = *ntP->mc_pdfweights;   
 
         _pdf_ids = *ntP->mc_pdfweightIds;    
-
     }
 
     // trigger

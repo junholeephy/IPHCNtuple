@@ -19,7 +19,7 @@
 #define kCat_2lss_1b_3j 10
 #define kCat_2lss_2b_2j 11
 
-#define DEBUG           false
+#define DEBUG           true
 
 using namespace std;
 
@@ -1098,6 +1098,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         if(jentry%10000 == 0) std::cout << "number of processed events " << jentry << std::endl;
 
+        if(DEBUG) std::cout << "New event ===" << std::endl;
+        
         //if(jentry > 100000) break;
         nb = fChain->GetEntry(jentry);   nbytes += nb;
 
@@ -1175,8 +1177,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             if ( !EM && !MM && !EE && M  &&           (mdataset ) ) is_trigger = true;
             if ( !EM && !MM && !EE && !M && E &&      (edataset ) ) is_trigger = true;
 
-
-            if(is_trigger)
+            if(true)
+            //if(is_trigger)
             {
                 weight *= 1;
                 //std::cout << " EM: " << EM 
@@ -1270,6 +1272,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         //is_trigger = false;
         //if ( vEvent->at(0).ev_trigger_pass_byname_1() >= 1 ) is_trigger = true;
 
+        if(DEBUG) std::cout << "New muons" << std::endl;
+
         // #####################################
         // #  _ __ ___  _   _  ___  _ __  ___  #
         // # | '_ ` _ \| | | |/ _ \| '_ \/ __| #
@@ -1296,6 +1300,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             theHistoManager->fillHisto("MuonEta",       "noSel",    "noChannel",   "",  vMuon->at(imuon).eta(),     weight);
             theHistoManager->fillHisto("MuonMVA",       "noSel",    "noChannel",   "",  vMuon->at(imuon).lepMVA(),  weight);
         }     
+
+        if(DEBUG) std::cout << "New electrons" << std::endl;
 
         // ##############################################
         // #       _           _                        #
@@ -1324,6 +1330,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             theHistoManager->fillHisto("ElectronMVA",   "noSel",    "noChannel",    "", vElectron->at(ielectron).lepMVA(),  weight);
         }  
 
+        if(DEBUG) std::cout << "New taus" << std::endl;
+
         // ########################
         // #  _                   #
         // # | |_ __ _ _   _ ___  #
@@ -1346,6 +1354,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             theHistoManager->fillHisto("TauEta",    "noSel",    "noChannel",    "", vTau->at(itau).eta(),   weight);
         }
 
+        if( DEBUG ) std::cout << "Ordering" << std::endl;
+
         // #############################################
         // #                _           _              #
         // #   ___  _ __ __| | ___ _ __(_)_ __   __ _  #
@@ -1362,7 +1372,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         if ( vLeptons.size() >= 2) {
             for (unsigned int ilep = 0; ilep<vLeptons.size()-1; ilep++) {
                 if ( vLeptons.at(ilep).pt() < vLeptons.at(ilep+1).pt() ) {
-                    std::cout << "Run Event " << vEvent->at(0).run() <<  " " << vEvent->at(0).id() 
+                    std::cout << "Run Event " << vEvent->at(0).run() <<  " " << vEvent->at(0).lumi() << " " << vEvent->at(0).id() 
                         << " nlep/tight/fake " << vLeptons.size() <<  "/" << vSelectedLeptons.size() <<  "/" <<  vFakeLeptons.size() << std::endl; 
                     std::cout << "  all pt[" << ilep << "]: " << vLeptons.at(ilep).pt() 
                         << " pt[" << ilep+1 << "]: " << vLeptons.at(ilep+1).pt() << std::endl;
@@ -1373,13 +1383,15 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         if ( vSelectedLeptons.size() >= 2) {
             for (unsigned int ilep = 0; ilep<vSelectedLeptons.size()-1; ilep++) {
                 if ( vSelectedLeptons.at(ilep).pt() < vSelectedLeptons.at(ilep+1).pt() ) {
-                    std::cout << "Run Event " << vEvent->at(0).run() <<  " " << vEvent->at(0).id() 
+                    std::cout << "Run Event " << vEvent->at(0).run() <<  " " << vEvent->at(0).lumi() << " " << vEvent->at(0).id() 
                         << " nlep/tight/fake " << vLeptons.size() <<  "/" << vSelectedLeptons.size() <<  "/" <<  vFakeLeptons.size() << std::endl; 
                     std::cout << "tight pt[" << ilep << "]: " << vSelectedLeptons.at(ilep).pt() 
                         << " pt[" << ilep+1 << "]: " << vSelectedLeptons.at(ilep+1).pt() << std::endl;
                 }
             }
         }
+
+        if( DEBUG ) std::cout << "New jets / b-jets" << std::endl;
 
         // ################################
         // #                              #
@@ -1399,12 +1411,12 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         {
 
             // updated for 801
-            if( vJet->at(ijet).CSVv2() > 0.46  ) nLooseBJets++;
-            if( vJet->at(ijet).CSVv2() > 0.80  ) nMediumBJets++;
+            if( vJet->at(ijet).CSVv2() > 0.5426  ) nLooseBJets++;
+            if( vJet->at(ijet).CSVv2() > 0.8484  ) nMediumBJets++;
 
-            if(vJet->at(ijet).CSVv2() >= 0.46 ) vSelectedBTagJets.push_back(vJet->at(ijet));
+            if(vJet->at(ijet).CSVv2() >= 0.5426  ) vSelectedBTagJets.push_back(vJet->at(ijet));
             else                                vSelectedNonBTagJets.push_back(vJet->at(ijet));
-            if(vJet->at(ijet).CSVv2() >= 0.80 ) vSelectedMediumBTagJets.push_back(vJet->at(ijet));
+            if(vJet->at(ijet).CSVv2() >= 0.8484  ) vSelectedMediumBTagJets.push_back(vJet->at(ijet));
 
             vSelectedJets.push_back(vJet->at(ijet));
 
@@ -1416,6 +1428,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         theHistoManager->fillHisto("MET",           "noSel",    "noChannel",    "", vEvent->at(0).metpt(), weight );
         
         theHistoManager->fillHisto("CutFlow",       "noSel",    "noChannel",    "", 1, 1);
+
+        std::cout << "New truth" << std::endl;
 
         // ###################################
         // #  _____ ____  _   _ _____ _   _  #
@@ -1478,6 +1492,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         LepGood_conePt1 = 0. ;
         mhtJet25_Recl   = 0. ;  
 
+        if( DEBUG ) std::cout << "Going through selections" << std::endl;
+
         // ############################################
         // #           _           _   _              #
         // #  ___  ___| | ___  ___| |_(_) ___  _ __   #
@@ -1494,7 +1510,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         //TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
         //TwoLeptonsSameSignSelection_TTbar(jentry);
 
-        //ThreeLeptonSelection_TTH3l(jentry);
+        ThreeLeptonSelection_TTH3l(jentry);
         ThreeLeptonSelection_ApplicationFakes(jentry);
         //ThreeLeptonSelection_CR_WZ(jentry);
         //ThreeLeptonSelection_CR_WZrelaxed(jentry);
@@ -1514,7 +1530,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // #                                                                                                   #
         // #####################################################################################################
 
-        bool print_all                        = false;
+        bool print_all                        = true;
         bool test_stat                        = false;
         bool produce_table_2lss_SR_ee         = false;
         bool produce_table_2lss_lepMVA_SB_ee  = false;
@@ -1523,16 +1539,18 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         bool produce_table_2lss_lepMVA_SB_em  = false;
         bool produce_table_2lss_SR_mm         = false;
         bool produce_table_2lss_lepMVA_SB_mm  = false;
-        bool produce_table_3l_SR              = false;
+        bool produce_table_3l_SR              = true;
         bool produce_table_3l_lepMVA_SB       = true;
 
-        if ( print_all )
+        if ( print_all ) // && ( is_3l_TTH_SR || is_3l_AppFakes_SR ) ) // || is_2lss_TTH_SR || is_2lss_AppFakes_SR ) )
         {
             std::cout << std::endl;
             std::cout << "==================================================================" << std::endl;
             std::cout << "====  Event  ==== " << std::endl;
 
-            std::cout << " Event:     "         << vEvent->at(0).id()
+            std::cout << " Event:     run "     << vEvent->at(0).run()
+                      << " lumi "               << vEvent->at(0).lumi()
+                      << " event "              << vEvent->at(0).id()
                       << " n leptons: "         << vSelectedLeptons.size()
                       << " n tight:   "         << n_tight
                       << " n taus:    "         << vSelectedTaus.size()
@@ -1777,6 +1795,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                       << std::endl;
         }
 
+        std::cout << "Madweight LHCO stuff" << std::endl;
+
         // ########################################################################################################
         // #  __  __           _              _       _     _     _     _   _  ____ ___        _          __  __  #
         // # |  \/  | __ _  __| |_      _____(_) __ _| |__ | |_  | |   | | | |/ ___/ _ \   ___| |_ _   _ / _|/ _| #
@@ -1888,6 +1908,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             if ( lepid2 == 2 && abs(vSelectedLeptons.at(2).id()) == 13 ) lepid3 = 3; // mumumu
         }
 
+        std::cout << "2D BDT stuff" << std::endl;
+
         // ################################################################################
         // #  ____  ____    ____  ____ _____                   _       _     _            #
         // # |___ \|  _ \  | __ )|  _ \_   _| __   ____ _ _ __(_) __ _| |__ | | ___  ___  #
@@ -1932,6 +1954,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         }
         if ( njj > 0 ) jet_dr_av = jet_dr_av / njj;
 
+        std::cout << "Histogramz" << std::endl;
+
         // ########################################################
         // #  _     _     _                                       #
         // # | |__ (_)___| |_ ___   __ _ _ __ __ _ _ __ ___  ____ #
@@ -1946,7 +1970,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         if ( is_3l_TTH_SR ) {
 
             if ( _isdata ) {
-                std::cout << "Run Event " << vEvent->at(0).run() <<  " " << vEvent->at(0).id() 
+                std::cout << "Run Event " << vEvent->at(0).run() <<  " " << vEvent->at(0).lumi() << " " << vEvent->at(0).id() 
                     << " nlep/tight/fake " << vLeptons.size() <<  "/" << vSelectedLeptons.size() <<  "/" <<  vFakeLeptons.size() 
                     << " njet/loose/medium " << vSelectedJets.size() 
                     <<  "/" << nLooseBJets <<  "/" << nMediumBJets << std::endl;
@@ -3449,7 +3473,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     theHistoManager->fillHisto("SumOfThreeLeptonsCharges",         "finalSel",   "ttH_3l",   "", sum_charges_3l                 , weight);
     theHistoManager->fillHisto("NumberOfSelectedLeptons",          "finalSel",   "ttH_3l",   "", vSelectedLeptons.size()        , weight);
 
-    if(DEBUG) std::cout << "Ok... SELECTED";
+    if(DEBUG) std::cout << "Ok... SELECTED" << std::endl;
 
     // ####################################
     // #  ____  ____    ____  ____ _____  #
@@ -3499,6 +3523,8 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
 
     theHistoManager->fillHisto("Signal_3l_TT_MVA",                         "finalSel",   "ttH_3l",   "",  signal_3l_TT_MVA,   weight);
 
+    if( DEBUG ) std::cout << "Signal 3l TT MVA ok" << std::endl;
+
     // ======================================================================================================
     // variables against ttV
 
@@ -3515,6 +3541,8 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     //          << " signal 3l   TTV MVA: " << signal_3l_TTV_MVA << std::endl;
 
     // ======================================================================================================
+
+    if( DEBUG ) std::cout << "Signal 3l TTV MVA ok" << std::endl;
 
     fillOutputTree();
 
@@ -3748,7 +3776,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_ApplicationFakes(int ev
     is_3l_AppFakes_SR = true;
 
     // temporary fix to test ttH vs ttbar in MEM
-    //is_3l_TTH_SR = true;
+    is_3l_TTH_SR = true;
 
     //std::cout << "Fake 3l weight: " << weightfake << std::endl;
 
@@ -5309,6 +5337,8 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("is_2bTight",&is_2bTight,"is_2bTight/I");
     tOutput->Branch("is_2bTight_float",&is_2bTight_float,"is_2bTight_float/F");
 
+    tOutput->Branch("is_3l_TZQ_SR",&is_3l_TZQ_SR,"is_3l_TZQ_SR/B");
+
     tOutput->Branch("cat_ee",&cat_ee,"cat_ee/I");
     tOutput->Branch("cat_ee_fake",&cat_ee_fake,"cat_ee_fake/I");
     tOutput->Branch("cat_ee_flip",&cat_ee_flip,"cat_ee_flip/I");
@@ -5493,11 +5523,14 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     
     tOutput->Branch("multilepton_h0_Id",                    &multilepton_h0_Id,                 "multilepton_h0_Id/I");
     tOutput->Branch("multilepton_h0_P4",                    "TLorentzVector",                   &multilepton_h0_P4);
+    tOutput->Branch("multilepton_h0_Label",                    &multilepton_h0_Label,                 "multilepton_h0_Label/I");
     tOutput->Branch("multilepton_t1_Id",                    &multilepton_t1_Id,                 "multilepton_t1_Id/I");
     tOutput->Branch("multilepton_t1_P4",                    "TLorentzVector",                   &multilepton_t1_P4);
+    tOutput->Branch("multilepton_t1_Label",                    &multilepton_t1_Label,                 "multilepton_h0_Label/I");
     tOutput->Branch("multilepton_t2_Id",                    &multilepton_t2_Id,                 "multilepton_t2_Id/I");
     tOutput->Branch("multilepton_t2_P4",                    "TLorentzVector",                   &multilepton_t2_P4);
-
+    tOutput->Branch("multilepton_t2_Label",                    &multilepton_t2_Label,                 "multilepton_h0_Label/I");
+ 
     // End test adding truth information
 
     tOutput->Branch("multilepton_mET","TLorentzVector",&multilepton_mET);
@@ -5623,6 +5656,9 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     // #                                                                             #
     // ###############################################################################
 
+    if ( !_isdata )
+    {
+
     float lep1_dr_gen       = 100.,     lep2_dr_gen     = 100.,     lep3_dr_gen     = 100.,     lep4_dr_gen     = 100. ;
     float jet1_dr_gen       = 100.,     jet2_dr_gen     = 100.;
     float lep1_dr_gen_min   = 100.,     lep2_dr_gen_min = 100.,     lep3_dr_gen_min = 100.,     lep4_dr_gen_min = 100. ;
@@ -5729,7 +5765,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
         }
     }
 
-    //std::cout << "Matching lepton to gen ok" << std::endl;
+    if( DEBUG ) std::cout << "Matching lepton to gen ok" << std::endl;
 
     if(false)
     {
@@ -5763,7 +5799,9 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
         multilepton_Bjet2_DeltaR_Matched    = jet2_dr_gen_min;
     }
 
-    //std::cout << "Matching b-jets to gen ok" << std::endl;
+    }
+
+    if( DEBUG ) std::cout << "Matching b-jets to gen ok" << std::endl;
 
     // ========================
 
@@ -5940,6 +5978,9 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     // #                                                                        #
     // ##########################################################################
 
+    if( !_isdata )
+    {
+
     for(unsigned int itruth = 0; itruth < vTruth->at(0).mc_truth_label().size() ; itruth++)
     {
         TLorentzVector LeptonX;
@@ -5977,6 +6018,10 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
             multilepton_t2_Id = vTruth->at(0).mc_truth_id().at(itruth);
         }
     }
+
+    }
+
+    if( DEBUG ) std::cout << "Standalone Gen ok" << std::endl;
 
     multilepton_mET.SetPtEtaPhiE(vEvent->at(0).metpt(), 0, vEvent->at(0).metphi(), vEvent->at(0).metpt());
     multilepton_mETcov00 = vEvent->at(0).metcov00();
