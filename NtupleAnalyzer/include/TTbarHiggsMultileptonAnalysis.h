@@ -94,6 +94,8 @@ class TTbarHiggsMultileptonAnalysis
         bool is_3l_WZrel_CR;  // WZ CR w/ 3l (loose) or more, no medium b-jets, Z peak
         bool is_3l_TTZ_CR;    // TTZ 3l analysis (for the future..)
 
+        bool is_3l_TZQ_SR;
+
         // for sub-categorisation
         int cat_ee_tau, cat_em_tau, cat_mm_tau, cat_tau;
         int cat_ee_2lss_QF, cat_ee_2lss_FR;

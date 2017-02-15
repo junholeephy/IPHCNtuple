@@ -141,8 +141,8 @@ bool Jet::sel()
                           );
 
     // synchronization printout
-    //if( false ) std::cout
-    if( isSelectionJet) std::cout
+    if( false ) std::cout
+    //if( isSelectionJet) std::cout
                             << nt->NtEvent->at(0).id()          << " "
                             << _pt                              << " "
                             << _eta                             << " "

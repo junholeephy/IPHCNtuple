@@ -6,7 +6,7 @@ echo "Don't forget to update the lumi and the maximum number of events to run on
 
 isdata=0
 doSystCombine=0
-lumi=12900
+lumi=36500
 
 cp /tmp/x509up_u7650 /home-pbs/xcoubez/proxy/.
 
@@ -21,8 +21,8 @@ que="cms_local_mdm"
 
 export HOME=$(pwd)
 
-dout="/home-pbs/xcoubez/2016/ttH/80X/MyAnalysis/CMSSW_8_0_20/src/ttH/NtupleAnalyzer/test/"
-dout_f="/home-pbs/xcoubez/2016/ttH/80X/MyAnalysis/CMSSW_8_0_20/src/ttH/NtupleAnalyzer/test/"
+dout="/home-pbs/xcoubez/Renovatio/Analysis/ttH/CMSSW_8_0_20/src/ttH/NtupleAnalyzer/test/"
+dout_f="/home-pbs/xcoubez/Renovatio/Analysis/ttH/CMSSW_8_0_20/src/ttH/NtupleAnalyzer/test/"
 
 runName="toy_${jName}"
 logName="log_${jName}"
@@ -34,11 +34,10 @@ mkdir ${logName}
 
 nmax=-1
 
-fxsec="table_MC_Medusa-patch4_20160726_TTLep.txt"
+fxsec="table_MC_Walrus-patch1_20170127.txt"
 
-fdir=$(ls -d lists)
-#fdir=$(ls -d list_Medusa_patch4_MC_WZ)
-#fdir=$(ls -d list_Medusa_patch4_DATA)
+#fdir=$(ls -d lists_MC_Walrus-patch1)
+fdir=$(ls -d lists_DATA_Walrus-patch1)
 
 echo $fdir
 
@@ -68,7 +67,7 @@ do
   fl=$(echo $sample | cut -c1-1)
   fl2=$(echo $sample | cut -c1-11)
   datamc=""
-  if [[ $fl == "J" ]]; then
+  if [[ $fl == "Run2016" ]]; then
     isdata=1
     doSystCombine=0
     datamc="DATA"

@@ -12,7 +12,7 @@ Truth::~Truth()
 
 void Truth::read()
 {
-    int UNINT = -666;
+    int UNINT = -1000;
 
     int gen_n = ntP->gen_n;
 

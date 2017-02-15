@@ -1,6 +1,7 @@
 #!/bin/env zsh
 
-cp /tmp/x509up_u6155 /home-pbs/lebihan/someone/proxy/.
+#cp /tmp/x509up_u6155 /home-pbs/lebihan/someone/proxy/.
+cp /tmp/x509up_u7650 /home-pbs/xcoubez/proxy/
 
 jName=${1}
 if [[ ${jName} == "" ]]; then
@@ -12,8 +13,8 @@ que="cms"
 
 export HOME=$(pwd)
 
-dout="/home-pbs/lebihan/someone/medusa_patch1_prod/ttH/NtupleProducer/test/"
-dout_f="/opt/sbg/scratch1/cms/lebihan/ntuples_prod_medusa_patch1_v3-trig/"
+dout="/home-pbs/xcoubez/Renovatio/Analysis/ttH/CMSSW_8_0_20/src/ttH/NtupleProducer/test/"
+dout_f="/opt/sbg/scratch1/cms/xcoubez/ntuples_prod_walrus_patch1_priority/"
 
 echo "CMSSW_RELEASE_BASE" $CMSSW_RELEASE_BASE
 
@@ -29,7 +30,7 @@ nmax=-1
 
 fxsec="table.txt"
 
-fdir=$(ls -d lists*)
+fdir=$(ls -d lists_priority*)
 
 echo $fdir
 
