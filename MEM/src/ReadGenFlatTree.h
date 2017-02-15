@@ -2275,7 +2275,7 @@ void ReadGenFlatTree::WriteMultilepton(MultiLepton* multiLepton){
 
   multilepton_Bjet1_Id 			= (*multiLepton).Bjets[0].Id;
   multilepton_Bjet1_P4 			= (*multiLepton).Bjets[0].P4;
-  multilepton_Bjet1_CSV           = (*multiLepton).Bjets[0].CSV;
+  multilepton_Bjet1_CSV           	= (*multiLepton).Bjets[0].CSV;
   multilepton_Bjet1_DeltaR_Matched      = (*multiLepton).BjetsMatched[0].DeltaR;
   multilepton_Bjet1_Label_Matched       = (*multiLepton).BjetsMatched[0].Label;
   multilepton_Bjet1_Id_Matched 		= (*multiLepton).BjetsMatched[0].Id;
@@ -2283,7 +2283,7 @@ void ReadGenFlatTree::WriteMultilepton(MultiLepton* multiLepton){
 
   multilepton_Bjet2_Id 			= (*multiLepton).Bjets[1].Id;
   multilepton_Bjet2_P4 			= (*multiLepton).Bjets[1].P4;
-  multilepton_Bjet2_CSV           = (*multiLepton).Bjets[1].CSV;
+  multilepton_Bjet2_CSV           	= (*multiLepton).Bjets[1].CSV;
   multilepton_Bjet2_DeltaR_Matched      = (*multiLepton).BjetsMatched[1].DeltaR;
   multilepton_Bjet2_Label_Matched       = (*multiLepton).BjetsMatched[1].Label;
   multilepton_Bjet2_Id_Matched          = (*multiLepton).BjetsMatched[1].Id;
@@ -2327,20 +2327,20 @@ void ReadGenFlatTree::WriteMultilepton(MultiLepton* multiLepton){
   multilepton_t2_Id                     = (*multiLepton).ParticleGen[2].Id;
   multilepton_t2_P4                     = (*multiLepton).ParticleGen[2].P4;
 
-  multilepton_JetHighestPt1_Id = (*multiLepton).JetsHighestPt[0].Id;
-  multilepton_JetHighestPt1_P4 = (*multiLepton).JetsHighestPt[0].P4;
-  multilepton_JetHighestPt2_Id = (*multiLepton).JetsHighestPt[1].Id;
-  multilepton_JetHighestPt2_P4 = (*multiLepton).JetsHighestPt[1].P4;
-  multilepton_JetClosestMw1_Id = (*multiLepton).JetsClosestMw[0].Id;
-  multilepton_JetClosestMw1_P4 = (*multiLepton).JetsClosestMw[0].P4;
-  multilepton_JetClosestMw2_Id = (*multiLepton).JetsClosestMw[1].Id;
-  multilepton_JetClosestMw2_P4 = (*multiLepton).JetsClosestMw[1].P4;
-  multilepton_JetLowestMjj1_Id = (*multiLepton).JetsLowestMjj[0].Id;
-  multilepton_JetLowestMjj1_P4 = (*multiLepton).JetsLowestMjj[0].P4;
-  multilepton_JetLowestMjj2_Id = (*multiLepton).JetsLowestMjj[1].Id;
-  multilepton_JetLowestMjj2_P4 = (*multiLepton).JetsLowestMjj[1].P4;
-  multilepton_mET = (*multiLepton).mET;
-  multilepton_Ptot = (*multiLepton).Ptot;
+  multilepton_JetHighestPt1_Id 		= (*multiLepton).JetsHighestPt[0].Id;
+  multilepton_JetHighestPt1_P4 		= (*multiLepton).JetsHighestPt[0].P4;
+  multilepton_JetHighestPt2_Id 		= (*multiLepton).JetsHighestPt[1].Id;
+  multilepton_JetHighestPt2_P4 		= (*multiLepton).JetsHighestPt[1].P4;
+  multilepton_JetClosestMw1_Id 		= (*multiLepton).JetsClosestMw[0].Id;
+  multilepton_JetClosestMw1_P4 		= (*multiLepton).JetsClosestMw[0].P4;
+  multilepton_JetClosestMw2_Id 		= (*multiLepton).JetsClosestMw[1].Id;
+  multilepton_JetClosestMw2_P4 		= (*multiLepton).JetsClosestMw[1].P4;
+  multilepton_JetLowestMjj1_Id 		= (*multiLepton).JetsLowestMjj[0].Id;
+  multilepton_JetLowestMjj1_P4 		= (*multiLepton).JetsLowestMjj[0].P4;
+  multilepton_JetLowestMjj2_Id 		= (*multiLepton).JetsLowestMjj[1].Id;
+  multilepton_JetLowestMjj2_P4 		= (*multiLepton).JetsLowestMjj[1].P4;
+  multilepton_mET 			= (*multiLepton).mET;
+  multilepton_Ptot 			= (*multiLepton).Ptot;
 
   //multilepton_JetHighestPt_Mjj = (multilepton_JetHighestPt1_P4+multilepton_JetHighestPt2_P4).M();
   //multilepton_JetClosestMw_Mjj = (multilepton_JetClosestMw1_P4+multilepton_JetClosestMw2_P4).M();
@@ -2422,6 +2422,118 @@ void ReadGenFlatTree::ReadMultilepton(Long64_t iEvent, MultiLepton* multiLepton)
   (*multiLepton).mET_cov10 = multilepton_mETcov10;
   (*multiLepton).mET_cov11 = multilepton_mETcov11;
   (*multiLepton).mHT = multilepton_mHT;
+
+  //cout << "Lepton0Pt="<<(*multiLepton).Leptons.at(0).P4.Pt()<<" Lepton1Pt="<<(*multiLepton).Leptons.at(1).P4.Pt() << " Lepton2Pt="<<(*multiLepton).Leptons.at(2).P4.Pt()<<endl;
+  //cout << "Bjet0Pt="<<(*multiLepton).Bjets.at(0).P4.Pt()<<" Bjet1Pt="<<(*multiLepton).Bjets.at(1).P4.Pt() << endl;
+  //cout << "JetHighestPt0Pt="<<(*multiLepton).JetsHighestPt.at(0).P4.Pt() << " JetHighestPt1Pt="<<(*multiLepton).JetsHighestPt.at(1).P4.Pt() << endl;
+  //cout << "JetClosestMw0Pt="<<(*multiLepton).JetsClosestMw.at(0).P4.Pt() << " JetClosestMw1Pt="<<(*multiLepton).JetsClosestMw.at(1).P4.Pt() << endl;
+  //cout << "JetLowestMjj0Pt="<<(*multiLepton).JetsLowestMjj.at(0).P4.Pt() << " JetLowestMjj1Pt="<<(*multiLepton).JetsLowestMjj.at(1).P4.Pt() << endl;
+
+  cout << "MultiLepton loaded"<<endl;
+
+  return;
+}
+
+
+void ReadGenFlatTree::ReadMultileptonUserDefined(Long64_t iEvent, MultiLepton* multiLepton){
+
+  cout << "ReadMultilepton"<<endl;
+
+  tInput->LoadTree(iEvent);
+  tInput->GetEntry(iEvent);
+
+  // EVENT #1 (run 275376 lumi  331 event 578533240)
+
+  if(true)
+  {
+
+  // ===========================================================================================================
+  (*multiLepton).kCatJets = 4;
+
+  (*multiLepton).Leptons.clear();
+  (*multiLepton).FillParticle("lepton", 13, TLorentzVector(-63.17969382,10.20649212,-176.4611832,187.7083017));
+  (*multiLepton).FillParticle("lepton", -13, TLorentzVector(10.29204053,24.36307254,-56.49449953,62.37888306));
+  (*multiLepton).FillParticle("lepton", -11, TLorentzVector(12.32398555,-0.1728198492,-5.328197284,13.42759014));
+
+  (*multiLepton).LeptonsMatched.clear();
+  (*multiLepton).FillParticleMatched("lepton", multilepton_Lepton1_DeltaR_Matched, multilepton_Lepton1_Label_Matched, multilepton_Lepton1_Id_Matched, *multilepton_Lepton1_P4_Matched_ptr);
+  (*multiLepton).FillParticleMatched("lepton", multilepton_Lepton2_DeltaR_Matched, multilepton_Lepton2_Label_Matched, multilepton_Lepton2_Id_Matched, *multilepton_Lepton2_P4_Matched_ptr);
+  (*multiLepton).FillParticleMatched("lepton", multilepton_Lepton3_DeltaR_Matched, multilepton_Lepton3_Label_Matched, multilepton_Lepton3_Id_Matched, *multilepton_Lepton3_P4_Matched_ptr);
+  (*multiLepton).FillParticleMatched("lepton", multilepton_Lepton4_DeltaR_Matched, multilepton_Lepton4_Label_Matched, multilepton_Lepton4_Id_Matched, *multilepton_Lepton4_P4_Matched_ptr);
+
+  (*multiLepton).Bjets.clear();
+  (*multiLepton).FillParticle("bjet", 0, 0.8973406553, 0,0,0,0, TLorentzVector(25.81664968,-63.80021097,-279.2412525,287.7334337));
+  (*multiLepton).FillParticle("bjet", 0, 0.5502513051, 0,0,0,0, TLorentzVector(29.0699138,1.73146953,143.3043164,146.3926179));
+
+  (*multiLepton).BjetsMatched.clear();
+  (*multiLepton).FillParticleMatched("jet", multilepton_Bjet1_DeltaR_Matched, multilepton_Bjet1_Label_Matched, multilepton_Bjet1_Id_Matched, *multilepton_Bjet1_P4_Matched_ptr);
+  (*multiLepton).FillParticleMatched("jet", multilepton_Bjet2_DeltaR_Matched, multilepton_Bjet2_Label_Matched, multilepton_Bjet2_Id_Matched, *multilepton_Bjet2_P4_Matched_ptr);
+
+  (*multiLepton).ParticleGen.clear();
+  (*multiLepton).FillParticleGen("whatever", multilepton_h0_Label, multilepton_h0_Id, *multilepton_h0_P4_ptr);
+  (*multiLepton).FillParticleGen("whatever", multilepton_t1_Label, multilepton_t1_Id, *multilepton_t1_P4_ptr);
+  (*multiLepton).FillParticleGen("whatever", multilepton_t2_Label, multilepton_t2_Id, *multilepton_t2_P4_ptr);
+
+  (*multiLepton).Jets.clear();
+  (*multiLepton).JetsHighestPt.clear();
+  (*multiLepton).JetsClosestMw.clear();
+  (*multiLepton).JetsLowestMjj.clear();
+
+  (*multiLepton).mET = TLorentzVector(16.17305402,16.68213381,0,23.23491478);
+  (*multiLepton).mET_cov00 = 1;
+  (*multiLepton).mET_cov01 = 0;
+  (*multiLepton).mET_cov10 = 0;
+  (*multiLepton).mET_cov11 = 1;
+  (*multiLepton).mHT = 1572.618652;
+
+  }
+
+  // EVENT #2 (run 276776 lumi  881 event 1524218683)
+
+  if(false)
+  {
+
+  // ===========================================================================================================
+  (*multiLepton).kCatJets = 3;
+
+  (*multiLepton).Leptons.clear();
+  (*multiLepton).FillParticle("lepton", 11, TLorentzVector(32.88572615,24.57231569,-46.06872267,61.70573037));
+  (*multiLepton).FillParticle("lepton", -11, TLorentzVector(14.44073434,-31.24464316,-121.2751663,126.0651749));
+  (*multiLepton).FillParticle("lepton", -11, TLorentzVector(-10.16623148,-1.23847927,-25.05356718,27.0659809));
+
+  (*multiLepton).LeptonsMatched.clear();
+  (*multiLepton).FillParticleMatched("lepton", multilepton_Lepton1_DeltaR_Matched, multilepton_Lepton1_Label_Matched, multilepton_Lepton1_Id_Matched, *multilepton_Lepton1_P4_Matched_ptr);
+  (*multiLepton).FillParticleMatched("lepton", multilepton_Lepton2_DeltaR_Matched, multilepton_Lepton2_Label_Matched, multilepton_Lepton2_Id_Matched, *multilepton_Lepton2_P4_Matched_ptr);
+  (*multiLepton).FillParticleMatched("lepton", multilepton_Lepton3_DeltaR_Matched, multilepton_Lepton3_Label_Matched, multilepton_Lepton3_Id_Matched, *multilepton_Lepton3_P4_Matched_ptr);
+  (*multiLepton).FillParticleMatched("lepton", multilepton_Lepton4_DeltaR_Matched, multilepton_Lepton4_Label_Matched, multilepton_Lepton4_Id_Matched, *multilepton_Lepton4_P4_Matched_ptr);
+
+  (*multiLepton).Bjets.clear();
+  (*multiLepton).FillParticle("bjet", 0, 0.930102706, 0,0,0,0, TLorentzVector(-143.3783458,8.338624118,41.79349018,150.625403));
+
+  (*multiLepton).BjetsMatched.clear();
+  (*multiLepton).FillParticleMatched("jet", multilepton_Bjet1_DeltaR_Matched, multilepton_Bjet1_Label_Matched, multilepton_Bjet1_Id_Matched, *multilepton_Bjet1_P4_Matched_ptr);
+  (*multiLepton).FillParticleMatched("jet", multilepton_Bjet2_DeltaR_Matched, multilepton_Bjet2_Label_Matched, multilepton_Bjet2_Id_Matched, *multilepton_Bjet2_P4_Matched_ptr);
+
+  (*multiLepton).ParticleGen.clear();
+  (*multiLepton).FillParticleGen("whatever", multilepton_h0_Label, multilepton_h0_Id, *multilepton_h0_P4_ptr);
+  (*multiLepton).FillParticleGen("whatever", multilepton_t1_Label, multilepton_t1_Id, *multilepton_t1_P4_ptr);
+  (*multiLepton).FillParticleGen("whatever", multilepton_t2_Label, multilepton_t2_Id, *multilepton_t2_P4_ptr);
+
+  (*multiLepton).Jets.clear();
+  (*multiLepton).JetsHighestPt.clear();
+  (*multiLepton).JetsClosestMw.clear();
+  (*multiLepton).JetsLowestMjj.clear();
+
+  (*multiLepton).FillParticle("jetHighestPt", 0, 0.1687322706, 0,0,0,0, TLorentzVector(162.643124,12.89360473,-309.6293432,350.2472345));
+
+  (*multiLepton).mET = TLorentzVector(-17.86693354,27.48508335,0,32.78196335);
+  (*multiLepton).mET_cov00 = 1;
+  (*multiLepton).mET_cov01 = 0;
+  (*multiLepton).mET_cov10 = 0;
+  (*multiLepton).mET_cov11 = 1;
+  (*multiLepton).mHT = 1302.917236;
+
+  }
 
   //cout << "Lepton0Pt="<<(*multiLepton).Leptons.at(0).P4.Pt()<<" Lepton1Pt="<<(*multiLepton).Leptons.at(1).P4.Pt() << " Lepton2Pt="<<(*multiLepton).Leptons.at(2).P4.Pt()<<endl;
   //cout << "Bjet0Pt="<<(*multiLepton).Bjets.at(0).P4.Pt()<<" Bjet1Pt="<<(*multiLepton).Bjets.at(1).P4.Pt() << endl;
