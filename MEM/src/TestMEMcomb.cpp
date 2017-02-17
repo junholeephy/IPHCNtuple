@@ -101,12 +101,8 @@ int main(int argc, char *argv[])
     int doOptimTopHad, doOptimTopLep, doOptimHiggs, doOptimW;
     cfgParser.LoadOptim(&doOptimTopHad, &doOptimTopLep, &doOptimHiggs, &doOptimW);
 
-    std::cout << "TEST XAVIER" << std::endl;
-
     HypIntegrator hypIntegrator;
     hypIntegrator.InitializeIntegrator(&cfgParser);
-
-    std::cout << "TEST XAVIER" << std::endl;
 
     int doMinimization = cfgParser.valDoMinimization;
 
@@ -210,6 +206,10 @@ int main(int argc, char *argv[])
       cout << "iEvent="<<iEvent<<endl;
 
       tree.ReadMultilepton(iEvent, &multiLepton);
+
+      // Fastest implementation to run on chosen event. Could move to option in the config file for later synchronizations
+      //if(tree.mc_event != 500141449) continue; // DoubleEG   Run2016D
+      //if(tree.mc_event != 578533240) continue; // DoubleMuon Run2016B
 
       cout << "Event number: " << tree.mc_event << endl;
 
