@@ -11,7 +11,7 @@ class Event : public Base
         Event();
         virtual ~Event();
 
-        int id()                            {return _id;};
+        long int id()                       {return _id;};
         int run()                           {return _run;};
         int lumi()                          {return _lumi;};
 
@@ -23,10 +23,10 @@ class Event : public Base
         float metpy()                       {return _metpt*sin(_metphi);};
         float metsumet()                    {return _metsumet;};
 
-        double metcov00()		    {return _metcov00;};
-        double metcov01()		    {return _metcov01;};
-        double metcov10()		    {return _metcov10;};
-        double metcov11()		    {return _metcov11;};
+        double metcov00()		            {return _metcov00;};
+        double metcov01()		            {return _metcov01;};
+        double metcov10()		            {return _metcov10;};
+        double metcov11()		            {return _metcov11;};
 
         float metNoHF_pt()                  {return _metNoHF_pt;};
         float metNoHF_phi()                 {return _metNoHF_phi;};
@@ -72,7 +72,7 @@ class Event : public Base
 
     protected:
 
-        int   _id;
+        long int   _id;
         int   _run;
         int   _lumi;
 

@@ -22,68 +22,68 @@
 
     // WZ
     TFile *_fileWZ ;
-    _fileWZ = TFile::Open("./Input/output_WZ_MC.root");
+    _fileWZ = TFile::Open("./Input/WZTo3LNu.root");
     _fileWZ->cd();
 
-    TH1F*  histWZ = (TH1F*)_fileWZ->Get("MTW_FinalCut_WZZZ_CR__");
+    TH1F*  histWZ = (TH1F*)_fileWZ->Get("MTW_finalSel_WZ_CR__");
     histWZ->Sumw2();
 
     // Residual background
 
     // ZZ
     TFile *_fileZZ ;
-    _fileZZ = TFile::Open("./Input/output_ZZ_MC.root");
+    _fileZZ = TFile::Open("./Input/ZZTo4L.root");
     _fileZZ->cd();
 
-    TH1F*  histZZ = (TH1F*)_fileZZ->Get("MTW_FinalCut_WZZZ_CR__");
+    TH1F*  histZZ = (TH1F*)_fileZZ->Get("MTW_finalSel_WZ_CR__");
     histZZ->Sumw2();
 
     // DY
     TFile *_fileDY ;
-    _fileDY = TFile::Open("./Input/output_DY_MC.root");
+    _fileDY = TFile::Open("./Input/DYJetsToLL.root");
     _fileDY->cd();
 
-    TH1F*  histDY = (TH1F*)_fileDY->Get("MTW_FinalCut_WZZZ_CR__");
+    TH1F*  histDY = (TH1F*)_fileDY->Get("MTW_finalSel_WZ_CR__");
     histDY->Sumw2();
 
     // TTZ
     TFile *_fileTTZ ;
-    _fileTTZ = TFile::Open("./Input/output_TTZ_MC.root");
+    _fileTTZ = TFile::Open("./Input/ZZTo4L.root");
     _fileTTZ->cd();
 
-    TH1F*  histTTZ = (TH1F*)_fileTTZ->Get("MTW_FinalCut_WZZZ_CR__");
+    TH1F*  histTTZ = (TH1F*)_fileTTZ->Get("MTW_finalSel_WZ_CR__");
     histTTZ->Sumw2();
 
     // ZZZ
     TFile *_fileZZZ ;
-    _fileZZZ = TFile::Open("./Input/output_ZZZ_MC.root");
+    _fileZZZ = TFile::Open("./Input/ZZTo4L.root");
     _fileZZZ->cd();
 
-    TH1F*  histZZZ = (TH1F*)_fileZZZ->Get("MTW_FinalCut_WZZZ_CR__");
+    TH1F*  histZZZ = (TH1F*)_fileZZZ->Get("MTW_finalSel_WZ_CR__");
     histZZZ->Sumw2();
 
     // WWZ
     TFile *_fileWWZ ;
-    _fileWWZ = TFile::Open("./Input/output_TTZ_MC.root");
+    _fileWWZ = TFile::Open("./Input/ZZTo4L.root");
     _fileWWZ->cd();
 
-    TH1F*  histWWZ = (TH1F*)_fileWWZ->Get("MTW_FinalCut_WZZZ_CR__");
+    TH1F*  histWWZ = (TH1F*)_fileWWZ->Get("MTW_finalSel_WZ_CR__");
     histWWZ->Sumw2();
 
     // Adding residual backgrounds
     TH1F*  histBkg = histZZ->Clone();
-    histBkg->Add(histDY);
-    histBkg->Add(histTTZ);
-    histBkg->Add(histZZZ);
-    histBkg->Add(histWWZ);
+    //histBkg->Add(histDY);
+    //histBkg->Add(histTTZ);
+    //histBkg->Add(histZZZ);
+    //histBkg->Add(histWWZ);
 
     // Get Data histo
 
     TFile *_fileDATA ;
-    _fileDATA = TFile::Open("./Input/output_DATA.root");
+    _fileDATA = TFile::Open("./Input/DATA.root");
     _fileDATA->cd();
 
-    TH1F*  histData = (TH1F*)_fileDATA->Get("MTW_FinalCut_WZZZ_CR__");
+    TH1F*  histData = (TH1F*)_fileDATA->Get("MTW_finalSel_WZ_CR__");
     
     histData->Sumw2();
     histData->SetMarkerStyle(20);
@@ -184,7 +184,7 @@
     histData->GetXaxis()->SetTitleSize(.05);
     histData->GetYaxis()->SetTitle("Events");
     histData->GetYaxis()->SetTitleSize(.05);
-    histData->GetYaxis()->SetRangeUser(0,10);
+    histData->GetYaxis()->SetRangeUser(0,100);
 
     histData->Draw("e");
     hs.Add(histBkg);
@@ -208,7 +208,7 @@
 
     qw->Draw();
 
-    text1 = new TLatex(0.15,0.93,"#bf{CMS} #it{Preliminary},                       2.26 fb^{-1} (13TeV)");
+    text1 = new TLatex(0.15,0.93,"#bf{CMS} #it{Preliminary},                       36.5 fb^{-1} (13TeV)");
     text1->SetNDC();
     text1->SetTextAlign(12);
     text1->SetX(0.16);
@@ -219,6 +219,8 @@
     c1->SaveAs("plots/WZ_3l_MTW.pdf");
 
     fitResult->Print("") ;
+
+/*
 
     // ##########
     // # MET LD #
@@ -250,9 +252,9 @@
 
     TH1F*  histBkg_METLD = histZZ_METLD->Clone();
     histBkg_METLD->Add(histDY_METLD);
-    histBkg_METLD->Add(histTTZ_METLD);
-    histBkg_METLD->Add(histZZZ_METLD);
-    histBkg_METLD->Add(histWWZ_METLD);
+    //histBkg_METLD->Add(histTTZ_METLD);
+    //histBkg_METLD->Add(histZZZ_METLD);
+    //histBkg_METLD->Add(histWWZ_METLD);
      
     _fileDATA->cd();
     TH1F*  histData_METLD = (TH1F*)_fileDATA->Get("MetLD_FinalCut_WZZZ_CR__");
@@ -334,9 +336,9 @@
 
     TH1F*  histBkg_nJet25 = histZZ_nJet25->Clone();
     histBkg_nJet25->Add(histDY_nJet25);
-    histBkg_nJet25->Add(histTTZ_nJet25);
-    histBkg_nJet25->Add(histZZZ_nJet25);
-    histBkg_nJet25->Add(histWWZ_nJet25);
+    //histBkg_nJet25->Add(histTTZ_nJet25);
+    //histBkg_nJet25->Add(histZZZ_nJet25);
+    //histBkg_nJet25->Add(histWWZ_nJet25);
      
     _fileDATA->cd();
     TH1F*  histData_nJet25 = (TH1F*)_fileDATA->Get("JetMultiplicity_FinalCut_WZZZ_CR__");
@@ -418,9 +420,9 @@
 
     TH1F*  histBkg_SumLepCharges = histZZ_SumLepCharges->Clone();
     histBkg_nJet25->Add(histDY_nJet25);
-    histBkg_nJet25->Add(histTTZ_nJet25);
-    histBkg_nJet25->Add(histZZZ_nJet25);
-    histBkg_nJet25->Add(histWWZ_nJet25);
+    //histBkg_nJet25->Add(histTTZ_nJet25);
+    //histBkg_nJet25->Add(histZZZ_nJet25);
+    //histBkg_nJet25->Add(histWWZ_nJet25);
 
     _fileDATA->cd();
     TH1F*  histData_SumLepCharges = (TH1F*)_fileDATA->Get("SumOfSelectedLeptonsCharges_FinalCut_WZZZ_CR__");
@@ -506,9 +508,9 @@
 
     TH1F*  histBkg_SVLpt = histZZ_SVLpt->Clone();
     histBkg_SVLpt->Add(histDY_SVLpt);
-    histBkg_SVLpt->Add(histTTZ_SVLpt);
-    histBkg_SVLpt->Add(histZZZ_SVLpt);
-    histBkg_SVLpt->Add(histWWZ_SVLpt);
+    //histBkg_SVLpt->Add(histTTZ_SVLpt);
+    //histBkg_SVLpt->Add(histZZZ_SVLpt);
+    //histBkg_SVLpt->Add(histWWZ_SVLpt);
      
     _fileDATA->cd();
     TH1F*  histData_SVLpt = (TH1F*)_fileDATA->Get("SumVecPtSelectedLeptons_FinalCut_WZZZ_CR__");
@@ -590,9 +592,9 @@
 
     TH1F*  histBkg_Mnl = histZZ_Mnl->Clone();
     histBkg_Mnl->Add(histDY_Mnl);
-    histBkg_Mnl->Add(histTTZ_Mnl);
-    histBkg_Mnl->Add(histZZZ_Mnl);
-    histBkg_Mnl->Add(histWWZ_Mnl);
+    //histBkg_Mnl->Add(histTTZ_Mnl);
+    //histBkg_Mnl->Add(histZZZ_Mnl);
+    //histBkg_Mnl->Add(histWWZ_Mnl);
      
     _fileDATA->cd();
     TH1F*  histData_Mnl = (TH1F*)_fileDATA->Get("InvariantMassOfSelectedLeptons_FinalCut_WZZZ_CR__");
@@ -916,5 +918,6 @@
 
     c1->SaveAs("plots/WZ_3l_CutFlow.pdf");
 
+*/
 
 }

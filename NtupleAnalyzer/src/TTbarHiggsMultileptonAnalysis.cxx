@@ -19,7 +19,7 @@
 #define kCat_2lss_1b_3j 10
 #define kCat_2lss_2b_2j 11
 
-#define DEBUG           true
+#define DEBUG           false
 
 using namespace std;
 
@@ -1503,8 +1503,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // #                                          #
         // ############################################
 
-        //TwoLeptonsSameSignSelection_TTH2l(jentry);
-        //TwoLeptonsSameSignSelection_ApplicationFakes(jentry);
+        TwoLeptonsSameSignSelection_TTH2l(jentry);
+        TwoLeptonsSameSignSelection_ApplicationFakes(jentry);
         //TwoLeptonsSameSignSelection_ApplicationFlips(jentry);
         //TwoLeptonsSameSignSelection_LepMVA_sideband(jentry);
         //TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
@@ -1512,7 +1512,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         ThreeLeptonSelection_TTH3l(jentry);
         ThreeLeptonSelection_ApplicationFakes(jentry);
-        //ThreeLeptonSelection_CR_WZ(jentry);
+        ThreeLeptonSelection_CR_WZ(jentry);
         //ThreeLeptonSelection_CR_WZrelaxed(jentry);
         //ThreeLeptonSelection_TTZ(jentry);
         //ThreeLeptonSelection_CR_Zl(jentry);
@@ -1542,7 +1542,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         bool produce_table_3l_SR              = true;
         bool produce_table_3l_lepMVA_SB       = true;
 
-        if ( print_all ) // && ( is_3l_TTH_SR || is_3l_AppFakes_SR ) ) // || is_2lss_TTH_SR || is_2lss_AppFakes_SR ) )
+        if ( print_all && ( is_3l_TTH_SR || is_3l_AppFakes_SR ) ) // || is_2lss_TTH_SR || is_2lss_AppFakes_SR ) )
         {
             std::cout << std::endl;
             std::cout << "==================================================================" << std::endl;
@@ -1835,7 +1835,6 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             jetht += vSelectedJets.at(ijet).pt();
             theHistoManager->fillHisto("JetPt",  "Trig", "", "", vJet->at(ijet).pt(), weight);
         }
-
 
         MHT = sqrt( (jet_px+lep_px)*(jet_px+lep_px) + (jet_py+lep_py)*(jet_py+lep_py) );
         met_ld = 0.00397 * MET + 0.00265 * MHT;
@@ -3577,7 +3576,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_ApplicationFakes(int ev
     if(DEBUG) std::cout << "nNonTight Ok... ";
 
     bool pass_nolosthits    =  ( vSelectedLeptons.at(0).noLostHits()        && vSelectedLeptons.at(1).noLostHits()       && vSelectedLeptons.at(2).noLostHits()     );
-    if(!pass_nolosthits)     return;
+    //if(!pass_nolosthits)     return;
     if(DEBUG) std::cout << "pass_nolosthits Ok... ";
 
     bool leading_lep_pt     = ( vSelectedLeptons.at(0).pt() > 20 );
@@ -3776,7 +3775,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_ApplicationFakes(int ev
     is_3l_AppFakes_SR = true;
 
     // temporary fix to test ttH vs ttbar in MEM
-    is_3l_TTH_SR = true;
+    // is_3l_TTH_SR = true;
 
     //std::cout << "Fake 3l weight: " << weightfake << std::endl;
 
@@ -5568,7 +5567,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     if (vSelectedJets.size()<2) return;
     if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return; 
 
-    //if (vSelectedLeptons.size()<2) return; // 2lss only at the moment
+    if (vSelectedLeptons.size()<2) return; // 2lss only at the moment
 
     //std::cout << "lept="<<vSelectedLeptons.size()<<" fake="<<vFakeLeptons.size()<<std::endl;
     //std::cout << "btag="<<vSelectedBTagJets.size()<<" nonbtag="<<vSelectedNonBTagJets.size()<<std::endl;
@@ -5644,7 +5643,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
         //multilepton_Bjet2_Id = 5;
     }
 
-    //std::cout << "Setting b-jets ok" << std::endl;
+    if( DEBUG ) std::cout << "Setting b-jets ok" << std::endl;
 
     // ###############################################################################
     // #                  _       _     _               _                            #

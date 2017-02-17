@@ -142,7 +142,7 @@ class TTbarHiggsMultileptonAnalysis
         float GetDeltaR(float eta1,float phi1,float eta2,float phi2);
 
         TTree* tOutput;
-        Int_t mc_event;
+        long int mc_event;
 
         BTagCalibrationX       calib;
         BTagCalibrationXReader reader;
