@@ -148,12 +148,12 @@ bool Muon::sel()
     // Fakeable
     
   
-    bool pass_lepMVA_TTH  = _lepMVA_TTH > 0.75 ;
+    bool pass_lepMVA_TTH  = _lepMVA_TTH > 0.90 ;
     bool pass_lepMVA_jetBTagCSV089 = _lepMVA_jetBTagCSV < 0.89;
     
     bool pass_lepMVA_jetBtagCSVPtRatio = false;
     
-    if (!pass_lepMVA_TTH && _lepMVA_jetPtRatio > 0.3 && _lepMVA_jetBTagCSV < 0.605) pass_lepMVA_jetBtagCSVPtRatio = true;
+    if (!pass_lepMVA_TTH && _lepMVA_jetPtRatio > 0.3 && _lepMVA_jetBTagCSV < 0.8484) pass_lepMVA_jetBtagCSVPtRatio = true;
     if (pass_lepMVA_TTH && pass_lepMVA_jetBTagCSV089) pass_lepMVA_jetBtagCSVPtRatio = true;
     
     _isFakeableTTH = isLooseTTH && pass_lepMVA_jetBtagCSVPtRatio;

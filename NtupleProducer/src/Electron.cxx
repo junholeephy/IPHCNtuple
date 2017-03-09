@@ -220,13 +220,13 @@ bool Electron::sel()
     pass_losthits = (_nlosthits == 0 );
     pass_pt       = (_pt        >  10); // should be 0.85 * pt(jet) for fakeable object cf v4 of note
 
-    bool pass_lepMVA_TTH  = _lepMVA_TTH > 0.75 ;
+    bool pass_lepMVA_TTH  = _lepMVA_TTH > 0.90 ;
     
-    bool pass_lepMVA_jetBTagCSV089 = _lepMVA_jetBTagCSV < 0.89;
+    bool pass_lepMVA_jetBTagCSV089 = _lepMVA_jetBTagCSV < 0.8484;
     
     bool pass_lepMVA_jetBtagCSVPtRatio = false;
     
-    if (!pass_lepMVA_TTH && _lepMVA_jetPtRatio > 0.3 && _lepMVA_jetBTagCSV < 0.605) pass_lepMVA_jetBtagCSVPtRatio = true;
+    if (!pass_lepMVA_TTH && _lepMVA_jetPtRatio > 0.5 && _lepMVA_jetBTagCSV < 0.3) pass_lepMVA_jetBtagCSVPtRatio = true;
     if ( pass_lepMVA_TTH && pass_lepMVA_jetBTagCSV089) pass_lepMVA_jetBtagCSVPtRatio = true;
     
     bool isFakeableTTH     = ( pass_pt          &&

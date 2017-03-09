@@ -47,6 +47,7 @@ class TTbarHiggsMultileptonAnalysis
         void ThreeLeptonSelection_ApplicationFakes(int evt);
 
         void ThreeLeptonSelection_CR_WZ(int evt);
+        void ThreeLeptonSelection_CR_WZ_ApplicationFakes(int evt);
         void ThreeLeptonSelection_CR_WZrelaxed(int evt);
         void ThreeLeptonSelection_TTZ(int evt);
 
