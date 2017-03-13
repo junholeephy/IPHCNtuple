@@ -26,7 +26,8 @@ SRC = src/TTbarHiggsMultileptonAnalysis.cxx \
  src/HistoManager.cxx src/Hist.cxx \
  src/Lepton.cxx \
  src/TTbarHiggsBTagEff.cxx \
- src/BTagCalibrationXStandalone.cxx
+ src/BTagCalibrationXStandalone.cxx \
+ src/TTbarHiggsTFAnalysis.cxx
 
 
 INC = include/TTbarHiggsMultileptonAnalysis.h \
@@ -35,14 +36,16 @@ INC = include/TTbarHiggsMultileptonAnalysis.h \
  include/Lepton.h \
  include/TTbarHiggsBTagEff.h \
  include/BTagCalibrationXStandalone.h \
- include/Ranges.h
+ include/Ranges.h \
+ include/TTbarHiggsTFAnalysis.h 
 
 OBJ = TTbarHiggsMultileptonAnalysis.o \
  Analyzer.o\
  HistoManager.o Hist.o\
  Lepton.o \
  TTbarHiggsBTagEff.o\
- BTagCalibrationXStandalone.o
+ BTagCalibrationXStandalone.o \
+ TTbarHiggsTFAnalysis.o
 
 EXE = Analyzer
 
