@@ -22,9 +22,8 @@
 
     // WZ
     TFile *_fileWZ ;
-    _fileWZ = TFile::Open("./Input/WZTo3LNu.root");
+    _fileWZ = TFile::Open("./Input/output_WZ.root");
     _fileWZ->cd();
-
     TH1F*  histWZ = (TH1F*)_fileWZ->Get("MTW_finalSel_WZ_CR__");
     histWZ->Sumw2();
 
@@ -32,63 +31,82 @@
 
     // ZZ
     TFile *_fileZZ ;
-    _fileZZ = TFile::Open("./Input/ZZTo4L.root");
+    _fileZZ = TFile::Open("./Input/output_ZZ.root");
     _fileZZ->cd();
-
     TH1F*  histZZ = (TH1F*)_fileZZ->Get("MTW_finalSel_WZ_CR__");
     histZZ->Sumw2();
-
+    histZZ->SetFillColor(kAzure+6);
+    histZZ->SetLineColor(kAzure+6);
+ 
     // DY
     TFile *_fileDY ;
-    _fileDY = TFile::Open("./Input/DYJetsToLL.root");
+    _fileDY = TFile::Open("./Input/output_DY.root");
     _fileDY->cd();
-
     TH1F*  histDY = (TH1F*)_fileDY->Get("MTW_finalSel_WZ_CR__");
     histDY->Sumw2();
-
-    // TTZ
-    TFile *_fileTTZ ;
-    _fileTTZ = TFile::Open("./Input/ZZTo4L.root");
-    _fileTTZ->cd();
-
-    TH1F*  histTTZ = (TH1F*)_fileTTZ->Get("MTW_finalSel_WZ_CR__");
-    histTTZ->Sumw2();
-
-    // ZZZ
-    TFile *_fileZZZ ;
-    _fileZZZ = TFile::Open("./Input/ZZTo4L.root");
-    _fileZZZ->cd();
-
-    TH1F*  histZZZ = (TH1F*)_fileZZZ->Get("MTW_finalSel_WZ_CR__");
-    histZZZ->Sumw2();
-
-    // WWZ
+    histDY->SetFillColor(kAzure+6);
+    histDY->SetLineColor(kAzure+6);
+ 
+     // WWZ
     TFile *_fileWWZ ;
-    _fileWWZ = TFile::Open("./Input/ZZTo4L.root");
+    _fileWWZ = TFile::Open("./Input/output_WWZ.root");
     _fileWWZ->cd();
 
     TH1F*  histWWZ = (TH1F*)_fileWWZ->Get("MTW_finalSel_WZ_CR__");
     histWWZ->Sumw2();
+    histWWZ->SetFillColor(kAzure+6);
+    histWWZ->SetLineColor(kAzure+6);
+   
+    // TTZ
+    TFile *_fileTTZ ;
+    _fileTTZ = TFile::Open("./Input/output_ttZ.root");
+    _fileTTZ->cd();
 
+    TH1F*  histTTZ = (TH1F*)_fileTTZ->Get("MTW_finalSel_WZ_CR__");
+    histTTZ->Sumw2();
+    histTTZ->SetFillColor(kAzure+6);
+    //histTTZ->SetLineColor(kAzure+6);
+    //histTTZ->SetLineWidth(0.8);
+
+   
     // Adding residual backgrounds
-    TH1F*  histBkg = histZZ->Clone();
-    //histBkg->Add(histDY);
-    //histBkg->Add(histTTZ);
+  
+    TH1F*  histBkg = (TH1F*) histZZ->Clone();//histZZ;
+    histBkg->Add(histDY);
+    histBkg->Add(histTTZ);
     //histBkg->Add(histZZZ);
-    //histBkg->Add(histWWZ);
+    histBkg->Add(histWWZ);
 
     // Get Data histo
 
     TFile *_fileDATA ;
-    _fileDATA = TFile::Open("./Input/DATA.root");
+    _fileDATA = TFile::Open("./Input/output_data.root");
+    //_fileDATA = TFile::Open("../../DATA_AC.root");
     _fileDATA->cd();
 
     TH1F*  histData = (TH1F*)_fileDATA->Get("MTW_finalSel_WZ_CR__");
     
     histData->Sumw2();
     histData->SetMarkerStyle(20);
-    RooRealVar
-        x("x","x",histData->GetXaxis()->GetXmin(),histData->GetXaxis()->GetXmax());
+    
+    
+     // Get Data Fake histo
+
+   
+    TH1F*  histDataFake = (TH1F*)_fileDATA->Get("MTW_Fakes_finalSel_WZ_CR__");
+    
+    histDataFake->Sumw2();
+    histDataFake->SetMarkerStyle(20);
+    //histDataFake->SetFillStyle(22);
+    histDataFake->SetFillColor(1); 
+    histDataFake->SetLineColor(1);
+    //histDataFake->SetLineWidth(0.8);
+    histDataFake->SetFillStyle(3325);
+   // histDataFake->SetFillColor(kBlack);
+    histBkg->Add(histDataFake);
+    
+    
+    RooRealVar x("x","x",histData->GetXaxis()->GetXmin(),histData->GetXaxis()->GetXmax());
     RooDataHist* data = new RooDataHist("data","data",x, histData);
 
     // Define MC PDFs
@@ -99,7 +117,7 @@
     RooHistPdf histpdf5("histpdfBkg", "histpdfBkg", x, *rooHistBkg);
 
     // Variable to be fitted nWZ, nBkg set to constant
-    RooRealVar nWZ("nWZ", "nWZ", 100., 0., 200.);
+    RooRealVar nWZ("nWZ", "nWZ", 500., 0., 2000.);
 
     double yieldBkg = histBkg->Integral();
     RooRealVar nBkg("nBkg", "nBkg", yieldBkg);
@@ -120,7 +138,7 @@
     RooFitResult* fitResult = pdf->fitTo(*data, Save());
 
     //std::cout << nWZ.getVal() << std::endl;
-    std::cout << nWZ.Print()  << std::endl;
+   // std::cout << nWZ.Print()  << std::endl;
 
     // Plot pdf's
 
@@ -154,25 +172,30 @@
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! A DECOMMENTER
 
     //histBkg->Scale((1-nWZ.getVal())*histData->Integral()/histBkg->Integral());
-
+    std::cout << histWZ->GetSumOfWeights()<< std::endl;
     std::cout << "scale factor : "<< nWZ.getVal()/histWZ->Integral() << std::endl;
-    std::cout << "nWZ MC : "      << histWZ->Integral()             << std::endl;
+    std::cout << "nWZ MC : "      << histWZ->Integral()  << std::endl;
     std::cout << "yieldBkg "      << yieldBkg                       << std::endl;
 
-    std::cout << "nWZ : " << nWZ.getVal() << " Â± " << nWZ.getError() << std::endl;
+    std::cout << "nWZ : " << nWZ.getVal() << " ± " << nWZ.getError() << std::endl;
+    
+    cout << " the Data "            << histData->Integral()    << endl;
+ 
+    histWZ->Scale(nWZ.getVal()/histWZ->Integral());
 
-    //histWZ->Scale(nWZ.getVal()/histWZ->Integral());
-
-    histWZ->SetFillColor(kBlue+2);
-    histZZ->SetFillColor(kRed+2);
+    histWZ->SetFillColor(kMagenta-6); 
+    //histWZ->SetLineColor(kMagenta-7);
+    //histZZ->SetFillColor(kRed+2);
     histBkg->SetFillColor(kGreen+2);
 
     TH1F* hmc = (TH1F*) histWZ->Clone();
     hmc->Add(histBkg);
+    //hmc->Add(histDataFake);
+    //hmc->Add(histTTZ);
     
     TH1F* hmcHatchedArea = (TH1F*) hmc->Clone();
     hmcHatchedArea->SetLineColor(1);
-    hmcHatchedArea->SetFillStyle(3004);
+    hmcHatchedArea->SetFillStyle(3013);
     hmcHatchedArea->SetFillColor(1);
 
     for(int j=0; j<hmcHatchedArea->GetNbinsX(); j++)
@@ -180,18 +203,24 @@
         hmcHatchedArea->SetBinError( j+1, sqrt(pow(hmc->GetBinError(j+1),2)) ); //+pow(3.,2)));
     }
 
-    histData->GetXaxis()->SetTitle("m_{T} W(l)");
+    histData->GetXaxis()->SetTitle("M_{T}(W#rightarrowl#nu) in 3l + 2 non-b jets");
     histData->GetXaxis()->SetTitleSize(.05);
     histData->GetYaxis()->SetTitle("Events");
     histData->GetYaxis()->SetTitleSize(.05);
     histData->GetYaxis()->SetRangeUser(0,100);
-
+    
+    histData->SetMaximum(80);
     histData->Draw("e");
-    hs.Add(histBkg);
-    hs.Add(histWZ);
+    //hs.Add(histBkg);
+    hs.Add(histDataFake);
+    hs.Add(histWWZ);
+    hs.Add(histZZ); 
+    hs.Add(histDY);  
+    hs.Add(histTTZ);
+    hs.Add(histWZ); 
     hs.Draw("histo same");
     hmcHatchedArea->Draw("e2same");
-    histData->SetLineColor(kRed+2);
+    histData->SetLineColor(kBlack);
     histData->Draw("esame");
 
     TLegend* qw = 0;
@@ -199,7 +228,9 @@
 
     qw->AddEntry(histData, "Data",                  "p");
     qw->AddEntry(histWZ,   "WZ",                    "f");
-    qw->AddEntry(histBkg,  "residual backgrounds",  "f");
+    //qw->AddEntry(histTTZ,  "TTZ",  "f");
+    qw->AddEntry(histWWZ,  "rares",  "f");
+    qw->AddEntry(histDataFake,  "fakes",  "f");
 
     qw->SetFillColor(0);
     qw->SetTextFont(42);
@@ -208,7 +239,7 @@
 
     qw->Draw();
 
-    text1 = new TLatex(0.15,0.93,"#bf{CMS} #it{Preliminary},                       36.5 fb^{-1} (13TeV)");
+    text1 = new TLatex(0.15,0.93,"#bf{CMS} #it{Preliminary},                       35.9 fb^{-1} (13TeV)");
     text1->SetNDC();
     text1->SetTextAlign(12);
     text1->SetX(0.16);
@@ -216,7 +247,7 @@
     text1->SetTextSize(0.05);
     text1->Draw();
 
-    c1->SaveAs("plots/WZ_3l_MTW.pdf");
+    c1->SaveAs("WZ_3l_2nonbjets_MTW.pdf");
 
     fitResult->Print("") ;
 
@@ -265,7 +296,7 @@
 
     THStack hs_METLD("hs_nJet25","test stacked histograms");
 
-    histWZ_METLD->SetFillColor(kBlue+2);
+    histWZ_METLD->SetFillColor(kAzure+2);
     histZZ_METLD->SetFillColor(kRed+2);
     histBkg_METLD->SetFillColor(kGreen+2);
 
@@ -349,7 +380,7 @@
 
     THStack hs_nJet25("hs_nJet25","test stacked histograms");
 
-    histWZ_nJet25->SetFillColor(kBlue+2);
+    histWZ_nJet25->SetFillColor(kAzure+2);
     histZZ_nJet25->SetFillColor(kRed+2);
     histBkg_nJet25->SetFillColor(kGreen+2);
 
@@ -433,7 +464,7 @@
 
     THStack hs_SumLepCharges("hs_SumLepCharges","test stacked histograms");
 
-    histWZ_SumLepCharges->SetFillColor(kBlue+2);
+    histWZ_SumLepCharges->SetFillColor(kAzure+2);
     histZZ_SumLepCharges->SetFillColor(kRed+2);
     histBkg_SumLepCharges->SetFillColor(kGreen+2);
 
@@ -521,7 +552,7 @@
 
     THStack hs_SVLpt("hs_SVLpt","test stacked histograms");
 
-    histWZ_SVLpt->SetFillColor(kBlue+2);
+    histWZ_SVLpt->SetFillColor(kAzure+2);
     histZZ_SVLpt->SetFillColor(kRed+2);
     histBkg_SVLpt->SetFillColor(kGreen+2);
 
@@ -605,7 +636,7 @@
 
     THStack hs_Mnl("hs_Mnl","test stacked histograms");
 
-    histWZ_Mnl->SetFillColor(kBlue+2);
+    histWZ_Mnl->SetFillColor(kAzure+2);
     histZZ_Mnl->SetFillColor(kRed+2);
     histBkg_Mnl->SetFillColor(kGreen+2);
 
@@ -689,7 +720,7 @@
 
     THStack hs_MZpeak("hs_MZpeak","test stacked histograms");
 
-    histWZ_MZpeak->SetFillColor(kBlue+2);
+    histWZ_MZpeak->SetFillColor(kAzure+2);
     histZZ_MZpeak->SetFillColor(kRed+2);
     histBkg_MZpeak->SetFillColor(kGreen+2);
 
@@ -773,7 +804,7 @@
 
     THStack hs_ptZ("hs_ptZ","test stacked histograms");
 
-    histWZ_ptZ->SetFillColor(kBlue+2);
+    histWZ_ptZ->SetFillColor(kAzure+2);
     histZZ_ptZ->SetFillColor(kRed+2);
     histBkg_ptZ->SetFillColor(kGreen+2);
 
@@ -861,7 +892,7 @@
 
     THStack hs_CutFlow("hs_CutFlow","test stacked histograms");
 
-    histWZ_CutFlow->SetFillColor(kBlue+2);
+    histWZ_CutFlow->SetFillColor(kAzure+2);
     histZZ_CutFlow->SetFillColor(kRed+2);
     histDY_CutFlow->SetFillColor(kGray+1);
     histTTZ_CutFlow->SetFillColor(kGray+2);
