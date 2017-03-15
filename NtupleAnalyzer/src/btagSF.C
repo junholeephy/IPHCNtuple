@@ -3,7 +3,7 @@
 
 void btagSF2(){
     BTagCalibrationX calib = BTagCalibrationX("csvv2",
-            "/opt/sbg/scratch1/cms/TTH/weight/CSVv2_ichep.csv");
+            "/opt/sbg/scratch1/cms/TTH/weight/CSVv2_Moriond17_B_H.csv");
 
     BTagCalibrationXReader reader = BTagCalibrationXReader(  BTagEntryX::OP_LOOSE,  // operating point
             "central",            // central sys type
