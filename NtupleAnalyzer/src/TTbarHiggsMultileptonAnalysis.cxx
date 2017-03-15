@@ -903,7 +903,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     // new b-tagging (using BTagCalibrationXStandaloneWhatever)
     // setup calibration + reader
     // BTagCalibrationX *      
-    calib = BTagCalibrationX("csvv2", "/opt/sbg/scratch1/cms/TTH/weight/CSVv2_ichep.csv");
+    calib = BTagCalibrationX("csvv2", "/opt/sbg/scratch1/cms/TTH/weight/CSVv2_Moriond17_B_H.csv");
 
     // BTagCalibrationXReader *
     reader = BTagCalibrationXReader(  BTagEntryX::OP_LOOSE,  // operating point
@@ -924,7 +924,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
 
 
     // BTag Efficiencies
-    std::string inputFileBTagEff = "/opt/sbg/scratch1/cms/TTH/weight/TT_TuneCUETP8M1_13TeV-powheg-pythia8_0.root";
+    std::string inputFileBTagEff = "/opt/sbg/scratch1/cms/TTH/weight/output_tt_effBtag.root";
     TFile* f_BTag_eff = new TFile ((inputFileBTagEff).c_str());
     fill_eff_btagging_histos(f_BTag_eff);
 
@@ -1525,7 +1525,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         //TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
         //TwoLeptonsSameSignSelection_TTbar(jentry);
 
-        ThreeLeptonSelection_TTH3l(jentry);
+        //ThreeLeptonSelection_TTH3l(jentry);
         //ThreeLeptonSelection_ApplicationFakes(jentry);
         ThreeLeptonSelection_CR_WZ(jentry);
         ThreeLeptonSelection_CR_WZ_ApplicationFakes(jentry);
@@ -6804,7 +6804,7 @@ void TTbarHiggsMultileptonAnalysis::selectBjets(std::string BjetSel, int* ibsel1
     if (BjetSel=="HighestBtagDiscrim"){
         float btag_max=-999, btag_max2=-999;
         for (unsigned int ib=0; ib<vSelectedJets.size(); ib++){
-            if (doSelectOnlyBjets && (vSelectedJets.at(ib).CSVv2()<0.46)) continue;
+            if (doSelectOnlyBjets && (vSelectedJets.at(ib).CSVv2()<0.5426)) continue;
             if (vSelectedJets.at(ib).CSVv2()>btag_max){
                 btag_max2 = btag_max;
                 ib2 = ib1;
