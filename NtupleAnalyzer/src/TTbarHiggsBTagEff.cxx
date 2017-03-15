@@ -193,16 +193,16 @@ void TTbarHiggsBTagEff::Loop()
                 if (vJet->at(ijet).jet_hadronFlavour()==5) 
                 {
                     theHistoManager->fillHisto2D("pTvsEta_b", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
-                    if (vJet->at(ijet).CSVv2() >= 0.46) theHistoManager->fillHisto2D("pTvsEtaLoose_b", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
-                    if (vJet->at(ijet).CSVv2() >= 0.80) theHistoManager->fillHisto2D("pTvsEtaMedium_b", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
+                    if (vJet->at(ijet).CSVv2() >= 0.5426) theHistoManager->fillHisto2D("pTvsEtaLoose_b", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
+                    if (vJet->at(ijet).CSVv2() >= 0.8484) theHistoManager->fillHisto2D("pTvsEtaMedium_b", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
                     //if (vJet->at(ijet).CSVv2()) theHistoManager->fillHisto2D("pTvsEtaTight_b", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
                 }
 
                 if (vJet->at(ijet).jet_hadronFlavour()==4) 
                 { 
                     theHistoManager->fillHisto2D("pTvsEta_c", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1);
-                    if (vJet->at(ijet).CSVv2() >= 0.46) theHistoManager->fillHisto2D("pTvsEtaLoose_c", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
-                    if (vJet->at(ijet).CSVv2() >= 0.80) theHistoManager->fillHisto2D("pTvsEtaMedium_c", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
+                    if (vJet->at(ijet).CSVv2() >= 0.5426) theHistoManager->fillHisto2D("pTvsEtaLoose_c", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
+                    if (vJet->at(ijet).CSVv2() >= 0.8484) theHistoManager->fillHisto2D("pTvsEtaMedium_c", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
                     //if (vJet->at(ijet).CSVv2()) theHistoManager->fillHisto2D("pTvsEtaTight_c", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
                 }
 
@@ -212,8 +212,8 @@ void TTbarHiggsBTagEff::Loop()
                     std::cout << "light"<<std::endl;
 
                     theHistoManager->fillHisto2D("pTvsEta_l", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1);
-                    if (vJet->at(ijet).CSVv2() >= 0.46) theHistoManager->fillHisto2D("pTvsEtaLoose_l", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
-                    if (vJet->at(ijet).CSVv2() >= 0.80) theHistoManager->fillHisto2D("pTvsEtaMedium_l", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
+                    if (vJet->at(ijet).CSVv2() >= 0.5426) theHistoManager->fillHisto2D("pTvsEtaLoose_l", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
+                    if (vJet->at(ijet).CSVv2() >= 0.8484) theHistoManager->fillHisto2D("pTvsEtaMedium_l", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
                     //if (vJet->at(ijet).jet_hadronFlavour()) theHistoManager->fillHisto2D("pTvsEtaTight_l", "", "", "", vJet->at(ijet).eta(), vJet->at(ijet).pt(),1); 
                 }
 
