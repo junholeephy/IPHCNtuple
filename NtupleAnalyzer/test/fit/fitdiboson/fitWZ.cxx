@@ -97,12 +97,9 @@
     
     histDataFake->Sumw2();
     histDataFake->SetMarkerStyle(20);
-    //histDataFake->SetFillStyle(22);
     histDataFake->SetFillColor(1); 
     histDataFake->SetLineColor(1);
-    //histDataFake->SetLineWidth(0.8);
     histDataFake->SetFillStyle(3325);
-   // histDataFake->SetFillColor(kBlack);
     histBkg->Add(histDataFake);
     
     
@@ -184,14 +181,9 @@
     histWZ->Scale(nWZ.getVal()/histWZ->Integral());
 
     histWZ->SetFillColor(kMagenta-6); 
-    //histWZ->SetLineColor(kMagenta-7);
-    //histZZ->SetFillColor(kRed+2);
-    histBkg->SetFillColor(kGreen+2);
-
+    
     TH1F* hmc = (TH1F*) histWZ->Clone();
     hmc->Add(histBkg);
-    //hmc->Add(histDataFake);
-    //hmc->Add(histTTZ);
     
     TH1F* hmcHatchedArea = (TH1F*) hmc->Clone();
     hmcHatchedArea->SetLineColor(1);
@@ -256,69 +248,139 @@
     // ##########
     // # MET LD #
     // ##########
+    
+    using namespace RooFit;
+
+    gROOT->SetStyle("Plain");
+    gStyle->SetOptTitle(0);
+    gStyle->SetOptStat(0);
+    gStyle->SetPadTickX(1);
+    gStyle->SetPadTickY(1);
+    gStyle->SetTitleSize(0.07, "XYZ");
+    gStyle->SetTitleFont(42,"X"); // was 22
+    gStyle->SetTitleFont(42,"Y"); // was 22
+    gStyle->SetPadBottomMargin(0.13);
+    gStyle->SetPadLeftMargin(0.15);
+    gStyle->SetPadRightMargin(0.15);
+    gStyle->SetHistLineWidth(2);
+
+ 
+     TFile *_fileWZ ;
+    _fileWZ = TFile::Open("./Input/output_WZ.root");
+     TFile *_fileZZ ;
+    _fileZZ = TFile::Open("./Input/output_ZZ.root");
+     TFile *_fileDY ;
+    _fileDY = TFile::Open("./Input/output_DY.root");
+     TFile *_fileWWZ ;
+    _fileWWZ = TFile::Open("./Input/output_WWZ.root");
+     TFile *_fileTTZ ;
+    _fileTTZ = TFile::Open("./Input/output_ttZ.root");
+     TFile *_fileDATA ;
+    _fileDATA = TFile::Open("./Input/output_data.root");
+
 
     _fileWZ->cd();
-    TH1F*  histWZ_METLD = (TH1F*)_fileWZ->Get("MetLD_FinalCut_WZZZ_CR__");
+    TH1F*  histWZ_METLD = (TH1F*)_fileWZ->Get("MetLD_AN_finalSel_WZ_CR__");
     histWZ_METLD->Sumw2();
-    
+    histWZ_METLD->SetFillColor(kMagenta-6);
+    histWZ_METLD->SetLineColor(kMagenta-6);
+ 
     _fileZZ->cd();
-    TH1F*  histZZ_METLD = (TH1F*)_fileZZ->Get("MetLD_FinalCut_WZZZ_CR__");
+    TH1F*  histZZ_METLD = (TH1F*)_fileZZ->Get("MetLD_AN_finalSel_WZ_CR__");
     histZZ_METLD->Sumw2();
-    
+    histZZ_METLD->SetFillColor(kAzure+6);
+    histZZ_METLD->SetLineColor(kAzure+6);
+ 
     _fileDY->cd();
-    TH1F*  histDY_METLD = (TH1F*)_fileDY->Get("MetLD_FinalCut_WZZZ_CR__");
+    TH1F*  histDY_METLD = (TH1F*)_fileDY->Get("MetLD_AN_finalSel_WZ_CR__");
     histDY_METLD->Sumw2();
-
+    histDY_METLD->SetFillColor(kAzure+6);
+    histDY_METLD->SetLineColor(kAzure+6);
+ 
+    
     _fileTTZ->cd();
-    TH1F*  histTTZ_METLD = (TH1F*)_fileTTZ->Get("MetLD_FinalCut_WZZZ_CR__");
+    TH1F*  histTTZ_METLD = (TH1F*)_fileTTZ->Get("MetLD_AN_finalSel_WZ_CR__");
     histTTZ_METLD->Sumw2();
-
-    _fileZZZ->cd();
-    TH1F*  histZZZ_METLD = (TH1F*)_fileZZZ->Get("MetLD_FinalCut_WZZZ_CR__");
-    histZZZ_METLD->Sumw2();
+    histTTZ_METLD->SetFillColor(kAzure+6);
+    histTTZ_METLD->SetLineColor(kAzure+6);
+ 
+   // _fileZZZ->cd();
+   // TH1F*  histZZZ_METLD = (TH1F*)_fileZZZ->Get("MetLD_AN_finalSel_WZ_CR__");
+    //histZZZ_METLD->Sumw2();
 
     _fileWWZ->cd();
-    TH1F*  histWWZ_METLD = (TH1F*)_fileWWZ->Get("MetLD_FinalCut_WZZZ_CR__");
+    TH1F*  histWWZ_METLD = (TH1F*)_fileWWZ->Get("MetLD_AN_finalSel_WZ_CR__");
     histWWZ_METLD->Sumw2();
-
-    TH1F*  histBkg_METLD = histZZ_METLD->Clone();
-    histBkg_METLD->Add(histDY_METLD);
+    histWWZ_METLD->SetFillColor(kAzure+6);
+    histWWZ_METLD->SetLineColor(kAzure+6);
+ 
+    //TH1F*  histBkg_METLD = histZZ_METLD->Clone();
+    //histBkg_METLD->Add(histDY_METLD);
     //histBkg_METLD->Add(histTTZ_METLD);
     //histBkg_METLD->Add(histZZZ_METLD);
     //histBkg_METLD->Add(histWWZ_METLD);
      
     _fileDATA->cd();
-    TH1F*  histData_METLD = (TH1F*)_fileDATA->Get("MetLD_FinalCut_WZZZ_CR__");
+    TH1F*  histData_METLD = (TH1F*)_fileDATA->Get("MetLD_AN_finalSel_WZ_CR__");
     histData_METLD->Sumw2();
     histData_METLD->SetMarkerStyle(20);
 
-    //histWZ_METLD->Scale(nWZ.getVal()/histWZ_METLD->Integral());
+    histWZ_METLD->Scale(0.96);
+    
+    TH1F*  histDataFake_METLD = (TH1F*)_fileDATA->Get("MetLD_AN_Fakes_finalSel_WZ_CR__");
+    histDataFake_METLD->Sumw2();
+    histDataFake_METLD->SetMarkerStyle(20);
+    histDataFake_METLD->SetFillColor(1); 
+    histDataFake_METLD->SetLineColor(1);
+    histDataFake_METLD->SetFillStyle(3325);
+    
+    
+    TH1F* hmc = (TH1F*) histWZ_METLD->Clone();
+    hmc->Add(histDataFake_METLD);
+    hmc->Add(histWWZ_METLD);
+    hmc->Add(histZZ_METLD); 
+    hmc->Add(histDY_METLD);  
+    hmc->Add(histTTZ_METLD);
+    
+    TH1F* hmcHatchedArea = (TH1F*) hmc->Clone();
+    hmcHatchedArea->SetLineColor(1);
+    hmcHatchedArea->SetFillStyle(3013);
+    hmcHatchedArea->SetFillColor(1);
 
-    THStack hs_METLD("hs_nJet25","test stacked histograms");
+    for(int j=0; j<hmcHatchedArea->GetNbinsX(); j++)
+    {
+        hmcHatchedArea->SetBinError( j+1, sqrt(pow(hmc->GetBinError(j+1),2)) ); //+pow(3.,2)));
+    }
 
-    histWZ_METLD->SetFillColor(kAzure+2);
-    histZZ_METLD->SetFillColor(kRed+2);
-    histBkg_METLD->SetFillColor(kGreen+2);
-
-    histData_METLD->GetXaxis()->SetTitle("E_{T}^{miss LD}");
+    histData_METLD->GetXaxis()->SetTitle("E_{T}^{miss LD} in 3l + 2 non-b jets");
     histData_METLD->GetXaxis()->SetTitleSize(.05);
     histData_METLD->GetYaxis()->SetTitle("Events");
     histData_METLD->GetYaxis()->SetTitleSize(.05);
-    histData_METLD->GetYaxis()->SetRangeUser(0,10);
-
-    histData_METLD->Draw("e");
-    hs_METLD.Add(histBkg_METLD);
-    hs_METLD.Add(histWZ_METLD);
-    hs_METLD.Draw("histosame");
-    histData_METLD->SetLineColor(kRed+2);
+    histData_METLD->GetYaxis()->SetRangeUser(0,100);
+    
+    histData_METLD->SetMaximum(150);
+    
+    histData_METLD->Draw("e"); 
+    THStack hs("hs","test stacked histograms");
+    hs.Add(histDataFake_METLD);
+    hs.Add(histWWZ_METLD);
+    hs.Add(histZZ_METLD); 
+    hs.Add(histDY_METLD);  
+    hs.Add(histTTZ_METLD);
+    hs.Add(histWZ_METLD); 
+    hs.Draw("histo same");
+    hmcHatchedArea->Draw("e2same");
+    histData_METLD->SetLineColor(kBlack);
     histData_METLD->Draw("esame");
 
+  
     TLegend* qw = 0;
     qw = new TLegend(0.6,0.657163,0.85,0.85,NULL,"brNDC");
 
-    qw->AddEntry(histData_METLD, "Data" ,                "p");
-    qw->AddEntry(histWZ_METLD,   "WZ" ,                  "f");
-    qw->AddEntry(histBkg_METLD,  "residual backgrounds" ,"f");
+    qw->AddEntry(histData_METLD, "Data",                  "p");
+    qw->AddEntry(histWZ_METLD,   "WZ",                    "f");
+    qw->AddEntry(histWWZ_METLD,  "rares",  "f");
+    qw->AddEntry(histDataFake_METLD,  "fakes",  "f");
 
     qw->SetFillColor(0);
     qw->SetTextFont(42);
@@ -327,7 +389,7 @@
 
     qw->Draw();
 
-    text1 = new TLatex(0.15,0.93,"#bf{CMS} #it{Preliminary},                       2.26 fb^{-1} (13TeV)");
+    text1 = new TLatex(0.15,0.93,"#bf{CMS} #it{Preliminary},                       35.9 fb^{-1} (13TeV)");
     text1->SetNDC();
     text1->SetTextAlign(12);
     text1->SetX(0.16);
@@ -335,7 +397,9 @@
     text1->SetTextSize(0.05);
     text1->Draw();
 
-    c1->SaveAs("plots/WZ_3l_METLD.pdf");
+   
+
+    c1->SaveAs("WZ_3l_METLD.pdf");
 
     // #################################
     // # the selected jet multiplicity #
