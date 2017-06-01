@@ -44,6 +44,8 @@
 #include "../Madgraph/PROC_SA_CPP_sm_no_b_mass_DECAY_pptllq/SubProcesses/P0_Sigma_sm_no_b_mass_dxb_tepemux/CPPProcess_P0_Sigma_sm_no_b_mass_dxb_tepemux.h"
 #include "../Madgraph/PROC_SA_CPP_sm_no_b_mass_DECAY_pptllq/SubProcesses/P0_Sigma_sm_no_b_mass_ub_tepemd/CPPProcess_P0_Sigma_sm_no_b_mass_ub_tepemd.h"
 #include "../Madgraph/PROC_SA_CPP_sm_no_b_mass_DECAY_pptllq/SubProcesses/P0_Sigma_sm_no_b_mass_uxbx_txepemdx/CPPProcess_P0_Sigma_sm_no_b_mass_uxbx_txepemdx.h"
+#include "../Madgraph/PROC_SA_CPP_sm_DECAY_gqlnullgq/SubProcesses/P0_Sigma_sm_gdx_epvemupmumgux/CPPProcess_P0_Sigma_sm_gdx_epvemupmumgux.h"
+#include "../Madgraph/PROC_SA_CPP_sm_DECAY_gqlnullgq/SubProcesses/P0_Sigma_sm_gu_epvemupmumgd/CPPProcess_P0_Sigma_sm_gu_epvemupmumgd.h"
 
 
 #define kNone -1 //No Integration, just evaluation
@@ -70,6 +72,7 @@
 #define kMEM_TTbar_TopAntitopFullyLepDecay 19
 #define kMEM_TTbar_TopAntitopSemiLepDecay 20
 #define kMEM_TLLJ_TopLepDecay 21
+#define kMEM_WZJJ_LepDecay 22
 
 #define kFixMw 1
 #define kFixBenergy 2
@@ -91,6 +94,7 @@
 #define kTop 5
 #define kAntitop 6
 #define kTLLJ 7
+#define kWZJJ 8
 
 #define kHfullylep 0
 #define kHsemilep 1
@@ -99,6 +103,7 @@
 #define kLNuJJ 4
 #define kNone -1
 #define kLLJ 5
+#define kLNuLLJJ 6
 
 #define kNoTop -1
 #define kTopLepDecay 0
@@ -196,6 +201,8 @@ class MEPhaseSpace
     CPPProcess_P0_Sigma_sm_no_b_mass_dxb_tepemux* process_P0_Sigma_sm_no_b_mass_dxb_tepemux;
     CPPProcess_P0_Sigma_sm_no_b_mass_ub_tepemd* process_P0_Sigma_sm_no_b_mass_ub_tepemd;
     CPPProcess_P0_Sigma_sm_no_b_mass_uxbx_txepemdx* process_P0_Sigma_sm_no_b_mass_uxbx_txepemdx;
+    CPPProcess_P0_Sigma_sm_gdx_epvemupmumgux* process_P0_Sigma_sm_gdx_epvemupmumgux;
+    CPPProcess_P0_Sigma_sm_gu_epvemupmumgd* process_P0_Sigma_sm_gu_epvemupmumgd;
 
 
     const LHAPDF::PDF* pdf;
@@ -236,6 +243,7 @@ class MEPhaseSpace
     double xsTTW;
     double xsTTbar;
     double xsTLLJ;
+    double xsWZJJ;
     double brTopLep;
     double brTopHad;
     double brHiggsFullLep;
@@ -319,6 +327,8 @@ class MEPhaseSpace
     double SetupKinematicsTTWJJ_NoBjorken_TopAntitopDecay(const double*) const;
     double SetupKinematicsTTbar_NoBjorken_TopAntitopDecay(const double*) const;
     double SetupKinematicsTLLJ_NoBjorken_TopDecay(const double*) const;
+    double SetupKinematicsWZJJ_NoBjorken(const double*) const;
+
 
     void ApplyTotalTransverseBoost() const;
 
@@ -520,6 +530,7 @@ MEPhaseSpace::MEPhaseSpace(){
   xsTTW = 0.04378 + 0.0217;
   xsTTbar = 441.3;
   xsTLLJ = 0.540 + 0.284;
+  xsWZJJ = 0.017;
   brTopHad = 0.97706 / gammaTop;
   brTopLep = brTopHad/3.;
   brHiggsFullLep = 1.570177e-05 / gammaHiggs;
@@ -682,6 +693,15 @@ void MEPhaseSpace::InitializeMadgraphProcesses(string MadgraphDir){
   process_P0_Sigma_sm_no_b_mass_uxbx_txepemdx->initProc(MGcard.c_str());
   if (verbosity>=1) cout << "TLLQ Process nexternal=" << process_P0_Sigma_sm_no_b_mass_uxbx_txepemdx->nexternal << endl;
 
+  MGcard = MadgraphDir + "/PROC_SA_CPP_sm_DECAY_gqlnullgq/Cards/param_card.dat";
+  process_P0_Sigma_sm_gdx_epvemupmumgux = new CPPProcess_P0_Sigma_sm_gdx_epvemupmumgux();
+  process_P0_Sigma_sm_gdx_epvemupmumgux->initProc(MGcard.c_str());
+  if (verbosity>=1) cout << "WZJJ Process nexternal=" << process_P0_Sigma_sm_gdx_epvemupmumgux->nexternal << endl;
+
+  MGcard = MadgraphDir + "/PROC_SA_CPP_sm_DECAY_gqlnullgq/Cards/param_card.dat";
+  process_P0_Sigma_sm_gu_epvemupmumgd = new CPPProcess_P0_Sigma_sm_gu_epvemupmumgd();
+  process_P0_Sigma_sm_gu_epvemupmumgd->initProc(MGcard.c_str());
+  if (verbosity>=1) cout << "WZJJ Process nexternal=" << process_P0_Sigma_sm_gu_epvemupmumgd->nexternal << endl;
 
 
   return;
@@ -747,11 +767,12 @@ void MEPhaseSpace::SetIntegrationMode(int imode){
   if (iMode==kMEM_TTWJJ_TopAntitopDecay) iCore = kTTWJJ;
   if (iMode==kMEM_TTbar_TopAntitopFullyLepDecay || iMode==kMEM_TTbar_TopAntitopSemiLepDecay) iCore = kTTbar;
   if (iMode==kMEM_TLLJ_TopLepDecay) iCore = kTLLJ;
+  if (iMode==kMEM_WZJJ_LepDecay) iCore = kLNuLLJJ;
 
   if (iCore==kTTbar) nCoreExternals=2;
   if (iCore==kTTH) nCoreExternals=3;
   if (iCore==kTTLL || iCore==kTTW || iCore==kTLLJ) nCoreExternals=4;
-  if (iCore==kTTWJJ) nCoreExternals=6;
+  if (iCore==kTTWJJ || iCore==kLNuLLJJ) nCoreExternals=6;
 
   return;
 }
@@ -767,8 +788,9 @@ int MEPhaseSpace::GetNumberIntegrationVar(int kMode, int kCatJets){
     if (kMode==kMEM_TTbar_TopAntitopSemiLepDecay) nparam = 5;
     if (kMode==kMEM_TTbar_TopAntitopFullyLepDecay) nparam = 6;
     if (kMode==kMEM_TLLJ_TopLepDecay) nparam=4;
+    if (kMode==kMEM_WZJJ_LepDecay) nparam=5;
 
-    if (kMode!=kMEM_TLLJ_TopLepDecay){
+    if (kMode!=kMEM_TLLJ_TopLepDecay && kMode!=kMEM_WZJJ_LepDecay){
       if (kMode!=kMEM_TTW_TopAntitopDecay && kMode!=kMEM_TTbar_TopAntitopFullyLepDecay){
         if (kCatJets==kCat_3l_2b_1j || kCatJets==kCat_3l_1b_2j) nparam += 2;
         else if (kCatJets==kCat_3l_2b_0j || kCatJets==kCat_3l_1b_1j) nparam += 4;
@@ -1504,7 +1526,7 @@ void MEPhaseSpace::ApplyTotalTransverseBoost() const {
     FillTTLLPhaseSpacePoint(Top, Antitop, Lep1, Lep2);
     ReadPartonMomenta(pCore, 6);
   }
-  if (iCore==kTTWJJ){
+  if (iCore==kTTWJJ || iCore==kWZJJ){
     TLorentzVector Lep1(pCore->at(4)[1], pCore->at(4)[2], pCore->at(4)[3], pCore->at(4)[0]);
     TLorentzVector Lep2(pCore->at(5)[1], pCore->at(5)[2], pCore->at(5)[3], pCore->at(5)[0]);
     TLorentzVector Jet1(pCore->at(6)[1], pCore->at(6)[2], pCore->at(6)[3], pCore->at(6)[0]);
@@ -1795,6 +1817,39 @@ double MEPhaseSpace::Eval(const double* x) const {
 
   }
 
+  if (iMode==kMEM_WZJJ_LepDecay){
+
+    int inputpos = 0;
+    if (iNleptons==3 && iMode==kMEM_WZJJ_LepDecay){
+      AddIntegVar_Woffshell(0, x, &inputpos);
+      AddIntegVar_Zoffshell(6, x, &inputpos);
+      AddIntegVar_TwoJets(12, x, &inputpos);
+    }
+
+    Computed_mETvect.SetPxPyPzE(0,0,0,0);
+
+    double weightPS = SetupKinematicsWZJJ_NoBjorken(xMEM);
+    if (verbosity>=2) cout << "weightPS="<<weightPS<<endl;
+    if (weightPS==0) { errorCounter[kErr_PS_Product]++; return MEMZEROWEIGHT; }
+
+    double weightTF = ComputeTFProduct();
+    if (weightTF==0) { errorCounter[kErr_TF_Product]++; return MEMZEROWEIGHT; }
+
+    ApplyTotalTransverseBoost();
+
+    TLorentzVector Pl1, Pl2;
+    SetMomentumFromEThetaPhi(0, MEMFix_HiggsFullLep.Lep1_E, MEMFix_HiggsFullLep.Lep1_Theta, MEMFix_HiggsFullLep.Lep1_Phi, &Pl1);
+    SetMomentumFromEThetaPhi(0, MEMFix_HiggsFullLep.Lep2_E, MEMFix_HiggsFullLep.Lep2_Theta, MEMFix_HiggsFullLep.Lep2_Phi, &Pl2);
+    double mll = (Pl1+Pl2).M();
+    muF = (mW+mll)/2.;
+
+    double weightMEPDF = ConvolvePdfCrossSection(pCore->at(0)[0]*2/comEnergy, pCore->at(1)[0]*2/comEnergy, muF) * GeV2barn;
+    if (weightMEPDF==0) { errorCounter[kErr_ME]++; errorCounter[kErr_PDF]++; return MEMZEROWEIGHT; }
+
+    weight = weightMEPDF * weightPS * weightTF;
+    if (weight==0) { errorCounter[kErr_Weight_Product]++; return MEMZEROWEIGHT;}
+
+  }
 
   if (iMode==kAllPartonsTTH_TopDecay || iMode==kAllPartonsTTH_TopLepDecayMwInt || iMode==kAllPartonsTTH_TopHadDecayMwInt){
     double weightPS=0;
@@ -4448,6 +4503,74 @@ double MEPhaseSpace::SetupKinematicsTLLJ_NoBjorken_TopDecay(const double* x) con
 
 }
 
+double MEPhaseSpace::SetupKinematicsWZJJ_NoBjorken(const double* x) const{
+
+
+  y[0] = x[0];
+  y[1] = x[1];
+  y[2] = x[2];
+  y[3] = x[3];
+  y[4] = x[4];
+  y[5] = x[5];
+
+  TLorentzVector P1;
+  TLorentzVector P2;
+  double weight_PS_W = SetupKinematics_Wlnu_WithBreitWigner_Generic(y, &P1, &P2);
+
+  Computed_mETvect += P2; //neutrino
+
+  TLorentzVector P3;
+  TLorentzVector P4;
+  SetMomentumFromEThetaPhi(0, x[6], x[7], x[8], &P3); //lepton1
+  SetMomentumFromEThetaPhi(0, x[9], x[10], x[11], &P4); //lepton2
+
+  TLorentzVector P5;
+  TLorentzVector P6;
+  SetMomentumFromEThetaPhi(0, x[12], x[13], x[14], &P5);  //jet1
+  SetMomentumFromEThetaPhi(0, x[15], x[16], x[17], &P6);  //jet2
+
+  TLorentzVector Ptot = P1 + P2 + P3 + P4 + P5 + P6;
+  double x1 = (Ptot.Pz()+Ptot.E())/comEnergy;
+  double x2 = (-Ptot.Pz()+Ptot.E())/comEnergy;
+
+  if (verbosity>=2) cout << "x1+x2="<<x1+x2<<endl;
+  if (!(x2>0 && x2<1)){
+    if (verbosity>=2) cout << "x2="<<x2<<" out of range, quit"<<endl;
+    return 0;
+  }
+  if (!(x1>0 && x1<1)){
+    if (verbosity>=2) cout << "x1="<<x1<<" out of range, quit"<<endl;
+    return 0;
+  }
+  if (verbosity>=2) cout << "Ptot Pt="<<Ptot.Pt()<<endl;
+
+  FillTTLNuJJPhaseSpacePoint(P1, P2, P3, P4, P5, P6);
+
+  SetInitialPartonMomenta(x1, x2);
+
+  ReadPartonMomenta(pCore, 8);
+  int check = 1;
+  check *= CheckMomentum(P1, 0);
+  check *= CheckMomentum(P2, 0);
+  check *= CheckMomentum(P3, 0);
+  check *= CheckMomentum(P4, 0);
+  check *= CheckMomentum(P5, 0);
+  check *= CheckMomentum(P6, 0);
+
+  if (check==0) {
+    if (verbosity>=2) cout << "Mass constraint is not respected"<<endl;
+    return 0;
+  }
+
+
+  double weight_PS_Init = 2./(comEnergy*comEnergy);
+  double weight_PS_LL = P3.Beta()*P3.Vect().Mag()*sin(x[7])/2. * P4.Beta()*P4.Vect().Mag()*sin(x[10])/2. /(TMath::Power(2*TMath::Pi(),6));
+  double weight_PS_JJ =  P5.Beta()*P5.Vect().Mag()*sin(x[13])/2. /(TMath::Power(2*TMath::Pi(),3)) * P6.Beta()*P6.Vect().Mag()*sin(x[16])/2. /(TMath::Power(2*TMath::Pi(),3));
+  double weight_PS = weight_PS_Init * weight_PS_W * weight_PS_LL * weight_PS_JJ;
+
+  return weight_PS;
+}
+
 double MEPhaseSpace::ComputeDecayMomenta(TLorentzVector& P, double M1, double M2, double theta, double phi, TLorentzVector* Decay1, TLorentzVector* Decay2) const{
 
   //Energies of decay particles in cm
@@ -4667,7 +4790,6 @@ double MEPhaseSpace::ComputeSubMatrixElement(int iProc, int ip1, int ip2) const 
             process_P0_Sigma_sm_no_b_mass_ub_tepemd->setMomenta(*pCore);
             process_P0_Sigma_sm_no_b_mass_ub_tepemd->sigmaKin();
             weight = process_P0_Sigma_sm_no_b_mass_ub_tepemd->sigmaHat();
-
 	  }
 	}
         if (FinalStateTTV.Top1_Sign==kAntitop){
@@ -4685,6 +4807,27 @@ double MEPhaseSpace::ComputeSubMatrixElement(int iProc, int ip1, int ip2) const 
           }
         }
       }
+
+      if (iProc==kWZJJ){
+        if (MEMFix_HiggsSemiLep.LepSign>0) {
+          if ((ip1==21 && ip2==-1) || (ip1==21 && ip2==-3)){
+ 	    process_P0_Sigma_sm_gdx_epvemupmumgux->setInitial(ip1, ip2);
+	    process_P0_Sigma_sm_gdx_epvemupmumgux->setMomenta(*pCore);
+	    process_P0_Sigma_sm_gdx_epvemupmumgux->sigmaKin();
+	    weight = process_P0_Sigma_sm_gdx_epvemupmumgux->sigmaHat();
+	  }
+        }
+        if (MEMFix_HiggsSemiLep.LepSign<0) {
+          if ((ip1==21 && ip2==2) || (ip1==21 && ip2==4)){
+            process_P0_Sigma_sm_gu_epvemupmumgd->setInitial(ip1, ip2);
+            process_P0_Sigma_sm_gu_epvemupmumgd->setMomenta(*pCore);
+            process_P0_Sigma_sm_gu_epvemupmumgd->sigmaKin();
+            weight = process_P0_Sigma_sm_gu_epvemupmumgd->sigmaHat();
+          }
+        }
+      }
+
+
 
       if (iProc==kTop){
         process_tbwjj->setMomenta(*pTop);
@@ -4957,6 +5100,17 @@ double MEPhaseSpace::ConvolvePdfCrossSection(double x1, double x2, double mu) co
            + pdf->xfxQ2(-2, x1, mu*mu) * pdf->xfxQ2(-5, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, -2, -5);
   }
 
+  if (iMode==kMEM_WZJJ_LepDecay && MEMFix_HiggsSemiLep.LepSign==1){
+    weight = pdf->xfxQ2(21, x1, mu*mu) * pdf->xfxQ2(-1, x2, mu*mu) * ComputeSubMatrixElement(kWZJJ, 21, -1)
+           + pdf->xfxQ2(21, x1, mu*mu) * pdf->xfxQ2(-3, x2, mu*mu) * ComputeSubMatrixElement(kWZJJ, 21, -3);
+  }
+  if (iMode==kMEM_WZJJ_LepDecay && MEMFix_HiggsSemiLep.LepSign==-1){
+    weight = pdf->xfxQ2(21, x1, mu*mu) * pdf->xfxQ2(4, x2, mu*mu) * ComputeSubMatrixElement(kWZJJ, 21, 4)
+           + pdf->xfxQ2(21, x1, mu*mu) * pdf->xfxQ2(2, x2, mu*mu) * ComputeSubMatrixElement(kWZJJ, 21, 2);
+  }
+
+
+
   if (iMode==kMEM_TTW_TopAntitopDecay || iMode==kMEM_TTWJJ_TopAntitopDecay){
     weight *= ComputeSubMatrixElement(kTop, 0, 0);
     weight *= ComputeSubMatrixElement(kAntitop, 0, 0);
@@ -5175,8 +5329,8 @@ void MEPhaseSpace::UpdateComputedVarForTF() const{
     }
   }
 
-  if (FinalStateTTV.Boson_Type == kLNuJJ){
-    //Jets for TTWJJ
+  if (FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type==kLNuLLJJ){
+    //Jets for TTWJJ or WZJJ
     if (FinalStateTTV.Top1_Decay!=kTopHadDecay){
       FillComputedJetForTF(pCore->at(6), &(transferFunctions->ComputedVarForTF.Jet1_E), &(transferFunctions->ComputedVarForTF.Jet1_Eta));
       FillComputedJetForTF(pCore->at(7), &(transferFunctions->ComputedVarForTF.Jet2_E), &(transferFunctions->ComputedVarForTF.Jet2_Eta));
@@ -5217,7 +5371,7 @@ double MEPhaseSpace::ComputeTFProduct() const {
   //if (FinalStateTTV.Top1_Decay == kTopHadDecay && (FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep)) jetTFmode = 2;
 
   if (FinalStateTTV.Boson_Type == kLLJ) nJetsIncludedForTF = 1;
-  if (FinalStateTTV.Top1_Decay == kTopHadDecay || FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep) nJetsIncludedForTF = 2;
+  if (FinalStateTTV.Top1_Decay == kTopHadDecay || FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep || FinalStateTTV.Boson_Type == kLNuLLJJ) nJetsIncludedForTF = 2;
   if (FinalStateTTV.Top1_Decay == kTopHadDecay && (FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep)) nJetsIncludedForTF = 4;  
 
   double weightTF = transferFunctions->ComputeTFProductJetBjetMet(nJetsIncludedForTF);

@@ -27,8 +27,8 @@ class ConfigParser
   int* Hyp;
   int *index_hyp;
 
-  int doTTLL, doTTHfl, doTTHsl, doTTW, doTTWJJ, doTTbarfl, doTTbarsl, doTLLJ;
-  int nPointsHypTTLL, nPointsHypTTHsl, nPointsHypTTHfl, nPointsHypTTW, nPointsHypTTWJJ, nPointsHypTTbarfl, nPointsHypTTbarsl, nPointsHypTLLJ;
+  int doTTLL, doTTHfl, doTTHsl, doTTW, doTTWJJ, doTTbarfl, doTTbarsl, doTLLJ, doWZJJ;
+  int nPointsHypTTLL, nPointsHypTTHsl, nPointsHypTTHfl, nPointsHypTTW, nPointsHypTTWJJ, nPointsHypTTbarfl, nPointsHypTTbarsl, nPointsHypTLLJ, nPointsHypWZJJ;
   double valJetTFfracmin, valJetTFfracmax, valNeutMaxE;
   string valJetChoice;
   int valOptim, valOptimTopLep, valOptimTopHad, valOptimHiggs, valOptimW;
@@ -80,6 +80,8 @@ void ConfigParser::GetConfigFromFile(string InputFile){
   ReadOptionValue(&option, &nPointsHypTTbarsl);
   ReadOptionValue(&option, &doTLLJ);
   ReadOptionValue(&option, &nPointsHypTLLJ);
+  ReadOptionValue(&option, &doWZJJ);
+  ReadOptionValue(&option, &nPointsHypWZJJ);
 
   ReadOptionValue(&option, &valOptim);
   ReadOptionValue(&option, &valOptimTopHad);
@@ -157,13 +159,14 @@ void ConfigParser::LoadHypotheses(int* nhyp, string** shyp, int** hyp, int** nPo
   if (doTTbarfl) (*nhyp)++;
   if (doTTbarsl) (*nhyp)++;
   if (doTLLJ) (*nhyp)++;
+  if (doWZJJ) (*nhyp)++;
 
   (*shyp) = new string[(*nhyp)];
   (*hyp) = new int[(*nhyp)];
   (*nPointsHyp) = new int[(*nhyp)]; 
 
-  (*index_hyp) = new int[8];
-  for (int i=0; i<8; i++) (*index_hyp)[i] = -1;
+  (*index_hyp) = new int[9];
+  for (int i=0; i<9; i++) (*index_hyp)[i] = -1;
 
 
   int ih=0;
@@ -221,6 +224,13 @@ void ConfigParser::LoadHypotheses(int* nhyp, string** shyp, int** hyp, int** nPo
     (*hyp)[ih] = kMEM_TLLJ_TopLepDecay;
     (*nPointsHyp)[ih] = nPointsHypTLLJ;
     (*index_hyp)[7] = ih;
+    ih++;
+  }
+  if (doWZJJ){
+    (*shyp)[ih] = "WZJJ";
+    (*hyp)[ih] = kMEM_WZJJ_LepDecay;
+    (*nPointsHyp)[ih] = nPointsHypWZJJ;
+    (*index_hyp)[8] = ih;
     ih++;
   }
 
