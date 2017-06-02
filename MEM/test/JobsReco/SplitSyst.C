@@ -14,7 +14,7 @@ void SplitSyst(string FileName){
   size_t foundinit = FileName.find(strinit);
   string FileName_tmp;
 
-/*
+
   TTree* t_JESplus = (TTree*) f->Get("JES__plus");
   FileName_tmp = FileName;
   FileName_tmp.replace(found, str.length(), "_JECplus.root");
@@ -38,7 +38,7 @@ void SplitSyst(string FileName){
   TTree* t_JESminus2 = t_JESminus->CopyTree("");
   t_JESminus2->SetName("Tree");
   f_JECminus->Write();
-*/
+
 
   TTree* t_JERplus = (TTree*) f->Get("JER__plus");
   FileName_tmp = FileName;

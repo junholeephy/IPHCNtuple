@@ -3,23 +3,29 @@
 #eosdir="/store/user/chanon/TZQ/TestNtuplesV7_Syst"
 dir=/tmp/chanon
 
-for inputfile in `cat FileList_Syst.txt`
+#for inputfile in `cat FileList.txt`
+while read line
 do
 
-  echo ${dir}/${inputfile}
+  echo $line > tmp
+  proc=`awk '{print $1}' tmp`
+  inputfile=`awk '{print $2}' tmp`
+  echo $proc $inputfile
+
+  echo ${inputfile}
 #  echo $line > tmp
 #  proc=`awk '{print $1}' tmp`
 #  inputfile=`awk '{print $2}' tmp`
 #  echo $proc $inputfile
 
-  root -l -q 'SplitSyst.C("'${dir}/${inputfile}'")' #| awk 'NR==3' > tmp
+  root -l -q 'SplitSyst.C("'${inputfile}'")' #| awk 'NR==3' > tmp
   #nEntries=`cat tmp`
   #echo nEntries=$nEntries
 
   #nEntriesTot=$(( nEntriesTot + nEntries ));
   #echo nEntriesTot=$nEntriesTot
 
-done 
+done < FileList.txt
 
 #cd /tmp/chanon/
 #ls *.root > l
