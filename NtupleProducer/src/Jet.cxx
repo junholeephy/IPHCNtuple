@@ -17,21 +17,26 @@ void Jet::read(bool isdata)
     _ID = idx;
 
     // general informations
-    if( CHECK(ntP->jet_E)       )       _E      = ntP->jet_E->at(idx);
-    if( CHECK(ntP->jet_pt)      )       _pt     = ntP->jet_pt->at(idx);
-    if( CHECK(ntP->jet_eta)     )       _eta    = ntP->jet_eta->at(idx);   
-    if( CHECK(ntP->jet_phi)     )       _phi    = ntP->jet_phi->at(idx);   
-    if( CHECK(ntP->jet_m)       )       _m      = ntP->jet_m->at(idx);
-    if( CHECK(ntP->jet_qgtag)   )       _qg     = ntP->jet_qgtag->at(idx);
+    if( CHECK(ntP->jet_E)       )       _E          = ntP->jet_E->at(idx);
+    if( CHECK(ntP->jet_pt)      )       _pt         = ntP->jet_pt->at(idx);
+    if( CHECK(ntP->jet_eta)     )       _eta        = ntP->jet_eta->at(idx);   
+    if( CHECK(ntP->jet_phi)     )       _phi        = ntP->jet_phi->at(idx);   
+    if( CHECK(ntP->jet_m)       )       _m          = ntP->jet_m->at(idx);
+    if( CHECK(ntP->jet_qgtag)   )       _qg         = ntP->jet_qgtag->at(idx);
 
 
     // selection variables
-    if( CHECK(ntP->jet_looseJetID) )  _isLoose = ntP->jet_looseJetID->at(idx);
+    if( CHECK(ntP->jet_looseJetID) )    _isLoose    = ntP->jet_looseJetID->at(idx);
 
     // other variables
-    if( CHECK(ntP->jet_ntrk) )        _ntrk   = ntP->jet_ntrk->at(idx);
-    if( CHECK(ntP->jet_CSVv2) )       _CSVv2  = ntP->jet_CSVv2->at(idx);
-    if (CHECK(ntP->jet_cMVAv2) )      _cMVAv2 = ntP->jet_cMVAv2->at(idx);
+    if ( CHECK(ntP->jet_ntrk)    )          _ntrk           = ntP->jet_ntrk->at(idx);
+    if ( CHECK(ntP->jet_CSVv2)   )          _CSVv2          = ntP->jet_CSVv2->at(idx);
+    if ( CHECK(ntP->jet_cMVAv2)  )          _cMVAv2         = ntP->jet_cMVAv2->at(idx);
+    if ( CHECK(ntP->jet_DeepCSVProbudsg) )  _deepCSVudsg    = ntP->jet_DeepCSVProbudsg->at(idx);
+    if ( CHECK(ntP->jet_DeepCSVProbb) )     _deepCSVb       = ntP->jet_DeepCSVProbb->at(idx);
+    if ( CHECK(ntP->jet_DeepCSVProbbb) )    _deepCSVbb      = ntP->jet_DeepCSVProbbb->at(idx);
+    if ( CHECK(ntP->jet_DeepCSVProbc) )     _deepCSVc       = ntP->jet_DeepCSVProbc->at(idx);
+    if ( CHECK(ntP->jet_DeepCSVProbcc) )    _deepCSVcc      = ntP->jet_DeepCSVProbcc->at(idx);
 
     // Gen Jets variables
 
@@ -64,10 +69,16 @@ void Jet::init()
     _isLoose = 0;
 
     // other variables
-    _ntrk    = -100;
-    _CSVv2   = -100.;
-    _cMVAv2  = -100.;
-    _deepCSV = -100.;
+    _ntrk           = -100;
+    _CSVv2          = -100.;
+    _cMVAv2         = -100.;
+
+    _deepCSV        = -100.;
+    _deepCSVudsg    = -100.;
+    _deepCSVb       = -100.;
+    _deepCSVbb      = -100.;
+    _deepCSVc       = -100.;
+    _deepCSVcc      = -100.;
 
     // Gen Jet variables
     _jet_partonFlavour    = -100.;

@@ -361,6 +361,11 @@ void Tree::Init(TChain *ch)
     jet_ntrk = 0;
     jet_CSVv2 = 0;
     jet_cMVAv2 = 0;
+    jet_DeepCSVProbudsg = 0;
+    jet_DeepCSVProbb = 0;
+    jet_DeepCSVProbbb = 0;
+    jet_DeepCSVProbc = 0;
+    jet_DeepCSVProbcc = 0;
     jet_looseJetID = 0;
     jet_partonFlavour = 0;
     jet_hadronFlavour = 0;
@@ -1162,6 +1167,11 @@ void Tree::Init(TChain *ch)
     fChain->SetBranchAddress("jet_ntrk", &jet_ntrk, &b_jet_ntrk);
     fChain->SetBranchAddress("jet_CSVv2", &jet_CSVv2, &b_jet_CSVv2);
     fChain->SetBranchAddress("jet_cMVAv2", &jet_cMVAv2, &b_jet_cMVAv2);
+    fChain->SetBranchAddress("jet_DeepCSVProbudsg", &jet_DeepCSVProbudsg, &b_jet_DeepCSVProbudsg);
+    fChain->SetBranchAddress("jet_DeepCSVProbb", &jet_DeepCSVProbb, &b_jet_DeepCSVProbb);
+    fChain->SetBranchAddress("jet_DeepCSVProbbb", &jet_DeepCSVProbb, &b_jet_DeepCSVProbbb);
+    fChain->SetBranchAddress("jet_DeepCSVProbc", &jet_DeepCSVProbc, &b_jet_DeepCSVProbc);
+    fChain->SetBranchAddress("jet_DeepCSVProbcc", &jet_DeepCSVProbcc, &b_jet_DeepCSVProbcc);
     fChain->SetBranchAddress("jet_looseJetID", &jet_looseJetID, &b_jet_looseJetID);
     fChain->SetBranchAddress("jet_partonFlavour", &jet_partonFlavour, &b_jet_partonFlavour);
     fChain->SetBranchAddress("jet_hadronFlavour", &jet_hadronFlavour, &b_jet_hadronFlavour);

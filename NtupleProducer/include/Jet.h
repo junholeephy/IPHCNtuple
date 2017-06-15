@@ -34,6 +34,11 @@ class Jet : public Base
         float CSVv2()       {return _CSVv2;};
         float cMVAv2()      {return _cMVAv2;};
         float deepCSV()     {return _deepCSV;};
+        float deepCSVudsg() {return _deepCSVudsg;};
+        float deepCSVb()    {return _deepCSVb;};
+        float deepCSVbb()   {return _deepCSVbb;};
+        float deepCSVc()    {return _deepCSVc;};
+        float deepCSVcc()   {return _deepCSVcc;};
 
         float jet_partonFlavour() {return _jet_partonFlavour  ;};
         float jet_hadronFlavour() {return _jet_hadronFlavour  ;};
@@ -85,6 +90,11 @@ class Jet : public Base
         float _CSVv2;
         float _cMVAv2;
         float _deepCSV;
+        float _deepCSVudsg;
+        float _deepCSVb;
+        float _deepCSVbb;
+        float _deepCSVc;
+        float _deepCSVcc;
 
         float _jet_partonFlavour  ;
         float _jet_hadronFlavour  ;

@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
 
         //	if( !(isHtoWW || isHtoZZ || isHtoTT) ) continue;
 
-        // std::cout << "Event =========== " << std::endl;
+         std::cout << "Event =========== " << std::endl;
 
         // event
         ev.init();
@@ -148,6 +148,8 @@ int main(int argc, char *argv[])
         }
         if(mu_presel) n_mu++;
 
+        std::cout << "muons done" << std::endl;
+
         int n_el_evt = 0;
 
         // electrons
@@ -167,6 +169,7 @@ int main(int argc, char *argv[])
         }
         if(el_presel) n_el++;
 
+        std::cout << "electrons done" << std::endl;
 
         // preselection
         //if ( (n_mu_evt + n_el_evt) < 2 ) continue; 
@@ -189,6 +192,8 @@ int main(int argc, char *argv[])
             }
         }	
         if(tau_presel) n_tau++;
+
+        std::cout << "taus done" << std::endl;
 
         int n_jet_evt = 0;
 
@@ -216,6 +221,8 @@ int main(int argc, char *argv[])
             }    
         }
         if(jet_presel) n_jet++;
+
+        std::cout << "jet done" << std::endl;
 
         //trigger objects
         /*for(int j=0;j<ntP->triggerobject_n;j++)
