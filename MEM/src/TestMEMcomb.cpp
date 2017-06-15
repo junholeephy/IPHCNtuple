@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
  
     cout << "Test MEM weight computation" <<endl;
 
-    int index[9];
+    int index[10];
     for (int ih=0; ih<nhyp; ih++){
       if (shyp[ih]=="TTLL") index[ih] = 0;
       if (shyp[ih]=="TTHfl") index[ih] = 1;
@@ -95,6 +95,7 @@ int main(int argc, char *argv[])
       if (shyp[ih]=="TTbarsl") index[ih] = 6;
       if (shyp[ih]=="TLLJ") index[ih] = 7;
       if (shyp[ih]=="WZJJ") index[ih] = 8;
+      if (shyp[ih]=="THJ") index[ih] = 9;
     }
  
     int doOptim;
@@ -102,12 +103,12 @@ int main(int argc, char *argv[])
     int doOptimTopHad, doOptimTopLep, doOptimHiggs, doOptimW;
     cfgParser.LoadOptim(&doOptimTopHad, &doOptimTopLep, &doOptimHiggs, &doOptimW);
 
-    std::cout << "TEST XAVIER" << std::endl;
+    //std::cout << "TEST XAVIER" << std::endl;
 
     HypIntegrator hypIntegrator;
     hypIntegrator.InitializeIntegrator(&cfgParser);
 
-    std::cout << "TEST XAVIER" << std::endl;
+    //std::cout << "TEST XAVIER" << std::endl;
 
     int doMinimization = cfgParser.valDoMinimization;
 
@@ -167,7 +168,7 @@ int main(int argc, char *argv[])
     sname = "hErrHist_Tot_hyp" + shyp[ih] + "_Fail";
     tree.hMEPhaseSpace_ErrorTot_Fail[ih] = new TH1F(sname.c_str(), sname.c_str(), 10, 0, 10);
   }
-  
+ /* 
   string index_CatJets[12];
   index_CatJets[0] = "3l_2b_2j";
   index_CatJets[1] = "3l_1b_2j";
@@ -192,8 +193,6 @@ int main(int argc, char *argv[])
      if(shyp[ih]=="WZJJ") index_XS[ih]=xsWZJJ;
   }
 
-  bool sel_tmp=0;
-  
   for(int ih=0; ih<nhyp; ih++){
      for(int index_cat=0; index_cat<12; index_cat++){
    	  sname = "hMEAllWeights_" + shyp[ih] + "_" + index_CatJets[index_cat];
@@ -202,7 +201,10 @@ int main(int argc, char *argv[])
    	  tree.hMEAllWeights_nlog[ih][index_cat] = new TH1D(sname.c_str(),sname.c_str(),700,0,700);
      }
   }
-  
+ */
+
+  bool sel_tmp=0;
+ 
     int nHypAllowed_TTH = 0, nHypAllowed_TTbar = 0;
 
     Permutations* MEMpermutations = new Permutations[nhyp];
@@ -444,6 +446,23 @@ int main(int argc, char *argv[])
       tree.mc_mem_wzjj_weight_JEC_down = 0;
       tree.mc_mem_wzjj_weight_JER_up = 0;
       tree.mc_mem_wzjj_weight_JER_down = 0;
+
+      tree.mc_mem_thj_weight_logmean = 0;
+      tree.mc_mem_thj_weight_log = 0;
+      tree.mc_mem_thj_weight = 0;
+      tree.mc_mem_thj_weight_time = 0;
+      tree.mc_mem_thj_weight_err = 0;
+      tree.mc_mem_thj_weight_chi2 = 0;
+      tree.mc_mem_thj_weight_max = 0;
+      tree.mc_mem_thj_weight_avg = 0;
+      tree.mc_kin_thj_weight_logmax = 0;
+      tree.mc_kin_thj_weight_logmaxint = 0;
+      tree.mc_mem_thj_weight_kinmax = 0;
+      tree.mc_mem_thj_weight_kinmaxint = 0;
+      tree.mc_mem_thj_weight_JEC_up = 0;
+      tree.mc_mem_thj_weight_JEC_down = 0;
+      tree.mc_mem_thj_weight_JER_up = 0;
+      tree.mc_mem_thj_weight_JER_down = 0;
 
       /*
       if (iEvent!=atoi(argv[2])){
@@ -877,6 +896,27 @@ int main(int argc, char *argv[])
        tree.mc_mem_wzjj_weight_kinmaxint = MEMpermutations[index_hyp[8]].resMEM_maxKinFit_Int.weight;
       }
     }
+    if (index_hyp[9]!=-1){
+      if (MEMpermutations[index_hyp[9]].computeHyp){
+       tree.mc_mem_thj_weight = MEMpermutations[index_hyp[9]].resMEM_avgExl0.weight;
+       tree.mc_mem_thj_weight_err = MEMpermutations[index_hyp[9]].resMEM_avgExl0.err;
+       tree.mc_mem_thj_weight_chi2 = MEMpermutations[index_hyp[9]].resMEM_avgExl0.chi2;
+       tree.mc_mem_thj_weight_time = MEMpermutations[index_hyp[9]].resMEM_avgExl0.time;
+       tree.mc_mem_thj_weight_log = log(MEMpermutations[index_hyp[9]].resMEM_avgExl0.weight);
+       tree.mc_mem_thj_weight_logmean = MEMpermutations[index_hyp[9]].resMEM_logavgExl0.weight;
+       tree.mc_mem_thj_weight_avg = MEMpermutations[index_hyp[9]].resMEM_avgIncl0.weight;
+       tree.mc_mem_thj_weight_max = MEMpermutations[index_hyp[9]].resMEM_max.weight;
+       tree.mc_mem_thj_weight_JEC_up = MEMpermutations[index_hyp[9]].resMEM_avgExl0_JEC_up.weight;
+       tree.mc_mem_thj_weight_JEC_down = MEMpermutations[index_hyp[9]].resMEM_avgExl0_JEC_down.weight;
+       tree.mc_mem_thj_weight_JER_up = MEMpermutations[index_hyp[9]].resMEM_avgExl0_JER_up.weight;
+       tree.mc_mem_thj_weight_JER_down = MEMpermutations[index_hyp[9]].resMEM_avgExl0_JER_down.weight;
+       tree.mc_kin_thj_weight_logmax = log(MEMpermutations[index_hyp[9]].resKin_maxKinFit.weight);
+       tree.mc_kin_thj_weight_logmaxint = log(MEMpermutations[index_hyp[9]].resKin_maxKinFit_Int.weight);
+       tree.mc_mem_thj_weight_kinmax = MEMpermutations[index_hyp[9]].resMEM_maxKinFit.weight;
+       tree.mc_mem_thj_weight_kinmaxint = MEMpermutations[index_hyp[9]].resMEM_maxKinFit_Int.weight;
+      }
+    }
+
 
 
 
@@ -1021,6 +1061,11 @@ int main(int argc, char *argv[])
        cout << "WZJJ nHypAllowed="<<MEMpermutations[index_hyp[8]].nHypAllowed<<endl;
        cout << "WZJJ weight="<<tree.mc_mem_wzjj_weight<<" ; log(weight)="<<tree.mc_mem_wzjj_weight_log<<endl;
      }
+     if (tree.mc_mem_thj_weight>0){
+       cout << "WZJJ nHypAllowed="<<MEMpermutations[index_hyp[9]].nHypAllowed<<endl;
+       cout << "WZJJ weight="<<tree.mc_mem_thj_weight<<" ; log(weight)="<<tree.mc_mem_thj_weight_log<<endl;
+     }
+
 
      if (tree.mc_mem_tth_weight>0 && tree.mc_mem_ttz_weight>0)
        cout << "TTHvsTTZ discrim="<<tree.mc_mem_ttz_tth_likelihood<<"; -log(discrim)="<< tree.mc_mem_ttz_tth_likelihood_nlog<<endl;

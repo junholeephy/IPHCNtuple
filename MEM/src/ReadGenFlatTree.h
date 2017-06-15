@@ -721,6 +721,20 @@ class ReadGenFlatTree {
   Double_t mc_mem_wzjj_weight_kinmax;
   Double_t mc_mem_wzjj_weight_kinmaxint;
 
+  Double_t mc_mem_thj_weight;
+  Double_t mc_mem_thj_weight_JEC_up, mc_mem_thj_weight_JEC_down, mc_mem_thj_weight_JER_up, mc_mem_thj_weight_JER_down;
+  Double_t mc_mem_thj_weight_log;
+  Double_t mc_mem_thj_weight_err;
+  Float_t mc_mem_thj_weight_chi2;
+  Float_t mc_mem_thj_weight_time;
+  Double_t mc_mem_thj_weight_max;
+  Double_t mc_mem_thj_weight_avg;
+  Double_t mc_mem_thj_weight_logmean;
+  Double_t mc_kin_thj_weight_logmax;
+  Double_t mc_kin_thj_weight_logmaxint;
+  Double_t mc_mem_thj_weight_kinmax;
+  Double_t mc_mem_thj_weight_kinmaxint;
+
 
   //Double_t mc_mem_ttz_tthfl_likelihood;
   //Double_t mc_mem_ttz_tthsl_likelihood;  
@@ -2035,6 +2049,23 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_mem_wzjj_weight_kinmaxint",&mc_mem_wzjj_weight_kinmaxint,"mc_mem_wzjj_weight_kinmaxint/D");
   tOutput->Branch("mc_kin_wzjj_weight_logmax",&mc_kin_wzjj_weight_logmax,"mc_kin_wzjj_weight_logmax/D");
   tOutput->Branch("mc_kin_wzjj_weight_logmaxint",&mc_kin_wzjj_weight_logmaxint,"mc_kin_wzjj_weight_logmaxint/D");
+
+  tOutput->Branch("mc_mem_thj_weight",&mc_mem_thj_weight,"mc_mem_thj_weight/D");
+  tOutput->Branch("mc_mem_thj_weight_JEC_up",&mc_mem_thj_weight_JEC_up,"mc_mem_thj_weight_JEC_up/D");
+  tOutput->Branch("mc_mem_thj_weight_JEC_down",&mc_mem_thj_weight_JEC_down,"mc_mem_thj_weight_JEC_down/D");
+  tOutput->Branch("mc_mem_thj_weight_JER_up",&mc_mem_thj_weight_JER_up,"mc_mem_thj_weight_JER_up/D");
+  tOutput->Branch("mc_mem_thj_weight_JER_down",&mc_mem_thj_weight_JER_down,"mc_mem_thj_weight_JER_down/D");
+  tOutput->Branch("mc_mem_thj_weight_log",&mc_mem_thj_weight_log,"mc_mem_thj_weight_log/D");
+  tOutput->Branch("mc_mem_thj_weight_err",&mc_mem_thj_weight_err,"mc_mem_thj_weight_err/D");
+  tOutput->Branch("mc_mem_thj_weight_chi2",&mc_mem_thj_weight_chi2,"mc_mem_thj_weight_chi2/F");
+  tOutput->Branch("mc_mem_thj_weight_time",&mc_mem_thj_weight_time,"mc_mem_thj_weight_time/F");
+  tOutput->Branch("mc_mem_thj_weight_max",&mc_mem_thj_weight_max,"mc_mem_thj_weight_max/D");
+  tOutput->Branch("mc_mem_thj_weight_avg",&mc_mem_thj_weight_avg,"mc_mem_thj_weight_avg/D");
+  tOutput->Branch("mc_mem_thj_weight_logmean",&mc_mem_thj_weight_logmean,"mc_mem_thj_weight_logmean/D");
+  tOutput->Branch("mc_mem_thj_weight_kinmax",&mc_mem_thj_weight_kinmax,"mc_mem_thj_weight_kinmax/D");
+  tOutput->Branch("mc_mem_thj_weight_kinmaxint",&mc_mem_thj_weight_kinmaxint,"mc_mem_thj_weight_kinmaxint/D");
+  tOutput->Branch("mc_kin_thj_weight_logmax",&mc_kin_thj_weight_logmax,"mc_kin_thj_weight_logmax/D");
+  tOutput->Branch("mc_kin_thj_weight_logmaxint",&mc_kin_thj_weight_logmaxint,"mc_kin_thj_weight_logmaxint/D");
 
 
   tOutput->Branch("mc_mem_ttz_tth_likelihood",&mc_mem_ttz_tth_likelihood,"mc_mem_ttz_tth_likelihood/D");
