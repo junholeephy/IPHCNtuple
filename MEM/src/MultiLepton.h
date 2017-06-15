@@ -371,7 +371,7 @@ int MultiLepton::CheckPermutationHyp(int kMode){
       if (!(Leptons[1].Id>0 && Leptons[2].Id<0)) check=0; // ME needs l+ l- ordering
     }
 
-    if (kMode==kMEM_TTH_TopAntitopHiggsDecay){
+    if (kMode==kMEM_TTH_TopAntitopHiggsDecay || kMode==kMEM_THJ_TopLepDecay){
       if (!(Leptons[0].Id>0 && Leptons[1].Id<0)) check=0; //opposite sign, and ME needs l+ l- ordering
     }
 
@@ -407,7 +407,7 @@ int MultiLepton::CheckPermutationHyp(int kMode){
     }
   }
   if (Leptons.size()==2){
-    if (kMode==kMEM_TTH_TopAntitopHiggsSemiLepDecay){
+    if (kMode==kMEM_TTH_TopAntitopHiggsSemiLepDecay || kMode==kMEM_THJ_TopLepDecay){
       if (!(Leptons[0].Id * Leptons[1].Id > 0)) check=0; //same sign leptons 
     }
     if (kMode==kMEM_TTW_TopAntitopDecay || kMode==kMEM_TTWJJ_TopAntitopDecay){
@@ -1401,14 +1401,24 @@ void MultiLepton::AddIntegrationBound_Woffshell(MEPhaseSpace** meIntegrator, int
 
 void MultiLepton::AddIntegrationBound_OneJet(MEPhaseSpace** meIntegrator, int* pos, int numJets, int isJetMissing){
 
+  cout << "AddIntegrationBound_OneJet" << " numJets="<<numJets<<" isJetMissing="<<isJetMissing << endl;//" E="<< Jets[numJets+0].P4.E()<< " Theta="<<Jets[numJets+0].P4.Theta()<<" Phi="<<Jets[numJets+0].P4.Phi()<<endl;
+
   if (isJetMissing==kJet_Present){
       (*meIntegrator)->MEMFix_OtherJets.Jet1_Theta = Jets[numJets+0].P4.Theta();
       (*meIntegrator)->MEMFix_OtherJets.Jet1_Phi = Jets[numJets+0].P4.Phi();
+    if (numJets==0){
       (*meIntegrator)->transferFunctions->MeasuredVarForTF.Jet1_E = Jets[numJets+0].P4.E();
       (*meIntegrator)->transferFunctions->MeasuredVarForTF.Jet1_Eta = Jets[numJets+0].P4.Eta();
       (*meIntegrator)->transferFunctions->MeasuredVarForTF.doJet1TF = true;
+    }
+    else if (numJets==2){
+      (*meIntegrator)->transferFunctions->MeasuredVarForTF.Jet3_E = Jets[numJets+0].P4.E();
+      (*meIntegrator)->transferFunctions->MeasuredVarForTF.Jet3_Eta = Jets[numJets+0].P4.Eta();
+      (*meIntegrator)->transferFunctions->MeasuredVarForTF.doJet3TF = true;
+    }
   }
-  else (*meIntegrator)->transferFunctions->MeasuredVarForTF.doJet1TF = false;
+  //else if (numJets==0) (*meIntegrator)->transferFunctions->MeasuredVarForTF.doJet1TF = false;
+  //else if (numJets==2) (*meIntegrator)->transferFunctions->MeasuredVarForTF.doJet3TF = false;
 
   if (isJetMissing==kJet_Present){
       xL[*pos] = Jets[numJets+0].P4.E()*JetTFfracmin; //HiggsSemiLep, Jet1_E

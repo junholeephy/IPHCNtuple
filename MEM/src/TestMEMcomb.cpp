@@ -516,12 +516,12 @@ int main(int argc, char *argv[])
                   if(sel_tmp){
 		    for (unsigned int ip=0; ip<MEMpermutations[ih].resMEM_all.size() ; ip++){
                       if(MEMpermutations[ih].resMEM_all.at(ip).weight>0){
-                        tree.hMEAllWeights[ih][index_cat]->Fill(MEMpermutations[ih].resMEM_all.at(ip).weight,tree.weight);
-                        tree.hMEAllWeights_nlog[ih][index_cat]->Fill(-log(MEMpermutations[ih].resMEM_all.at(ip).weight),tree.weight);
+                        //tree.hMEAllWeights[ih][index_cat]->Fill(MEMpermutations[ih].resMEM_all.at(ip).weight,tree.weight);
+                        //tree.hMEAllWeights_nlog[ih][index_cat]->Fill(-log(MEMpermutations[ih].resMEM_all.at(ip).weight),tree.weight);
                       }
                       else{
-                        tree.hMEAllWeights[ih][index_cat]->Fill(1e-300,tree.weight);
-                        tree.hMEAllWeights_nlog[ih][index_cat]->Fill(-log(1e-300),tree.weight);
+                        //tree.hMEAllWeights[ih][index_cat]->Fill(1e-300,tree.weight);
+                        //tree.hMEAllWeights_nlog[ih][index_cat]->Fill(-log(1e-300),tree.weight);
                       }
 		    }
                   }
@@ -1062,8 +1062,8 @@ int main(int argc, char *argv[])
        cout << "WZJJ weight="<<tree.mc_mem_wzjj_weight<<" ; log(weight)="<<tree.mc_mem_wzjj_weight_log<<endl;
      }
      if (tree.mc_mem_thj_weight>0){
-       cout << "WZJJ nHypAllowed="<<MEMpermutations[index_hyp[9]].nHypAllowed<<endl;
-       cout << "WZJJ weight="<<tree.mc_mem_thj_weight<<" ; log(weight)="<<tree.mc_mem_thj_weight_log<<endl;
+       cout << "THJ nHypAllowed="<<MEMpermutations[index_hyp[9]].nHypAllowed<<endl;
+       cout << "THJ weight="<<tree.mc_mem_thj_weight<<" ; log(weight)="<<tree.mc_mem_thj_weight_log<<endl;
      }
 
 
@@ -1101,8 +1101,8 @@ int main(int argc, char *argv[])
   }
   for(int ih=0; ih<nhyp; ih++){
      for(int index_cat=0; index_cat<12; index_cat++){
-        tree.hMEAllWeights[ih][index_cat]->Write();
-        tree.hMEAllWeights_nlog[ih][index_cat]->Write();
+        //tree.hMEAllWeights[ih][index_cat]->Write();
+        //tree.hMEAllWeights_nlog[ih][index_cat]->Write();
      }
   }
 
