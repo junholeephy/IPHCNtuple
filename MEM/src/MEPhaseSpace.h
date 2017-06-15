@@ -46,6 +46,10 @@
 #include "../Madgraph/PROC_SA_CPP_sm_no_b_mass_DECAY_pptllq/SubProcesses/P0_Sigma_sm_no_b_mass_uxbx_txepemdx/CPPProcess_P0_Sigma_sm_no_b_mass_uxbx_txepemdx.h"
 #include "../Madgraph/PROC_SA_CPP_sm_DECAY_gqlnullgq/SubProcesses/P0_Sigma_sm_gdx_epvemupmumgux/CPPProcess_P0_Sigma_sm_gdx_epvemupmumgux.h"
 #include "../Madgraph/PROC_SA_CPP_sm_DECAY_gqlnullgq/SubProcesses/P0_Sigma_sm_gu_epvemupmumgd/CPPProcess_P0_Sigma_sm_gu_epvemupmumgd.h"
+#include "../Madgraph/PROC_SA_CPP_sm_no_b_mass_DECAY_ppthq/SubProcesses/P0_Sigma_sm_no_b_mass_dbx_txhu/CPPProcess_P0_Sigma_sm_no_b_mass_dbx_txhu.h"
+#include "../Madgraph/PROC_SA_CPP_sm_no_b_mass_DECAY_ppthq/SubProcesses/P0_Sigma_sm_no_b_mass_dxb_thux/CPPProcess_P0_Sigma_sm_no_b_mass_dxb_thux.h"
+#include "../Madgraph/PROC_SA_CPP_sm_no_b_mass_DECAY_ppthq/SubProcesses/P0_Sigma_sm_no_b_mass_ub_thd/CPPProcess_P0_Sigma_sm_no_b_mass_ub_thd.h"
+#include "../Madgraph/PROC_SA_CPP_sm_no_b_mass_DECAY_ppthq/SubProcesses/P0_Sigma_sm_no_b_mass_uxbx_txhdx/CPPProcess_P0_Sigma_sm_no_b_mass_uxbx_txhdx.h"
 
 
 #define kNone -1 //No Integration, just evaluation
@@ -73,6 +77,7 @@
 #define kMEM_TTbar_TopAntitopSemiLepDecay 20
 #define kMEM_TLLJ_TopLepDecay 21
 #define kMEM_WZJJ_LepDecay 22
+#define kMEM_THJ_TopLepDecay 23
 
 #define kFixMw 1
 #define kFixBenergy 2
@@ -95,6 +100,7 @@
 #define kAntitop 6
 #define kTLLJ 7
 #define kWZJJ 8
+#define kTHJ 9
 
 #define kHfullylep 0
 #define kHsemilep 1
@@ -104,6 +110,8 @@
 #define kNone -1
 #define kLLJ 5
 #define kLNuLLJJ 6
+#define kHfullylepJ 7
+#define kHsemilepJ 8
 
 #define kNoTop -1
 #define kTopLepDecay 0
@@ -141,6 +149,9 @@
 #define kCat_3l_1b_0j 12
 #define kCat_3l_0b_1j 13
 #define kCat_3l_0b_0j 14
+
+#define kCat_2lss_1b_2j 15
+#define kCat_2lss_1b_1j 16
 
 using namespace std;
 using namespace LHAPDF;
@@ -203,6 +214,10 @@ class MEPhaseSpace
     CPPProcess_P0_Sigma_sm_no_b_mass_uxbx_txepemdx* process_P0_Sigma_sm_no_b_mass_uxbx_txepemdx;
     CPPProcess_P0_Sigma_sm_gdx_epvemupmumgux* process_P0_Sigma_sm_gdx_epvemupmumgux;
     CPPProcess_P0_Sigma_sm_gu_epvemupmumgd* process_P0_Sigma_sm_gu_epvemupmumgd;
+    CPPProcess_P0_Sigma_sm_no_b_mass_dbx_txhu* process_P0_Sigma_sm_no_b_mass_dbx_txhu;
+    CPPProcess_P0_Sigma_sm_no_b_mass_dxb_thux* process_P0_Sigma_sm_no_b_mass_dxb_thux;
+    CPPProcess_P0_Sigma_sm_no_b_mass_ub_thd* process_P0_Sigma_sm_no_b_mass_ub_thd;
+    CPPProcess_P0_Sigma_sm_no_b_mass_uxbx_txhdx* process_P0_Sigma_sm_no_b_mass_uxbx_txhdx;
 
 
     const LHAPDF::PDF* pdf;
@@ -244,6 +259,7 @@ class MEPhaseSpace
     double xsTTbar;
     double xsTLLJ;
     double xsWZJJ;
+    double xsTHJ;
     double brTopLep;
     double brTopHad;
     double brHiggsFullLep;
@@ -328,7 +344,7 @@ class MEPhaseSpace
     double SetupKinematicsTTbar_NoBjorken_TopAntitopDecay(const double*) const;
     double SetupKinematicsTLLJ_NoBjorken_TopDecay(const double*) const;
     double SetupKinematicsWZJJ_NoBjorken(const double*) const;
-
+    double SetupKinematicsTHJ_NoBjorken_TopDecay(const double*) const;
 
     void ApplyTotalTransverseBoost() const;
 
@@ -531,6 +547,7 @@ MEPhaseSpace::MEPhaseSpace(){
   xsTTbar = 441.3;
   xsTLLJ = 0.540 + 0.284;
   xsWZJJ = 0.017;
+  xsTHJ = 0.060235; //SM
   brTopHad = 0.97706 / gammaTop;
   brTopLep = brTopHad/3.;
   brHiggsFullLep = 1.570177e-05 / gammaHiggs;
@@ -703,6 +720,26 @@ void MEPhaseSpace::InitializeMadgraphProcesses(string MadgraphDir){
   process_P0_Sigma_sm_gu_epvemupmumgd->initProc(MGcard.c_str());
   if (verbosity>=1) cout << "WZJJ Process nexternal=" << process_P0_Sigma_sm_gu_epvemupmumgd->nexternal << endl;
 
+  MGcard = MadgraphDir + "/PROC_SA_CPP_sm_no_b_mass_DECAY_ppthq/Cards/param_card.dat";
+  process_P0_Sigma_sm_no_b_mass_dbx_txhu = new CPPProcess_P0_Sigma_sm_no_b_mass_dbx_txhu();
+  process_P0_Sigma_sm_no_b_mass_dbx_txhu->initProc(MGcard.c_str());
+  if (verbosity>=1) cout << "THQ Process nexternal=" << process_P0_Sigma_sm_no_b_mass_dbx_txhu->nexternal << endl;
+
+  MGcard = MadgraphDir + "/PROC_SA_CPP_sm_no_b_mass_DECAY_ppthq/Cards/param_card.dat";
+  process_P0_Sigma_sm_no_b_mass_dxb_thux = new CPPProcess_P0_Sigma_sm_no_b_mass_dxb_thux();
+  process_P0_Sigma_sm_no_b_mass_dxb_thux->initProc(MGcard.c_str());
+  if (verbosity>=1) cout << "THQ Process nexternal=" << process_P0_Sigma_sm_no_b_mass_dxb_thux->nexternal << endl;
+
+  MGcard = MadgraphDir + "/PROC_SA_CPP_sm_no_b_mass_DECAY_ppthq/Cards/param_card.dat";
+  process_P0_Sigma_sm_no_b_mass_ub_thd = new CPPProcess_P0_Sigma_sm_no_b_mass_ub_thd();
+  process_P0_Sigma_sm_no_b_mass_ub_thd->initProc(MGcard.c_str());
+  if (verbosity>=1) cout << "THQ Process nexternal=" << process_P0_Sigma_sm_no_b_mass_ub_thd->nexternal << endl;
+
+  MGcard = MadgraphDir + "/PROC_SA_CPP_sm_no_b_mass_DECAY_ppthq/Cards/param_card.dat";
+  process_P0_Sigma_sm_no_b_mass_uxbx_txhdx = new CPPProcess_P0_Sigma_sm_no_b_mass_uxbx_txhdx();
+  process_P0_Sigma_sm_no_b_mass_uxbx_txhdx->initProc(MGcard.c_str());
+  if (verbosity>=1) cout << "THQ Process nexternal=" << process_P0_Sigma_sm_no_b_mass_uxbx_txhdx->nexternal << endl;
+
 
   return;
 }
@@ -768,9 +805,10 @@ void MEPhaseSpace::SetIntegrationMode(int imode){
   if (iMode==kMEM_TTbar_TopAntitopFullyLepDecay || iMode==kMEM_TTbar_TopAntitopSemiLepDecay) iCore = kTTbar;
   if (iMode==kMEM_TLLJ_TopLepDecay) iCore = kTLLJ;
   if (iMode==kMEM_WZJJ_LepDecay) iCore = kLNuLLJJ;
+  if (iMode==kMEM_THJ_TopLepDecay) iCore = kTHJ;
 
   if (iCore==kTTbar) nCoreExternals=2;
-  if (iCore==kTTH) nCoreExternals=3;
+  if (iCore==kTTH || iCore==kTHJ) nCoreExternals=3;
   if (iCore==kTTLL || iCore==kTTW || iCore==kTLLJ) nCoreExternals=4;
   if (iCore==kTTWJJ || iCore==kLNuLLJJ) nCoreExternals=6;
 
@@ -789,6 +827,7 @@ int MEPhaseSpace::GetNumberIntegrationVar(int kMode, int kCatJets){
     if (kMode==kMEM_TTbar_TopAntitopFullyLepDecay) nparam = 6;
     if (kMode==kMEM_TLLJ_TopLepDecay) nparam=4;
     if (kMode==kMEM_WZJJ_LepDecay) nparam=5;
+    if (kMode==kMEM_THJ_TopLepDecay) nparam=8;
 
     if (kMode!=kMEM_TLLJ_TopLepDecay && kMode!=kMEM_WZJJ_LepDecay){
       if (kMode!=kMEM_TTW_TopAntitopDecay && kMode!=kMEM_TTbar_TopAntitopFullyLepDecay){
@@ -799,7 +838,7 @@ int MEPhaseSpace::GetNumberIntegrationVar(int kMode, int kCatJets){
         if (kCatJets==kCat_3l_1b_1j || kCatJets==kCat_3l_1b_2j) nparam += 2;
       }
     }
-    else if (kMode==kMEM_TLLJ_TopLepDecay){
+    else if (kMode==kMEM_TLLJ_TopLepDecay || kMode==kMEM_THJ_TopLepDecay){
 	if (kCatJets==kCat_3l_1b_0j || kCatJets==kCat_3l_0b_1j) nparam += 2;
 	if (kCatJets==kCat_3l_0b_0j) nparam += 4;
     }
@@ -816,6 +855,7 @@ int MEPhaseSpace::GetNumberIntegrationVar(int kMode, int kCatJets){
     if (kMode==kMEM_TTW_TopAntitopDecay) nparam = 8;
     if (kMode==kMEM_TTWJJ_TopAntitopDecay) nparam = 10;
     if (kMode==kMEM_TTbar_TopAntitopSemiLepDecay) nparam = 5;
+    if (kMode==kMEM_THJ_TopLepDecay) nparam = 8;
 
     if (kMode!=kMEM_TTW_TopAntitopDecay && kMode!=kMEM_TTbar_TopAntitopSemiLepDecay){
       if (kCatJets==kCat_2lss_2b_3j || kCatJets==kCat_2lss_1b_4j) nparam += 2;
@@ -823,6 +863,10 @@ int MEPhaseSpace::GetNumberIntegrationVar(int kMode, int kCatJets){
     }
     if (kMode==kMEM_TTW_TopAntitopDecay || kMode==kMEM_TTbar_TopAntitopSemiLepDecay){
       if (kCatJets==kCat_2lss_1b_4j || kCatJets==kCat_2lss_1b_3j) nparam += 2;
+    }
+    if (kMode==kMEM_THJ_TopLepDecay){
+      if (kCatJets==kCat_2lss_1b_2j) nparam += 2;
+      if (kCatJets==kCat_2lss_1b_1j) nparam += 4;
     }
   }
 
@@ -1480,7 +1524,7 @@ void MEPhaseSpace::ApplyTotalTransverseBoost() const {
     FillTTbarPhaseSpacePoint(Top, Antitop);
     ReadPartonMomenta(pCore, 4);
   } 
-  if (iCore==kTTH){
+  if (iCore==kTTH || iCore==kTHJ){
     TLorentzVector Higgs(pCore->at(4)[1], pCore->at(4)[2], pCore->at(4)[3], pCore->at(4)[0]);
     TLorentzVector Ptot = Top + Antitop + Higgs;
     TVector3 BoostPt = Ptot.BoostVector();
@@ -1816,7 +1860,40 @@ double MEPhaseSpace::Eval(const double* x) const {
     if (weight==0) { errorCounter[kErr_Weight_Product]++; return MEMZEROWEIGHT;}
 
   }
+  if (iMode==kMEM_THJ_TopLepDecay){    
 
+    int inputpos = 0;
+    if (iNleptons==3 && iMode==kMEM_THJ_TopLepDecay){
+      AddIntegVar_TopLep(0, x, &inputpos, 1);
+      AddIntegVar_HiggsFullyLep(8, x, &inputpos);
+      AddIntegVar_OneJet(19, x, &inputpos);
+    }
+    if (iNleptons==2 && iMode==kMEM_THJ_TopLepDecay){
+      AddIntegVar_TopLep(0, x, &inputpos, 1);
+      AddIntegVar_HiggsSemiLep(8, x, &inputpos);
+      AddIntegVar_OneJet(19, x, &inputpos);
+    }
+
+    Computed_mETvect.SetPxPyPzE(0,0,0,0);
+
+    double weightPS = SetupKinematicsTHJ_NoBjorken_TopDecay(xMEM);
+    if (verbosity>=2) cout << "weightPS="<<weightPS<<endl;
+    if (weightPS==0) { errorCounter[kErr_PS_Product]++; return MEMZEROWEIGHT; }
+
+    double weightTF = ComputeTFProduct();
+    if (weightTF==0) { errorCounter[kErr_TF_Product]++; return MEMZEROWEIGHT; }
+
+    ApplyTotalTransverseBoost();
+
+    muF = (mTop+mHiggs)/2.;
+
+    double weightMEPDF = ConvolvePdfCrossSection(pCore->at(0)[0]*2/comEnergy, pCore->at(1)[0]*2/comEnergy, muF) * GeV2barn;
+    if (weightMEPDF==0) { errorCounter[kErr_ME]++; errorCounter[kErr_PDF]++; return MEMZEROWEIGHT; }
+
+    weight = weightMEPDF * weightPS * weightTF;
+    if (weight==0) { errorCounter[kErr_Weight_Product]++; return MEMZEROWEIGHT;}
+
+  }
   if (iMode==kMEM_WZJJ_LepDecay){
 
     int inputpos = 0;
@@ -4503,6 +4580,79 @@ double MEPhaseSpace::SetupKinematicsTLLJ_NoBjorken_TopDecay(const double* x) con
 
 }
 
+double MEPhaseSpace::SetupKinematicsTHJ_NoBjorken_TopDecay(const double* x) const{
+
+  y[0] = x[0];
+  y[1] = x[1];
+  y[2] = x[2];
+  y[3] = x[3];
+  y[4] = x[4];
+  y[5] = x[5];
+  y[6] = x[6];
+  y[7] = x[7];
+
+  TLorentzVector P1;
+  double weight_PS_Top1 = 0;
+  weight_PS_Top1  = SetupKinematics_TopDecay_WithTopPhaseSpace_Generic(y, &P1, FinalStateTTV.Top1_Sign, FinalStateTTV.Top1_Decay);
+  if (weight_PS_Top1==0) return 0;
+
+  y[0] = x[8];
+  y[1] = x[9];
+  y[2] = x[10];
+  y[3] = x[11];
+  y[4] = x[12];
+  y[5] = x[13];
+  y[6] = x[14];
+  y[7] = x[15];
+  y[8] = x[16];
+  y[9] = x[17];
+  y[10] = x[18];
+
+  TLorentzVector P2;
+  double weight_PS_Higgs = SetupKinematics_HiggsDecay_WithHiggsPhaseSpace_Generic(y, &P2);
+  if (weight_PS_Higgs==0) return 0;
+
+  TLorentzVector P3;
+  SetMomentumFromEThetaPhi(0, x[19], x[20], x[21], &P3);
+
+  TLorentzVector Ptot = P1 + P2 + P3;
+  double x1 = (Ptot.Pz()+Ptot.E())/comEnergy;
+  double x2 = (-Ptot.Pz()+Ptot.E())/comEnergy;
+
+  if (verbosity>=2) cout << "x1+x2="<<x1+x2<<endl;
+  if (!(x2>0 && x2<1)){
+    if (verbosity>=2) cout << "x2="<<x2<<" out of range, quit"<<endl;
+    return 0;
+  }
+  if (!(x1>0 && x1<1)){
+    if (verbosity>=2) cout << "x1="<<x1<<" out of range, quit"<<endl;
+    return 0;
+  }
+
+  if (verbosity>=2) cout << "Ptot Pt="<<Ptot.Pt()<<endl;
+
+  FillTTHPhaseSpacePoint(P1, P2, P3);
+
+  SetInitialPartonMomenta(x1, x2);
+
+  ReadPartonMomenta(pCore, 5);
+  int check = 1;
+  check =  CheckMomentum(P1, mTop);
+  check *= CheckMomentum(P2, mHiggs);
+  check *= CheckMomentum(P3, 0);
+  if (check==0) {
+    if (verbosity>=2) cout << "Mass constraint is not respected"<<endl;
+    return 0;
+  }
+
+  double weight_PS_Init = 2./(comEnergy*comEnergy);
+  double weight_PS_J =  P3.Beta()*P3.Vect().Mag()*sin(x[20])/2. /(TMath::Power(2*TMath::Pi(),3));
+  double weight_PS = weight_PS_Init * weight_PS_Top1 * weight_PS_Higgs * weight_PS_J;
+
+  return weight_PS;
+
+}
+
 double MEPhaseSpace::SetupKinematicsWZJJ_NoBjorken(const double* x) const{
 
 
@@ -4808,6 +4958,38 @@ double MEPhaseSpace::ComputeSubMatrixElement(int iProc, int ip1, int ip2) const 
         }
       }
 
+      if (iProc==kTHJ){
+        if (FinalStateTTV.Top1_Sign==kTop){
+          if ((ip1==5 && ip2==-1) || (ip1==-1 && ip2==5) || (ip1==5 && ip2==-3) || (ip1==-3 && ip2==5)){
+            process_P0_Sigma_sm_no_b_mass_dxb_thux->setInitial(ip1, ip2);
+            process_P0_Sigma_sm_no_b_mass_dxb_thux->setMomenta(*pCore);
+            process_P0_Sigma_sm_no_b_mass_dxb_thux->sigmaKin();
+            weight = process_P0_Sigma_sm_no_b_mass_dxb_thux->sigmaHat();
+          }
+          if ((ip1==5 && ip2==4) || (ip1==4 && ip2==5) || (ip1==5 && ip2==2) || (ip1==2 && ip2==5)){
+            process_P0_Sigma_sm_no_b_mass_ub_thd->setInitial(ip1, ip2);
+            process_P0_Sigma_sm_no_b_mass_ub_thd->setMomenta(*pCore);
+            process_P0_Sigma_sm_no_b_mass_ub_thd->sigmaKin();
+            weight = process_P0_Sigma_sm_no_b_mass_ub_thd->sigmaHat();
+          }
+        }
+        if (FinalStateTTV.Top1_Sign==kAntitop){
+          if ((ip1==-5 && ip2==1) || (ip1==1 && ip2==-5) || (ip1==-5 && ip2==3) || (ip1==3 && ip2==-5)){
+            process_P0_Sigma_sm_no_b_mass_dbx_txhu->setInitial(ip1, ip2);
+            process_P0_Sigma_sm_no_b_mass_dbx_txhu->setMomenta(*pCore);
+            process_P0_Sigma_sm_no_b_mass_dbx_txhu->sigmaKin();
+            weight = process_P0_Sigma_sm_no_b_mass_dbx_txhu->sigmaHat();
+          }
+          if ((ip1==-5 && ip2==-4) || (ip1==-4 && ip2==-5) || (ip1==-5 && ip2==-2) || (ip1==-2 && ip2==-5)){
+            process_P0_Sigma_sm_no_b_mass_uxbx_txhdx->setInitial(ip1, ip2);
+            process_P0_Sigma_sm_no_b_mass_uxbx_txhdx->setMomenta(*pCore);
+            process_P0_Sigma_sm_no_b_mass_uxbx_txhdx->sigmaKin();
+            weight = process_P0_Sigma_sm_no_b_mass_uxbx_txhdx->sigmaHat();
+          }
+        }
+      }
+
+
       if (iProc==kWZJJ){
         if (MEMFix_HiggsSemiLep.LepSign>0) {
           if ((ip1==21 && ip2==-1) || (ip1==21 && ip2==-3)){
@@ -5100,6 +5282,27 @@ double MEPhaseSpace::ConvolvePdfCrossSection(double x1, double x2, double mu) co
            + pdf->xfxQ2(-2, x1, mu*mu) * pdf->xfxQ2(-5, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, -2, -5);
   }
 
+  if (iMode==kMEM_THJ_TopLepDecay && FinalStateTTV.Top1_Sign==kTop){
+    weight = pdf->xfxQ2(5, x1, mu*mu) * pdf->xfxQ2(-1, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, 5, -1)
+           + pdf->xfxQ2(5, x1, mu*mu) * pdf->xfxQ2(-3, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, 5, -3)
+           + pdf->xfxQ2(-1, x1, mu*mu) * pdf->xfxQ2(5, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, -1, 5)
+           + pdf->xfxQ2(-3, x1, mu*mu) * pdf->xfxQ2(5, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, -3, 5)
+           + pdf->xfxQ2(5, x1, mu*mu) * pdf->xfxQ2(4, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, 5, 4)
+           + pdf->xfxQ2(5, x1, mu*mu) * pdf->xfxQ2(2, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, 5, 2)
+           + pdf->xfxQ2(4, x1, mu*mu) * pdf->xfxQ2(5, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, 4, 5)
+           + pdf->xfxQ2(2, x1, mu*mu) * pdf->xfxQ2(5, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, 2, 5);
+  }
+  if (iMode==kMEM_THJ_TopLepDecay && FinalStateTTV.Top1_Sign==kAntitop){
+    weight = pdf->xfxQ2(-5, x1, mu*mu) * pdf->xfxQ2(1, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, -5, 1)
+           + pdf->xfxQ2(-5, x1, mu*mu) * pdf->xfxQ2(3, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, -5, 3)
+           + pdf->xfxQ2(1, x1, mu*mu) * pdf->xfxQ2(-5, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, 1, -5)
+           + pdf->xfxQ2(3, x1, mu*mu) * pdf->xfxQ2(-5, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, 3, -5)
+           + pdf->xfxQ2(-5, x1, mu*mu) * pdf->xfxQ2(-4, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, -5, -4)
+           + pdf->xfxQ2(-5, x1, mu*mu) * pdf->xfxQ2(-2, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, -5, -2)
+           + pdf->xfxQ2(-4, x1, mu*mu) * pdf->xfxQ2(-5, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, -4, -5)
+           + pdf->xfxQ2(-2, x1, mu*mu) * pdf->xfxQ2(-5, x2, mu*mu) * ComputeSubMatrixElement(kTLLJ, -2, -5);
+  }
+
   if (iMode==kMEM_WZJJ_LepDecay && MEMFix_HiggsSemiLep.LepSign==1){
     weight = pdf->xfxQ2(21, x1, mu*mu) * pdf->xfxQ2(-1, x2, mu*mu) * ComputeSubMatrixElement(kWZJJ, 21, -1)
            + pdf->xfxQ2(21, x1, mu*mu) * pdf->xfxQ2(-3, x2, mu*mu) * ComputeSubMatrixElement(kWZJJ, 21, -3);
@@ -5115,7 +5318,7 @@ double MEPhaseSpace::ConvolvePdfCrossSection(double x1, double x2, double mu) co
     weight *= ComputeSubMatrixElement(kTop, 0, 0);
     weight *= ComputeSubMatrixElement(kAntitop, 0, 0);
   }
-  if (iMode==kMEM_TLLJ_TopLepDecay){
+  if (iMode==kMEM_TLLJ_TopLepDecay || iMode==kMEM_THJ_TopLepDecay){
     weight *= ComputeSubMatrixElement(FinalStateTTV.Top1_Sign, 0, 0);
   }
 
@@ -5370,8 +5573,9 @@ double MEPhaseSpace::ComputeTFProduct() const {
   //if (FinalStateTTV.Top1_Decay == kTopHadDecay || FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep) jetTFmode = 1;  
   //if (FinalStateTTV.Top1_Decay == kTopHadDecay && (FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep)) jetTFmode = 2;
 
-  if (FinalStateTTV.Boson_Type == kLLJ) nJetsIncludedForTF = 1;
+  if (FinalStateTTV.Boson_Type == kLLJ || FinalStateTTV.Boson_Type==kHfullylepJ) nJetsIncludedForTF = 1;
   if (FinalStateTTV.Top1_Decay == kTopHadDecay || FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep || FinalStateTTV.Boson_Type == kLNuLLJJ) nJetsIncludedForTF = 2;
+  if (FinalStateTTV.Boson_Type==kHsemilepJ) nJetsIncludedForTF = 3;
   if (FinalStateTTV.Top1_Decay == kTopHadDecay && (FinalStateTTV.Boson_Type == kLNuJJ || FinalStateTTV.Boson_Type == kHsemilep)) nJetsIncludedForTF = 4;  
 
   double weightTF = transferFunctions->ComputeTFProductJetBjetMet(nJetsIncludedForTF);

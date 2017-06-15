@@ -1,7 +1,7 @@
 #!/bin/bash
 
-model=sm
-suffix="gqlnullgq"
+model=sm_no_b_mass
+suffix="ppthq"
 
 cd PROC_SA_CPP_${model}_DECAY_${suffix}
 echo Entering PROC_SA_CPP_${model}_DECAY_${suffix}

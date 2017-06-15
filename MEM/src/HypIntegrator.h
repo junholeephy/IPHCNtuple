@@ -132,7 +132,7 @@ void HypIntegrator::SetupIntegrationHypothesis(int kMode, int kCat, int nPoints)
 
   nPointsCatHyp = nPoints;
   if (meIntegrator->iNleptons==3){
-    if (kMode!=kMEM_TTW_TopAntitopDecay && kMode!=kMEM_TTbar_TopAntitopFullyLepDecay && kMode!=kMEM_TLLJ_TopLepDecay && kMode!=kMEM_WZJJ_LepDecay){
+    if (kMode!=kMEM_TTW_TopAntitopDecay && kMode!=kMEM_TTbar_TopAntitopFullyLepDecay && kMode!=kMEM_TLLJ_TopLepDecay && kMode!=kMEM_THJ_TopLepDecay && kMode!=kMEM_WZJJ_LepDecay){
       if (kCat==kCat_3l_1b_2j || kCat==kCat_3l_2b_1j) nPointsCatHyp *= 10;
       if (kCat==kCat_3l_1b_1j || kCat==kCat_3l_2b_0j) nPointsCatHyp *= 50;
     }
@@ -145,12 +145,16 @@ void HypIntegrator::SetupIntegrationHypothesis(int kMode, int kCat, int nPoints)
     if (kCat==kCat_4l_1b) nPointsCatHyp *= 30; 
   }
   else if (meIntegrator->iNleptons==2){
-    if (kMode!=kMEM_TTW_TopAntitopDecay && kMode!=kMEM_TTbar_TopAntitopSemiLepDecay){
+    if (kMode!=kMEM_TTW_TopAntitopDecay && kMode!=kMEM_TTbar_TopAntitopSemiLepDecay && kMode!=kMEM_THJ_TopLepDecay){
       if (kCat==kCat_2lss_2b_3j || kCat==kCat_2lss_1b_4j) nPointsCatHyp *= 10;
       if (kCat==kCat_2lss_1b_3j || kCat==kCat_2lss_2b_2j) nPointsCatHyp *= 50;
     }
     if (kMode==kMEM_TTW_TopAntitopDecay || kMode==kMEM_TTbar_TopAntitopSemiLepDecay){
       if (kCat==kCat_2lss_1b_4j || kCat==kCat_2lss_1b_3j) nPointsCatHyp *= 10;
+    }
+    if (kMode==kMEM_THJ_TopLepDecay){
+      if (kCat==kCat_2lss_1b_2j) nPointsCatHyp *= 10;
+      if (kCat==kCat_2lss_1b_1j) nPointsCatHyp *= 50;
     }
   }
 

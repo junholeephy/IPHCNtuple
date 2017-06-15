@@ -70,6 +70,7 @@ class Permutations {
   double xsTTbar;
   double xsTLLJ;
   double xsWZJJ;
+  double xsTHJ;
 
   IntegrationResult res;
   IntegrationResult* res_syst;
@@ -134,6 +135,7 @@ int Permutations::InitializeHyp(HypIntegrator* hypIntegrator, int hyp, int nPoin
   xsTTbar = (*hypIntegrator).meIntegrator->xsTTbar * (*hypIntegrator).meIntegrator->brTopHad * (*hypIntegrator).meIntegrator->brTopLep;
   xsTLLJ = (*hypIntegrator).meIntegrator->xsTLLJ * (*hypIntegrator).meIntegrator->brTopLep;
   xsWZJJ = (*hypIntegrator).meIntegrator->xsWZJJ;
+  xsTHJ = (*hypIntegrator).meIntegrator->xsTHJ * (*hypIntegrator).meIntegrator->brTopLep;
 
   if (hyp==kMEM_TTH_TopAntitopHiggsDecay || hyp==kMEM_TTH_TopAntitopHiggsSemiLepDecay) xs = xsTTH;
   if (hyp==kMEM_TTLL_TopAntitopDecay) xs = xsTTLL;
@@ -141,6 +143,7 @@ int Permutations::InitializeHyp(HypIntegrator* hypIntegrator, int hyp, int nPoin
   if (hyp==kMEM_TTbar_TopAntitopSemiLepDecay || hyp==kMEM_TTbar_TopAntitopFullyLepDecay) xs = xsTTbar;
   if (hyp==kMEM_TLLJ_TopLepDecay) xs = xsTLLJ;
   if (hyp==kMEM_WZJJ_LepDecay) xs = xsWZJJ;
+  if (hyp==kMEM_THJ_TopLepDecay) xs = xsTHJ;
 
   cout << "Process "<<hyp<< " (" << shyp<< ")" << " xs="<< xs<< endl;
 
@@ -173,7 +176,7 @@ int Permutations::InitializeHyp(HypIntegrator* hypIntegrator, int hyp, int nPoin
        }
        //if (hyp==kMEM_TLLJ_TopLepDecay) multiLepton.SwitchJetsFromAllJets(kJetSingle);
        //if (hyp==kMEM_TLLJ_TopLepDecay) multiLepton.SwitchJetsFromAllJets(kJetPair_HighestEta);
-       if (hyp==kMEM_TLLJ_TopLepDecay) multiLepton.SwitchJetsFromAllJets(kJetSingleHighestEta);
+       if (hyp==kMEM_TLLJ_TopLepDecay || hyp==kMEM_THJ_TopLepDecay) multiLepton.SwitchJetsFromAllJets(kJetSingleHighestEta);
      }
      else if (multiLepton.kCatJets==kCat_3l_2b_1j || (multiLepton.kCatJets==kCat_3l_1b_1j && hyp!=kMEM_WZJJ_LepDecay)) multiLepton.SwitchJetsFromAllJets(kJetSingle);
      else if (multiLepton.kCatJets==kCat_3l_1b_1j && hyp==kMEM_WZJJ_LepDecay) multiLepton.SwitchJetsFromAllJets(kTreatFirstBjetAsJet);
@@ -189,12 +192,13 @@ int Permutations::InitializeHyp(HypIntegrator* hypIntegrator, int hyp, int nPoin
        }
      }
      else if (multiLepton.kCatJets==kCat_2lss_2b_3j || multiLepton.kCatJets==kCat_2lss_1b_3j) {
-         if (hyp==kMEM_TTH_TopAntitopHiggsSemiLepDecay) multiLepton.SwitchJetsFromAllJets(kThreeJets_MwClosest_HighestPt);
+         if (hyp==kMEM_TTH_TopAntitopHiggsSemiLepDecay || hyp==kMEM_THJ_TopLepDecay) multiLepton.SwitchJetsFromAllJets(kThreeJets_MwClosest_HighestPt);
          else if (hyp==kMEM_TTW_TopAntitopDecay || hyp==kMEM_TTbar_TopAntitopSemiLepDecay) multiLepton.SwitchJetsFromAllJets(kJetPair_MwClosest);
      }
      else if (multiLepton.kCatJets==kCat_2lss_2b_2j) {
        multiLepton.SwitchJetsFromAllJets(kJetPair_MwClosest);
      }
+     else if (multiLepton.kCatJets==kCat_2lss_1b_2j && hyp==kMEM_THJ_TopLepDecay) multiLepton.SwitchJetsFromAllJets(kJetPair_HighestPt);
 
   doPermutationLep = true;
   doPermutationJet = true;
@@ -203,13 +207,14 @@ int Permutations::InitializeHyp(HypIntegrator* hypIntegrator, int hyp, int nPoin
   //Check if hypothesis can do jet permutation
   if ((multiLepton.Leptons.size()==3 && hyp==kMEM_TTW_TopAntitopDecay)
      //|| (hyp==kMEM_TLLJ_TopLepDecay && (multiLepton.kCatJets==kCat_3l_1b_1j || multiLepton.kCatJets==kCat_3l_2b_1j))
-     || hyp==kMEM_TLLJ_TopLepDecay 
+     || hyp==kMEM_TLLJ_TopLepDecay
+     || hyp==kMEM_THJ_TopLepDecay
      || hyp==kMEM_TTbar_TopAntitopFullyLepDecay 
      || multiLepton.kCatJets==kCat_3l_2b_0j 
      || multiLepton.Leptons.size()==4)
 	doPermutationJet=false;
 
-  if ((hyp==kMEM_TLLJ_TopLepDecay || hyp==kMEM_WZJJ_LepDecay) && (multiLepton.kCatJets==kCat_3l_1b_1j || multiLepton.kCatJets==kCat_3l_1b_2j)) doPermutationBjet = false;
+  if ((hyp==kMEM_TLLJ_TopLepDecay || hyp==kMEM_THJ_TopLepDecay || hyp==kMEM_WZJJ_LepDecay) && (multiLepton.kCatJets==kCat_3l_1b_1j || multiLepton.kCatJets==kCat_3l_1b_2j)) doPermutationBjet = false;
 
   //Sort leptons and jets by Pt
   multiLepton.DoSort(&multiLepton.Leptons);
@@ -291,7 +296,7 @@ void Permutations::LoopPermutations(HypIntegrator* hypIntegrator){
          } while (doPermutationLep && permreslep);
 
          if (doPermutationJet) {
-	   if (Hypothesis==kMEM_TLLJ_TopLepDecay) permresjet = multiLepton.DoPermutationLinear("jet",&multiLepton.Jets);
+	   if (Hypothesis==kMEM_TLLJ_TopLepDecay || (Hypothesis==kMEM_THJ_TopLepDecay && multiLepton.Leptons.size()==3)) permresjet = multiLepton.DoPermutationLinear("jet",&multiLepton.Jets);
            else if (multiLepton.kCatJets!=kCat_3l_2b_1j && multiLepton.kCatJets!=kCat_3l_1b_1j && multiLepton.kCatJets!=kCat_2lss_2b_3j && multiLepton.kCatJets!=kCat_2lss_1b_3j && multiLepton.kCatJets!=kCat_2lss_2b_2j) permresjet = multiLepton.DoPermutation(&multiLepton.Jets);
            else permresjet = multiLepton.DoPermutationMissingJet("jet");
          }
