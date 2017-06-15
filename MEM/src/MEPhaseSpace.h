@@ -5548,6 +5548,21 @@ void MEPhaseSpace::UpdateComputedVarForTF() const{
     FillComputedJetForTF(pCore->at(5), &(transferFunctions->ComputedVarForTF.Jet1_E), &(transferFunctions->ComputedVarForTF.Jet1_Eta));
   }
 
+  if (FinalStateTTV.Boson_Type == kHfullylepJ) {
+    FillComputedJetForTF(pCore->at(4), &(transferFunctions->ComputedVarForTF.Jet1_E), &(transferFunctions->ComputedVarForTF.Jet1_Eta));
+  }
+  if (FinalStateTTV.Boson_Type == kHsemilepJ) {
+    if (MEMFix_HiggsSemiLep.LepSign == 1){
+      FillComputedJetForTF(pHiggs->at(3), &(transferFunctions->ComputedVarForTF.Jet1_E), &(transferFunctions->ComputedVarForTF.Jet1_Eta));
+      FillComputedJetForTF(pHiggs->at(4), &(transferFunctions->ComputedVarForTF.Jet2_E), &(transferFunctions->ComputedVarForTF.Jet2_Eta));
+    }
+    else if (MEMFix_HiggsSemiLep.LepSign == -1){
+      FillComputedJetForTF(pHiggs->at(1), &(transferFunctions->ComputedVarForTF.Jet1_E), &(transferFunctions->ComputedVarForTF.Jet1_Eta));
+      FillComputedJetForTF(pHiggs->at(2), &(transferFunctions->ComputedVarForTF.Jet2_E), &(transferFunctions->ComputedVarForTF.Jet2_Eta));
+    }
+    FillComputedJetForTF(pCore->at(4), &(transferFunctions->ComputedVarForTF.Jet3_E), &(transferFunctions->ComputedVarForTF.Jet3_Eta));
+  }
+
   //mET: Always
   transferFunctions->ComputedVarForTF.mET_Px = Computed_mETvect.Px();
   transferFunctions->ComputedVarForTF.mET_Py = Computed_mETvect.Py();
