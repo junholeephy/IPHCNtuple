@@ -101,6 +101,17 @@ class ReadGenFlatTree {
   Float_t Weight, Channel, NJets, NBJets, mTW;
   Float_t Q2__plus, Q2__minus, PU__plus, PU__minus, MuEff__plus, MuEff__minus, EleEff__plus, EleEff__minus, LFcont__plus, LFcont__minus, HFstats1__plus, HFstats1__minus, HFstats2__plus, HFstats2__minus, CFerr1__plus, CFerr1__minus, CFerr2__plus, CFerr2__minus, HFcont__plus, HFcont__minus, LFstats1__plus, LFstats1__minus, LFstats2__plus, LFstats2__minus, pdf__plus, pdf__minus, Weight_noTag, Weight_noPU;
 
+  std::vector<double>* mc_kin_tthfl_inputvars;
+  std::vector<double>* mc_kin_tthsl_inputvars;
+  std::vector<double>* mc_kin_ttz_inputvars;
+  std::vector<double>* mc_kin_ttw_inputvars;
+  std::vector<double>* mc_kin_ttwjj_inputvars;
+  std::vector<double>* mc_kin_ttbarfl_inputvars;
+  std::vector<double>* mc_kin_ttbarsl_inputvars;
+  std::vector<double>* mc_kin_tllj_inputvars;
+  std::vector<double>* mc_kin_wzjj_inputvars;
+  std::vector<double>* mc_kin_thj_inputvars;
+
   TBranch* b_mc_event;
   TBranch* b_mc_weight;
   TBranch* b_weight;
@@ -1287,6 +1298,19 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
    multilepton_JetLowestMjj2_2ndPair_P4_ptr = 0;
    multilepton_mET_ptr = 0;
    multilepton_Ptot_ptr = 0;
+
+   mc_kin_tthfl_inputvars = new std::vector<double>;
+   mc_kin_tthsl_inputvars = new std::vector<double>;
+   mc_kin_ttz_inputvars = new std::vector<double>;
+   mc_kin_ttw_inputvars = new std::vector<double>;
+   mc_kin_ttwjj_inputvars = new std::vector<double>;
+   mc_kin_ttbarfl_inputvars = new std::vector<double>;
+   mc_kin_ttbarsl_inputvars = new std::vector<double>;
+   mc_kin_tllj_inputvars = new std::vector<double>;
+   mc_kin_wzjj_inputvars = new std::vector<double>;
+   mc_kin_thj_inputvars = new std::vector<double>;
+
+
    /*
    MEAllWeights_TTLL = new std::vector<double>;
    MEAllWeights_TTHfl = new std::vector<double>;
@@ -1896,6 +1920,8 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_kin_ttz_zll_Pt",&mc_kin_ttz_zll_Pt,"mc_kin_ttz_zll_Pt/F");
   tOutput->Branch("mc_kin_ttz_zll_Zmass",&mc_kin_ttz_zll_Zmass,"mc_kin_ttz_zll_Zmass/F");
 
+
+
   tOutput->Branch("mc_mem_ttw_weight",&mc_mem_ttw_weight,"mc_mem_ttw_weight/D");
   tOutput->Branch("mc_mem_ttw_weight_JEC_up",&mc_mem_ttw_weight_JEC_up,"mc_mem_ttw_weight_JEC_up/D");
   tOutput->Branch("mc_mem_ttw_weight_JEC_down",&mc_mem_ttw_weight_JEC_down,"mc_mem_ttw_weight_JEC_down/D");
@@ -2178,6 +2204,16 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
 
 //Float_t Q2__plus, Q2__minus, PU__plus, PU__minus, MuEff__plus, MuEff__minus, EleEff__plus, EleEff__minus, LFcont__plus, LFcont__minus, HFstats1__plus, HFstats1__minus, HFstats2__plus, HFstats2__minus, CFerr1__plus, CFerr1__minus, CFerr2__plus, CFerr2__minus, HFcont__plus, HFcont__minus, LFstats1__plus, LFstats1__minus, LFstats2__plus, LFstats2__minus, pdf__plus, pdf__minus, Weight_noTag, Weight_noPU;
 
+  tOutput->Branch("mc_kin_tthfl_inputvars","std::vector<double>",&mc_kin_tthfl_inputvars);
+  tOutput->Branch("mc_kin_tthsl_inputvars","std::vector<double>",&mc_kin_tthsl_inputvars);
+  tOutput->Branch("mc_kin_ttz_inputvars","std::vector<double>",&mc_kin_ttz_inputvars);
+  tOutput->Branch("mc_kin_ttw_inputvars","std::vector<double>",&mc_kin_ttw_inputvars);
+  tOutput->Branch("mc_kin_ttwjj_inputvars","std::vector<double>",&mc_kin_ttwjj_inputvars);
+  tOutput->Branch("mc_kin_ttbarfl_inputvars","std::vector<double>",&mc_kin_ttbarfl_inputvars);
+  tOutput->Branch("mc_kin_ttbarsl_inputvars","std::vector<double>",&mc_kin_ttbarsl_inputvars);
+  tOutput->Branch("mc_kin_tllj_inputvars","std::vector<double>",&mc_kin_tllj_inputvars);
+  tOutput->Branch("mc_kin_wzjj_inputvars","std::vector<double>",&mc_kin_wzjj_inputvars);
+  tOutput->Branch("mc_kin_thj_inputvars","std::vector<double>",&mc_kin_thj_inputvars);
 
 
   /*

@@ -278,6 +278,7 @@ void Permutations::LoopPermutations(HypIntegrator* hypIntegrator){
                if ((*hypIntegrator).meIntegrator->weight_max/xs > resKin_maxKinFit_Int.weight) {
                  cout << "better kinweight_maxint"<<endl;
                  resKin_maxKinFit_Int.weight = (*hypIntegrator).meIntegrator->weight_max / xs;
+		 resKin_maxKinFit_Int.intvar = (*hypIntegrator).meIntegrator->weight_max_intvar;
                  resMEM_maxKinFit_Int = res;
                }
 
@@ -371,6 +372,8 @@ IntegrationResult Permutations::GetMEMResult(HypIntegrator* hypIntegrator){
   iterationNumber = 5;
 
   (*hypIntegrator).meIntegrator->weight_max = 0;
+  //int ninputs = (*hypIntegrator).meIntegrator->GetNumberIntegrationVar((*hypIntegrator).meIntegrator->iMode, multiLepton.kCatJets);
+  //(*hypIntegrator).meIntegrator->weight_max_intvar = new float[ninputs];
 
   resMEM = (*hypIntegrator).DoIntegration(multiLepton.xL, multiLepton.xU, stage, iterationNumber);
 

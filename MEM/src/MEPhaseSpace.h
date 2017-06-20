@@ -232,6 +232,7 @@ class MEPhaseSpace
     int nExternals, nCoreExternals;
     mutable int iCall;
     mutable int iIteration;
+    int nparam;
     //int iTF;
     //int iTFOption;
     int iOptim, iOptimTopLep, iOptimTopHad, iOptimHiggs, iOptimW;
@@ -239,6 +240,7 @@ class MEPhaseSpace
 
     double MEMZEROWEIGHT;
     mutable double weight_max;
+    mutable std::vector<double> weight_max_intvar;
 
     mutable int isTopAntitop;
 
@@ -817,7 +819,7 @@ void MEPhaseSpace::SetIntegrationMode(int imode){
 
 int MEPhaseSpace::GetNumberIntegrationVar(int kMode, int kCatJets){
 
-  int nparam=5;
+  nparam=5;
   if (iNleptons==3){
     if (kMode==kMEM_TTLL_TopAntitopDecay) nparam = 5;
     if (kMode==kMEM_TTH_TopAntitopHiggsDecay || kMode==kMEM_TTH_TopAntitopHiggsSemiLepDecay) nparam = 10;
@@ -2091,6 +2093,8 @@ double MEPhaseSpace::Eval(const double* x) const {
 
   if (weight > weight_max) {
     weight_max = weight;
+    weight_max_intvar.clear();
+    for (int ii=0; ii<nparam; ii++) weight_max_intvar.push_back(x[ii]);
     UpdateKinVar();
   }
 

@@ -26,6 +26,7 @@ struct IntegrationResult {
       double time;
       double err;
       double chi2;
+      std::vector<double> intvar;
 } ;
 
 
@@ -46,6 +47,7 @@ class HypIntegrator
   ROOT::Minuit2::Minuit2Minimizer* minimizer;
   TRandom2 rnd;
 
+  int nparam;
   int intPoints;
 
   void InitializeIntegrator(ConfigParser*);
@@ -117,7 +119,7 @@ void HypIntegrator::SetupIntegrationHypothesis(int kMode, int kCat, int nPoints)
 
   meIntegrator->SetIntegrationMode(kMode);
 
-  int nparam = meIntegrator->GetNumberIntegrationVar(kMode, kCat);
+  nparam = meIntegrator->GetNumberIntegrationVar(kMode, kCat);
 
   ROOT::Math::Functor* FunctorHyp = NULL;
   FunctorHyp = toIntegrate[nparam];
@@ -161,6 +163,8 @@ void HypIntegrator::SetupIntegrationHypothesis(int kMode, int kCat, int nPoints)
   SetNCalls(nPointsCatHyp);
   ResetCounters();
 
+  meIntegrator->weight_max_intvar.clear();// = new float[nparam];
+
   return;
 }
 
@@ -168,7 +172,7 @@ void HypIntegrator::SetupMinimizerHypothesis(int kMode, int kCat, int stageValue
 
   meIntegrator->SetIntegrationMode(kMode);
 
-  int nparam = meIntegrator->GetNumberIntegrationVar(kMode, kCat);
+  nparam = meIntegrator->GetNumberIntegrationVar(kMode, kCat);
 
   ROOT::Math::Functor* FunctorHyp = NULL;
   FunctorHyp = toIntegrate[nparam];
