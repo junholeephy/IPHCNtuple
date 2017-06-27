@@ -49,7 +49,13 @@ int main(int argc, char *argv[])
   subgd->SetMaxFunctionCalls(100000);
   subgd->Minimize();
 
+  const double fBest = subgd->MinValue();
+  const double* xBest = subgd->X();
 
+  cout << "Minimum: "<<fBest<<endl;
+  for (unsigned int ivar=0; ivar<subgd->NDim(); ivar++){
+    cout << "Var"<<ivar<<": "<<xBest[ivar]<<endl;
+  }
 
   return 0;
 /*

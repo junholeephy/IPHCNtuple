@@ -359,8 +359,8 @@ bool SubGradientDescent::CheckConvergence(){
     if (fabs((*fObjFunc)(x)-(*fObjFunc)(xOld))<tolerance) c = true; 
   }
 
-  if (ntimesSamePoint<5 && c) cout << "Tolerance="<<tolerance<<", stopping"<<endl;
-  if (ntimesSamePoint==5) cout <<"ntimesSamePoint="<<ntimesSamePoint<<", stopping "<<endl;
+  if (ntimesSamePoint<5 && c) {if (verbose>0) cout << "Tolerance="<<tolerance<<", stopping"<<endl;}
+  if (ntimesSamePoint==5) {if (verbose>0) cout <<"ntimesSamePoint="<<ntimesSamePoint<<", stopping "<<endl;}
 
    return ((ntimesSamePoint<5 && c) || ntimesSamePoint==5);
 }

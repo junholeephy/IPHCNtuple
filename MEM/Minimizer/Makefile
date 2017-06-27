@@ -24,7 +24,6 @@ all : testMinimizer
 clean:
 	rm *.o
 	rm test*
-	rm *.d
 
 objects= TestMinimizer.o
 
