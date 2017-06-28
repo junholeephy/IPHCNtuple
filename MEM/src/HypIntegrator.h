@@ -13,10 +13,12 @@
 #include "Math/AdaptiveIntegratorMultiDim.h"
 #include "Minuit2/Minuit2Minimizer.h"
 #include "TRandom2.h"
+#include "TPluginManager.h"
 
 #include "MEPhaseSpace.h"
 #include "ConfigParser.h"
 #include "MultiLepton.h"
+#include "../Minimizer/SubGradient.h"
 
 #include <ctime>
 
@@ -44,7 +46,10 @@ class HypIntegrator
   ROOT::Math::GSLMCIntegrator* ig2;
   ROOT::Math::VegasParameters* param;
 
-  ROOT::Minuit2::Minuit2Minimizer* minimizer;
+  //ROOT::Minuit2::Minuit2Minimizer* minimizer;
+  //SubGradientDescent* minimizer;
+  ROOT::Math::Minimizer* minimizer;
+
   TRandom2 rnd;
 
   int nparam;
@@ -67,6 +72,8 @@ class HypIntegrator
 
 HypIntegrator::HypIntegrator(){
 
+  gPluginMgr->AddHandler("ROOT::Math::Minimizer", "subgradient", "SubGradientDescent", "SubGradient_h", "SubGradientDescent(const char*)");
+
   meIntegrator = new MEPhaseSpace();
 
   toIntegrate = new ROOT::Math::Functor*[15];
@@ -78,8 +85,11 @@ HypIntegrator::HypIntegrator(){
   ig2 = new ROOT::Math::GSLMCIntegrator( ROOT::Math::IntegrationMultiDim::kVEGAS, 1.e-12, 1.e-5, intPoints);
   param = new ROOT::Math::VegasParameters( *(ig2->ExtraOptions()) );
 
-  minimizer = new ROOT::Minuit2::Minuit2Minimizer( ROOT::Minuit2::kMigrad );
+  //minimizer = new ROOT::Minuit2::Minuit2Minimizer( ROOT::Minuit2::kMigrad );
+  minimizer = ROOT::Math::Factory::CreateMinimizer("subgradient","");
+
   minimizer->SetPrintLevel(0);
+ 
 }
 
 HypIntegrator::~HypIntegrator(){
@@ -102,6 +112,22 @@ void HypIntegrator::InitializeIntegrator(ConfigParser* cfgParser){
   meIntegrator->transferFunctions->SetTFChoice(cfgParser->valTFChoice);
   meIntegrator->transferFunctions->SetTFOption(cfgParser->valTFOption);
   meIntegrator->transferFunctions->LoadTFfromHisto(cfgParser->valTFfile);
+
+  if (cfgParser->valDoMinimization==1) minimizer = ROOT::Math::Factory::CreateMinimizer("subgradient","");
+  if (cfgParser->valDoMinimization==2) minimizer = ROOT::Math::Factory::CreateMinimizer("Minuit2", "Migrad");
+  if (cfgParser->valDoMinimization==3) minimizer = ROOT::Math::Factory::CreateMinimizer("Minuit2", "Simplex");
+  if (cfgParser->valDoMinimization==4) minimizer = ROOT::Math::Factory::CreateMinimizer("Minuit2", "Combined");
+  //if (cfgParser->valDoMinimization==5) minimizer = ROOT::Math::Factory::CreateMinimizer("Minuit2", "Fumili");
+  //if (cfgParser->valDoMinimization==5) minimizer = ROOT::Math::Factory::CreateMinimizer("GSLMultiMin", "ConjugateFR");
+  //if (cfgParser->valDoMinimization==5) minimizer = ROOT::Math::Factory::CreateMinimizer("GSLMultiMin", "ConjugatePR");
+  //if (cfgParser->valDoMinimization==5) minimizer = ROOT::Math::Factory::CreateMinimizer("GSLMultiMin", "BFGS");
+  //if (cfgParser->valDoMinimization==5) minimizer = ROOT::Math::Factory::CreateMinimizer("GSLMultiMin", "BFGS2");
+  //if (cfgParser->valDoMinimization==5) minimizer = ROOT::Math::Factory::CreateMinimizer("GSLMultiMin", "SteepestDescent");
+  //if (cfgParser->valDoMinimization==5) minimizer = ROOT::Math::Factory::CreateMinimizer("GSLMultiFit", "");
+  if (cfgParser->valDoMinimization==5) minimizer = ROOT::Math::Factory::CreateMinimizer("GSLSimAn", "");
+
+ 
+  minimizer->SetPrintLevel(0);
 
  return;
 }
@@ -179,8 +205,10 @@ void HypIntegrator::SetupMinimizerHypothesis(int kMode, int kCat, int stageValue
 
   minimizer->SetFunction(*FunctorHyp);
 
-  minimizer->SetMaxFunctionCalls(5*nPointsCatHyp);
+  minimizer->SetMaxFunctionCalls(nPointsCatHyp);
   minimizer->SetPrintLevel(0);
+
+  //subgd->SetFunction(*FunctorHyp);   
 
   return;
 }

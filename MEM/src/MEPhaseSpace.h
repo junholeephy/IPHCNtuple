@@ -52,7 +52,7 @@
 #include "../Madgraph/PROC_SA_CPP_sm_no_b_mass_DECAY_ppthq/SubProcesses/P0_Sigma_sm_no_b_mass_uxbx_txhdx/CPPProcess_P0_Sigma_sm_no_b_mass_uxbx_txhdx.h"
 
 
-#define kNone -1 //No Integration, just evaluation
+#define kNoPhaseSpace -1 //No Integration, just evaluation
 #define kInitialPartons 0 //Integration over bjorken x, given the final states
 #define kAllPartonsTTH 1 //Integration over everything (total cross-section)
 //#define kAllPartonsTTH_FSonly 2 //Integration over final state phase space only
@@ -107,7 +107,7 @@
 #define kLL 2
 #define kLNu 3
 #define kLNuJJ 4
-#define kNone -1
+#define kNoBoson -1
 #define kLLJ 5
 #define kLNuLLJJ 6
 #define kHfullylepJ 7
@@ -1622,7 +1622,7 @@ double MEPhaseSpace::Eval(const double* x) const {
 
   double weight = 0;
 
-  if (iMode == kNone){
+  if (iMode == kNoPhaseSpace){
   //Evaluate weight only
     double weightME = ComputeMatrixElement();
     double weightPDF = ComputePDF(pCore->at(0)[0]*2/comEnergy, pCore->at(1)[0]*2/comEnergy, muF);

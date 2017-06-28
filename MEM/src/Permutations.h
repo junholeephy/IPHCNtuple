@@ -17,7 +17,7 @@ class Permutations {
 
   bool computeHyp;
   
-  bool doMinimization;
+  int doMinimization;
 
   bool doPermutationLep;
   bool doPermutationJet;
@@ -52,7 +52,7 @@ class Permutations {
   Permutations();
   ~Permutations(); 
   void SetMultiLepton(MultiLepton*, HypIntegrator*);
-  int InitializeHyp(HypIntegrator*, int, int, string, bool, string, int);
+  int InitializeHyp(HypIntegrator*, int, int, string, int, string, int);
   void LoopPermutations(HypIntegrator*);
 
   IntegrationResult GetMEMKinFitResult(HypIntegrator*, int);
@@ -98,7 +98,7 @@ void Permutations::SetMultiLepton(MultiLepton* multilepton_, HypIntegrator* hypI
   return;
 }
 
-int Permutations::InitializeHyp(HypIntegrator* hypIntegrator, int hyp, int nPointsHyp, string shyp, bool doMinimization_, string JetChoice, int nPermutationJetSyst_){
+int Permutations::InitializeHyp(HypIntegrator* hypIntegrator, int hyp, int nPointsHyp, string shyp, int doMinimization_, string JetChoice, int nPermutationJetSyst_){
 
   cout << "InitializeHyp " << hyp << " (" << shyp << "), nPoints=" <<  nPointsHyp << " doMinimization="<<doMinimization_<<", JetChoice=" << JetChoice << ", nsyst="<<nPermutationJetSyst_<<endl;
 
@@ -156,7 +156,7 @@ int Permutations::InitializeHyp(HypIntegrator* hypIntegrator, int hyp, int nPoin
 
   //Setup integrator
   (*hypIntegrator).SetupIntegrationHypothesis(hyp, multiLepton.kCatJets, nPointsHyp);
-  if (doMinimization) (*hypIntegrator).SetupMinimizerHypothesis(hyp, multiLepton.kCatJets, 0, nPointsHyp);
+  if (doMinimization>=1) (*hypIntegrator).SetupMinimizerHypothesis(hyp, multiLepton.kCatJets, 0, nPointsHyp);
 
   //Check if MEM can be computed for a given hypothesis
   if (multiLepton.Leptons.size()==4 && (hyp!=kMEM_TTH_TopAntitopHiggsDecay && hyp!=kMEM_TTLL_TopAntitopDecay && hyp!=kMEM_TTbar_TopAntitopFullyLepDecay)) return 0;
@@ -259,7 +259,7 @@ void Permutations::LoopPermutations(HypIntegrator* hypIntegrator){
                multiLepton.SwitchJetSyst(0);
 
 	       //Use MEM as kinematic fit, minimization from random initial value of integration variables
-	       if (doMinimization) resMinimized = GetMEMKinFitResult(hypIntegrator, 10);
+	       if (doMinimization>=1) resMinimized = GetMEMKinFitResult(hypIntegrator, 10);
 
 	       //Compute MEM weight
 	       res = GetMEMResult(hypIntegrator);
@@ -267,8 +267,8 @@ void Permutations::LoopPermutations(HypIntegrator* hypIntegrator){
 	       resMEM_all.push_back(res);
 	
 	       //Save MEM weight and Kin Fit result for best Kin Fit (minimization from initial value of integration variables)
-	       if (doMinimization) {
-                 if (resMinimized.weight/xs < resKin_maxKinFit.weight) {
+	       if (doMinimization>=1) {
+                 if (resMinimized.weight/xs > resKin_maxKinFit.weight) {
                    resKin_maxKinFit.weight = resMinimized.weight / xs;
                    resMEM_maxKinFit = res;
                  }
@@ -346,7 +346,7 @@ IntegrationResult Permutations::GetMEMKinFitResult(HypIntegrator* hypIntegrator,
     var = (*hypIntegrator).FindMinimizationiInitialValues(multiLepton.xL, multiLepton.xU);
     resMin = (*hypIntegrator).DoMinimization(multiLepton.xL, multiLepton.xU, var);
 
-    cout << "KIN TRY Hyp "<< HypothesisName <<" Vegas Ncall="<<(*hypIntegrator).nPointsCatHyp <<" -log(max)=" << resMin.weight<<" Time(s)="<<resMin.time<<endl;
+    cout << "DOMINIMIZATION KIN TRY Hyp "<< HypothesisName <<" Vegas Ncall="<<(*hypIntegrator).nPointsCatHyp <<" -log(max)=" << resMin.weight<<" Time(s)="<<resMin.time<<endl;
  
     if ( resMin.weight < kinresweightmin) kinresweightmin = resMin.weight;
   }
@@ -355,7 +355,7 @@ IntegrationResult Permutations::GetMEMKinFitResult(HypIntegrator* hypIntegrator,
 
   resMin.weight = exp(-kinresweightmin);
 
-  cout << "KIN FINAL Hyp "<< HypothesisName <<" Vegas Ncall="<<(*hypIntegrator).nPointsCatHyp <<" max=" << resMin.weight<<" Time(s)="<<resMin.time<<endl;
+  cout << "DOMINIMIZATION KIN FINAL Hyp "<< HypothesisName <<" Vegas Ncall="<<(*hypIntegrator).nPointsCatHyp <<" max=" << resMin.weight<<" Time(s)="<<resMin.time<<endl;
 
   if (!(resMin.weight>0)) {
      resMin.weight = 0;

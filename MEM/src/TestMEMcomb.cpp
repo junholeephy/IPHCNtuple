@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
   else if (strcmp(argv[4],"--MEMRun")==0){ 
  
     cout << "Test MEM weight computation" <<endl;
-
+/*
     int index[10];
     for (int ih=0; ih<nhyp; ih++){
       if (shyp[ih]=="TTLL") index[ih] = 0;
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
       if (shyp[ih]=="WZJJ") index[ih] = 8;
       if (shyp[ih]=="THJ") index[ih] = 9;
     }
- 
+ */
     int doOptim;
     cfgParser.LoadOptim(&doOptim);
     int doOptimTopHad, doOptimTopLep, doOptimHiggs, doOptimW;
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
     double xsTTW = hypIntegrator.meIntegrator->xsTTW * hypIntegrator.meIntegrator->brTopLep * hypIntegrator.meIntegrator->brTopLep;
     double xsTTbar = hypIntegrator.meIntegrator->xsTTbar * hypIntegrator.meIntegrator->brTopHad * hypIntegrator.meIntegrator->brTopLep;
     double xsTLLJ = hypIntegrator.meIntegrator->xsTLLJ * hypIntegrator.meIntegrator->brTopLep;
-    double xsWZJJ = hypIntegrator.meIntegrator->xsWZJJ ;
+    //double xsWZJJ = hypIntegrator.meIntegrator->xsWZJJ ;
 
     tree.InitializeMEMRun(InputFileName);
     if (atoi(argv[3])==-1 || evMax>tree.tInput->GetEntries()) evMax = tree.tInput->GetEntries();
