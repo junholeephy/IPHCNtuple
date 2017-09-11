@@ -270,6 +270,7 @@ void Permutations::LoopPermutations(HypIntegrator* hypIntegrator){
 	       if (doMinimization>=1) {
                  if (resMinimized.weight/xs > resKin_maxKinFit.weight) {
                    resKin_maxKinFit.weight = resMinimized.weight / xs;
+		   resKin_maxKinFit.intvar = resMinimized.intvar;
                    resMEM_maxKinFit = res;
                  }
 	       }
@@ -336,7 +337,8 @@ IntegrationResult Permutations::GetMEMKinFitResult(HypIntegrator* hypIntegrator,
 
   double kinresweightmin = 1000;
   double * var;
-  
+  std::vector<double> intvar_tmp; 
+ 
   (*hypIntegrator).meIntegrator->SetMinimization(1);
              
   (*hypIntegrator).meIntegrator->weight_max = 0;
@@ -348,12 +350,16 @@ IntegrationResult Permutations::GetMEMKinFitResult(HypIntegrator* hypIntegrator,
 
     cout << "DOMINIMIZATION KIN TRY Hyp "<< HypothesisName <<" Vegas Ncall="<<(*hypIntegrator).nPointsCatHyp <<" -log(max)=" << resMin.weight<<" Time(s)="<<resMin.time<<endl;
  
-    if ( resMin.weight < kinresweightmin) kinresweightmin = resMin.weight;
+    if ( resMin.weight < kinresweightmin) {
+      kinresweightmin = resMin.weight;
+      intvar_tmp = resMin.intvar;
+    }
   }
 
   (*hypIntegrator).meIntegrator->SetMinimization(0);
 
   resMin.weight = exp(-kinresweightmin);
+  resMin.intvar = intvar_tmp;
 
   cout << "DOMINIMIZATION KIN FINAL Hyp "<< HypothesisName <<" Vegas Ncall="<<(*hypIntegrator).nPointsCatHyp <<" max=" << resMin.weight<<" Time(s)="<<resMin.time<<endl;
 

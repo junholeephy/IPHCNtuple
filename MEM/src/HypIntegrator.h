@@ -302,6 +302,7 @@ IntegrationResult HypIntegrator::DoMinimization(double* xL, double* xU, double* 
 
   const double *xs = minimizer->X();
   res.weight = meIntegrator->Eval(xs);
+  res.intvar = meIntegrator->weight_max_intvar;
 
   return res;  
 }

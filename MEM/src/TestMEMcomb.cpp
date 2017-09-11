@@ -475,6 +475,19 @@ int main(int argc, char *argv[])
       tree.mc_kin_tllj_inputvars->clear();
       tree.mc_kin_wzjj_inputvars->clear();
       tree.mc_kin_thj_inputvars->clear();
+
+      tree.mc_kinInt_tthfl_inputvars->clear();
+      tree.mc_kinInt_tthsl_inputvars->clear();
+      tree.mc_kinInt_ttz_inputvars->clear();
+      tree.mc_kinInt_ttw_inputvars->clear();
+      tree.mc_kinInt_ttwjj_inputvars->clear();
+      tree.mc_kinInt_ttbarfl_inputvars->clear();
+      tree.mc_kinInt_ttbarsl_inputvars->clear();
+      tree.mc_kinInt_tllj_inputvars->clear();
+      tree.mc_kinInt_wzjj_inputvars->clear();
+      tree.mc_kinInt_thj_inputvars->clear();
+
+
       //}
 
       /*
@@ -736,10 +749,15 @@ int main(int argc, char *argv[])
        tree.mc_mem_ttz_weight_kinmax = MEMpermutations[index_hyp[0]].resMEM_maxKinFit.weight;
        tree.mc_mem_ttz_weight_kinmaxint = MEMpermutations[index_hyp[0]].resMEM_maxKinFit_Int.weight;
        //FillWeightVectors(MEMpermutations[index_hyp[0]], tree.MEAllWeights_TTLL, tree.MEAllWeights_TTLL_log);
-       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kin_ttz_inputvars->push_back(MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kinInt_ttz_inputvars->push_back(MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[0]].resKin_maxKinFit.intvar.size(); ii++) tree.mc_kin_ttz_inputvars->push_back(MEMpermutations[index_hyp[0]].resKin_maxKinFit.intvar.at(ii));
+
       //tree.mc_kin_ttz_inputvars = &MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar;
-      //cout << "intvar size="<<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.size();
-      //for (unsigned int ii=0; ii<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.size(); ii++) cout << "Var"<<ii<<" : "<<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.at(ii)<<endl;
+      cout << "kinInt intvar size="<<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.size()<<endl;
+      cout << "kin intvar size="<<MEMpermutations[index_hyp[0]].resKin_maxKinFit.intvar.size()<<endl;
+      for (unsigned int ii=0; ii<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.size(); ii++) cout << "kinInt Var"<<ii<<" : "<<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.at(ii)<<endl;
+      for (unsigned int ii=0; ii<MEMpermutations[index_hyp[0]].resKin_maxKinFit.intvar.size(); ii++) cout << "kin Var"<<ii<<" : "<<MEMpermutations[index_hyp[0]].resKin_maxKinFit.intvar.at(ii)<<endl;
+
       }
     }
     if (index_hyp[1]!=-1){

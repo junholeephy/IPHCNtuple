@@ -112,6 +112,18 @@ class ReadGenFlatTree {
   std::vector<double>* mc_kin_wzjj_inputvars;
   std::vector<double>* mc_kin_thj_inputvars;
 
+  std::vector<double>* mc_kinInt_tthfl_inputvars;
+  std::vector<double>* mc_kinInt_tthsl_inputvars;
+  std::vector<double>* mc_kinInt_ttz_inputvars;
+  std::vector<double>* mc_kinInt_ttw_inputvars;
+  std::vector<double>* mc_kinInt_ttwjj_inputvars;
+  std::vector<double>* mc_kinInt_ttbarfl_inputvars;
+  std::vector<double>* mc_kinInt_ttbarsl_inputvars;
+  std::vector<double>* mc_kinInt_tllj_inputvars;
+  std::vector<double>* mc_kinInt_wzjj_inputvars;
+  std::vector<double>* mc_kinInt_thj_inputvars;
+
+
   TBranch* b_mc_event;
   TBranch* b_mc_weight;
   TBranch* b_weight;
@@ -1310,6 +1322,16 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
    mc_kin_wzjj_inputvars = new std::vector<double>;
    mc_kin_thj_inputvars = new std::vector<double>;
 
+   mc_kinInt_tthfl_inputvars = new std::vector<double>;
+   mc_kinInt_tthsl_inputvars = new std::vector<double>;
+   mc_kinInt_ttz_inputvars = new std::vector<double>;
+   mc_kinInt_ttw_inputvars = new std::vector<double>;
+   mc_kinInt_ttwjj_inputvars = new std::vector<double>;
+   mc_kinInt_ttbarfl_inputvars = new std::vector<double>;
+   mc_kinInt_ttbarsl_inputvars = new std::vector<double>;
+   mc_kinInt_tllj_inputvars = new std::vector<double>;
+   mc_kinInt_wzjj_inputvars = new std::vector<double>;
+   mc_kinInt_thj_inputvars = new std::vector<double>;
 
    /*
    MEAllWeights_TTLL = new std::vector<double>;
@@ -2214,6 +2236,17 @@ void ReadGenFlatTree::InitializeMEMRun(string InputFileName){
   tOutput->Branch("mc_kin_tllj_inputvars","std::vector<double>",&mc_kin_tllj_inputvars);
   tOutput->Branch("mc_kin_wzjj_inputvars","std::vector<double>",&mc_kin_wzjj_inputvars);
   tOutput->Branch("mc_kin_thj_inputvars","std::vector<double>",&mc_kin_thj_inputvars);
+
+  tOutput->Branch("mc_kinInt_tthfl_inputvars","std::vector<double>",&mc_kinInt_tthfl_inputvars);
+  tOutput->Branch("mc_kinInt_tthsl_inputvars","std::vector<double>",&mc_kinInt_tthsl_inputvars);
+  tOutput->Branch("mc_kinInt_ttz_inputvars","std::vector<double>",&mc_kinInt_ttz_inputvars);
+  tOutput->Branch("mc_kinInt_ttw_inputvars","std::vector<double>",&mc_kinInt_ttw_inputvars);
+  tOutput->Branch("mc_kinInt_ttwjj_inputvars","std::vector<double>",&mc_kinInt_ttwjj_inputvars);
+  tOutput->Branch("mc_kinInt_ttbarfl_inputvars","std::vector<double>",&mc_kinInt_ttbarfl_inputvars);
+  tOutput->Branch("mc_kinInt_ttbarsl_inputvars","std::vector<double>",&mc_kinInt_ttbarsl_inputvars);
+  tOutput->Branch("mc_kinInt_tllj_inputvars","std::vector<double>",&mc_kinInt_tllj_inputvars);
+  tOutput->Branch("mc_kinInt_wzjj_inputvars","std::vector<double>",&mc_kinInt_wzjj_inputvars);
+  tOutput->Branch("mc_kinInt_thj_inputvars","std::vector<double>",&mc_kinInt_thj_inputvars);
 
 
   /*
