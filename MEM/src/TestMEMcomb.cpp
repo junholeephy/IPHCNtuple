@@ -246,8 +246,8 @@ int main(int argc, char *argv[])
       tree.multilepton_JetClosestMw2_P4 = *tree.multilepton_JetClosestMw2_P4_ptr;
       tree.multilepton_JetLowestMjj1_P4 = *tree.multilepton_JetLowestMjj1_P4_ptr;
       tree.multilepton_JetLowestMjj2_P4 = *tree.multilepton_JetLowestMjj2_P4_ptr;
-      tree.multilepton_JetHighestEta1_P4 = *tree.multilepton_JetHighestEta1_P4_ptr;
-      tree.multilepton_JetHighestEta2_P4 = *tree.multilepton_JetHighestEta2_P4_ptr;
+      //tree.multilepton_JetHighestEta1_P4 = *tree.multilepton_JetHighestEta1_P4_ptr;
+      //tree.multilepton_JetHighestEta2_P4 = *tree.multilepton_JetHighestEta2_P4_ptr;
       tree.multilepton_JetHighestPt1_2ndPair_P4 = *tree.multilepton_JetHighestPt1_2ndPair_P4_ptr;
       tree.multilepton_JetHighestPt2_2ndPair_P4 = *tree.multilepton_JetHighestPt2_2ndPair_P4_ptr;
       tree.multilepton_JetClosestMw1_2ndPair_P4 = *tree.multilepton_JetClosestMw1_2ndPair_P4_ptr;
