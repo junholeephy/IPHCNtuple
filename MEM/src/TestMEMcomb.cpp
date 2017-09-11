@@ -751,13 +751,11 @@ int main(int argc, char *argv[])
        //FillWeightVectors(MEMpermutations[index_hyp[0]], tree.MEAllWeights_TTLL, tree.MEAllWeights_TTLL_log);
        for (unsigned int ii=0; ii<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kinInt_ttz_inputvars->push_back(MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.at(ii));
        for (unsigned int ii=0; ii<MEMpermutations[index_hyp[0]].resKin_maxKinFit.intvar.size(); ii++) tree.mc_kin_ttz_inputvars->push_back(MEMpermutations[index_hyp[0]].resKin_maxKinFit.intvar.at(ii));
-
       //tree.mc_kin_ttz_inputvars = &MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar;
-      cout << "kinInt intvar size="<<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.size()<<endl;
-      cout << "kin intvar size="<<MEMpermutations[index_hyp[0]].resKin_maxKinFit.intvar.size()<<endl;
-      for (unsigned int ii=0; ii<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.size(); ii++) cout << "kinInt Var"<<ii<<" : "<<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.at(ii)<<endl;
-      for (unsigned int ii=0; ii<MEMpermutations[index_hyp[0]].resKin_maxKinFit.intvar.size(); ii++) cout << "kin Var"<<ii<<" : "<<MEMpermutations[index_hyp[0]].resKin_maxKinFit.intvar.at(ii)<<endl;
-
+      //cout << "kinInt intvar size="<<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.size()<<endl;
+      //cout << "kin intvar size="<<MEMpermutations[index_hyp[0]].resKin_maxKinFit.intvar.size()<<endl;
+      //for (unsigned int ii=0; ii<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.size(); ii++) cout << "kinInt Var"<<ii<<" : "<<MEMpermutations[index_hyp[0]].resKin_maxKinFit_Int.intvar.at(ii)<<endl;
+      //for (unsigned int ii=0; ii<MEMpermutations[index_hyp[0]].resKin_maxKinFit.intvar.size(); ii++) cout << "kin Var"<<ii<<" : "<<MEMpermutations[index_hyp[0]].resKin_maxKinFit.intvar.at(ii)<<endl;
       }
     }
     if (index_hyp[1]!=-1){
@@ -780,7 +778,8 @@ int main(int argc, char *argv[])
         tree.mc_mem_tthsl_weight_kinmax = MEMpermutations[index_hyp[1]].resMEM_maxKinFit.weight;
         tree.mc_mem_tthsl_weight_kinmaxint = MEMpermutations[index_hyp[1]].resMEM_maxKinFit_Int.weight;
         //FillWeightVectors(MEMpermutations[index_hyp[1]], tree.MEAllWeights_TTHfl, tree.MEAllWeights_TTHfl_log);
-        for (unsigned int ii=0; ii<MEMpermutations[index_hyp[1]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kin_tthsl_inputvars->push_back(MEMpermutations[index_hyp[1]].resKin_maxKinFit_Int.intvar.at(ii));
+        for (unsigned int ii=0; ii<MEMpermutations[index_hyp[1]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kinInt_tthsl_inputvars->push_back(MEMpermutations[index_hyp[1]].resKin_maxKinFit_Int.intvar.at(ii));
+        for (unsigned int ii=0; ii<MEMpermutations[index_hyp[1]].resKin_maxKinFit.intvar.size(); ii++) tree.mc_kin_tthsl_inputvars->push_back(MEMpermutations[index_hyp[1]].resKin_maxKinFit.intvar.at(ii));
 
       }
    }
@@ -804,7 +803,8 @@ int main(int argc, char *argv[])
        tree.mc_mem_tthfl_weight_kinmax = MEMpermutations[index_hyp[2]].resMEM_maxKinFit.weight;
        tree.mc_mem_tthfl_weight_kinmaxint = MEMpermutations[index_hyp[2]].resMEM_maxKinFit_Int.weight;
        //FillWeightVectors(MEMpermutations[index_hyp[2]], tree.MEAllWeights_TTHfl, tree.MEAllWeights_TTHfl_log);
-       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[2]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kin_tthfl_inputvars->push_back(MEMpermutations[index_hyp[2]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[2]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kinInt_tthfl_inputvars->push_back(MEMpermutations[index_hyp[2]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[2]].resKin_maxKinFit.intvar.size(); ii++) tree.mc_kin_tthfl_inputvars->push_back(MEMpermutations[index_hyp[2]].resKin_maxKinFit.intvar.at(ii));
      }
    }
    if (index_hyp[3]!=-1){ 
@@ -826,7 +826,8 @@ int main(int argc, char *argv[])
        tree.mc_mem_ttw_weight_kinmax = MEMpermutations[index_hyp[3]].resMEM_maxKinFit.weight;
        tree.mc_mem_ttw_weight_kinmaxint = MEMpermutations[index_hyp[3]].resMEM_maxKinFit_Int.weight;
        //FillWeightVectors(MEMpermutations[index_hyp[3]], tree.MEAllWeights_TTW, tree.MEAllWeights_TTW_log);
-       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[3]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kin_ttw_inputvars->push_back(MEMpermutations[index_hyp[3]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[3]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kinInt_ttw_inputvars->push_back(MEMpermutations[index_hyp[3]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[3]].resKin_maxKinFit.intvar.size(); ii++) tree.mc_kin_ttw_inputvars->push_back(MEMpermutations[index_hyp[3]].resKin_maxKinFit.intvar.at(ii));
 
      }
    }
@@ -849,7 +850,8 @@ int main(int argc, char *argv[])
        tree.mc_mem_ttwjj_weight_kinmax = MEMpermutations[index_hyp[4]].resMEM_maxKinFit.weight;
        tree.mc_mem_ttwjj_weight_kinmaxint = MEMpermutations[index_hyp[4]].resMEM_maxKinFit_Int.weight;
        //FillWeightVectors(MEMpermutations[index_hyp[4]], tree.MEAllWeights_TTWJJ, tree.MEAllWeights_TTWJJ_log);
-       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[4]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kin_ttwjj_inputvars->push_back(MEMpermutations[index_hyp[4]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[4]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kinInt_ttwjj_inputvars->push_back(MEMpermutations[index_hyp[4]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[4]].resKin_maxKinFit.intvar.size(); ii++) tree.mc_kin_ttwjj_inputvars->push_back(MEMpermutations[index_hyp[4]].resKin_maxKinFit.intvar.at(ii));
      }
    }
    if (index_hyp[5]!=-1){
@@ -872,7 +874,8 @@ int main(int argc, char *argv[])
        tree.mc_mem_ttbarfl_weight_kinmax = MEMpermutations[index_hyp[5]].resMEM_maxKinFit.weight;
        tree.mc_mem_ttbarfl_weight_kinmaxint = MEMpermutations[index_hyp[5]].resMEM_maxKinFit_Int.weight;
        //FillWeightVectors(MEMpermutations[index_hyp[5]], tree.MEAllWeights_TTbarfl, tree.MEAllWeights_TTbarfl_log);
-       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[5]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kin_ttbarfl_inputvars->push_back(MEMpermutations[index_hyp[5]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[5]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kinInt_ttbarfl_inputvars->push_back(MEMpermutations[index_hyp[5]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[5]].resKin_maxKinFit.intvar.size(); ii++) tree.mc_kin_ttbarfl_inputvars->push_back(MEMpermutations[index_hyp[5]].resKin_maxKinFit.intvar.at(ii));
      }
    }
    if (index_hyp[6]!=-1){
@@ -895,7 +898,8 @@ int main(int argc, char *argv[])
        tree.mc_mem_ttbarsl_weight_kinmax = MEMpermutations[index_hyp[6]].resMEM_maxKinFit.weight;
        tree.mc_mem_ttbarsl_weight_kinmaxint = MEMpermutations[index_hyp[6]].resMEM_maxKinFit_Int.weight;
        //FillWeightVectors(MEMpermutations[index_hyp[6]], tree.MEAllWeights_TTbarsl, tree.MEAllWeights_TTbarsl_log);
-       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[6]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kin_ttbarsl_inputvars->push_back(MEMpermutations[index_hyp[6]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[6]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kinInt_ttbarsl_inputvars->push_back(MEMpermutations[index_hyp[6]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[6]].resKin_maxKinFit.intvar.size(); ii++) tree.mc_kin_ttbarsl_inputvars->push_back(MEMpermutations[index_hyp[6]].resKin_maxKinFit.intvar.at(ii));
       }
     }
     if (index_hyp[7]!=-1){
@@ -917,7 +921,8 @@ int main(int argc, char *argv[])
        tree.mc_mem_tllj_weight_kinmax = MEMpermutations[index_hyp[7]].resMEM_maxKinFit.weight;
        tree.mc_mem_tllj_weight_kinmaxint = MEMpermutations[index_hyp[7]].resMEM_maxKinFit_Int.weight;
        //FillWeightVectors(MEMpermutations[index_hyp[7]], tree.MEAllWeights_TLLJ, tree.MEAllWeights_TLLJ_log);
-       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[7]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kin_tllj_inputvars->push_back(MEMpermutations[index_hyp[7]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[7]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kinInt_tllj_inputvars->push_back(MEMpermutations[index_hyp[7]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[7]].resKin_maxKinFit.intvar.size(); ii++) tree.mc_kin_tllj_inputvars->push_back(MEMpermutations[index_hyp[7]].resKin_maxKinFit.intvar.at(ii));
       }
     }
     if (index_hyp[8]!=-1){
@@ -938,7 +943,8 @@ int main(int argc, char *argv[])
        tree.mc_kin_wzjj_weight_logmaxint = log(MEMpermutations[index_hyp[8]].resKin_maxKinFit_Int.weight);
        tree.mc_mem_wzjj_weight_kinmax = MEMpermutations[index_hyp[8]].resMEM_maxKinFit.weight;
        tree.mc_mem_wzjj_weight_kinmaxint = MEMpermutations[index_hyp[8]].resMEM_maxKinFit_Int.weight;
-       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[8]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kin_wzjj_inputvars->push_back(MEMpermutations[index_hyp[8]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[8]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kinInt_wzjj_inputvars->push_back(MEMpermutations[index_hyp[8]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[8]].resKin_maxKinFit.intvar.size(); ii++) tree.mc_kin_wzjj_inputvars->push_back(MEMpermutations[index_hyp[8]].resKin_maxKinFit.intvar.at(ii));
       }
     }
     if (index_hyp[9]!=-1){
@@ -960,6 +966,7 @@ int main(int argc, char *argv[])
        tree.mc_mem_thj_weight_kinmax = MEMpermutations[index_hyp[9]].resMEM_maxKinFit.weight;
        tree.mc_mem_thj_weight_kinmaxint = MEMpermutations[index_hyp[9]].resMEM_maxKinFit_Int.weight;
        for (unsigned int ii=0; ii<MEMpermutations[index_hyp[9]].resKin_maxKinFit_Int.intvar.size(); ii++) tree.mc_kin_thj_inputvars->push_back(MEMpermutations[index_hyp[9]].resKin_maxKinFit_Int.intvar.at(ii));
+       for (unsigned int ii=0; ii<MEMpermutations[index_hyp[9]].resKin_maxKinFit.intvar.size(); ii++) tree.mc_kinInt_thj_inputvars->push_back(MEMpermutations[index_hyp[9]].resKin_maxKinFit.intvar.at(ii));
       }
     }
 
