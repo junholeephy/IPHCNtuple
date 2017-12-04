@@ -146,11 +146,15 @@ double get_csv_wgt( std::vector<double> jetPts,
     double csvWgtlf = 1.;
 
     for( int iJet=0; iJet<int(jetPts.size()); iJet++ ){
+    
 
         double csv = jetCSVs[iJet];
         double jetPt = jetPts[iJet];
         double jetAbsEta = fabs(jetEtas[iJet]);
         int flavor = jetFlavors[iJet];
+	
+	//NEW
+	if(jetAbsEta > 2.4) {continue;}
 
         int iPt = -1; int iEta = -1;
         if (jetPt >=19.99 && jetPt<30) iPt = 0;

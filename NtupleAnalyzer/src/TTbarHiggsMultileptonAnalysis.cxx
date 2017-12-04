@@ -1424,7 +1424,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         for(unsigned int ijet=0; ijet < vJet->size() ; ijet++)
         {
-
+/*
             // updated for 801
             if( vJet->at(ijet).CSVv2() > 0.5426  ) nLooseBJets++;
             if( vJet->at(ijet).CSVv2() > 0.8484  ) nMediumBJets++;
@@ -1432,6 +1432,16 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             if(vJet->at(ijet).CSVv2() >= 0.5426  ) vSelectedBTagJets.push_back(vJet->at(ijet));
             else                                vSelectedNonBTagJets.push_back(vJet->at(ijet));
             if(vJet->at(ijet).CSVv2() >= 0.8484  ) vSelectedMediumBTagJets.push_back(vJet->at(ijet));
+*/
+
+//NEW -- added eta cut for bjets
+	    if( vJet->at(ijet).CSVv2() > 0.5426 && vJet->at(ijet).eta() <= 2.4 ) nLooseBJets++;
+            if( vJet->at(ijet).CSVv2() > 0.8484 && vJet->at(ijet).eta() <= 2.4  ) nMediumBJets++;
+
+            if(vJet->at(ijet).CSVv2() >= 0.5426 && vJet->at(ijet).eta() <= 2.4 ) vSelectedBTagJets.push_back(vJet->at(ijet));
+            else if( vJet->at(ijet).eta() <= 2.4)                                vSelectedNonBTagJets.push_back(vJet->at(ijet));
+            if(vJet->at(ijet).CSVv2() >= 0.8484 && vJet->at(ijet).eta() <= 2.4 ) vSelectedMediumBTagJets.push_back(vJet->at(ijet));
+//---------
 
             vSelectedJets.push_back(vJet->at(ijet));
 
@@ -1525,16 +1535,16 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         //TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
         //TwoLeptonsSameSignSelection_TTbar(jentry);
 
-        //ThreeLeptonSelection_TTH3l(jentry);
+        ThreeLeptonSelection_TTH3l(jentry);
         //ThreeLeptonSelection_ApplicationFakes(jentry);
-        ThreeLeptonSelection_CR_WZ(jentry);
-        ThreeLeptonSelection_CR_WZ_ApplicationFakes(jentry);
+        //ThreeLeptonSelection_CR_WZ(jentry);
+        //ThreeLeptonSelection_CR_WZ_ApplicationFakes(jentry);
         //ThreeLeptonSelection_CR_WZrelaxed(jentry);
         //ThreeLeptonSelection_TTZ(jentry);
         //ThreeLeptonSelection_CR_Zl(jentry);
 
         //if ( is_2lss_TTH_SR || is_3l_TTH_SR )                                     fillOutputTree();
-        //if ( is_2lss_TTH_SR || is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR )   fillOutputTree();
+        if ( is_2lss_TTH_SR || is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR )   fillOutputTree();
 
         // #####################################################################################################
         // #                             .__                        .__                __   .__                #

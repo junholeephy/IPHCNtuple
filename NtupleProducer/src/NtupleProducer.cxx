@@ -208,8 +208,15 @@ int main(int argc, char *argv[])
             jesTotal->setJetPt(ntP->jet_pt->at(idx));
             jesTotal->setJetEta(ntP->jet_eta->at(idx));
 
-            jet.setJESUncertainty(jesTotal->getUncertainty(true));
-            //jet.setJESUncertainty(0.);
+
+	//cout<<__LINE__<<endl;
+        
+	    //jet.setJESUncertainty(jesTotal->getUncertainty(true));
+       
+	//cout<<__LINE__<<endl;
+	
+	
+	    jet.setJESUncertainty(0.);
             //std::cout << "Test ===================" << std::endl;
             //std::cout << "n_jet_evt: " << n_jet_evt << std::endl;
             //if(n_jet_evt==1) break;

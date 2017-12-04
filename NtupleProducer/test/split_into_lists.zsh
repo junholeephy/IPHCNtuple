@@ -1,6 +1,6 @@
 #!/bin/env zsh
-
-fpath="/dpm/in2p3.fr/home/cms/phedex/store/user/kskovpen/FlatTree/Walrus-patch1-v20170127/"
+export x509_USER_PROXY=/home-pbs/ntonon/proxy/x509up_u8066
+fpath="/dpm/in2p3.fr/home/cms/phedex/store/user/kskovpen/FlatTree/Walrus-patch2-v20170615/"
 
 dataStr="SingleElectron|SingleMuon|DoubleEG|DoubleMuon|MuonEG"
 

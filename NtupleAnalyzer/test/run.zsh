@@ -9,8 +9,9 @@ export LD_LIBRARY_PATH=${cdir}:${NtupleDir}:${NtupleDir}/obj:$LD_LIBRARY_PATH
 ./../Analyzer \
 --file input.txt \
 --tree Nt \
---outfile ./output_ttH_MC \
---nmax 100000 \
+--outfile ./output_tHq_MC \
+#--nmax 100000 \
+--nmax -1 \
 --isdata 0 \
 --doSystCombine 0 \
 --nowe 1 \

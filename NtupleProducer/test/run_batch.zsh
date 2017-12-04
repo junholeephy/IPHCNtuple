@@ -1,7 +1,8 @@
 #!/bin/env zsh
 
 #cp /tmp/x509up_u6155 /home-pbs/lebihan/someone/proxy/.
-cp /tmp/x509up_u7650 /home-pbs/xcoubez/proxy/
+#cp /tmp/x509up_u7650 /home-pbs/xcoubez/proxy/
+cp /tmp/x509up_u8066 /home-pbs/ntonon/proxy
 
 jName=${1}
 if [[ ${jName} == "" ]]; then
@@ -13,8 +14,8 @@ que="cms"
 
 export HOME=$(pwd)
 
-dout="/home-pbs/xcoubez/Renovatio/Analysis/ttH/CMSSW_8_0_20/src/ttH/NtupleProducer/test/"
-dout_f="/opt/sbg/scratch1/cms/xcoubez/ntuples_prod_walrus_patch1_priority/"
+dout="/home-pbs/ntonon/tHq/CMSSW_8_0_20/src/ttH/NtupleProducer/test"
+dout_f="/opt/sbg/scratch1/cms/ntonon/ntuples_prod_walrus_patch2/"
 
 echo "CMSSW_RELEASE_BASE" $CMSSW_RELEASE_BASE
 
