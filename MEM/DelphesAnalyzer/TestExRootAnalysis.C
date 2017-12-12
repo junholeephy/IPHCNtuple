@@ -4,6 +4,7 @@
 #include "TChain.h"
 #include "TClonesArray.h"
 #include "TH1.h"
+#include "TH3.h"
 #include "TCanvas.h"
 #include "TLorentzVector.h"
 
@@ -43,6 +44,8 @@ void TestExRootAnalysis()
 
   // Create chain of root trees
   TChain chain("Delphes");
+
+  //First 100k
   chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_0.root");
   chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_1.root");
   chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_2.root");
@@ -51,21 +54,33 @@ void TestExRootAnalysis()
   chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_5.root");
   chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_6.root");
   chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_7.root");
-  //chain.Add("/afs/cern.ch/work/c/chanon/MG5_aMC_v2_5_5/Delphes/tag_1_delphes_events_0.root");
-  //chain.Add("/afs/cern.ch/work/c/chanon/MG5_aMC_v2_5_5/Delphes/tag_1_delphes_events_1.root");
-  //chain.Add("/afs/cern.ch/work/c/chanon/MG5_aMC_v2_5_5/Delphes/tag_1_delphes_events_2.root");
-  //chain.Add("/afs/cern.ch/work/c/chanon/MG5_aMC_v2_5_5/Delphes/tag_1_delphes_events_3.root");
-  //chain.Add("/afs/cern.ch/work/c/chanon/MG5_aMC_v2_5_5/Delphes/tag_1_delphes_events_4.root");
-  //chain.Add("/afs/cern.ch/work/c/chanon/MG5_aMC_v2_5_5/Delphes/tag_1_delphes_events_5.root");
-  //chain.Add("/afs/cern.ch/work/c/chanon/MG5_aMC_v2_5_5/Delphes/tag_1_delphes_events_6.root");
-  //chain.Add("/afs/cern.ch/work/c/chanon/MG5_aMC_v2_5_5/Delphes/tag_1_delphes_events_7.root");
 
-  //chain.Add("/afs/cern.ch/work/c/chanon/MG5_aMC_v2_5_5/EVENTS_ttll_3l_LO/Events/run_02/tag_1_delphes_events.root");
-  
+  //Next 375k
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_0.root");
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_1.root");
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_3.root");
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_4.root");
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_5.root");
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_6.root");
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_7.root");
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_8.root");
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_10.root");
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_11.root");
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_12.root");
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_15.root");
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_16.root");
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_18.root");
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_19.root");
+  //Next 400k
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_2_delphes_events.root");
+  //Next 400k
+  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v3/tag_3_delphes_events.root");
+
+
   // Create object of class ExRootTreeReader
   ExRootTreeReader *treeReader = new ExRootTreeReader(&chain);
   Long64_t numberOfEntries = treeReader->GetEntries();
-  //Long64_t numberOfEntries = 10;
+  //Long64_t numberOfEntries = 10000;
   cout << "nEntries="<<numberOfEntries<<endl;
 
   // Get pointers to branches used in this analysis
@@ -86,6 +101,7 @@ void TestExRootAnalysis()
   std::vector<Lepton*> vSelectedLeptons;
   std::vector<GenParticle*> vSelectedPartons;
   std::vector<GenParticle*> vSelectedNeutrinos;
+  std::vector<GenParticle*> vSelectedGenLeptons;
 
   std::vector<std::pair<Jet*, GenParticle*>> MatchedBJets;
   std::vector<std::pair<Jet*, GenParticle*>> MatchedJets;
@@ -96,6 +112,9 @@ void TestExRootAnalysis()
   bool doSelectOnlyBjets = true;
   int ib1=-1, ib2=-1;
   TLorentzVector Bjet1, Bjet2;
+  double Ptot = 0;
+  double Ptot_Px=0, Ptot_Py=0, Ptot_Pz=0, Ptot_Eta=0, Ptot_E=0, Ptot_M=0;
+  TLorentzVector Ptot_P4(0,0,0,0);
 
   unsigned int nSelectedEvent = 0; 
 
@@ -103,8 +122,11 @@ void TestExRootAnalysis()
   MultiLeptonTree tree;
   tree.initializeOutputTree();
 
-  bool doTTZselection = true;
-  bool doTFselection = false;
+  bool doTTZselection = false;
+  bool doTFselection = true;
+
+  //int NEND_bis = NEND;
+  //if (NEND > numberOfEntries) NEND_bis = numberOfEntries; 
 
   // Loop over all events
   for(Int_t entry = 0; entry < numberOfEntries; ++entry) {
@@ -114,6 +136,7 @@ void TestExRootAnalysis()
     if (entry % 1000 == 1) cout << "Event "<<entry<<endl;
  
     vSelectedJets.clear();
+    vSelectedGenLeptons.clear();
     vSelectedLeptons.clear();
     vSelectedPartons.clear();
     MatchedBJets.clear();
@@ -121,6 +144,7 @@ void TestExRootAnalysis()
     vSelectedNeutrinos.clear();
     ib1=-1, ib2=-1;
 
+    Ptot_Px=0, Ptot_Py=0, Ptot_Pz=0, Ptot_Eta=0, Ptot_E=0, Ptot_M=0;
     //Checkin gen particles
     if(branchGenParticle->GetEntries() > 0) {
       for (int ig=0; ig<branchGenParticle->GetEntries(); ig++){
@@ -128,15 +152,33 @@ void TestExRootAnalysis()
 	if (genparticle->Status==23 || genparticle->Status==24) {
 	  if (abs(genparticle->PID)<=5) {
 	    vSelectedPartons.push_back(genparticle);
+	    Ptot_Px += genparticle->Px;
+	    Ptot_Py += genparticle->Py;
+	    Ptot_Pz += genparticle->Pz;
+	    Ptot_E += genparticle->E;
 	    //cout << "GenParticle "<<ig<<" PID="<<genparticle->PID<<" status="<<genparticle->Status << endl;
 	  }
 	  if (abs(genparticle->PID)==12 || abs(genparticle->PID)==14 || abs(genparticle->PID)==16){
 	    vSelectedNeutrinos.push_back(genparticle);
+            Ptot_Px += genparticle->Px;
+	    Ptot_Py += genparticle->Py;
+	    Ptot_Pz += genparticle->Pz;
+	    Ptot_E += genparticle->E;
 	    //cout << "GenParticle "<<ig<<" PID="<<genparticle->PID<<" status="<<genparticle->Status << endl;
+	  }
+	  if (abs(genparticle->PID)==11 || abs(genparticle->PID)==13 || abs(genparticle->PID)==15){
+	    vSelectedGenLeptons.push_back(genparticle);
+	    Ptot_Px += genparticle->Px;
+	    Ptot_Py += genparticle->Py;
+	    Ptot_Pz += genparticle->Pz;
+	    Ptot_E += genparticle->E;
 	  }
 	}
       }
     }
+    Ptot_P4.SetPxPyPzE(Ptot_Px, Ptot_Py, Ptot_Pz, Ptot_E);
+    Ptot = sqrt(Ptot_Px*Ptot_Px+Ptot_Py*Ptot_Py);
+    //cout << "Ptot="<<Ptot<<endl;
  
     // If event contains at least 1 jet
     if(branchJet->GetEntries() > 0) {
@@ -308,12 +350,12 @@ void TestExRootAnalysis()
       //for (int i=0; i<Constituents.GetEntries(); i++) {
 	//cout << "Constituents "<<i<< " " <<Constituents.At(i)<<endl;
       //}
-      TRefArray Particles = vSelectedJets.at(0)->Particles;
+      //TRefArray Particles = vSelectedJets.at(0)->Particles;
       //cout << "First jet Particles size="<<Particles.GetEntriesFast()<<endl;
-      for (int i=0; i<Particles.GetEntriesFast(); i++) {
-	GenParticle* particle = (GenParticle*) Particles.At(i);
+      //for (int i=0; i<Particles.GetEntriesFast(); i++) {
+	//GenParticle* particle = (GenParticle*) Particles.At(i);
 	//cout << "Particle "<< i<<" Id=" <<particle->PID<<endl;
-      }
+      //}
 
       //Analyze matched jets TF
       for (int ij=0; ij< MatchedJets.size(); ij++){
@@ -366,7 +408,13 @@ void TestExRootAnalysis()
 
 
     //Fill Output Tree
-    
+
+    tree.Pdf_Ptot->Fill(Ptot);
+    tree.Pdf_PtotEta->Fill(Ptot_P4.Eta());
+    tree.Pdf_PtotM->Fill(Ptot_P4.M());
+    tree.Pdf_PtotP4->Fill(Ptot_P4.Pt(), Ptot_P4.Eta(), Ptot_P4.M());
+
+  if (doTTZselection){ 
     if (is3l && ib1!=-1 && ib2!=-1 && vSelectedJets.size()-2>=2) tree.catJets = kCat_3l_2b_2j;
     else if (is3l && ib1!=-1 && ib2==-1 && vSelectedJets.size()-1>=2) tree.catJets = kCat_3l_1b_2j;
     else if (is3l && ib1!=-1 && ib2!=-1 && vSelectedJets.size()-2==1) tree.catJets = kCat_3l_2b_1j;
@@ -502,7 +550,7 @@ void TestExRootAnalysis()
 
     tree.tOutput->Fill();
 
-
+  }
 
     nSelectedEvent++;
 
@@ -511,9 +559,23 @@ void TestExRootAnalysis()
   cout << "---RESULTS---"<<endl;
   cout << "nSelectedEvent="<<nSelectedEvent<<endl;
 
-   //tree.TFratio_B->Write();
-   //tree.TFratio_nonB->Write();
    double a = 0;
+   a  = tree.Pdf_Ptot->Integral();
+   tree.Pdf_Ptot->Scale(1./a);
+   tree.Pdf_Ptot->Write();
+ 
+   a  = tree.Pdf_PtotEta->Integral();
+   tree.Pdf_PtotEta->Scale(1./a);
+   tree.Pdf_PtotEta->Write();
+
+   a  = tree.Pdf_PtotM->Integral();
+   tree.Pdf_PtotM->Scale(1./a);
+   tree.Pdf_PtotM->Write();
+ 
+   a  = tree.Pdf_PtotP4->Integral();
+   tree.Pdf_PtotP4->Scale(1./a);
+   tree.Pdf_PtotP4->Write();
+
     for (int ieta=0; ieta<3; ieta++)  {
       for (int ienergy=0; ienergy<6; ienergy++) {
 	a = tree.TF_B[ieta][ienergy]->Integral();
@@ -550,6 +612,8 @@ void TestExRootAnalysis()
       if (a>0) tree.TF_mET_Phi[imet]->Scale(1./a);
       tree.TF_mET_Phi[imet]->Write();
     }
+
+
    tree.tOutput->Write();
    fOutput->Close();
 }

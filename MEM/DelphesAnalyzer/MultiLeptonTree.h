@@ -87,7 +87,10 @@ class MultiLeptonTree {
         TH1F* TF_mET_Py[6];
         TH1F* TF_mET_Pt[6];
         TH1F* TF_mET_Phi[6];
-
+	TH1F* Pdf_Ptot;
+	TH1F* Pdf_PtotEta;
+        TH1F* Pdf_PtotM;
+	TH3F* Pdf_PtotP4;
 };
 
 MultiLeptonTree::MultiLeptonTree(){
@@ -280,6 +283,11 @@ void MultiLeptonTree::initializeOutputTree(){
 
     //TFratio_B = new TH1F("TFratio_B","TFratio_B", 100, 0, 5);
     //TFratio_nonB = new TH1F("TFratio_nonB", "TFratio_nonB", 100, 0, 5);
+
+    Pdf_Ptot = new TH1F("Pdf_Ptot","Pdf_Ptot",1000,0,2000);
+    Pdf_PtotEta = new TH1F("Pdf_PtotEta","Pdf_PtotEta",200, -7, 7);
+    Pdf_PtotM = new TH1F("Pdf_PtotM","Pdf_PtotM",1000,0,2000);
+    Pdf_PtotP4 = new TH3F("Pdf_PtotP4","Pdf_PtotP4",1000,0,2000, 200, -7, 7, 1000, 0, 2000);
 
     string histname;
     for (int ieta=0; ieta<3; ieta++)  {
