@@ -45,6 +45,15 @@ ver="name_of_your_ouput_dir"
 ...
 ```
 
+* **crabConfigTemplate.py** - modify the following :
+
+```
+...
+config.Data.splitting = 'FileBased'
+#config.Data.splitting = 'LumiBased' #commented
+...
+```
+
 
 ### Launch the jobs
 
