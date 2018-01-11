@@ -102,6 +102,9 @@ void TestExRootAnalysis()
   std::vector<GenParticle*> vSelectedPartons;
   std::vector<GenParticle*> vSelectedNeutrinos;
   std::vector<GenParticle*> vSelectedGenLeptons;
+  std::vector<GenParticle*> vSelectedW;
+  std::vector<GenParticle*> vSelectedNeutrinosFromTopLep;
+  std::vector<GenParticle*> vSelectedBquark;
 
   std::vector<std::pair<Jet*, GenParticle*>> MatchedBJets;
   std::vector<std::pair<Jet*, GenParticle*>> MatchedJets;
@@ -116,14 +119,17 @@ void TestExRootAnalysis()
   double Ptot_Px=0, Ptot_Py=0, Ptot_Pz=0, Ptot_Eta=0, Ptot_E=0, Ptot_M=0;
   TLorentzVector Ptot_P4(0,0,0,0);
 
+  unsigned int nSelectedEventsTTZwithGen = 0;
+  unsigned int nSelectedEventsTTZ = 0;
   unsigned int nSelectedEvent = 0; 
 
   TFile* fOutput = new TFile("output.root","RECREATE");
   MultiLeptonTree tree;
   tree.initializeOutputTree();
 
-  bool doTTZselection = false;
-  bool doTFselection = true;
+  bool doTTZselection = true;
+  bool doTFselection = false;
+  bool storeGenLevel = true;
 
   //int NEND_bis = NEND;
   //if (NEND > numberOfEntries) NEND_bis = numberOfEntries; 
@@ -133,22 +139,92 @@ void TestExRootAnalysis()
 
     // Load selected branches with data from specified event
     treeReader->ReadEntry(entry);
-    if (entry % 1000 == 1) cout << "Event "<<entry<<endl;
- 
+    if (entry % 1000 == 0) cout << "Event "<<entry<<endl;
+    //cout << "Event "<<entry<<endl; 
+
     vSelectedJets.clear();
     vSelectedGenLeptons.clear();
     vSelectedLeptons.clear();
     vSelectedPartons.clear();
+    vSelectedW.clear();
+    vSelectedNeutrinosFromTopLep.clear();
+    vSelectedBquark.clear();
     MatchedBJets.clear();
     MatchedJets.clear();
     vSelectedNeutrinos.clear();
     ib1=-1, ib2=-1;
+    bool foundHadronicTop = false;
+    int iLeptonicTop = -1;
+    int iHadronicTop = -1;
+    int iTop = 0;
 
+    GenParticle *genparticle;
     Ptot_Px=0, Ptot_Py=0, Ptot_Pz=0, Ptot_Eta=0, Ptot_E=0, Ptot_M=0;
     //Checkin gen particles
     if(branchGenParticle->GetEntries() > 0) {
       for (int ig=0; ig<branchGenParticle->GetEntries(); ig++){
-        GenParticle *genparticle = (GenParticle*) branchGenParticle->At(ig);
+        genparticle = (GenParticle*) branchGenParticle->At(ig);
+
+	if (abs(genparticle->PID)==12 || abs(genparticle->PID)==14 || abs(genparticle->PID)==16) {
+	  //cout << "TEST GenParticle "<<ig<<" PID="<<genparticle->PID<<" status="<<genparticle->Status << endl;
+	  int m = genparticle->M1;
+          GenParticle *genmother = (GenParticle*) branchGenParticle->At(m);
+	  if (abs(genmother->PID)==24){
+	    vSelectedW.push_back(genmother);
+            vSelectedNeutrinosFromTopLep.push_back(genparticle);
+            //cout << "nNeutFromTopLep size="<<vSelectedNeutrinosFromTopLep.size()<<endl;
+	    GenParticle * gentmp = genmother;
+	    GenParticle *gengranma = genmother;
+	    bool doGoBackHistory = true;
+	    while (doGoBackHistory){
+	      int gm = gentmp->M1;
+              gengranma = (GenParticle*) branchGenParticle->At(gm);
+	      if (abs(gengranma->PID)==6){
+		doGoBackHistory = false;
+	      }
+	      else gentmp = gengranma;
+	    }
+	    int md1 = gengranma->D1;
+            int md2 = gengranma->D2;
+            GenParticle *genmomdaughter1 = (GenParticle*) branchGenParticle->At(md1);
+            GenParticle *genmomdaughter2 = (GenParticle*) branchGenParticle->At(md2);
+            if (abs(genmomdaughter1->PID)==5) vSelectedBquark.push_back(genmomdaughter1);
+            else if (abs(genmomdaughter2->PID)==5) vSelectedBquark.push_back(genmomdaughter2);
+	    //cout << "vSelectedBquark size="<<vSelectedBquark.size()<<endl;
+	    iLeptonicTop = iTop;
+	    iTop++;
+	  }
+	}
+
+	if (abs(genparticle->PID)<=4 && !foundHadronicTop){
+	  int m = genparticle->M1;
+          GenParticle *genmother = (GenParticle*) branchGenParticle->At(m);
+	  if (abs(genmother->PID)==24){
+	    vSelectedW.push_back(genmother);
+            GenParticle * gentmp = genmother;
+            GenParticle *gengranma = genmother;
+            bool doGoBackHistory = true;
+            while (doGoBackHistory){
+              int gm = gentmp->M1;
+              gengranma = (GenParticle*) branchGenParticle->At(gm);
+              if (abs(gengranma->PID)==6){
+                doGoBackHistory = false;
+              }
+              else gentmp = gengranma;
+            }
+            int md1 = gengranma->D1;
+            int md2 = gengranma->D2;
+            GenParticle *genmomdaughter1 = (GenParticle*) branchGenParticle->At(md1);
+            GenParticle *genmomdaughter2 = (GenParticle*) branchGenParticle->At(md2);
+            if (abs(genmomdaughter1->PID)==5) vSelectedBquark.push_back(genmomdaughter1);
+            else if (abs(genmomdaughter2->PID)==5) vSelectedBquark.push_back(genmomdaughter2);
+            //cout << "vSelectedBquark size="<<vSelectedBquark.size()<<endl;
+	    foundHadronicTop = true;
+            iHadronicTop = iTop;
+            iTop++;
+	  }
+	}
+
 	if (genparticle->Status==23 || genparticle->Status==24) {
 	  if (abs(genparticle->PID)<=5) {
 	    vSelectedPartons.push_back(genparticle);
@@ -159,7 +235,15 @@ void TestExRootAnalysis()
 	    //cout << "GenParticle "<<ig<<" PID="<<genparticle->PID<<" status="<<genparticle->Status << endl;
 	  }
 	  if (abs(genparticle->PID)==12 || abs(genparticle->PID)==14 || abs(genparticle->PID)==16){
+	    //cout << "genparticle status="<<genparticle->Status<<endl;
 	    vSelectedNeutrinos.push_back(genparticle);
+	    //cout << "nSelectedNeutrinos="<<vSelectedNeutrinos.size()<<endl;
+	    //int m = genparticle->M1;
+	    //cout << "Mother num="<<m<<endl;
+            //GenParticle *genmother = (GenParticle*) branchGenParticle->At(m);
+	    //cout << "Mother pid="<<genmother->PID<<" status="<< genmother->Status<<endl;
+	    //vSelectedNeutrinosFromTopLep.push_back(genparticle);
+	    //cout << "nNeutFromTopLep size="<<vSelectedNeutrinosFromTopLep.size()<<endl;
             Ptot_Px += genparticle->Px;
 	    Ptot_Py += genparticle->Py;
 	    Ptot_Pz += genparticle->Pz;
@@ -172,6 +256,41 @@ void TestExRootAnalysis()
 	    Ptot_Py += genparticle->Py;
 	    Ptot_Pz += genparticle->Pz;
 	    Ptot_E += genparticle->E;
+	  }
+	}
+	if (genparticle->Status==22) {
+	  if (abs(genparticle->PID)==24){
+	    //vSelectedW.push_back(genparticle);
+	    int m = genparticle->M1;
+	    GenParticle *genmother = (GenParticle*) branchGenParticle->At(m);
+	    int md1 = genmother->D1;
+	    int md2 = genmother->D2;
+	    GenParticle *genmomdaughter1 = (GenParticle*) branchGenParticle->At(md1);
+	    GenParticle *genmomdaughter2 = (GenParticle*) branchGenParticle->At(md2);
+	    //if (abs(genmomdaughter1->PID)==5) vSelectedBquark.push_back(genmomdaughter1); 
+	    //else if (abs(genmomdaughter2->PID)==5) vSelectedBquark.push_back(genmomdaughter2);
+
+	   /* 
+	   GenParticle *gentmp = genparticle;
+	   int doSearchNeutrino = 1;
+	    while (doSearchNeutrino>=1){
+	      //cout << "doSearchNeutrino="<<doSearchNeutrino<<endl;
+	      int d1 = gentmp->D1;
+	      int d2 = gentmp->D2;
+	      GenParticle *gendaughter1 = (GenParticle*) branchGenParticle->At(d1);
+	      GenParticle *gendaughter2 = (GenParticle*) branchGenParticle->At(d2);
+	      if (gendaughter1->Status==23 || gendaughter2->Status==23){
+	        //cout << "Wdaughter1 pid="<<gendaughter1->PID<<" status="<<gendaughter1->Status<<endl;
+                //cout << "Wdaughter2 pid="<<gendaughter2->PID<<" status="<<gendaughter2->Status<<endl;
+	        if (abs(gendaughter1->PID)==12 || abs(gendaughter1->PID)==14 || abs(gendaughter1->PID)==16) { vSelectedNeutrinosFromTopLep.push_back(gendaughter1); doSearchNeutrino=0; }
+                else if (abs(gendaughter2->PID)==12 || abs(gendaughter2->PID)==14 || abs(gendaughter2->PID)==16) { vSelectedNeutrinosFromTopLep.push_back(gendaughter2); doSearchNeutrino=0; }
+	        else doSearchNeutrino++;
+	        gentmp = gendaughter1;
+		//cout << "vNeutFromTopLep="<<vSelectedNeutrinosFromTopLep.size()<<endl;
+	      }
+	      else doSearchNeutrino = 0;
+	    }
+	    */ 
 	  }
 	}
       }
@@ -201,13 +320,21 @@ void TestExRootAnalysis()
     if (vSelectedJets.size()>0 && vSelectedPartons.size()>0){
       for (unsigned int i=0; i<vSelectedJets.size(); i++){
 	TLorentzVector Pjet; Pjet.SetPtEtaPhiM(vSelectedJets.at(i)->PT, vSelectedJets.at(i)->Eta, vSelectedJets.at(i)->Phi, vSelectedJets.at(i)->Mass);
+
 	for (unsigned int j=0; j<vSelectedPartons.size(); j++){
 	  TLorentzVector Ppart; Ppart.SetPtEtaPhiM(vSelectedPartons.at(j)->PT, vSelectedPartons.at(j)->Eta, vSelectedPartons.at(j)->Phi, vSelectedPartons.at(j)->Mass);
 	  double deltaR = Pjet.DeltaR(Ppart);
 	  if (deltaR<0.2) {
-	    if (abs(vSelectedPartons.at(j)->PID)==5 && vSelectedJets.at(i)->BTag==1) MatchedBJets.push_back(std::make_pair(vSelectedJets.at(i), vSelectedPartons.at(j)));
+	    //if (abs(vSelectedPartons.at(j)->PID)==5 && vSelectedJets.at(i)->BTag==1) MatchedBJets.push_back(std::make_pair(vSelectedJets.at(i), vSelectedPartons.at(j)));
 	    if (abs(vSelectedPartons.at(j)->PID)<5) MatchedJets.push_back(std::make_pair(vSelectedJets.at(i), vSelectedPartons.at(j)));
 	    //cout << "Jet"<<i<<" Parton"<<j<<" deltaR="<<deltaR<<endl;
+	  }
+	}
+	for (unsigned int j=0; j<vSelectedBquark.size(); j++){
+	  TLorentzVector Ppart; Ppart.SetPtEtaPhiM(vSelectedBquark.at(j)->PT, vSelectedBquark.at(j)->Eta, vSelectedBquark.at(j)->Phi, vSelectedBquark.at(j)->Mass);
+	  double deltaR = Pjet.DeltaR(Ppart);
+	  if (deltaR<0.2) {
+	    if (abs(vSelectedBquark.at(j)->PID)==5 && vSelectedJets.at(i)->BTag==1) MatchedBJets.push_back(std::make_pair(vSelectedJets.at(i), vSelectedBquark.at(j)));
 	  }
 	}
       }
@@ -321,10 +448,12 @@ void TestExRootAnalysis()
     met_ld = 0.00397 * mET->MET + 0.00265 * MHT;
 
 
+
     if (doTTZselection){
 
       if (vSelectedJets.size()<2) continue;
       if (ib1==-1) continue;
+      //if (ib2==-1) continue;
 
       if (vSelectedLeptons.size()<3) continue;
       //if (vSelectedLeptons.at(0)->PT<25) continue;
@@ -339,8 +468,68 @@ void TestExRootAnalysis()
 
       if (vSelectedLeptons.at(0)->Charge*vSelectedLeptons.at(1)->Charge>0 && vSelectedLeptons.at(1)->Charge*vSelectedLeptons.at(2)->Charge>0) continue;
 
+      nSelectedEventsTTZ++;
+
       //if(vSelectedJets.size() < 4 && (met_ld < (0.2 + 0.1 * isSFOS)) ) continue;
 
+      if(storeGenLevel){
+	
+	//if (MatchedJets.size()!=2) continue;
+	if (MatchedBJets.size()!=2) continue;
+        //if (vSelectedJets.size()!=2) continue;
+        //if (vSelectedBJets.size()!=2) continue;
+        //if (vSelectedNeutrinos.size()>=1) continue;
+	if (vSelectedNeutrinosFromTopLep.size()!=1) continue;
+	if (vSelectedW.size()!=2) continue; 
+        /*
+        for (int ij=0; ij< MatchedJets.size(); ij++){
+          TLorentzVector Pjet; Pjet.SetPtEtaPhiM(MatchedJets.at(ij).first->PT, MatchedJets.at(ij).first->Eta, MatchedJets.at(ij).first->Phi, MatchedJets.at(ij).first->Mass);
+          TLorentzVector Ppart; Ppart.SetPtEtaPhiM(MatchedJets.at(ij).second->PT, MatchedJets.at(ij).second->Eta, MatchedJets.at(ij).second->Phi, MatchedJets.at(ij).second->Mass);
+	  if (ij==0) {
+            tree.multilepton_Jet1_DeltaR_Matched = Pjet.DeltaR(Ppart);
+            tree.multilepton_Jet1_Id_Matched = 0;   
+            tree.multilepton_Jet1_P4_Matched = Ppart;
+	  }
+          if (ij==1) {
+            tree.multilepton_Jet2_DeltaR_Matched = Pjet.DeltaR(Ppart);
+            tree.multilepton_Jet2_Id_Matched = 0;   
+            tree.multilepton_Jet2_P4_Matched = Ppart;
+          }
+        }
+        */
+        for (int ij=0; ij< MatchedBJets.size(); ij++){
+          TLorentzVector Pjet; Pjet.SetPtEtaPhiM(MatchedBJets.at(ij).first->PT, MatchedBJets.at(ij).first->Eta, MatchedBJets.at(ij).first->Phi, MatchedBJets.at(ij).first->Mass);
+          TLorentzVector Ppart; Ppart.SetPtEtaPhiM(MatchedBJets.at(ij).second->PT, MatchedBJets.at(ij).second->Eta, MatchedBJets.at(ij).second->Phi, MatchedBJets.at(ij).second->Mass);
+	  if (ij==iHadronicTop){
+            tree.multilepton_Bjet1_DeltaR_Matched = Pjet.DeltaR(Ppart); 
+            tree.multilepton_Bjet1_Id_Matched = 5;       
+            tree.multilepton_Bjet1_P4_Matched = Ppart;       
+	  }
+          if (ij==iLeptonicTop){
+            tree.multilepton_Bjet2_DeltaR_Matched = Pjet.DeltaR(Ppart);
+            tree.multilepton_Bjet2_Id_Matched = 5;
+            tree.multilepton_Bjet2_P4_Matched = Ppart;
+          }
+        }
+
+	//cout << "nNeutrinosFromTopLep: "<<vSelectedNeutrinosFromTopLep.size()<<endl;
+	//cout << "nW: "<<vSelectedW.size()<<endl;
+	//cout << "nBquarks: " << vSelectedBquark.size() << " nBjetMatched="<< MatchedBJets.size()<<endl;
+
+	if (vSelectedNeutrinosFromTopLep.size()>0){
+          TLorentzVector Pneutrino; Pneutrino.SetPtEtaPhiM(vSelectedNeutrinosFromTopLep.at(0)->PT, vSelectedNeutrinosFromTopLep.at(0)->Eta, vSelectedNeutrinosFromTopLep.at(0)->Phi, 0);
+	  tree.multilepton_mET_Matched = Pneutrino;
+	}
+
+	if (vSelectedW.size()>=2){
+	  TLorentzVector PW1; PW1.SetPtEtaPhiM(vSelectedW.at(iHadronicTop)->PT, vSelectedW.at(iHadronicTop)->Eta, vSelectedW.at(iHadronicTop)->Phi, vSelectedW.at(iHadronicTop)->Mass);
+          TLorentzVector PW2; PW2.SetPtEtaPhiM(vSelectedW.at(iLeptonicTop)->PT, vSelectedW.at(iLeptonicTop)->Eta, vSelectedW.at(iLeptonicTop)->Phi, vSelectedW.at(iLeptonicTop)->Mass); 
+	  tree.multilepton_W1_P4_Matched = PW1;
+          tree.multilepton_W2_P4_Matched = PW2;
+	}
+	
+	nSelectedEventsTTZwithGen++;
+      }
     }
 
     if (doTFselection){
@@ -422,6 +611,7 @@ void TestExRootAnalysis()
     else if (is3l && ib1!=-1 && ib2!=-1 && vSelectedJets.size()-2==0) tree.catJets = kCat_3l_2b_0j;
     else tree.catJets = -1;
 
+    if (tree.catJets != kCat_3l_2b_2j) continue;
 
     tree.multilepton_Lepton1_Id = -999;
     tree.multilepton_Lepton2_Id = -999;
@@ -558,6 +748,8 @@ void TestExRootAnalysis()
   
   cout << "---RESULTS---"<<endl;
   cout << "nSelectedEvent="<<nSelectedEvent<<endl;
+  cout << "nSelectedEventsTTZ="<<nSelectedEventsTTZ<<endl;
+  cout << "nSelectedEventsTTZwithGen="<<nSelectedEventsTTZwithGen<<endl;
 
    double a = 0;
    a  = tree.Pdf_Ptot->Integral();

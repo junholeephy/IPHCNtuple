@@ -60,6 +60,14 @@ class MultiLeptonTree {
         Float_t multilepton_JetHighestPt1_JER_Up, multilepton_JetHighestPt2_JER_Up, multilepton_JetClosestMw1_JER_Up, multilepton_JetClosestMw2_JER_Up, multilepton_JetLowestMjj1_JER_Up, multilepton_JetLowestMjj2_JER_Up;
         Float_t multilepton_JetHighestPt1_JER_Down, multilepton_JetHighestPt2_JER_Down, multilepton_JetClosestMw1_JER_Down, multilepton_JetClosestMw2_JER_Down, multilepton_JetLowestMjj1_JER_Down, multilepton_JetLowestMjj2_JER_Down;
 
+        Float_t         multilepton_Jet1_DeltaR_Matched,   multilepton_Jet2_DeltaR_Matched;
+        Int_t           multilepton_Jet1_Label_Matched,    multilepton_Jet2_Label_Matched;
+        Int_t           multilepton_Jet1_Id_Matched,       multilepton_Jet2_Id_Matched;
+        TLorentzVector  multilepton_Jet1_P4_Matched,       multilepton_Jet2_P4_Matched;
+
+	TLorentzVector multilepton_W1_P4_Matched, multilepton_W2_P4_Matched;
+
+
         Int_t multilepton_JetHighestPt1_2ndPair_Id, multilepton_JetHighestPt2_2ndPair_Id, multilepton_JetClosestMw1_2ndPair_Id, multilepton_JetClosestMw2_2ndPair_Id, multilepton_JetLowestMjj1_2ndPair_Id, multilepton_JetLowestMjj2_2ndPair_Id;
         TLorentzVector  multilepton_JetHighestPt1_2ndPair_P4, multilepton_JetHighestPt2_2ndPair_P4, multilepton_JetClosestMw1_2ndPair_P4, multilepton_JetClosestMw2_2ndPair_P4, multilepton_JetLowestMjj1_2ndPair_P4, multilepton_JetLowestMjj2_2ndPair_P4;
         Float_t multilepton_JetHighestPt1_2ndPair_CSV, multilepton_JetHighestPt2_2ndPair_CSV, multilepton_JetClosestMw1_2ndPair_CSV, multilepton_JetClosestMw2_2ndPair_CSV, multilepton_JetLowestMjj1_2ndPair_CSV, multilepton_JetLowestMjj2_2ndPair_CSV;
@@ -78,6 +86,8 @@ class MultiLeptonTree {
         Double_t multilepton_mETcov01;
         Double_t multilepton_mETcov10;
         Double_t multilepton_mETcov11;
+
+       TLorentzVector multilepton_mET_Matched;
 
         TH1F* TF_B[3][6];
         TH1F* TF_nonB[3][6];
@@ -165,6 +175,9 @@ void MultiLeptonTree::initializeOutputTree(){
     tOutput->Branch("multilepton_Bjet2_Label_Matched",      &multilepton_Bjet2_Label_Matched,       "multilepton_Bjet2_Label_Matched/I");
     tOutput->Branch("multilepton_Bjet2_Id_Matched",         &multilepton_Bjet2_Id_Matched,          "multilepton_Bjet2_Id_Matched/I");
     tOutput->Branch("multilepton_Bjet2_P4_Matched",         "TLorentzVector",                       &multilepton_Bjet2_P4_Matched);
+
+    tOutput->Branch("multilepton_W1_P4_Matched", "TLorentzVector", &multilepton_W1_P4_Matched);
+    tOutput->Branch("multilepton_W2_P4_Matched", "TLorentzVector", &multilepton_W2_P4_Matched);
 
 
     tOutput->Branch("multilepton_JetHighestPt1_Id",&multilepton_JetHighestPt1_Id,"multilepton_JetHighestPt1_Id/I");
@@ -278,6 +291,9 @@ void MultiLeptonTree::initializeOutputTree(){
     tOutput->Branch("multilepton_mETcov01",&multilepton_mETcov01,"multilepton_mETcov01/D");
     tOutput->Branch("multilepton_mETcov10",&multilepton_mETcov10,"multilepton_mETcov10/D");
     tOutput->Branch("multilepton_mETcov11",&multilepton_mETcov11,"multilepton_mETcov11/D");
+
+    tOutput->Branch("multilepton_mET_Matched", "TLorentzVector", &multilepton_mET_Matched);
+
     tOutput->Branch("multilepton_mHT",&multilepton_mHT,"multilepton_mHT/F");
     tOutput->Branch("multilepton_Ptot","TLorentzVector",&multilepton_Ptot);
 
