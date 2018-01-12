@@ -18,9 +18,43 @@ Installing and running the IPHCFlatTree code to produce Flat Trees. Using tag "W
 cd /home-pbs/username/
 mkdir MyAnalysis
 cd MyAnalysis
+
+# CMSSW Release
+RELEASE=8_0_25
+
+# Setup release
+cmsrel CMSSW_$RELEASE
+cd CMSSW_X_Y_Z/src
+cmsenv
+git cms-init
+
+# Clone this repo
+git clone https://github.com/IPHC/IPHCFlatTree.git
+cd IPHCFlatTree
+git tag -l //List the available tags
+git checkout tags/Walrus-patch2 //Use Walrus-patch2 tag instead of master branch
+
+# Egamma
+git cms-merge-topic shervin86:Moriond2017_JEC_energyScales
+cd EgammaAnalysis/ElectronTools/data; git clone https://github.com/ECALELFS/ScalesSmearings; cd -
+git cms-merge-topic ikrav:egm_id_80X_v2
+
+# Add MET filters
+git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
+
+# Tools needed for AK10 jet collection
+git clone https://github.com/cms-jet/JetToolbox JMEAnalysis/JetToolbox 
+
+# Add DeepCSV tagger
+git cms-merge-topic -u mverzett:DeepFlavour-from-CMSSW_8_0_21
+mkdir RecoBTag/DeepFlavour/data/; cd RecoBTag/DeepFlavour/data/; wget http://home.fnal.gov/~verzetti//DeepFlavour/training/DeepFlavourNoSL.json; cd -
+
+# Compile the monster
+scram b -j5
 ```
 
-Follow instructions from [IPHCFlatTree's README](https://github.com/IPHC/IPHCFlatTree/tree/Walrus-patch2)
+(( Instructions taken from [IPHCFlatTree's README](https://github.com/IPHC/IPHCFlatTree/tree/Walrus-patch2) ))
+
 
 ### Set-up
 
