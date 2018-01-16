@@ -33,6 +33,7 @@ git clone https://github.com/IPHC/IPHCFlatTree.git
 cd IPHCFlatTree
 git tag -l //List the available tags
 git checkout tags/Walrus-patch2 //Use Walrus-patch2 tag instead of master branch
+cd ..
 
 # Egamma
 git cms-merge-topic shervin86:Moriond2017_JEC_energyScales
