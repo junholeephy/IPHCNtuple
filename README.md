@@ -84,8 +84,10 @@ ver="name_of_your_ouput_dir"
 
 ```
 ...
-config.Data.splitting = 'FileBased'
-#config.Data.splitting = 'LumiBased' #commented
+isData=0 #For MC
+...
+config.Data.splitting = 'FileBased' #For MC
+#config.Data.splitting = 'LumiBased' #For data
 ...
 ```
 
