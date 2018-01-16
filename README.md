@@ -76,7 +76,8 @@ cd IPHCFlatTree/FlatTreeProducer/test/PROD
 ```
 ...
 slist="list.txt"
-ver="name_of_your_ouput_dir"
+ver="Walrus-patch2"
+prodv="/store/user/USERNAME/FlatTree/${ver}/"
 ...
 ```
 
