@@ -90,6 +90,8 @@ isData=0 #For MC
 config.Data.splitting = 'FileBased' #For MC
 #config.Data.splitting = 'LumiBased' #For data
 ...
+#config.Data.lumiMask = 'GRL/Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON.txt' #Comment for MC
+...
 ```
 
 
@@ -141,13 +143,31 @@ git push origin tHq2016
 
 
 ```
+cd /home-pbs/username/MyAnalysis/CMSSW_8_0_20/src/ttH/NtupleProducer/src
+```
+
+* **NtupleProducer.cxx** - modify path to JEC files for data and MC, e.g. : 
+
+```
+jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("PATH", "Total")));
+```
+
+
+```
 cd /home-pbs/username/MyAnalysis/CMSSW_8_0_20/src/ttH/NtupleProducer/test
 ```
 
 * **input.txt** - include the the Flat Tree(s) path(s), e.g. : 
 
 ```
-root://sbgse1.in2p3.fr//dpm/in2p3.fr/home/cms/phedex/store/user/kskovpen/FlatTree/Walrus-patch2-v20170615/THQ_Hincl_13TeV-madgraph-pythia8_TuneCUETP8M1/RunIISummer16MiniAODv2_PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_v1_MINIAODSIM/170615_174912/0000/output_1.root
+root://sbgse1.in2p3.fr//dpm/in2p3.fr/home/cms/phedex/store/user/XXX/output_*.root
+```
+
+
+* **input.txt** - include the the Flat Tree(s) path(s), e.g. : 
+
+```
+root://sbgse1.in2p3.fr//dpm/in2p3.fr/home/cms/phedex/store/user/XXX/output_*.root
 ```
 
 * **split_into_lists.zsh** - modify the following lines with your own proxy, username, directory :
@@ -188,6 +208,9 @@ dout_f="/opt/sbg/scratch1/cms/ntonon/ntuples_prod_walrus_patch2/"
 
 ```
 ./run.zsh
+
+//Or directly (e.g.) : 
+./NtupleProducer --file input.txt  --outfile output --tree FlatTree/tree --nmax -1 --isdata 0
 ```
 
 *Launch jobs*
