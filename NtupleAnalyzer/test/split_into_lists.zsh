@@ -7,14 +7,14 @@ dirName=${1}
 #  exit 1
 #fi
 
-fpath="/opt/sbg/scratch1/cms/xcoubez/ntuples_prod_walrus_patch1_priority/toyPriority/"
+fpath="/opt/sbg/scratch1/cms/ntonon/ntuples_prod_walrus_patch2/toyallStat/"
 
 liDATA=($(ls ${fpath} | grep "Run2016"))
 liMC=($(ls ${fpath}))
 
 nFilesDATA=2 # per job
 nFilesMC=1
-outDir="lists_ttH"
+outDir="lists_tHq"
 
 rm -rf ${outDir}
 mkdir ${outDir}

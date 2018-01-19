@@ -23,7 +23,10 @@
 
 using namespace std;
 
-TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis() 
+//FIXME -- cutflow vector -- new
+vector<double> v_cutflow(15);
+
+TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis()
 {
     _printLHCO_MC = false;
     _processLHCO_MC = -1;
@@ -32,11 +35,11 @@ TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis()
     _processLHCO_RECO = -1;
 }
 
-TTbarHiggsMultileptonAnalysis::~TTbarHiggsMultileptonAnalysis() 
+TTbarHiggsMultileptonAnalysis::~TTbarHiggsMultileptonAnalysis()
 {
     delete theHistoManager;
 
-    if (_doSystCombine) 
+    if (_doSystCombine)
     {
         delete  histoManager_2lss_mm_0tau_bl_neg;
         delete  histoManager_2lss_mm_0tau_bt_neg;
@@ -62,7 +65,7 @@ TTbarHiggsMultileptonAnalysis::~TTbarHiggsMultileptonAnalysis()
 
 TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree,
         TString sampleName, TString treeName, TString outputFileName, bool isdata, bool doSystCombine, float xsec, float lumi, int nowe, int nmax)
-{    
+{
 
     //
     _isdata = isdata;
@@ -97,14 +100,14 @@ TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileNa
     {
         std::string fnameStr = std::string(ifile);
         tree->Add(fnameStr.c_str());
-    }   
+    }
     infile.close();
     Init(tree);
 
     theHistoManager = new HistoManager();
 
     if (_doSystCombine)
-    { 
+    {
         std::cout <<"doSystCombine" << std::endl;
         histoManager_2lss_mm_0tau_bl_neg = new HistoManager();
         histoManager_2lss_mm_0tau_bt_neg = new HistoManager();
@@ -146,17 +149,17 @@ TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileNa
     }
 
     TString outputfileNameRoot = _outputFileName+".root";
-    outputfile = new TFile(outputfileNameRoot.Data(), "recreate");  
+    outputfile = new TFile(outputfileNameRoot.Data(), "recreate");
 
 }
 
-void TTbarHiggsMultileptonAnalysis::InitLHCO(int process_MC, int process_RECO) 
-{  
+void TTbarHiggsMultileptonAnalysis::InitLHCO(int process_MC, int process_RECO)
+{
     if (!_isdata)
-    {    
+    {
         _printLHCO_MC = true;
-        _processLHCO_MC = process_MC;     
-        TString fout_MC_path(_outputFileName+"_LHCO_MC.txt"); 
+        _processLHCO_MC = process_MC;
+        TString fout_MC_path(_outputFileName+"_LHCO_MC.txt");
         fout_MC.open(fout_MC_path.Data());
     }
 
@@ -167,11 +170,11 @@ void TTbarHiggsMultileptonAnalysis::InitLHCO(int process_MC, int process_RECO)
 
     fline00 = "#   typ	  eta	 phi	   pt  jmass  ntrk  btag   had/em  dummy dummy";
     del = "    ";
-    trig = "8";   
+    trig = "8";
 }
 
 void TTbarHiggsMultileptonAnalysis::createHistograms()
-{    
+{
     outputfile->cd();
     initializeOutputTree();
 
@@ -368,7 +371,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_1007",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_1008",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_1009",   "",  20,    0,   300);
-    
+
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2001",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2002",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2003",   "",  20,    0,   300);
@@ -388,7 +391,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2017",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2018",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2019",   "",  20,    0,   300);
-    
+
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2020",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2021",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2022",   "",  20,    0,   300);
@@ -399,7 +402,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2027",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2028",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2029",   "",  20,    0,   300);
-   
+
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2030",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2031",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2032",   "",  20,    0,   300);
@@ -410,7 +413,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2037",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2038",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2039",   "",  20,    0,   300);
-  
+
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2040",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2041",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2042",   "",  20,    0,   300);
@@ -421,7 +424,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2047",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2048",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2049",   "",  20,    0,   300);
-    
+
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2050",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2051",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2052",   "",  20,    0,   300);
@@ -432,7 +435,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2057",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2058",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2059",   "",  20,    0,   300);
-    
+
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2060",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2061",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2062",   "",  20,    0,   300);
@@ -443,7 +446,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2067",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2068",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2069",   "",  20,    0,   300);
-    
+
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2070",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2071",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2072",   "",  20,    0,   300);
@@ -454,7 +457,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2077",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2078",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2079",   "",  20,    0,   300);
-    
+
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2080",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2081",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2082",   "",  20,    0,   300);
@@ -465,7 +468,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2087",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2088",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2089",   "",  20,    0,   300);
-    
+
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2090",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2091",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2092",   "",  20,    0,   300);
@@ -476,11 +479,11 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2097",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2098",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2099",   "",  20,    0,   300);
-    
+
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2100",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2101",   "",  20,    0,   300);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_2102",   "",  20,    0,   300);
- 
+
     theHistoManager->addHisto("InvariantMassOfSelectedLeptons",     "finalSel",     "WZ_CR",   "",  15,    0,   600);
     theHistoManager->addHisto("SumOfSelectedLeptonsCharges",        "finalSel",     "WZ_CR",   "",  10,   -5,     5);
     theHistoManager->addHisto("SumVecPtSelectedLeptons",            "finalSel",     "WZ_CR",   "",  12,    0,   500);
@@ -488,14 +491,14 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("InvMassRemainingLepton",             "finalSel",     "WZ_CR",   "",  15,    0,   300);
     theHistoManager->addHisto("SumOfRemainingLeptonsCharges",       "finalSel",     "WZ_CR",   "",  10,   -5,     5);
     theHistoManager->addHisto("SumVecPtRemainingLeptons",           "finalSel",     "WZ_CR",   "",  25,    0,   500);
-   
+
     theHistoManager->addHisto("JetMultiplicity",                    "finalSel",     "WZ_CR_BSFUp",   "",   8,    0,     8);
     theHistoManager->addHisto("SumOfSelectedLeptonsCharges",        "finalSel",     "WZ_CR_BSFUp",   "",  10,   -5,     5);
     theHistoManager->addHisto("MET",                                "finalSel",     "WZ_CR_BSFUp",   "",  20,    0,   200);
     theHistoManager->addHisto("ZCandidateInvariantMass",            "finalSel",     "WZ_CR_BSFUp",   "",  15,   60,   120);
     theHistoManager->addHisto("ZCandidateTransverseMomentum",       "finalSel",     "WZ_CR_BSFUp",   "",  12,    0,   500);
     theHistoManager->addHisto("MTW",                                "finalSel",     "WZ_CR_BSFUp",   "",  15,    0,   300);
-    
+
     theHistoManager->addHisto("JetMultiplicity",                    "finalSel",     "WZ_CR_BSFDo",   "",   8,    0,     8);
     theHistoManager->addHisto("SumOfSelectedLeptonsCharges",        "finalSel",     "WZ_CR_BSFDo",   "",  10,   -5,     5);
     theHistoManager->addHisto("MET",                                "finalSel",     "WZ_CR_BSFDo",   "",  20,    0,   200);
@@ -510,7 +513,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("MTW_AN_Fakes",                             "finalSel",     "WZ_CR",   "",   9,   0.,   180.);
 
     theHistoManager->addHisto("MTW_Fakes",                                "finalSel",     "WZ_CR",        "",  20,    0,   300);
- 
+
 
     // WZ variables - relaxed CR
 
@@ -583,7 +586,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("Signal_3l_TT_MVA",                   "finalSel",     "ttH_3l",   "",  20,   -1,     1);
     theHistoManager->addHisto("Signal_3l_TTV_MVA",                  "finalSel",     "ttH_3l",   "",  20,   -1,     1);
 
-    // from Daniel 
+    // from Daniel
 
     theHistoManager->addHisto("nLep",         "PreSel", "", "", 10, -0.5, 9.5);
     theHistoManager->addHisto("nLep loose",   "PreSel", "", "", 10, -0.5, 9.5);
@@ -848,7 +851,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("Mll min",      "TTemu", "", "",10, 0., 200.);
     theHistoManager->addHisto("best MZ",      "TTemu", "", "",12,60., 120.);
 
-    // "Unrolled" 2D MVAs for Combine   
+    // "Unrolled" 2D MVAs for Combine
 
     if (_doSystCombine)
     {
@@ -902,7 +905,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
 
     // new b-tagging (using BTagCalibrationXStandaloneWhatever)
     // setup calibration + reader
-    // BTagCalibrationX *      
+    // BTagCalibrationX *
     calib = BTagCalibrationX("csvv2", "/opt/sbg/scratch1/cms/TTH/weight/CSVv2_Moriond17_B_H.csv");
 
     // BTagCalibrationXReader *
@@ -956,7 +959,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
 
 
 void TTbarHiggsMultileptonAnalysis::writeHistograms()
-{  
+{
     outputfile->cd();
 
     std::vector<TH1F*> the1DHisto =  theHistoManager->getHisto1D_list();
@@ -969,7 +972,7 @@ void TTbarHiggsMultileptonAnalysis::writeHistograms()
 
     //COMBINE
     if (_doSystCombine)
-    { 
+    {
         //
         outputfile->mkdir("ttH_2lss_mm_0tau_bl_neg");
         outputfile->cd("ttH_2lss_mm_0tau_bl_neg");
@@ -1038,7 +1041,7 @@ void TTbarHiggsMultileptonAnalysis::writeHistograms()
         std::vector<TH1F*> h_2lss_em_0tau_bt_pos = histoManager_2lss_em_0tau_bt_pos->getHisto1D_list();
         for(unsigned int i=0; i<h_2lss_em_0tau_bt_pos.size(); i++)  h_2lss_em_0tau_bt_pos[i]->Write();
 
-        //    
+        //
         outputfile->cd();
         outputfile->mkdir("ttH_3l_bl_neg");
         outputfile->cd("ttH_3l_bl_neg");
@@ -1105,7 +1108,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
     Long64_t nbytes = 0, nb = 0;
 
-    for (Long64_t jentry=0; jentry<nentries_max;jentry++) 
+    for (Long64_t jentry=0; jentry<nentries_max;jentry++)
     {
 
         Long64_t ientry = fChain->LoadTree(jentry);
@@ -1114,7 +1117,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         if(jentry%10000 == 0) std::cout << "number of processed events " << jentry << std::endl;
 
         if(DEBUG) std::cout << "New event ===" << std::endl;
-        
+
         //if(jentry > 100000) break;
         nb = fChain->GetEntry(jentry);   nbytes += nb;
 
@@ -1130,6 +1133,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         if ( !_isdata )
         {
             weight = _lumi*_xsec/_nowe;
+
             mc_weight = vEvent->at(0).mc_weight();
             //weight_PV = _h_PV->GetBinContent(pvn);
             weight = weight * mc_weight; //*weight_PV;
@@ -1141,29 +1145,30 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
             weights_pdf = vEvent->at(0).pdf_weights();
             ids_pdf = vEvent->at(0).pdf_ids();
-	    
-	    if (weights_pdf.size()<110) std::cout << "problem with size of PDF weights " << weights_pdf.size()<< std::endl;
+
+            //FIXME -- commented this line
+	    // if (weights_pdf.size()<110) std::cout << "problem with size of PDF weights " << weights_pdf.size()<< std::endl;
 
         /*
         for(unsigned int i=0; i < weights_pdf.size() ; i++)
         {
             std::cout << weights_pdf.at(i) << " " <<ids_pdf.at(i) << std::endl;
-        }   
+        }
         */
 
         }
-        else 
+        else
         {
             weight    = 1.;
             mc_weight = 1.;
-            weight_PV = 1.; 
+            weight_PV = 1.;
 
             //
             bool TRIGm   = vEvent->at(0).is_TRIGm()  ;
             bool TRIGe   = vEvent->at(0).is_TRIGe()  ;
-            bool TRIGmTk = vEvent->at(0).is_TRIGmTk(); 
+            bool TRIGmTk = vEvent->at(0).is_TRIGmTk();
             bool TRIGee  = vEvent->at(0).is_TRIGee() ;
-            bool TRIGmm  = vEvent->at(0).is_TRIGmm() ; 
+            bool TRIGmm  = vEvent->at(0).is_TRIGmm() ;
             bool TRIGme  = vEvent->at(0).is_TRIGme() ;
             bool TRIGem  = vEvent->at(0).is_TRIGem() ;
             bool TRIGmmTk= vEvent->at(0).is_TRIGmmTk();
@@ -1196,24 +1201,24 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             if(is_trigger)
             {
                 weight *= 1;
-                //std::cout << " EM: " << EM 
-                //          << " MM: " << MM 
+                //std::cout << " EM: " << EM
+                //          << " MM: " << MM
                 //          << " EE: " << EE
                 //          << " M:  " << M
                 //          << " E:  " << E                    << std::endl;
                 //std::cout << " sampleName: " << _sampleName   << std::endl;
-                //std::cout << " weight:     " << weight       << std::endl; 
+                //std::cout << " weight:     " << weight       << std::endl;
             }
             else
             {
                 weight *= 0;
-                //std::cout << " EM: " << EM 
-                //          << " MM: " << MM  
+                //std::cout << " EM: " << EM
+                //          << " MM: " << MM
                 //          << " EE: " << EE
                 //          << " M:  " << M
                 //          << " E:  " << E                    << std::endl;
                 //std::cout << " sampleName: " << _sampleName   << std::endl;
-                //std::cout << " weight:     " << weight       << std::endl;  
+                //std::cout << " weight:     " << weight       << std::endl;
             }
         }
 
@@ -1226,7 +1231,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // # |_|_| |_|_|\__|_|\__,_|_|_|___/\__,_|\__|_|\___/|_| |_| #
         // #                                                         #
         // ###########################################################
-        
+
         vLeptons.clear();
         vSelectedMuons.clear();
         vSelectedElectrons.clear();
@@ -1235,13 +1240,13 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         vFakeMuons.clear();
         vFakeElectrons.clear();
         vInclusiveFakeLeptons.clear();
-        vFakeLeptons.clear();	
+        vFakeLeptons.clear();
         vSelectedNonBTagJets.clear();
         vSelectedBTagJets.clear();
         vSelectedMediumBTagJets.clear();
         vSelectedJets.clear();
         vSelectedTaus.clear();
-        
+
         weightfake = 0;
         weightflip = 0;
 
@@ -1252,9 +1257,10 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         is_2lss_LepMVA_SB   = false;
         is_emu_TT_CR        = false;
 
+        is_3l_THQ_SR        = false;
         is_3l_TTH_SR        = false;
         is_3l_AppFakes_SR   = false;
-        is_3l_WZ_CR         = false; 
+        is_3l_WZ_CR         = false;
         is_3l_WZrel_CR      = false;
         is_3l_TTZ_CR        = false;
 
@@ -1298,7 +1304,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // #####################################
 
         for(unsigned int imuon=0; imuon < vMuon->size() ; imuon++)
-        {   
+        {
             Lepton l; l.setLepton(&vMuon->at(imuon),imuon,0,1);
 
             if ( vMuon->at(imuon).isFakeableTTH() )
@@ -1308,13 +1314,13 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             }
 
 
-            //if (vMuon->at(imuon).isLooseTTH()) 
+            //if (vMuon->at(imuon).isLooseTTH())
                 vLeptons.push_back(l);
 
             theHistoManager->fillHisto("MuonPt",        "noSel",    "noChannel",   "",  vMuon->at(imuon).pt(),      weight);
             theHistoManager->fillHisto("MuonEta",       "noSel",    "noChannel",   "",  vMuon->at(imuon).eta(),     weight);
             theHistoManager->fillHisto("MuonMVA",       "noSel",    "noChannel",   "",  vMuon->at(imuon).lepMVA(),  weight);
-        }     
+        }
 
         if(DEBUG) std::cout << "New electrons" << std::endl;
 
@@ -1328,7 +1334,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // ##############################################
 
         for(unsigned int ielectron=0; ielectron < vElectron->size() ; ielectron++)
-        {   
+        {
             Lepton l; l.setLepton(&vElectron->at(ielectron),ielectron,1,0);
 
             if ( vElectron->at(ielectron).isFakeableTTH() )
@@ -1337,13 +1343,13 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                 if(vElectron->at(ielectron).isTightTTH()) n_tight = n_tight + 1;
             }
 
-            //if (vElectron->at(ielectron).isLooseTTH()) 
+            //if (vElectron->at(ielectron).isLooseTTH())
                 vLeptons.push_back(l);
 
             theHistoManager->fillHisto("ElectronPt",    "noSel",    "noChannel",    "", vElectron->at(ielectron).pt(),      weight);
             theHistoManager->fillHisto("ElectronEta",   "noSel",    "noChannel",    "", vElectron->at(ielectron).eta(),     weight);
             theHistoManager->fillHisto("ElectronMVA",   "noSel",    "noChannel",    "", vElectron->at(ielectron).lepMVA(),  weight);
-        }  
+        }
 
         if(DEBUG) std::cout << "New taus" << std::endl;
 
@@ -1354,14 +1360,14 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // # | || (_| | |_| \__ \ #
         // #  \__\__,_|\__,_|___/ #
         // #                      #
-        // ########################            
+        // ########################
 
         for(unsigned int itau=0; itau < vTau->size() ; itau++)
         {
             Lepton l; l.setLepton(&vTau->at(itau),itau,0,0);
 
             if( vTau->at(itau).isTightTTH() )
-            {    
+            {
                 vSelectedTaus.push_back(vTau->at(itau));
             }
 
@@ -1387,9 +1393,9 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         if ( vLeptons.size() >= 2) {
             for (unsigned int ilep = 0; ilep<vLeptons.size()-1; ilep++) {
                 if ( vLeptons.at(ilep).pt() < vLeptons.at(ilep+1).pt() ) {
-                    std::cout << "Run Event " << vEvent->at(0).run() <<  " " << vEvent->at(0).lumi() << " " << vEvent->at(0).id() 
-                        << " nlep/tight/fake " << vLeptons.size() <<  "/" << vSelectedLeptons.size() <<  "/" <<  vFakeLeptons.size() << std::endl; 
-                    std::cout << "  all pt[" << ilep << "]: " << vLeptons.at(ilep).pt() 
+                    std::cout << "Run Event " << vEvent->at(0).run() <<  " " << vEvent->at(0).lumi() << " " << vEvent->at(0).id()
+                        << " nlep/tight/fake " << vLeptons.size() <<  "/" << vSelectedLeptons.size() <<  "/" <<  vFakeLeptons.size() << std::endl;
+                    std::cout << "  all pt[" << ilep << "]: " << vLeptons.at(ilep).pt()
                         << " pt[" << ilep+1 << "]: " << vLeptons.at(ilep+1).pt() << std::endl;
                 }
             }
@@ -1398,9 +1404,9 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         if ( vSelectedLeptons.size() >= 2) {
             for (unsigned int ilep = 0; ilep<vSelectedLeptons.size()-1; ilep++) {
                 if ( vSelectedLeptons.at(ilep).pt() < vSelectedLeptons.at(ilep+1).pt() ) {
-                    std::cout << "Run Event " << vEvent->at(0).run() <<  " " << vEvent->at(0).lumi() << " " << vEvent->at(0).id() 
-                        << " nlep/tight/fake " << vLeptons.size() <<  "/" << vSelectedLeptons.size() <<  "/" <<  vFakeLeptons.size() << std::endl; 
-                    std::cout << "tight pt[" << ilep << "]: " << vSelectedLeptons.at(ilep).pt() 
+                    std::cout << "Run Event " << vEvent->at(0).run() <<  " " << vEvent->at(0).lumi() << " " << vEvent->at(0).id()
+                        << " nlep/tight/fake " << vLeptons.size() <<  "/" << vSelectedLeptons.size() <<  "/" <<  vFakeLeptons.size() << std::endl;
+                    std::cout << "tight pt[" << ilep << "]: " << vSelectedLeptons.at(ilep).pt()
                         << " pt[" << ilep+1 << "]: " << vSelectedLeptons.at(ilep+1).pt() << std::endl;
                 }
             }
@@ -1435,11 +1441,11 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 */
 
 //NEW -- added eta cut for bjets
-	    if( vJet->at(ijet).CSVv2() > 0.5426 && vJet->at(ijet).eta() <= 2.4 ) nLooseBJets++;
+            if( vJet->at(ijet).CSVv2() > 0.5426 && vJet->at(ijet).eta() <= 2.4 ) nLooseBJets++;
             if( vJet->at(ijet).CSVv2() > 0.8484 && vJet->at(ijet).eta() <= 2.4  ) nMediumBJets++;
 
             if(vJet->at(ijet).CSVv2() >= 0.5426 && vJet->at(ijet).eta() <= 2.4 ) vSelectedBTagJets.push_back(vJet->at(ijet));
-            else if( vJet->at(ijet).eta() <= 2.4)                                vSelectedNonBTagJets.push_back(vJet->at(ijet));
+            else                               vSelectedNonBTagJets.push_back(vJet->at(ijet));
             if(vJet->at(ijet).CSVv2() >= 0.8484 && vJet->at(ijet).eta() <= 2.4 ) vSelectedMediumBTagJets.push_back(vJet->at(ijet));
 //---------
 
@@ -1451,7 +1457,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         }
 
         theHistoManager->fillHisto("MET",           "noSel",    "noChannel",    "", vEvent->at(0).metpt(), weight );
-        
+
         theHistoManager->fillHisto("CutFlow",       "noSel",    "noChannel",    "", 1, 1);
 
         if( DEBUG) std::cout << "New truth" << std::endl;
@@ -1467,7 +1473,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         //std::cout << "Event..." << std::endl;
         //std::cout << "WW: " << cat_HtoWW << " ZZ: " << cat_HtoZZ << " tau tau: " << cat_Htott << std::endl;
-            
+
         if ( !_isdata )
         {
             for(unsigned int itruth = 0; itruth < vTruth->at(0).mc_truth_label().size() ; itruth++)
@@ -1475,15 +1481,15 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
                 //std::cout << vTruth->at(0).mc_truth_label().at(itruth) << std::endl;
                 if( vTruth->at(0).mc_truth_label().at(itruth) == 12 )
-                {   cat_HtoWW = true; 
+                {   cat_HtoWW = true;
                     //std::cout << "H to WW" << std::endl;
                 }
                 else if( vTruth->at(0).mc_truth_label().at(itruth) == 14 )
-                {   cat_HtoZZ = true; 
+                {   cat_HtoZZ = true;
                     //std::cout << "H to ZZ" << std::endl;
                 }
                 else if( vTruth->at(0).mc_truth_label().at(itruth) == 16 )
-                {   cat_Htott = true; 
+                {   cat_Htott = true;
                     //std::cout << "H to tau tau" << std::endl;
                 }
 
@@ -1493,7 +1499,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                 //std::cout << " eta: "      << vTruth->at(0).mc_truth_eta().at(itruth)    ; //<< std::endl;
                 //std::cout << " phi: "      << vTruth->at(0).mc_truth_phi().at(itruth)    ; //<< std::endl;
                 //std::cout << " E:   "      << vTruth->at(0).mc_truth_E().at(itruth)      << std::endl;
-            
+
             }
         }
 
@@ -1515,7 +1521,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         MT_met_lep1     = 0. ;
         LepGood_conePt0 = 0. ;
         LepGood_conePt1 = 0. ;
-        mhtJet25_Recl   = 0. ;  
+        mhtJet25_Recl   = 0. ;
 
         if( DEBUG ) std::cout << "Going through selections" << std::endl;
 
@@ -1535,7 +1541,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         //TwoLeptonsSameSignSelection_JetMultiplicity_sideband(jentry);
         //TwoLeptonsSameSignSelection_TTbar(jentry);
 
-        ThreeLeptonSelection_TTH3l(jentry);
+        ThreeLeptonSelection_THQ3l(jentry);
+        //ThreeLeptonSelection_TTH3l(jentry);
         //ThreeLeptonSelection_ApplicationFakes(jentry);
         //ThreeLeptonSelection_CR_WZ(jentry);
         //ThreeLeptonSelection_CR_WZ_ApplicationFakes(jentry);
@@ -1544,7 +1551,8 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         //ThreeLeptonSelection_CR_Zl(jentry);
 
         //if ( is_2lss_TTH_SR || is_3l_TTH_SR )                                     fillOutputTree();
-        if ( is_2lss_TTH_SR || is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR )   fillOutputTree();
+        // if ( is_2lss_TTH_SR || is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR )   fillOutputTree();
+        if ( is_3l_THQ_SR )   fillOutputTree();
 
         // #####################################################################################################
         // #                             .__                        .__                __   .__                #
@@ -1594,7 +1602,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                       <<       "  [mm ss SR]:  " << (is_2lss_TTH_SR         && abs(cat_mm)          )
                       <<       "  [mm ss FR]:  " << (is_2lss_AppFakes_SR    && abs(cat_mm_2lss_FR)  )
                       <<       "  [3l    SR]:  " << (is_3l_TTH_SR                                   )
-                      <<       "  [3l    FR]:  " << (is_3l_AppFakes_SR                              )                     
+                      <<       "  [3l    FR]:  " << (is_3l_AppFakes_SR                              )
                       << std::endl;
 
             std::cout << "==== Leptons ==== " << std::endl;
@@ -1607,7 +1615,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                                             << "  isE  "        << vSelectedLeptons.at(i).isElectron()
                                             << "  isM  "        << vSelectedLeptons.at(i).isMuon()
                                             << "  istight  "    << vSelectedLeptons.at(i).isTightTTH()
-                                            << "  lepMVA   "    << vSelectedLeptons.at(i).lepMVA_TTH()     
+                                            << "  lepMVA   "    << vSelectedLeptons.at(i).lepMVA_TTH()
                                             << std::endl;
             }
 
@@ -1807,7 +1815,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         {
             std::cout << vEvent->at(0).id()     << " "
                       //<< weight_FR_3l           << " "
-                      << weightfake             << " " 
+                      << weightfake             << " "
                       << max_Lep_eta            << " "
                       << MT_met_lep1            << " "
                       << nJet25_Recl            << " "
@@ -1916,13 +1924,13 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         int lepid2 = -1, lepid3 = -1;
         if ( nlepsel >= 2 ) {
-            if ( abs(vSelectedLeptons.at(0).id()) == 11 
+            if ( abs(vSelectedLeptons.at(0).id()) == 11
                     && abs(vSelectedLeptons.at(1).id()) == 11 ) lepid2 = 0; // ee
-            if ( abs(vSelectedLeptons.at(0).id()) == 11 
+            if ( abs(vSelectedLeptons.at(0).id()) == 11
                     && abs(vSelectedLeptons.at(1).id()) == 13 ) lepid2 = 1; // emu
-            if ( abs(vSelectedLeptons.at(0).id()) == 13 
+            if ( abs(vSelectedLeptons.at(0).id()) == 13
                     && abs(vSelectedLeptons.at(1).id()) == 11 ) lepid2 = 1;
-            if ( abs(vSelectedLeptons.at(0).id()) == 13 
+            if ( abs(vSelectedLeptons.at(0).id()) == 13
                     && abs(vSelectedLeptons.at(1).id()) == 13 ) lepid2 = 2; // mumu
         }
         if ( nlepsel >= 3 ) {
@@ -1949,14 +1957,14 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         float lep1_mtw = -1., lep1_dr_min = 100., lep2_dr_min = 100., lep_eta_max = -1.;
 
         if (   vSelectedLeptons.size()     >= 2
-                && vSelectedLeptons.at(0).pt() >  20 
-                && vSelectedLeptons.at(1).pt() >  10 ) 
+                && vSelectedLeptons.at(0).pt() >  20
+                && vSelectedLeptons.at(1).pt() >  10 )
         {
             lep_eta_max = fabs(vSelectedLeptons.at(0).eta());
 
             if ( fabs(vSelectedLeptons.at(1).eta()) > lep_eta_max ) lep_eta_max = fabs(vSelectedLeptons.at(1).eta());
 
-            for (int ijet=0; ijet < vJet->size() ; ijet++) 
+            for (int ijet=0; ijet < vJet->size() ; ijet++)
             {
                 dr = GetDeltaR( vSelectedLeptons.at(0).eta(), vSelectedLeptons.at(0).phi(), vJet->at(ijet).eta(), vJet->at(ijet).phi() );
                 if ( dr < lep1_dr_min ) lep1_dr_min = dr;
@@ -1966,13 +1974,13 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             }
 
             lep1_mtw = sqrt( 2 * vSelectedLeptons.at(0).p4().Pt() * MET * (1 - cos( vSelectedLeptons.at(0).phi() - METphi )));
-        }	   
+        }
 
-        int njj = 0; 
+        int njj = 0;
         float jet_dr_av = 0.;
-        for (int ijet=0; ijet < vJet->size()-1 ; ijet++) 
+        for (int ijet=0; ijet < vJet->size()-1 ; ijet++)
         {
-            for (int kjet=ijet+1; kjet < vJet->size() ; kjet++) 
+            for (int kjet=ijet+1; kjet < vJet->size() ; kjet++)
             {
                 jet_dr_av += GetDeltaR( vJet->at(ijet).eta(), vJet->at(ijet).phi(), vJet->at(kjet).eta(), vJet->at(kjet).phi() );
                 njj++;
@@ -1996,11 +2004,11 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         if ( is_3l_TTH_SR ) {
 
             if ( _isdata ) {
-                std::cout << "Run Event " << vEvent->at(0).run() <<  " " << vEvent->at(0).lumi() << " " << vEvent->at(0).id() 
-                    << " nlep/tight/fake " << vLeptons.size() <<  "/" << vSelectedLeptons.size() <<  "/" <<  vFakeLeptons.size() 
-                    << " njet/loose/medium " << vSelectedJets.size() 
+                std::cout << "Run Event " << vEvent->at(0).run() <<  " " << vEvent->at(0).lumi() << " " << vEvent->at(0).id()
+                    << " nlep/tight/fake " << vLeptons.size() <<  "/" << vSelectedLeptons.size() <<  "/" <<  vFakeLeptons.size()
+                    << " njet/loose/medium " << vSelectedJets.size()
                     <<  "/" << nLooseBJets <<  "/" << nMediumBJets << std::endl;
-                std::cout << "lep id " << lepid3 << " pT " << vSelectedLeptons.at(0).pt() <<  " " 
+                std::cout << "lep id " << lepid3 << " pT " << vSelectedLeptons.at(0).pt() <<  " "
                     << vSelectedLeptons.at(1).pt() <<  " "
                     << vSelectedLeptons.at(2).pt() <<  " " << std::endl;
                 std::cout << " " << std::endl;
@@ -2064,7 +2072,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                         float mz = ( vSelectedLeptons.at(i).p4() + vSelectedLeptons.at(j).p4() ).M();
                         if ( fabs(mz - 91.188) < 10. ) {
                             if ( i == 0 && j == 1 ) lepw = 2;
-                            if ( i == 0 && j == 2 ) lepw = 1;    
+                            if ( i == 0 && j == 2 ) lepw = 1;
                             if ( i == 1 && j == 2 ) lepw = 0;
                             zpt = ( vSelectedLeptons.at(i).p4() + vSelectedLeptons.at(j).p4() ).Pt();
                         }
@@ -2128,7 +2136,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
                         float mz = ( vLeptons.at(i).p4() + vLeptons.at(j).p4() ).M();
                         if ( fabs(mz - 91.188) < 10. ) {
                             if ( i == 0 && j == 1 ) lepw = 2;
-                            if ( i == 0 && j == 2 ) lepw = 1;    
+                            if ( i == 0 && j == 2 ) lepw = 1;
                             if ( i == 1 && j == 2 ) lepw = 0;
                             zpt = ( vLeptons.at(i).p4() + vLeptons.at(j).p4() ).Pt();
                         }
@@ -2284,6 +2292,12 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
     }
 
+    for(int i=0; i<v_cutflow.size(); i++)
+    {
+        cout<<"v_cutflow "<<i<<" = "<<v_cutflow[i]<<endl;
+    }
+
+
 }
 
 // ##############################################################################
@@ -2354,7 +2368,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
         {
             if ( fabs( ( vLeptons.at(i).p4() + vLeptons.at(j).p4() ).M() ) < 12 )
             { pass_invariantemasscut = false ;}
-            //std::cout << std::endl << "lep[" << i << "] and lep[" << j << "]: " << fabs( ( vLeptons.at(i).p4() + vLeptons.at(j).p4() ).M() ) << " " << std::endl; 
+            //std::cout << std::endl << "lep[" << i << "] and lep[" << j << "]: " << fabs( ( vLeptons.at(i).p4() + vLeptons.at(j).p4() ).M() ) << " " << std::endl;
         }
     }
     if(!pass_invariantemasscut) return;
@@ -2460,7 +2474,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
     theHistoManager->fillHisto("WeightCSV_max", "finalSel", "ttH2l",    "",     max_weight_csv, 1);
 
     weight_csv_down = min_weight_csv;
-    weight_csv_up   = max_weight_csv;    
+    weight_csv_up   = max_weight_csv;
 
     // ##################################################################################################################################
 
@@ -2470,7 +2484,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
       && (met_ld > 0.2)                      )
     {
         if(DEBUG) std::cout << "ee + Zveto + metld Ok... SELECTED";
-        
+
         if(vSelectedTaus.size() == 0)
         {
             cat_ee = vSelectedLeptons.at(0).charge();
@@ -2495,7 +2509,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
         {
             cat_2ltau = vSelectedLeptons.at(0).charge();
             stat_2lss_SR_tau = stat_2lss_SR_tau + 1;
-        }   
+        }
     }
 
     if( abs(vSelectedLeptons.at(0).id()) != abs(vSelectedLeptons.at(1).id()) )
@@ -2525,7 +2539,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
         if(vSelectedTaus.size() > 0)
         {
             cat_2ltau = vSelectedLeptons.at(0).charge();
-            stat_2lss_SR_tau = stat_2lss_SR_tau + 1;            
+            stat_2lss_SR_tau = stat_2lss_SR_tau + 1;
         }
     }
 
@@ -2578,7 +2592,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
     // variables against ttbar
     max_Lep_eta     = std::max( fabs(vSelectedLeptons.at(0).eta()), fabs(vSelectedLeptons.at(1).eta()) ) ;
 
-    nJet25_Recl = vSelectedJets.size() ;     
+    nJet25_Recl = vSelectedJets.size() ;
 
     mindr_lep1_jet = 1000.;
     mindr_lep2_jet = 1000.;
@@ -2596,9 +2610,9 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
 
     int njj     = 0 ;
     avg_dr_jet  = 0.;
-    for (int ijet=0; ijet < vSelectedJets.size()-1 ; ijet++) 
+    for (int ijet=0; ijet < vSelectedJets.size()-1 ; ijet++)
     {
-        for (int kjet=ijet+1; kjet < vSelectedJets.size() ; kjet++) 
+        for (int kjet=ijet+1; kjet < vSelectedJets.size() ; kjet++)
         {
             avg_dr_jet += GetDeltaR( vSelectedJets.at(ijet).eta(), vSelectedJets.at(ijet).phi(), vSelectedJets.at(kjet).eta(), vSelectedJets.at(kjet).phi() );
             njj++;
@@ -2607,7 +2621,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
     if ( njj > 0 ) avg_dr_jet = avg_dr_jet / njj;
 
     MT_met_lep1     = sqrt( 2. * vSelectedLeptons.at(0).pt() * vEvent->at(0).metpt() * (1 - cos( vSelectedLeptons.at(0).phi() - vEvent->at(0).metphi() )) );
-    
+
     signal_2lss_TT_MVA  = mva_2lss_tt->EvaluateMVA("BDTG method");
 
     theHistoManager->fillHisto("Signal_2lss_TT_MVA",                       "finalSel", "ttH2lss",   "",  signal_2lss_TT_MVA,   weight);
@@ -2640,7 +2654,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
 
     // variable implementation based on https://github.com/cms-ttH/ttH-13TeVMultiLeptons/blob/master/TemplateMakers/test/eventReconstructor_factorized.h#L48-L58
 
-    
+
     // Fill variables
 
     // if (is2bTight)
@@ -2815,7 +2829,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFakes
         if(DEBUG) std::cout << "ee + Zveto + metld Ok... SELECTED";
 
         weightfake = get_FR_wgt_2l(leptonsPts, leptonsEtas, leptonsIds);
-        //std::cout << "Fake 2lss weight: " << weightfake << std::endl; 
+        //std::cout << "Fake 2lss weight: " << weightfake << std::endl;
 
         if(vSelectedTaus.size() == 0)
         {
@@ -3149,7 +3163,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFlips
     theHistoManager->fillHisto("WeightCSV_max",  "",   "ttH2l",   "", max_weight_csv, 1);
 
     weight_csv_down = min_weight_csv;
-    weight_csv_up   = max_weight_csv;    
+    weight_csv_up   = max_weight_csv;
 
     // ##################################################################################################################################
 
@@ -3338,7 +3352,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
             { pass_invariantemasscut = false ;}
         }
     }
-    if(!pass_invariantemasscut) return;    
+    if(!pass_invariantemasscut) return;
 
     if(DEBUG) std::cout << "invariantmasscut Ok... ";
 
@@ -3470,8 +3484,8 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
         weights_csv.push_back(wgt_csv_def_sys);
     }
 
-    double min_weight_csv = *min_element(weights_csv.begin(),weights_csv.end()); 
-    double max_weight_csv = *max_element(weights_csv.begin(),weights_csv.end()); 
+    double min_weight_csv = *min_element(weights_csv.begin(),weights_csv.end());
+    double max_weight_csv = *max_element(weights_csv.begin(),weights_csv.end());
     theHistoManager->fillHisto("WeightCSV_min",  "",   "ttH2l",   "", min_weight_csv, 1);
     theHistoManager->fillHisto("WeightCSV_max",  "",   "ttH2l",   "", max_weight_csv, 1);
 
@@ -3566,6 +3580,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
     //std::cout << " signal 3l   TT MVA: "  << signal_3l_TT_MVA
     //          << " signal 3l   TTV MVA: " << signal_3l_TTV_MVA << std::endl;
 
+
     // ======================================================================================================
 
     if( DEBUG ) std::cout << "Signal 3l TTV MVA ok" << std::endl;
@@ -3574,6 +3589,400 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
 
     if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
 }
+
+
+
+
+
+
+
+/*
+████████ ██   ██  ██████  ██████  ██
+   ██    ██   ██ ██    ██      ██ ██
+   ██    ███████ ██    ██  █████  ██
+   ██    ██   ██ ██ ▄▄ ██      ██ ██
+   ██    ██   ██  ██████  ██████  ███████
+                     ▀▀
+*/
+
+
+//NEW -------------------------------------------
+void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_THQ3l(int evt)
+{
+	v_cutflow[0]++;
+
+    if(weight==0)         return; // For data not passing the relevant trigger, clean up the histograms from events with weight 0)
+    //if(vSelectedTaus.size()>0) return;
+
+    v_cutflow[1]++;
+
+
+    // ####################
+    // # Common selection #
+    // ####################
+
+    if(DEBUG)             std::cout << std::endl << " 3l ss SR ==================================================================" << std::endl;
+
+    bool nLep               = ( vSelectedLeptons.size()     >= 3 );
+    if(!nLep)               return;
+
+    v_cutflow[2]++;
+
+
+    if(DEBUG) std::cout << "nLep Ok... ";
+
+    bool nTight             = ( n_tight                     == 3 ); //CHANGED
+    if(!nTight)             return;
+
+    bool are_fullytight     =  ( vSelectedLeptons.at(0).isTightTTH()        && vSelectedLeptons.at(1).isTightTTH()      && vSelectedLeptons.at(2).isTightTTH()
+                              //&& vSelectedLeptons.at(0).passTightCharge()   && vSelectedLeptons.at(1).passTightCharge() && vSelectedLeptons.at(2).passTightCharge()
+                              && vSelectedLeptons.at(0).cutEventSel()       && vSelectedLeptons.at(1).cutEventSel()     && vSelectedLeptons.at(2).cutEventSel()
+                              && vSelectedLeptons.at(0).noLostHits()        && vSelectedLeptons.at(1).noLostHits()      && vSelectedLeptons.at(2).noLostHits()      );
+    // if(!are_fullytight)     return; //CHANGED
+    if(DEBUG) std::cout << "nTight Ok... ";
+
+
+    v_cutflow[3]++;
+
+
+    bool leading_lep_pt     = ( vSelectedLeptons.at(0).pt() > 25 );
+    if(!leading_lep_pt)     return;
+
+    if(DEBUG) std::cout << "leading_lep_pt Ok... ";
+
+    bool following_lep_pt   = ( (vSelectedLeptons.at(1).pt() > 15) && (vSelectedLeptons.at(2).pt() > 15) );
+    if(!following_lep_pt)   return;
+
+
+    if(DEBUG) std::cout << "following_lep_pt Ok... ";
+
+    bool nJets              = ( vSelectedJets.size()        >= 2 );
+    if(!nJets)              return;
+
+    v_cutflow[4]++;
+
+
+    if(DEBUG) std::cout << "nJets Ok... ";
+
+    // bool nLooseBtag         = ( nLooseBJets                 >= 2 );
+    if(nJets == nLooseBJets) {return;} //Need at least 1 jet not passing CSV loose //CHANGED
+
+    v_cutflow[5]++;
+
+
+    bool nMediumBtag        = ( nMediumBJets                >= 1 );
+    if(!nMediumBtag)      return; //CHANGED
+
+    v_cutflow[6]++;
+
+
+    if(DEBUG) std::cout << "Btag Ok... ";
+
+    // Adding invariant mass cut on loose leptons pairs
+    bool pass_invariantemasscut = true;
+    for(int i=0; i<vLeptons.size()-1; i++)
+    {
+        for(int j=i+1; j<vLeptons.size(); j++)
+        {
+            if ( fabs( ( vLeptons.at(i).p4() + vLeptons.at(j).p4() ).M() ) < 12 )
+            { pass_invariantemasscut = false ;}
+        }
+    }
+    if(!pass_invariantemasscut) return;
+
+    v_cutflow[7]++;
+
+    if(DEBUG) std::cout << "invariantmasscut Ok... ";
+
+    // ##########
+    // # Z veto #
+    // ##########
+
+    bool pass_Zveto = true;
+    for(int i=0; i<vSelectedLeptons.size()-1; i++)
+    {
+        for(int j=i+1; j<vSelectedLeptons.size(); j++)
+        {
+            if (  ( vSelectedLeptons.at(i).id()     == -vSelectedLeptons.at(j).id()                             )
+               && ( vSelectedLeptons.at(i).charge() == -vSelectedLeptons.at(j).charge()                         )
+                    && ( fabs( ( vSelectedLeptons.at(i).p4() + vSelectedLeptons.at(j).p4() ).M() - 91.188) < 15 ) )
+            { pass_Zveto = false ;} //CHANGED //15 GeV window
+        }
+    }
+    if(!pass_Zveto)       return;
+
+    v_cutflow[8]++;
+
+    theHistoManager->fillHisto("CutFlow",                "finalSel",   "ttH_3l",   "",   2, weight);
+
+    if(DEBUG) std::cout << "Zveto Ok... ";
+
+    // ##########
+    // # MET LD #
+    // ##########
+
+    float jet_px = 0, jet_py = 0, lepton_px = 0, lepton_py = 0, tau_px = 0, tau_py = 0, MHT = 0, met_ld = 0;
+
+    TLorentzVector jetp4;
+    for(int i=0; i<vSelectedJets.size(); i++)
+    {
+        jetp4.SetPtEtaPhiE(vSelectedJets.at(i).pt(), vSelectedJets.at(i).eta(), vSelectedJets.at(i).phi(), vSelectedJets.at(i).E());
+        jet_px = jet_px + jetp4.Px();
+        jet_py = jet_py + jetp4.Py();
+    }
+
+    for(int i=0; i<vSelectedLeptons.size(); i++)
+    {
+        lepton_px = lepton_px + vSelectedLeptons.at(i).p4().Px();
+        lepton_py = lepton_py + vSelectedLeptons.at(i).p4().Py();
+    }
+
+    TLorentzVector taup4;
+    for(int i=0; i<vSelectedTaus.size(); i++)
+    {
+        taup4.SetPtEtaPhiE(vSelectedTaus.at(i).pt(), vSelectedTaus.at(i).eta(), vSelectedTaus.at(i).phi(), vSelectedTaus.at(i).E());
+        tau_px = tau_px + taup4.Px();
+        tau_py = tau_py + taup4.Py();
+    }
+
+    MHT = sqrt( (jet_px + lepton_px + tau_px) * (jet_px + lepton_px + tau_px) + (jet_py + lepton_py + tau_py) * (jet_py + lepton_py + tau_py) );
+
+    met_ld = 0.00397 * vEvent->at(0).metpt() + 0.00265 * MHT;
+
+    if( met_ld               > 0.2 )  theHistoManager->fillHisto("CutFlow",                "finalSel",   "ttH_3l", _sampleName.Data(),   3, weight);
+    if( vSelectedJets.size() >= 4  )  theHistoManager->fillHisto("CutFlow",                "finalSel",   "ttH_3l", _sampleName.Data(),   4, weight);
+
+    if(DEBUG) std::cout << " MHT =  " << MHT << "MET = " << vEvent->at(0).metpt() << " met_ld = " << met_ld ;
+
+    // ########
+    // # SFOS #
+    // ########
+
+    bool isSFOS = false;
+    for(int i=0; i<vSelectedLeptons.size(); i++)
+    {
+        for(int j=0; j<vSelectedLeptons.size(); j++)
+        {
+            if (  ( i                           != j                            )
+                    && ( vSelectedLeptons.at(i).id() == -vSelectedLeptons.at(j).id() ) )
+            { isSFOS = true ;}
+        }
+    }
+
+    if( met_ld               > 0.3 ) theHistoManager->fillHisto("CutFlow",                "finalSel",   "ttH_3l",   "",   6, weight);
+    if( isSFOS                     ) theHistoManager->fillHisto("CutFlow",                "finalSel",   "ttH_3l",   "",   7, weight);
+
+    if(DEBUG) std::cout << std::endl << "nJets: " << vSelectedJets.size() << " met_ld: " << met_ld << " isSFOS " << isSFOS << std::endl;
+
+    // if(vSelectedJets.size() < 4 && (met_ld < (0.2 + 0.1 * isSFOS)) ) return; //CHANGED
+
+    if(DEBUG) std::cout << "nJets and met_ld Ok... ";
+
+    int sum_charges_3l = 0;
+    for(int i=0; i<3; i++)
+    {
+        sum_charges_3l = sum_charges_3l + vSelectedLeptons.at(i).charge();
+    }
+    if( fabs(sum_charges_3l) != 1 ) return;
+
+    v_cutflow[9]++;
+
+    if(DEBUG) std::cout << "sumOfCharges Ok... ";
+
+    // #################################
+    // # b-tagging nominal reweighting #
+    // #################################
+
+    std::vector<double> jetPts;
+    std::vector<double> jetEtas;
+    std::vector<double> jetCSVs;
+    std::vector<int>    jetFlavors;
+    int iSys = 0;
+    double wgt_csv, wgt_csv_def, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf, new_weight;
+
+    for(int i=0; i<vSelectedJets.size(); i++)
+    {
+        jetPts.push_back(     vSelectedJets.at(i).pt()                );
+        jetEtas.push_back(    vSelectedJets.at(i).eta()               );
+        jetCSVs.push_back(    vSelectedJets.at(i).CSVv2()             );
+        jetFlavors.push_back( vSelectedJets.at(i).jet_hadronFlavour() );
+    }
+
+    wgt_csv_def = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, iSys, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf);
+    new_weight = weight * wgt_csv_def; // weight = weight * wgt_csv_def;
+
+    // ##################################################################################################################################
+
+    // ##################################
+    // # b-tagging deriving systematics #
+    // ##################################
+
+    std::vector<double> weights_csv;
+    double wgt_csv_def_sys = 0;
+
+    for(int i=7; i<25; i++)
+    {
+        wgt_csv_def_sys = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, i, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf)/wgt_csv_def;
+        weights_csv.push_back(wgt_csv_def_sys);
+    }
+
+    double min_weight_csv = *min_element(weights_csv.begin(),weights_csv.end());
+    double max_weight_csv = *max_element(weights_csv.begin(),weights_csv.end());
+    theHistoManager->fillHisto("WeightCSV_min",  "",   "ttH2l",   "", min_weight_csv, 1);
+    theHistoManager->fillHisto("WeightCSV_max",  "",   "ttH2l",   "", max_weight_csv, 1);
+
+    weight_csv_down = min_weight_csv;
+    weight_csv_up   = max_weight_csv;
+
+    // ##################################################################################################################################
+
+    stat_3l_SR  = stat_3l_SR + 1;
+    cat_3l      = sum_charges_3l;
+    // is_3l_TTH_SR = true;
+    is_3l_THQ_SR = true;
+
+    theHistoManager->fillHisto("CutFlow",                          "finalSel",   "ttH_3l",   "", 8                              , weight);
+
+    theHistoManager->fillHisto("LeadingLeptonPt",                  "finalSel",   "ttH_3l",   "", vSelectedLeptons.at(0).pt()    , weight);
+    theHistoManager->fillHisto("SubLeadingLeptonPt",               "finalSel",   "ttH_3l",   "", vSelectedLeptons.at(1).pt()    , weight);
+    theHistoManager->fillHisto("ThirdLeptonPt",                    "finalSel",   "ttH_3l",   "", vSelectedLeptons.at(2).pt()    , weight);
+    theHistoManager->fillHisto("MET",                              "finalSel",   "ttH_3l",   "", vEvent->at(0).metpt()          , weight);
+    theHistoManager->fillHisto("MHT",                              "finalSel",   "ttH_3l",   "", MHT                            , weight);
+    theHistoManager->fillHisto("MetLD",                            "finalSel",   "ttH_3l",   "", met_ld                         , weight);
+    theHistoManager->fillHisto("TauMultiplicity",                  "finalSel",   "ttH_3l",   "", vSelectedTaus.size()           , weight);
+    theHistoManager->fillHisto("JetMultiplicity",                  "finalSel",   "ttH_3l",   "", vSelectedJets.size()           , weight);
+    theHistoManager->fillHisto("LooseBJetMultiplicity",            "finalSel",   "ttH_3l",   "", vSelectedBTagJets.size()       , weight);
+    theHistoManager->fillHisto("MediumBJetMultiplicity",           "finalSel",   "ttH_3l",   "", vSelectedMediumBTagJets.size() , weight);
+    theHistoManager->fillHisto("SumOfThreeLeptonsCharges",         "finalSel",   "ttH_3l",   "", sum_charges_3l                 , weight);
+    theHistoManager->fillHisto("NumberOfSelectedLeptons",          "finalSel",   "ttH_3l",   "", vSelectedLeptons.size()        , weight);
+
+    if(DEBUG) std::cout << "Ok... SELECTED" << std::endl;
+
+    // ####################################
+    // #  ____  ____    ____  ____ _____  #
+    // # |___ \|  _ \  | __ )|  _ \_   _| #
+    // #   __) | | | | |  _ \| | | || |   #
+    // #  / __/| |_| | | |_) | |_| || |   #
+    // # |_____|____/  |____/|____/ |_|   #
+    // #                                  #
+    // ####################################
+
+    // based on https://github.com/CERN-PH-CMG/cmgtools-lite/blob/0b47d4d1c50ea0e24ef0d9cf1c24c763e78c1bf0/TTHAnalysis/python/tools/kinMVA_2D_2lss_3l.py
+
+    // ======================================================================================================
+    // variables against ttbar
+
+    max_Lep_eta     = std::max( fabs(vSelectedLeptons.at(0).eta()), fabs(vSelectedLeptons.at(1).eta()) ) ;
+
+    MT_met_lep1     = sqrt( 2 * vSelectedLeptons.at(0).pt() * vEvent->at(0).metpt() * (1 - cos( vSelectedLeptons.at(0).phi() - vEvent->at(0).metphi() )));
+
+    nJet25_Recl     = vSelectedJets.size() ;
+    mhtJet25_Recl   = sqrt( (jet_px*jet_px) + (jet_py*jet_py) );
+
+    int njj = 0;
+    avg_dr_jet = 0.;
+    for (int ijet=0; ijet < vSelectedJets.size()-1 ; ijet++)
+    {
+        for (int kjet=ijet+1; kjet < vSelectedJets.size() ; kjet++)
+        {
+            avg_dr_jet += GetDeltaR( vSelectedJets.at(ijet).eta(), vSelectedJets.at(ijet).phi(), vSelectedJets.at(kjet).eta(), vSelectedJets.at(kjet).phi() );
+            njj++;
+        }
+    }
+    if ( njj > 0 ) avg_dr_jet = avg_dr_jet / njj;
+
+    mindr_lep1_jet = 1000.;
+    mindr_lep2_jet = 1000.;
+
+    for (int i=0; i<vSelectedJets.size(); i++)
+    {
+        if( DeltaRLeptonJet( vSelectedLeptons.at(0), vSelectedJets.at(i) ) < mindr_lep1_jet )
+        { mindr_lep1_jet = DeltaRLeptonJet( vSelectedLeptons.at(0), vSelectedJets.at(i) ); }
+        if( DeltaRLeptonJet( vSelectedLeptons.at(2), vSelectedJets.at(i) ) < mindr_lep2_jet )
+        { mindr_lep2_jet = DeltaRLeptonJet( vSelectedLeptons.at(2), vSelectedJets.at(i) ); }
+    }
+
+    signal_3l_TT_MVA    = mva_3l_tt->EvaluateMVA("BDTG method");
+
+    theHistoManager->fillHisto("Signal_3l_TT_MVA",                         "finalSel",   "ttH_3l",   "",  signal_3l_TT_MVA,   weight);
+
+    if( DEBUG ) std::cout << "Signal 3l TT MVA ok" << std::endl;
+
+    // ======================================================================================================
+    // variables against ttV
+
+    met             = vEvent->at(0).metpt() ;
+
+    LepGood_conePt0 = vSelectedLeptons.at(0).pt() ;
+    LepGood_conePt1 = vSelectedLeptons.at(2).pt() ;
+
+    signal_3l_TTV_MVA   = mva_3l_ttV->EvaluateMVA("BDTG method");
+
+    theHistoManager->fillHisto("Signal_3l_TTV_MVA",                        "finalSel",   "ttH_3l",   "",  signal_3l_TTV_MVA,  weight);
+
+    //std::cout << " signal 3l   TT MVA: "  << signal_3l_TT_MVA
+    //          << " signal 3l   TTV MVA: " << signal_3l_TTV_MVA << std::endl;
+
+    // ======================================================================================================
+    //variables from tHq2016
+    //NEW
+    double nJet25;
+    double MaxEtaJet25;
+    double totCharge;
+    double nJetEta1 ;
+    double detaFwdJetBJet;
+    double detaFwdJet2BJet;
+    double detaFwdJetClosestLep;
+    double dphiHighestPtSPPair;
+    double minDRll;
+    double Lep3Pt;
+
+    nJet25 = nJet25_Recl;
+
+    double tmp = -999;
+    for(int ijet=0; ijet<vSelectedNonBTagJets.size(); ijet++)
+    {
+        if(fabs(vSelectedNonBTagJets.at(ijet).eta()) > tmp) {tmp = fabs(vSelectedNonBTagJets.at(ijet).eta());}
+    }
+    MaxEtaJet25 = tmp;
+
+    totCharge = vSelectedLeptons.at(0).charge() + vSelectedLeptons.at(1).charge() + vSelectedLeptons.at(2).charge();
+
+    // tmp = 0;
+    // for(int ijet=0; ijet<vSelectedNonBTagJets.size(); ijet++)
+    // {
+    //     if(fabs(vSelectedNonBTagJets.at(ijet).eta) > 1) tmp++;
+    // }
+    // nJetEta1 = tmp;
+
+
+    tmp = 0;
+    // detaFwdJetBJet
+
+
+
+
+    signal_3l_TTV_MVA   = mva_3l_ttV->EvaluateMVA("BDTG method");
+
+    // theHistoManager->fillHisto("Signal_3l_TTV_MVA",                        "finalSel",   "ttH_3l",   "",  signal_3l_TTV_MVA,  weight);
+
+
+
+    // ======================================================================================================
+
+    if( DEBUG ) std::cout << "Signal 3l TTV MVA ok" << std::endl;
+
+    fillOutputTree();
+
+    if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
+}
+
+
+
+
+
+
+
 
 void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_ApplicationFakes(int evt)
 {
@@ -3765,8 +4174,8 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_ApplicationFakes(int ev
         weights_csv.push_back(wgt_csv_def_sys);
     }
 
-    double min_weight_csv = *min_element(weights_csv.begin(),weights_csv.end()); 
-    double max_weight_csv = *max_element(weights_csv.begin(),weights_csv.end()); 
+    double min_weight_csv = *min_element(weights_csv.begin(),weights_csv.end());
+    double max_weight_csv = *max_element(weights_csv.begin(),weights_csv.end());
     theHistoManager->fillHisto("WeightCSV_min",  "",   "ttH2l",   "", min_weight_csv, 1);
     theHistoManager->fillHisto("WeightCSV_max",  "",   "ttH2l",   "", max_weight_csv, 1);
 
@@ -3996,7 +4405,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_LepMVA_sideband(
     if(  (abs(vInclusiveFakeLeptons.at(0).id()) == 11)
             && (abs(vInclusiveFakeLeptons.at(1).id()) == 11)
             && (pass_Zveto                            )
-            && (met_ld                           > 0.2) // remaining conditions for ee       
+            && (met_ld                           > 0.2) // remaining conditions for ee
       )
     {
         theHistoManager->fillHisto("CutFlow",                          "finalSel",   "LepMVA_2l_SB",   "", 8                              , weight);
@@ -4015,7 +4424,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_LepMVA_sideband(
 
     if(  ( (abs(vInclusiveFakeLeptons.at(0).id()) == 11) && (abs(vInclusiveFakeLeptons.at(1).id()) == 13) )
             || ( (abs(vInclusiveFakeLeptons.at(0).id()) == 13) && (abs(vInclusiveFakeLeptons.at(1).id()) == 11) ) // smarter way to do is probably exists
-            && true                                      // remaining conditions for ee       
+            && true                                      // remaining conditions for ee
       )
     {
         theHistoManager->fillHisto("CutFlow",                          "finalSel",   "LepMVA_2l_SB",   "", 8                              , weight);
@@ -4033,7 +4442,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_LepMVA_sideband(
 
     if(  (abs(vInclusiveFakeLeptons.at(0).id()) == 13)
             && (abs(vInclusiveFakeLeptons.at(1).id()) == 13)
-            && true                                      // remaining conditions for ee       
+            && true                                      // remaining conditions for ee
       )
     {
         theHistoManager->fillHisto("CutFlow",                          "finalSel",   "LepMVA_2l_SB",   "", 8                              , weight);
@@ -4050,7 +4459,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_LepMVA_sideband(
         theHistoManager->fillHisto("NumberOfSelectedLeptons",          "finalSel",   "LepMVA_2l_SB",   "", vInclusiveFakeLeptons.size()        , weight);
     }
 
-    is_2lss_LepMVA_SB = true;   
+    is_2lss_LepMVA_SB = true;
 
     //fillOutputTree();
 
@@ -4143,7 +4552,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_JetMultiplicity_
     if(  (abs(vSelectedLeptons.at(0).id()) == 11)
             && (abs(vSelectedLeptons.at(1).id()) == 11)
             && (pass_Zveto                            )
-            && (met_ld                           > 0.2) // remaining conditions for ee       
+            && (met_ld                           > 0.2) // remaining conditions for ee
       )
     {
         theHistoManager->fillHisto("CutFlow",                          "finalSel",   "JM_2l_SB",   "", 8                              , weight);
@@ -4162,7 +4571,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_JetMultiplicity_
 
     if(  ( (abs(vSelectedLeptons.at(0).id()) == 11) && (abs(vSelectedLeptons.at(1).id()) == 13) )
             || ( (abs(vSelectedLeptons.at(0).id()) == 13) && (abs(vSelectedLeptons.at(1).id()) == 11) ) // smarter way to do is probably exists
-            && true                                      // remaining conditions for ee       
+            && true                                      // remaining conditions for ee
       )
     {
         theHistoManager->fillHisto("CutFlow",                          "finalSel",   "JM_2l_SB",   "", 8                              , weight);
@@ -4181,7 +4590,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_JetMultiplicity_
 
     if(  (abs(vSelectedLeptons.at(0).id()) == 13)
             && (abs(vSelectedLeptons.at(1).id()) == 13)
-            && true                                      // remaining conditions for ee       
+            && true                                      // remaining conditions for ee
       )
     {
         theHistoManager->fillHisto("CutFlow",                          "finalSel",   "JM_2l_SB",   "", 8                              , weight);
@@ -4198,7 +4607,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_JetMultiplicity_
         theHistoManager->fillHisto("NumberOfSelectedLeptons",          "finalSel",   "JM_2l_SB",   "", vSelectedLeptons.size()        , weight);
     }
 
-    is_2lss_JM_SB = true;   
+    is_2lss_JM_SB = true;
 
     //fillOutputTree();
 
@@ -4285,7 +4694,7 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTbar(int evt) /
         theHistoManager->fillHisto("NumberOfSelectedLeptons",          "finalSel",   "TT_2l_CR",   "", vSelectedLeptons.size()        , weight);
     }
 
-    is_emu_TT_CR = true;   
+    is_emu_TT_CR = true;
 
     //fillOutputTree();
 
@@ -4349,7 +4758,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
             { pass_invariantemasscut = false ;}
         }
     }
-    if(!pass_invariantemasscut) return;    
+    if(!pass_invariantemasscut) return;
 
     if(DEBUG) std::cout << "invariantmasscut Ok... ";
 
@@ -4378,9 +4787,9 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     }
     if(!pass_Zpeak)       return;
 
-    // 
+    //
     if( ( (Lep1Z == 0) && (Lep2Z == 1) ) || ( (Lep1Z == 1) && (Lep2Z == 0) ) ) LepW = 2;
-    if( ( (Lep1Z == 0) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 0) ) ) LepW = 1;    
+    if( ( (Lep1Z == 0) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 0) ) ) LepW = 1;
     if( ( (Lep1Z == 1) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 1) ) ) LepW = 0;
     //AC considering cases with 4 leptons, taking lepW w/ highest pT
     if( ( (Lep1Z == 0) && (Lep2Z == 3) ) || ( (Lep1Z == 3) && (Lep2Z == 0) ) ) LepW = 1;
@@ -4464,7 +4873,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     if( fabs(sum_charges_3l) != 1 ) return;
 
     if(DEBUG) std::cout << "sumOfCharges Ok... ";
-    
+
     // ##################################################################################################################################
 
     // ###########################
@@ -4477,17 +4886,17 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     std::vector<int>    jetFlavors;
     int iSys = 0;
     double wgt_csv, wgt_csv_def, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf, new_weight;
-    
-    zero_btagSF    = 1.;        
-    zero_btagSF_up = 1.;        
-    zero_btagSF_do = 1.;        
+
+    zero_btagSF    = 1.;
+    zero_btagSF_up = 1.;
+    zero_btagSF_do = 1.;
 
     if(!_isdata)
     {
         for(int i=0; i<vSelectedJets.size(); i++)
         {
-            //std::cout   << "pt: "       << vSelectedJets.at(i).pt() 
-            //            << " eta: "     << vSelectedJets.at(i).eta() 
+            //std::cout   << "pt: "       << vSelectedJets.at(i).pt()
+            //            << " eta: "     << vSelectedJets.at(i).eta()
             //            << " flavor: "  << vSelectedJets.at(i).jet_hadronFlavour() << std::endl;
 
             float  pt_test              = vSelectedJets.at(i).pt();
@@ -4502,7 +4911,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
                 btag_eff = get_eff_btagging( pt_test, eta_test, 5);
                 jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_B,     eta_test,   pt_test );
                 jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_B,     eta_test,   pt_test );
-                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_B,     eta_test,   pt_test );  
+                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_B,     eta_test,   pt_test );
             }
 
             if ( vSelectedJets.at(i).jet_hadronFlavour() == 4 )
@@ -4510,7 +4919,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
                 btag_eff = get_eff_btagging( pt_test, eta_test, 4);
                 jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_C,     eta_test,   pt_test );
                 jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_C,     eta_test,   pt_test );
-                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_C,     eta_test,   pt_test );  
+                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_C,     eta_test,   pt_test );
             }
 
             if ( vSelectedJets.at(i).jet_hadronFlavour() == 0 )
@@ -4518,7 +4927,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
                 btag_eff = get_eff_btagging( pt_test, eta_test, 0);
                 jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );
                 jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );
-                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );  
+                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );
             }
 
             zero_btagSF    *= ( 1. - (btag_eff * jet_scalefactor) );
@@ -4533,7 +4942,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     }
 
     // weight *= zero_btagSF;
-     
+
     //wgt_csv_def = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, iSys, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf);
     //new_weight = weight * wgt_csv_def; // weight = weight * wgt_csv_def;
 
@@ -4590,7 +4999,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     rem_lep_invmass = rem_lep_invmass_p4.M();
     rem_lep_sumofpt = sqrt( (rem_lep_px*rem_lep_px) + (rem_lep_py*rem_lep_py) );
 
-   
+
     // ##################################################################################################################################
 
     theHistoManager->fillHisto("ZCandidateInvariantMass",        "finalSel", "WZ_CR",   "",   ZM                    , weight*zero_btagSF);
@@ -4604,7 +5013,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto("MetLD_AN",                       "finalSel", "WZ_CR",   "",   met_ld                , weight);
     theHistoManager->fillHisto("MinMll_AN",                      "finalSel", "WZ_CR",   "",   minMll                , weight);
     theHistoManager->fillHisto("MTW_AN",                         "finalSel", "WZ_CR",   "",   MTW                   , weight);
-   
+
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR",   "",   MTW                   , weight);
     if(weights_pdf.size()> 110)
     {
@@ -4616,7 +5025,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1007",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(6));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1008",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(7));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_1009",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(8));
-    
+
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2001",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(9));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2002",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(10));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2003",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(11));
@@ -4629,7 +5038,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2010",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(18));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2011",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(19));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2012",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(20));
-   
+
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2013",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(21));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2014",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(22));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2015",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(23));
@@ -4640,7 +5049,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2020",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(28));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2021",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(29));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2022",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(30));
-  
+
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2023",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(31));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2024",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(32));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2025",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(33));
@@ -4651,7 +5060,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2030",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(38));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2031",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(39));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2032",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(40));
-    
+
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2033",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(41));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2034",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(42));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2035",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(43));
@@ -4662,7 +5071,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2040",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(48));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2041",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(49));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2042",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(50));
-    
+
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2043",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(51));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2044",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(52));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2045",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(53));
@@ -4673,7 +5082,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2050",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(58));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2051",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(59));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2052",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(60));
-    
+
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2053",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(61));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2054",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(62));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2055",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(63));
@@ -4684,7 +5093,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2060",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(68));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2061",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(69));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2062",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(70));
-   
+
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2063",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(71));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2064",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(72));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2065",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(73));
@@ -4695,7 +5104,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2070",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(78));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2071",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(79));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2072",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(80));
-   
+
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2073",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(81));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2074",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(82));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2075",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(83));
@@ -4706,7 +5115,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2080",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(88));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2081",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(89));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2082",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(90));
-    
+
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2083",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(91));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2084",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(92));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2085",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(93));
@@ -4717,7 +5126,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2090",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(98));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2091",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(99));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2092",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(100));
-  
+
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2093",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(101));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2094",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(102));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2095",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(103));
@@ -4729,7 +5138,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2101",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(109));
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_2102",   "",   MTW              , weight*zero_btagSF*weights_pdf.at(110));
     }
-    
+
     theHistoManager->fillHisto("InvariantMassOfSelectedLeptons", "finalSel", "WZ_CR",   "",   all_lep_invmass       , weight*zero_btagSF);
     theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "finalSel", "WZ_CR",   "",   all_lep_sumofcharges  , weight*zero_btagSF);
     theHistoManager->fillHisto("SumVecPtSelectedLeptons",        "finalSel", "WZ_CR",   "",   all_lep_sumofpt       , weight*zero_btagSF);
@@ -4741,19 +5150,19 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
     theHistoManager->fillHisto2D("InvMassLastLeptonVSZMass",     "finalSel", "WZ_CR",   "",   rem_lep_invmass,    ZM, weight*zero_btagSF);
     theHistoManager->fillHisto2D("SumPtLepVSZMass",              "finalSel", "WZ_CR",   "",   rem_lep_sumofpt,    ZM, weight*zero_btagSF);
     theHistoManager->fillHisto2D("METLDVSZMass",                 "finalSel", "WZ_CR",   "",   met_ld,             ZM, weight*zero_btagSF);
-    
+
     theHistoManager->fillHisto("JetMultiplicity",                "finalSel", "WZ_CR_BSFUp",   "",   vSelectedJets.size()  , weight*zero_btagSF_up);
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_BSFUp",   "",   MTW                   , weight*zero_btagSF_up);
     theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "finalSel", "WZ_CR_BSFUp",   "",   all_lep_sumofcharges  , weight*zero_btagSF_up);
     theHistoManager->fillHisto("ZCandidateInvariantMass",        "finalSel", "WZ_CR_BSFUp",   "",   ZM                    , weight*zero_btagSF_up);
     theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "finalSel", "WZ_CR_BSFUp",   "",   Zpt                   , weight*zero_btagSF_up);
-    
+
     theHistoManager->fillHisto("JetMultiplicity",                "finalSel", "WZ_CR_BSFDo",   "",   vSelectedJets.size()  , weight*zero_btagSF_do);
     theHistoManager->fillHisto("MTW",                            "finalSel", "WZ_CR_BSFDo",   "",   MTW                   , weight*zero_btagSF_do);
     theHistoManager->fillHisto("SumOfSelectedLeptonsCharges",    "finalSel", "WZ_CR_BSFDo",   "",   all_lep_sumofcharges  , weight*zero_btagSF_do);
     theHistoManager->fillHisto("ZCandidateInvariantMass",        "finalSel", "WZ_CR_BSFDo",   "",   ZM                    , weight*zero_btagSF_do);
     theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "finalSel", "WZ_CR_BSFDo",   "",   Zpt                   , weight*zero_btagSF_do);
- 
+
    //std::cout << "LepW "<< LepW <<std::endl;
    //std::cout << "vSelectedLeptons.size() " <<vSelectedLeptons.size() << std::endl;
    //std::cout << "phi " << vSelectedLeptons.at(LepW).phi() <<" "<< vEvent->at(0).metphi()<< std::endl;
@@ -4820,7 +5229,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ_ApplicationFakes(
             { pass_invariantemasscut = false ;}
         }
     }
-    if(!pass_invariantemasscut) return;    
+    if(!pass_invariantemasscut) return;
 
     if(DEBUG) std::cout << "invariantmasscut Ok... ";
 
@@ -4849,9 +5258,9 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ_ApplicationFakes(
     }
     if(!pass_Zpeak)       return;
 
-    // 
+    //
     if( ( (Lep1Z == 0) && (Lep2Z == 1) ) || ( (Lep1Z == 1) && (Lep2Z == 0) ) ) LepW = 2;
-    if( ( (Lep1Z == 0) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 0) ) ) LepW = 1;    
+    if( ( (Lep1Z == 0) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 0) ) ) LepW = 1;
     if( ( (Lep1Z == 1) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 1) ) ) LepW = 0;
     //AC considering cases with 4 leptons, taking lepW w/ highest pT
     if( ( (Lep1Z == 0) && (Lep2Z == 3) ) || ( (Lep1Z == 3) && (Lep2Z == 0) ) ) LepW = 1;
@@ -4935,7 +5344,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ_ApplicationFakes(
     if( fabs(sum_charges_3l) != 1 ) return;
 
     if(DEBUG) std::cout << "sumOfCharges Ok... ";
-    
+
     // ##################################################################################################################################
 
     // ###########################
@@ -4948,17 +5357,17 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ_ApplicationFakes(
     std::vector<int>    jetFlavors;
     int iSys = 0;
     double wgt_csv, wgt_csv_def, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf, new_weight;
-    
-    zero_btagSF    = 1.;        
-    zero_btagSF_up = 1.;        
-    zero_btagSF_do = 1.;        
+
+    zero_btagSF    = 1.;
+    zero_btagSF_up = 1.;
+    zero_btagSF_do = 1.;
 
     if(!_isdata)
     {
         for(int i=0; i<vSelectedJets.size(); i++)
         {
-            //std::cout   << "pt: "       << vSelectedJets.at(i).pt() 
-            //            << " eta: "     << vSelectedJets.at(i).eta() 
+            //std::cout   << "pt: "       << vSelectedJets.at(i).pt()
+            //            << " eta: "     << vSelectedJets.at(i).eta()
             //            << " flavor: "  << vSelectedJets.at(i).jet_hadronFlavour() << std::endl;
 
             float  pt_test              = vSelectedJets.at(i).pt();
@@ -4973,7 +5382,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ_ApplicationFakes(
                 btag_eff = get_eff_btagging( pt_test, eta_test, 5);
                 jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_B,     eta_test,   pt_test );
                 jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_B,     eta_test,   pt_test );
-                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_B,     eta_test,   pt_test );  
+                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_B,     eta_test,   pt_test );
             }
 
             if ( vSelectedJets.at(i).jet_hadronFlavour() == 4 )
@@ -4981,7 +5390,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ_ApplicationFakes(
                 btag_eff = get_eff_btagging( pt_test, eta_test, 4);
                 jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_C,     eta_test,   pt_test );
                 jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_C,     eta_test,   pt_test );
-                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_C,     eta_test,   pt_test );  
+                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_C,     eta_test,   pt_test );
             }
 
             if ( vSelectedJets.at(i).jet_hadronFlavour() == 0 )
@@ -4989,7 +5398,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ_ApplicationFakes(
                 btag_eff = get_eff_btagging( pt_test, eta_test, 0);
                 jet_scalefactor      = reader.eval_auto_bounds(  "central",  BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );
                 jet_scalefactor_up   = reader.eval_auto_bounds(  "up",       BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );
-                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );  
+                jet_scalefactor_do   = reader.eval_auto_bounds(  "down",     BTagEntryX::FLAV_UDSG,     eta_test,   pt_test );
             }
 
             zero_btagSF    *= ( 1. - (btag_eff * jet_scalefactor) );
@@ -5004,7 +5413,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ_ApplicationFakes(
     }
 
     // weight *= zero_btagSF;
-     
+
     //wgt_csv_def = get_csv_wgt(jetPts, jetEtas, jetCSVs, jetFlavors, iSys, wgt_csv_hf, wgt_csv_lf, wgt_csv_cf);
     //new_weight = weight * wgt_csv_def; // weight = weight * wgt_csv_def;
 
@@ -5094,9 +5503,9 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ_ApplicationFakes(
     theHistoManager->fillHisto("MetLD_AN_Fakes",                       "finalSel", "WZ_CR",   "",   met_ld                , weight);
     theHistoManager->fillHisto("MinMll_AN_Fakes",                      "finalSel", "WZ_CR",   "",   minMll                , weight);
     theHistoManager->fillHisto("MTW_AN_Fakes",                         "finalSel", "WZ_CR",   "",   MTW                   , weight);
-   
+
     theHistoManager->fillHisto("MTW_Fakes",                            "finalSel", "WZ_CR",   "",   MTW                   , weight);
-    
+
     is_3l_WZ_CR = true;
 }
 
@@ -5153,7 +5562,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZrelaxed(int evt)
             { pass_invariantemasscut = false ;}
         }
     }
-    if(!pass_invariantemasscut) return;    
+    if(!pass_invariantemasscut) return;
 
     if(DEBUG) std::cout << "invariantmasscut Ok... ";
 
@@ -5182,9 +5591,9 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZrelaxed(int evt)
     }
     if(!pass_Zpeak)       return;
 
-    // 
+    //
     if( ( (Lep1Z == 0) && (Lep2Z == 1) ) || ( (Lep1Z == 1) && (Lep2Z == 0) ) ) LepW = 2;
-    if( ( (Lep1Z == 0) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 0) ) ) LepW = 1;    
+    if( ( (Lep1Z == 0) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 0) ) ) LepW = 1;
     if( ( (Lep1Z == 1) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 1) ) ) LepW = 0;
     //AC considering cases with 4 leptons, taking lepW w/ highest pT
     if( ( (Lep1Z == 0) && (Lep2Z == 3) ) || ( (Lep1Z == 3) && (Lep2Z == 0) ) ) LepW = 1;
@@ -5398,7 +5807,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
             { pass_invariantemasscut = false ;}
         }
     }
-    if(!pass_invariantemasscut) return;    
+    if(!pass_invariantemasscut) return;
 
     if(DEBUG) std::cout << "invariantmasscut Ok... ";
 
@@ -5427,9 +5836,9 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
     }
     if(!pass_Zpeak)       return;
 
-    // 
+    //
     if( ( (Lep1Z == 0) && (Lep2Z == 1) ) || ( (Lep1Z == 1) && (Lep2Z == 0) ) ) LepW = 2;
-    if( ( (Lep1Z == 0) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 0) ) ) LepW = 1;    
+    if( ( (Lep1Z == 0) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 0) ) ) LepW = 1;
     if( ( (Lep1Z == 1) && (Lep2Z == 2) ) || ( (Lep1Z == 2) && (Lep2Z == 1) ) ) LepW = 0;
     //AC considering cases with 4 leptons, taking lepW w/ highest pT
     if( ( (Lep1Z == 0) && (Lep2Z == 3) ) || ( (Lep1Z == 3) && (Lep2Z == 0) ) ) LepW = 1;
@@ -5568,7 +5977,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTZ(int evt)
     rem_lep_sumofpt = sqrt( (rem_lep_px*rem_lep_px) + (rem_lep_py*rem_lep_py) );
 
     theHistoManager->fillHisto("LeadingLeptonPt",                "finalSel", "TTZ_CR",   "",   vSelectedLeptons.at(0).pt()   , weight);
-    theHistoManager->fillHisto("SubLeadingLeptonPt",             "finalSel", "TTZ_CR",   "",   vSelectedLeptons.at(1).pt()   , weight);    
+    theHistoManager->fillHisto("SubLeadingLeptonPt",             "finalSel", "TTZ_CR",   "",   vSelectedLeptons.at(1).pt()   , weight);
 
     theHistoManager->fillHisto("ZCandidateInvariantMass",        "finalSel", "TTZ_CR",   "",   ZM                    , weight);
     theHistoManager->fillHisto("ZCandidateTransverseMomentum",   "finalSel", "TTZ_CR",   "",   Zpt                   , weight);
@@ -5608,44 +6017,44 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_Zl(int evt)
 
 }
 
-bool TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l_MC() 
-{ 
+bool TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l_MC()
+{
     bool sel_MC = true;
 
-    //Check decays 
+    //Check decays
     if (!((vTruth->at(0).ttbar_decay()==1 && vTruth->at(0).boson_decay()==0) || //ttH
                 (vTruth->at(0).ttbar_decay()==2 && vTruth->at(0).boson_decay()==1) || //ttH
                 (vTruth->at(0).ttbar_decay()==1 && vTruth->at(0).boson_decay()==2) || //tt semi-lep, ttZ
                 (vTruth->at(0).ttbar_decay()==2 && vTruth->at(0).boson_decay()==3)    //tt di-lep, ttW
-         )) 
-    { 
-        sel_MC = false; 
+         ))
+    {
+        sel_MC = false;
         return sel_MC;}
 
-        // 
-        if (vTruth->at(0).JetsHighestPt_phi().size()<2 || vTruth->at(0).JetsClosestMw_phi().size()<2 || vTruth->at(0).JetsLowestMjj_phi().size()<2) 
-        { 
-            sel_MC = false; 
+        //
+        if (vTruth->at(0).JetsHighestPt_phi().size()<2 || vTruth->at(0).JetsClosestMw_phi().size()<2 || vTruth->at(0).JetsLowestMjj_phi().size()<2)
+        {
+            sel_MC = false;
             return sel_MC;}
 
-            //pt, eta of leptons	
-            if (!(vTruth->at(0).Leptons_pt().at(0)> 10 && 
+            //pt, eta of leptons
+            if (!(vTruth->at(0).Leptons_pt().at(0)> 10 &&
                         vTruth->at(0).Leptons_pt().at(1)> 10 &&
-                        vTruth->at(0).Leptons_pt().at(2)> 10   )) sel_MC = false; 
+                        vTruth->at(0).Leptons_pt().at(2)> 10   )) sel_MC = false;
 
 
-            if (!(fabs(vTruth->at(0).Leptons_eta().at(0)) <2.5 && 
+            if (!(fabs(vTruth->at(0).Leptons_eta().at(0)) <2.5 &&
                         fabs(vTruth->at(0).Leptons_eta().at(1)) <2.5 &&
-                        fabs(vTruth->at(0).Leptons_eta().at(2)) <2.5   )) sel_MC = false; 
+                        fabs(vTruth->at(0).Leptons_eta().at(2)) <2.5   )) sel_MC = false;
 
 
             //lead. lepton
-            if (!(vTruth->at(0).Leptons_pt().at(0) > 20 || 
+            if (!(vTruth->at(0).Leptons_pt().at(0) > 20 ||
                         vTruth->at(0).Leptons_pt().at(1) > 20 ||
-                        vTruth->at(0).Leptons_pt().at(2) > 20  )) sel_MC = false; 
+                        vTruth->at(0).Leptons_pt().at(2) > 20  )) sel_MC = false;
 
 
-            //SFOS && M(ll) not in 81-101 ??? 
+            //SFOS && M(ll) not in 81-101 ???
             int SFOSpair = -1;
             if ((vTruth->at(0).Leptons_id().at(0)==-vTruth->at(0).Leptons_id().at(1))) SFOSpair = 0;
             if ((vTruth->at(0).Leptons_id().at(1)==-vTruth->at(0).Leptons_id().at(2))) SFOSpair = 1;
@@ -5662,8 +6071,8 @@ bool TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l_MC()
 
             if ( !(( Lep1+Lep2 ).M()  > 12 && ( Lep1+Lep3 ).M()  > 12 && ( Lep2+Lep3 ).M()  > 12 )) sel_MC = false;
 
-            if ( (SFOSpair == 0 && fabs( (Lep1+Lep2 ).M()-91.188 ) < 10. ) || 
-                    (SFOSpair == 1 && fabs( (Lep2+Lep3 ).M()-91.188 ) < 10. ) ||  
+            if ( (SFOSpair == 0 && fabs( (Lep1+Lep2 ).M()-91.188 ) < 10. ) ||
+                    (SFOSpair == 1 && fabs( (Lep2+Lep3 ).M()-91.188 ) < 10. ) ||
                     (SFOSpair == 2 && fabs( (Lep1+Lep3 ).M()-91.188 ) < 10. )    ) sel_MC = false;
 
             return sel_MC;
@@ -5680,7 +6089,7 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("weight",&weight,"weight/F");
     tOutput->Branch("weightfake",&weightfake,"weightfake/F");
     tOutput->Branch("weightflip",&weightflip,"weightflip/F");
-    tOutput->Branch("mc_weight",&mc_weight,"mc_weight/F"); 
+    tOutput->Branch("mc_weight",&mc_weight,"mc_weight/F");
     tOutput->Branch("weight_scale_muF0p5",&weight_scale_muF0p5,"weight_scale_muF0p5/F");
     tOutput->Branch("weight_scale_muF2",&weight_scale_muF2,"weight_scale_muF2/F");
     tOutput->Branch("weight_scale_muR0p5",&weight_scale_muR0p5,"weight_scale_muR0p5/F");
@@ -5704,11 +6113,12 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
 
     tOutput->Branch("is_2lss_TTH_SR",&is_2lss_TTH_SR,"is_2lss_TTH_SR/B");
     tOutput->Branch("is_3l_TTH_SR",&is_3l_TTH_SR,"is_3l_TTH_SR/B");
+    tOutput->Branch("is_3l_THQ_SR",&is_3l_THQ_SR,"is_3l_THQ_SR/B"); //NEW
 
     tOutput->Branch("is_emu_TT_CR",&is_emu_TT_CR,"is_emu_TT_CR/B");
     tOutput->Branch("is_3l_WZrel_CR",&is_3l_WZrel_CR,"is_3l_WZrel_CR/B");
     tOutput->Branch("is_3l_TTZ_CR",&is_3l_TTZ_CR,"is_3l_TTZ_CR/B");
-     
+
     tOutput->Branch("is_2bTight",&is_2bTight,"is_2bTight/I");
     tOutput->Branch("is_2bTight_float",&is_2bTight_float,"is_2bTight_float/F");
 
@@ -5895,7 +6305,7 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("multilepton_JetLowestMjj2_2ndPair_JER_Down",&multilepton_JetLowestMjj2_2ndPair_JER_Down,"multilepton_JetLowestMjj2_2ndPair_JER_Down/F");
 
     // Test adding truth information
-    
+
     tOutput->Branch("multilepton_h0_Id",                    &multilepton_h0_Id,                 "multilepton_h0_Id/I");
     tOutput->Branch("multilepton_h0_P4",                    "TLorentzVector",                   &multilepton_h0_P4);
     tOutput->Branch("multilepton_h0_Label",                    &multilepton_h0_Label,                 "multilepton_h0_Label/I");
@@ -5905,7 +6315,7 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("multilepton_t2_Id",                    &multilepton_t2_Id,                 "multilepton_t2_Id/I");
     tOutput->Branch("multilepton_t2_P4",                    "TLorentzVector",                   &multilepton_t2_P4);
     tOutput->Branch("multilepton_t2_Label",                    &multilepton_t2_Label,                 "multilepton_h0_Label/I");
- 
+
     // End test adding truth information
 
     tOutput->Branch("multilepton_mET","TLorentzVector",&multilepton_mET);
@@ -5934,14 +6344,14 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
         }
     }
     if ((is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR) && vSelectedLeptons.size()>=4 && tot_charge==0 && (tot_id==0 || abs(tot_id)==2)) is4l = true;
-    else if ( ((is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR) && vSelectedLeptons.size()==3)
-            || ((is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR) && vSelectedLeptons.size()>=4) ) 
-        is3l = true;
+    else if ( ((is_3l_THQ_SR || is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR) && vSelectedLeptons.size()==3)
+            || ((is_3l_THQ_SR || is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR) && vSelectedLeptons.size()>=4) )
+        is3l = true; //CHANGED
     else if ( is_2lss_TTH_SR && vSelectedLeptons.size()==2 && vSelectedLeptons.at(0).charge()==vSelectedLeptons.at(1).charge()) is2lss = true;
     if (!is2lss && !is3l && !is4l) return;
 
     if (vSelectedJets.size()<2) return;
-    if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return; 
+    if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return;
 
     if (vSelectedLeptons.size()<2) return; // 2lss only at the moment
 
@@ -5967,7 +6377,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     else if (is2lss && ib1!=-1 && ib2!=-1 && vSelectedJets.size()-2==3) catJets = kCat_2lss_2b_3j;
     else if (is2lss && ib1!=-1 && ib2==-1 && vSelectedJets.size()-1==3) catJets = kCat_2lss_1b_3j;
     else if (is2lss && ib1!=-1 && ib2!=-1 && vSelectedJets.size()-2==2) catJets = kCat_2lss_2b_2j;
-    //4l 
+    //4l
     else if (is4l && ib1!=-1 && ib2!=-1) catJets = kCat_4l_2b;
     else if (is4l && ib1!=-1 && ib2==-1) catJets = kCat_4l_1b;
     //3l
@@ -6039,7 +6449,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     float lep1_dr_gen_min   = 100.,     lep2_dr_gen_min = 100.,     lep3_dr_gen_min = 100.,     lep4_dr_gen_min = 100. ;
     float jet1_dr_gen_min   = 100.,     jet2_dr_gen_min = 100.;
     int   lep1_matched      = -1,       lep2_matched    = -1,       lep3_matched   = -1,       lep4_matched    = -1;
-    int   jet1_matched      = -1,       jet2_matched    = -1;  
+    int   jet1_matched      = -1,       jet2_matched    = -1;
 
     TLorentzVector LeptonX;
 
@@ -6057,7 +6467,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
             {   lep2_dr_gen_min = lep2_dr_gen;  lep2_matched = itruth;  }
 
             if(vSelectedLeptons.size()>=3)
-            {    
+            {
                 lep3_dr_gen = GetDeltaR(vTruth->at(0).mc_truth_eta().at(itruth),  vTruth->at(0).mc_truth_phi().at(itruth), vSelectedLeptons.at(2).eta(), vSelectedLeptons.at(2).phi() );
                 if( lep3_dr_gen < lep3_dr_gen_min)
                 {   lep3_dr_gen_min = lep3_dr_gen;  lep3_matched = itruth;  }
@@ -6072,7 +6482,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
 
             jet1_dr_gen = GetDeltaR(vTruth->at(0).mc_truth_eta().at(itruth),  vTruth->at(0).mc_truth_phi().at(itruth), vSelectedJets.at(ib1).eta(), vSelectedJets.at(ib1).phi() );
             if( jet1_dr_gen < jet1_dr_gen_min)
-            {   jet1_dr_gen_min = jet1_dr_gen;  jet1_matched = itruth;  }        
+            {   jet1_dr_gen_min = jet1_dr_gen;  jet1_matched = itruth;  }
 
             if(ib2!=-1)
             {
@@ -6096,7 +6506,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
 
     if(lep1_matched >= 0)
     {
-        LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(lep1_matched),       vTruth->at(0).mc_truth_eta().at(lep1_matched), 
+        LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(lep1_matched),       vTruth->at(0).mc_truth_eta().at(lep1_matched),
                                 vTruth->at(0).mc_truth_phi().at(lep1_matched),      vTruth->at(0).mc_truth_E().at(lep1_matched)     );
         multilepton_Lepton1_P4_Matched      = LeptonX;
         multilepton_Lepton1_Id_Matched      = vTruth->at(0).mc_truth_id().at(lep1_matched);
@@ -6105,7 +6515,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     }
 
     if(lep2_matched >= 0)
-    {    
+    {
         LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(lep2_matched),       vTruth->at(0).mc_truth_eta().at(lep2_matched),
                                 vTruth->at(0).mc_truth_phi().at(lep2_matched),      vTruth->at(0).mc_truth_E().at(lep2_matched)     );
         multilepton_Lepton2_P4_Matched      = LeptonX;
@@ -6151,7 +6561,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
         std::cout << "phi: "            << vTruth->at(0).mc_truth_phi().at(jet1_matched)    << std::endl;
         std::cout << "E: "              << vTruth->at(0).mc_truth_E().at(jet1_matched)      << std::endl;
         std::cout << "Id: "             << vTruth->at(0).mc_truth_id().at(jet1_matched)     << std::endl;
-        std::cout << "Label: "          << vTruth->at(0).mc_truth_label().at(jet1_matched)  << std::endl;    
+        std::cout << "Label: "          << vTruth->at(0).mc_truth_label().at(jet1_matched)  << std::endl;
     }
 
     if(jet1_matched >= 0)
@@ -6191,28 +6601,28 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
             ij2 = ij1;
             pt_max = vSelectedJets.at(ij).pt();
             ij1 = ij;
-        } 
+        }
         if (vSelectedJets.at(ij).pt() < pt_max && vSelectedJets.at(ij).pt() > pt_max2){
-            pt_max2 = vSelectedJets.at(ij).pt(); 
-            ij2 = ij; 
-        } 
+            pt_max2 = vSelectedJets.at(ij).pt();
+            ij2 = ij;
+        }
         for (unsigned int ik=0; ik<vSelectedJets.size(); ik++){
             if (ik==ij) continue;
             if (ik==ib1 || ik==ib2) continue;
             Pjet1.SetPtEtaPhiE(vSelectedJets.at(ij).pt(), vSelectedJets.at(ij).eta(), vSelectedJets.at(ij).phi(), vSelectedJets.at(ij).E());
-            Pjet2.SetPtEtaPhiE(vSelectedJets.at(ik).pt(), vSelectedJets.at(ik).eta(), vSelectedJets.at(ik).phi(), vSelectedJets.at(ik).E()); 
+            Pjet2.SetPtEtaPhiE(vSelectedJets.at(ik).pt(), vSelectedJets.at(ik).eta(), vSelectedJets.at(ik).phi(), vSelectedJets.at(ik).E());
             if (TMath::Abs((Pjet1+Pjet2).M()-80.419)<diffmass_min){
                 ik1=ij;
                 ik2=ik;
                 diffmass_min = TMath::Abs((Pjet1+Pjet2).M()-80.419);
-            } 
+            }
             if ((Pjet1+Pjet2).M()<mass_min){
                 il1=ij;
                 il2=ik;
                 mass_min = (Pjet1+Pjet2).M();
-            } 
-        } 
-    }  
+            }
+        }
+    }
 
     //std::cout << "Choosing 2 jets ok" << std::endl;
 
@@ -6271,12 +6681,12 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
         FillJetInfoOutputTree(&multilepton_JetHighestPt1_Id, 1, &multilepton_JetHighestPt1_P4, Jet1, &multilepton_JetHighestPt1_CSV, vSelectedJets.at(ij1).CSVv2(), &multilepton_JetHighestPt1_JEC_Up, &multilepton_JetHighestPt1_JEC_Down, vSelectedJets.at(ij1).JES_uncert(), &multilepton_JetHighestPt1_JER_Up, &multilepton_JetHighestPt1_JER_Down, vSelectedJets.at(ij1).pt_JER(), vSelectedJets.at(ij1).pt_JER_up(), vSelectedJets.at(ij1).pt_JER_down());
         //multilepton_JetHighestPt1_Id = 1;
         //multilepton_JetHighestPt1_P4.SetPtEtaPhiE(vSelectedJets.at(ij1).pt(), vSelectedJets.at(ij1).eta(), vSelectedJets.at(ij1).phi(), vSelectedJets.at(ij1).E());
-    }   
+    }
     if (ij1!=-1 && ij2!=-1) {
         Jet1.SetPtEtaPhiE(vSelectedJets.at(ij1).pt(), vSelectedJets.at(ij1).eta(), vSelectedJets.at(ij1).phi(), vSelectedJets.at(ij1).E());
         Jet2.SetPtEtaPhiE(vSelectedJets.at(ij2).pt(), vSelectedJets.at(ij2).eta(), vSelectedJets.at(ij2).phi(), vSelectedJets.at(ij2).E());
         FillJetInfoOutputTree(&multilepton_JetHighestPt1_Id, 1, &multilepton_JetHighestPt1_P4, Jet1, &multilepton_JetHighestPt1_CSV, vSelectedJets.at(ij1).CSVv2(), &multilepton_JetHighestPt1_JEC_Up, &multilepton_JetHighestPt1_JEC_Down, vSelectedJets.at(ij1).JES_uncert(), &multilepton_JetHighestPt1_JER_Up, &multilepton_JetHighestPt1_JER_Down, vSelectedJets.at(ij1).pt_JER(), vSelectedJets.at(ij1).pt_JER_up(), vSelectedJets.at(ij1).pt_JER_down());
-        FillJetInfoOutputTree(&multilepton_JetHighestPt2_Id, 1, &multilepton_JetHighestPt2_P4, Jet2, &multilepton_JetHighestPt2_CSV, vSelectedJets.at(ij2).CSVv2(), &multilepton_JetHighestPt2_JEC_Up, &multilepton_JetHighestPt2_JEC_Down, vSelectedJets.at(ij2).JES_uncert(), &multilepton_JetHighestPt2_JER_Up, &multilepton_JetHighestPt2_JER_Down, vSelectedJets.at(ij2).pt_JER(), vSelectedJets.at(ij2).pt_JER_up(), vSelectedJets.at(ij2).pt_JER_down());	
+        FillJetInfoOutputTree(&multilepton_JetHighestPt2_Id, 1, &multilepton_JetHighestPt2_P4, Jet2, &multilepton_JetHighestPt2_CSV, vSelectedJets.at(ij2).CSVv2(), &multilepton_JetHighestPt2_JEC_Up, &multilepton_JetHighestPt2_JEC_Down, vSelectedJets.at(ij2).JES_uncert(), &multilepton_JetHighestPt2_JER_Up, &multilepton_JetHighestPt2_JER_Down, vSelectedJets.at(ij2).pt_JER(), vSelectedJets.at(ij2).pt_JER_up(), vSelectedJets.at(ij2).pt_JER_down());
         //multilepton_JetHighestPt1_Id = 1;
         //multilepton_JetHighestPt2_Id = 1;
         //multilepton_JetHighestPt1_P4.SetPtEtaPhiE(vSelectedJets.at(ij1).pt(), vSelectedJets.at(ij1).eta(), vSelectedJets.at(ij1).phi(), vSelectedJets.at(ij1).E());
@@ -6319,7 +6729,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
             //multilepton_JetHighestPt1_2ndPair_Id = 1;
             //multilepton_JetHighestPt1_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(im1).pt(), vSelectedJets.at(im1).eta(), vSelectedJets.at(im1).phi(), vSelectedJets.at(im1).E());
             //multilepton_JetHighestPt2_2ndPair_Id = 1;
-            //multilepton_JetHighestPt2_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(im2).pt(), vSelectedJets.at(im2).eta(), vSelectedJets.at(im2).phi(), vSelectedJets.at(im2).E());   
+            //multilepton_JetHighestPt2_2ndPair_P4.SetPtEtaPhiE(vSelectedJets.at(im2).pt(), vSelectedJets.at(im2).eta(), vSelectedJets.at(im2).phi(), vSelectedJets.at(im2).E());
         }
         if (io1!=-1 && io2!=-1){
             Jet1.SetPtEtaPhiE(vSelectedJets.at(ip1).pt(), vSelectedJets.at(ip1).eta(), vSelectedJets.at(ip1).phi(), vSelectedJets.at(ip1).E());
@@ -6361,12 +6771,12 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
         TLorentzVector LeptonX;
 
         if( vTruth->at(0).mc_truth_label().at(itruth) == 1 )
-        { 
-            LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(itruth), 
-                                    vTruth->at(0).mc_truth_eta().at(itruth), 
-                                    vTruth->at(0).mc_truth_phi().at(itruth), 
+        {
+            LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(itruth),
+                                    vTruth->at(0).mc_truth_eta().at(itruth),
+                                    vTruth->at(0).mc_truth_phi().at(itruth),
                                     vTruth->at(0).mc_truth_E().at(itruth) );
-           
+
             multilepton_h0_P4 = LeptonX;
             multilepton_h0_Id = vTruth->at(0).mc_truth_id().at(itruth);
         }
@@ -6374,13 +6784,13 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
         if( vTruth->at(0).mc_truth_label().at(itruth) == 2 )
         {
             LeptonX.SetPtEtaPhiE(   vTruth->at(0).mc_truth_pt().at(itruth),
-                                    vTruth->at(0).mc_truth_eta().at(itruth), 
-                                    vTruth->at(0).mc_truth_phi().at(itruth), 
+                                    vTruth->at(0).mc_truth_eta().at(itruth),
+                                    vTruth->at(0).mc_truth_phi().at(itruth),
                                     vTruth->at(0).mc_truth_E().at(itruth) );
 
             multilepton_t1_P4 = LeptonX;
             multilepton_t1_Id = vTruth->at(0).mc_truth_id().at(itruth);
-        }        
+        }
 
         if( vTruth->at(0).mc_truth_label().at(itruth) == 3 )
         {
@@ -6407,13 +6817,13 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
 
     mc_ttZhypAllowed = 0;
     /*
-        if(vSelectedLeptons.size()==3) 
+        if(vSelectedLeptons.size()==3)
         {
             if ( vSelectedLeptons.at(0).charge()==vSelectedLeptons.at(1).charge() && vSelectedLeptons.at(1).charge()==vSelectedLeptons.at(2).charge() ) mc_ttZhypAllowed =-1;
-            else if (  ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(1).id() ) 
-            || ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(2).id() ) 
+            else if (  ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(1).id() )
+            || ( vSelectedLeptons.at(0).id() == -vSelectedLeptons.at(2).id() )
             || ( vSelectedLeptons.at(1).id() == -vSelectedLeptons.at(2).id() ))
-            mc_ttZhypAllowed = 1; 
+            mc_ttZhypAllowed = 1;
         }
     */
 
@@ -6428,7 +6838,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     mc_nBtagJets25          = vSelectedBTagJets.size();
     mc_nMediumBtagJets25    = vSelectedMediumBTagJets.size();
     mc_nNonBtagJets25       = vSelectedNonBTagJets.size();
-    
+
     is_2bTight              = (vSelectedMediumBTagJets.size()>=2)?1:0;
     is_2bTight_float        = (vSelectedMediumBTagJets.size()>=2)?1.0:0.0;
 
@@ -6456,14 +6866,14 @@ void TTbarHiggsMultileptonAnalysis::FillJetInfoOutputTree(int* tree_Id, int Id, 
 }
 
 void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_MC(int evt)
-{  
+{
 
     //std::cout <<" _MC 1"<< std::endl;
 
     /*if( proc<-1 || proc > 6 )f
       {
       std::cout << "proc can only take following values: -1,1,2,3,4,5,6" << std::endl;
-      std::cout << "3l final state specific" << std::endl;    
+      std::cout << "3l final state specific" << std::endl;
       std::cout << "1,2,3,4: specific to the ttH final state, cf patches provided to madweight" << std::endl;
       std::cout << "5: specific to the ttZ with l+l-l+ final state" << std::endl;
       std::cout << "6: specific to the ttZ with l+l-l- final state" << std::endl;
@@ -6474,7 +6884,7 @@ void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_MC(int evt)
 
     fline0 = "0      " + std::string(Form("%d",evt)) + "     " + trig;
 
-    int nobj = 1;	      
+    int nobj = 1;
 
     int multilepton_Lepton1_Id_LHCO = -666;
     int multilepton_Lepton2_Id_LHCO = -666;
@@ -6482,7 +6892,7 @@ void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_MC(int evt)
 
     //
     // LHCO lepton ID convention
-    //  
+    //
     if (abs(vTruth->at(0).Leptons_id().at(0))==11) multilepton_Lepton1_Id_LHCO = 1 ;
     else if (abs(vTruth->at(0).Leptons_id().at(0))==13) multilepton_Lepton1_Id_LHCO = 2 ;
     if (abs(vTruth->at(0).Leptons_id().at(1))==11) multilepton_Lepton2_Id_LHCO = 1 ;
@@ -6497,7 +6907,7 @@ void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_MC(int evt)
     float multilepton_Lepton2_phi       = Phi_0_2Pi(vTruth->at(0).Leptons_phi().at(1));
     float multilepton_Lepton3_phi       = Phi_0_2Pi(vTruth->at(0).Leptons_phi().at(2));
     float multilepton_Bjet1_phi         = Phi_0_2Pi(vTruth->at(0).Bjets_phi().at(0));
-    float multilepton_Bjet2_phi         = Phi_0_2Pi(vTruth->at(0).Bjets_phi().at(1));	  
+    float multilepton_Bjet2_phi         = Phi_0_2Pi(vTruth->at(0).Bjets_phi().at(1));
     float multilepton_JetHighestPt1_phi = Phi_0_2Pi(vTruth->at(0).JetsHighestPt_phi().at(0));
     float multilepton_JetHighestPt2_phi = Phi_0_2Pi(vTruth->at(0).JetsHighestPt_phi().at(1));
     float multilepton_JetClosestMw1_phi = Phi_0_2Pi(vTruth->at(0).JetsClosestMw_phi().at(0));
@@ -6508,14 +6918,14 @@ void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_MC(int evt)
     //std::cout <<" _MC 22"<< std::endl;
 
     // l1
-    std::string l1_fline = std::string(Form("%d	  %d	 %.2f	  %.2f     %.2f     %.2f     %d     %d     %d	  %d	 %d", 
+    std::string l1_fline = std::string(Form("%d	  %d	 %.2f	  %.2f     %.2f     %.2f     %d     %d     %d	  %d	 %d",
                 nobj,multilepton_Lepton1_Id_LHCO,vTruth->at(0).Leptons_eta().at(0),multilepton_Lepton1_phi,vTruth->at(0).Leptons_pt().at(0),0.0,vTruth->at(0).Leptons_id().at(0)/abs(vTruth->at(0).Leptons_id().at(0)),0,0,0,0));
-    nobj++; 
+    nobj++;
     //std::cout <<" _MC 23"<< std::endl;
     // l2
     std::string l2_fline = std::string(Form("%d	  %d	 %.2f	  %.2f     %.2f     %.2f     %d     %d     %d	  %d	 %d",
                 nobj,multilepton_Lepton2_Id_LHCO,vTruth->at(0).Leptons_eta().at(1),multilepton_Lepton2_phi,vTruth->at(1).Leptons_pt().at(1),0.0,vTruth->at(0).Leptons_id().at(1)/abs(vTruth->at(0).Leptons_id().at(1)),0,0,0,0));
-    nobj++;	
+    nobj++;
     //std::cout <<" _MC 24"<< std::endl;
     // l3
     std::string l3_fline = std::string(Form("%d	  %d	 %.2f	  %.2f     %.2f     %.2f     %d     %d     %d	  %d	 %d",
@@ -6523,31 +6933,31 @@ void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_MC(int evt)
     nobj++;
     //std::cout <<" _MC 3"<< std::endl;
 
-    //										    
+    //
     std::string j1_fline;
     std::string j2_fline;
 
     if ( _processLHCO_MC == 5 || _processLHCO_MC == 6 || _processLHCO_MC == 4 || _processLHCO_MC == 3 )
-    {			     
+    {
         // j1
-        j1_fline = std::string(Form("%d	  %d	 %.2f	    %.2f     %.2f     %.2f     %d     %d     %d     %d     %d", 
+        j1_fline = std::string(Form("%d	  %d	 %.2f	    %.2f     %.2f     %.2f     %d     %d     %d     %d     %d",
                     nobj,4,vTruth->at(0).JetsClosestMw_eta().at(0),multilepton_JetClosestMw1_phi,vTruth->at(0).JetsClosestMw_pt().at(0),0.0,1,0,0,0,0));
         nobj++;
 
         // j2
-        j2_fline = std::string(Form("%d	  %d	  %.2f      %.2f     %.2f     %.2f     %d     %d     %d     %d     %d", 
+        j2_fline = std::string(Form("%d	  %d	  %.2f      %.2f     %.2f     %.2f     %d     %d     %d     %d     %d",
                     nobj,4,vTruth->at(0).JetsClosestMw_eta().at(1),multilepton_JetClosestMw2_phi,vTruth->at(0).JetsClosestMw_pt().at(1),0.0,1,0,0,0,0));
         nobj++;
     }
     else if ( _processLHCO_MC == 1 || _processLHCO_MC == 2)
     {
         // j1
-        j1_fline = std::string(Form("%d	  %d	  %.2f      %.2f     %.2f     %.2f     %d     %d     %d     %d     %d", 
+        j1_fline = std::string(Form("%d	  %d	  %.2f      %.2f     %.2f     %.2f     %d     %d     %d     %d     %d",
                     nobj,4,vTruth->at(0).JetsLowestMjj_eta().at(0),multilepton_JetLowestMjj1_phi,vTruth->at(0).JetsLowestMjj_pt().at(0),0.0,1,0,0,0,0));
         nobj++;
 
         // j2
-        j2_fline = std::string(Form("%d	  %d	   %.2f     %.2f     %.2f     %.2f     %d     %d     %d     %d     %d", 
+        j2_fline = std::string(Form("%d	  %d	   %.2f     %.2f     %.2f     %.2f     %d     %d     %d     %d     %d",
                     nobj,4,vTruth->at(0).JetsLowestMjj_eta().at(1),multilepton_JetLowestMjj2_phi,vTruth->at(0).JetsLowestMjj_pt().at(1),0.0,1,0,0,0,0));
         nobj++;
     }
@@ -6566,7 +6976,7 @@ void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_MC(int evt)
     nobj++;
 
 
-    // bj2 
+    // bj2
     std::string b2_fline = std::string(Form("%d	  %d	 %.2f	  %.2f     %.2f     %.2f     %d     %d     %d	  %d	 %d",
                 nobj,4,vTruth->at(0).Bjets_eta().at(1),multilepton_Bjet2_phi,vTruth->at(0).Bjets_pt().at(1),BJet2.M(),1,2,0,0,0));
     nobj++;
@@ -6577,28 +6987,28 @@ void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_MC(int evt)
     nobj++;
 
 
-    //    
+    //
     fout_MC << fline00   << std::endl;
     fout_MC << fline0    << std::endl;
     fout_MC << l1_fline  << std::endl;
     fout_MC << l2_fline  << std::endl;
-    fout_MC << l3_fline  << std::endl;	  
+    fout_MC << l3_fline  << std::endl;
     if (!(_processLHCO_MC == 7 || _processLHCO_MC == 8)) fout_MC << j1_fline  << std::endl;// don't print jets for ttW hypothesis
     if (!(_processLHCO_MC == 7 || _processLHCO_MC == 8)) fout_MC << j2_fline  << std::endl;// don't print jets for ttW hypothesis
     fout_MC << b1_fline  << std::endl;
     fout_MC << b2_fline  << std::endl;
-    fout_MC << met_fline << std::endl;      
+    fout_MC << met_fline << std::endl;
 
 }
 
 void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_RECO(int evt)
 {
 
-    if (vSelectedLeptons.size()!=3 || vSelectedBTagJets.size()<2 || vSelectedJets.size()<4 ) return; 
+    if (vSelectedLeptons.size()!=3 || vSelectedBTagJets.size()<2 || vSelectedJets.size()<4 ) return;
 
     fline0 = "0      " + std::string(Form("%d",evt)) + "     " + trig;
 
-    int nobj = 1;	      
+    int nobj = 1;
 
     int multilepton_Lepton1_Id_LHCO = -666;
     int multilepton_Lepton2_Id_LHCO = -666;
@@ -6606,7 +7016,7 @@ void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_RECO(int evt)
 
     //
     // LHCO lepton ID convention
-    //  
+    //
     if(abs(multilepton_Lepton1_Id)==11) multilepton_Lepton1_Id_LHCO = 1 ;
     else if(abs(multilepton_Lepton1_Id)==13) multilepton_Lepton1_Id_LHCO = 2 ;
     if(abs(multilepton_Lepton2_Id)==11) multilepton_Lepton2_Id_LHCO = 1 ;
@@ -6622,7 +7032,7 @@ void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_RECO(int evt)
     float multilepton_Lepton2_phi       = Phi_0_2Pi(multilepton_Lepton1_P4.Phi());
     float multilepton_Lepton3_phi       = Phi_0_2Pi(multilepton_Lepton1_P4.Phi());
     float multilepton_Bjet1_phi         = Phi_0_2Pi(multilepton_Bjet1_P4.Phi());
-    float multilepton_Bjet2_phi         = Phi_0_2Pi(multilepton_Bjet2_P4.Phi());	 
+    float multilepton_Bjet2_phi         = Phi_0_2Pi(multilepton_Bjet2_P4.Phi());
     float multilepton_JetHighestPt1_phi = Phi_0_2Pi(multilepton_JetHighestPt1_P4.Phi());
     float multilepton_JetHighestPt2_phi = Phi_0_2Pi(multilepton_JetHighestPt1_P4.Phi());
     float multilepton_JetClosestMw1_phi = Phi_0_2Pi(multilepton_JetClosestMw1_P4.Phi());
@@ -6633,41 +7043,41 @@ void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_RECO(int evt)
 
     // l1
     std::string l1_fline = std::string(Form("%d	  %d	 %.2f	  %.2f     %.2f     %.2f     %d     %d     %d	  %d	 %d", nobj,multilepton_Lepton1_Id_LHCO,multilepton_Lepton1_P4.Eta(),multilepton_Lepton1_phi,multilepton_Lepton1_P4.Pt(),0.0,multilepton_Lepton1_Id/abs(multilepton_Lepton1_Id),0,0,0,0));
-    nobj++; 
+    nobj++;
 
     // l2
     std::string l2_fline = std::string(Form("%d	  %d	 %.2f	  %.2f     %.2f     %.2f     %d     %d     %d	  %d	 %d", nobj,multilepton_Lepton2_Id_LHCO,multilepton_Lepton2_P4.Eta(),multilepton_Lepton2_phi,multilepton_Lepton2_P4.Pt(),0.0,multilepton_Lepton2_Id/abs(multilepton_Lepton2_Id),0,0,0,0));
-    nobj++;	
+    nobj++;
 
     // l3
     std::string l3_fline = std::string(Form("%d	  %d	 %.2f	  %.2f     %.2f     %.2f     %d     %d     %d	  %d	 %d", nobj,multilepton_Lepton3_Id_LHCO,multilepton_Lepton3_P4.Eta(),multilepton_Lepton3_phi,multilepton_Lepton3_P4.Pt(),0.0,multilepton_Lepton3_Id/abs(multilepton_Lepton3_Id),0,0,0,0));
     nobj++;
 
-    //										    
+    //
     std::string j1_fline;
     std::string j2_fline;
 
     if ( _processLHCO_RECO == 5 || _processLHCO_RECO == 6 || _processLHCO_RECO == 4 || _processLHCO_RECO == 3 )
-    {			     
+    {
         // j1
-        j1_fline = std::string(Form("%d	  %d	 %.2f	    %.2f     %.2f     %.2f     %d     %d     %d     %d     %d", 
+        j1_fline = std::string(Form("%d	  %d	 %.2f	    %.2f     %.2f     %.2f     %d     %d     %d     %d     %d",
                     nobj,4,multilepton_JetClosestMw1_P4.Eta(),multilepton_JetClosestMw1_phi,multilepton_JetClosestMw1_P4.Pt(),0.0,1,0,0,0,0));
         nobj++;
 
         // j2
-        j2_fline = std::string(Form("%d	  %d	  %.2f      %.2f     %.2f     %.2f     %d     %d     %d     %d     %d", 
+        j2_fline = std::string(Form("%d	  %d	  %.2f      %.2f     %.2f     %.2f     %d     %d     %d     %d     %d",
                     nobj,4,multilepton_JetClosestMw2_P4.Eta(),multilepton_JetClosestMw2_phi,multilepton_JetClosestMw2_P4.Pt(),0.0,1,0,0,0,0));
         nobj++;
     }
-    else if ( _processLHCO_RECO == 1 || _processLHCO_RECO == 2 ) 
+    else if ( _processLHCO_RECO == 1 || _processLHCO_RECO == 2 )
     {
         // j1
-        j1_fline = std::string(Form("%d	  %d	  %.2f      %.2f     %.2f     %.2f     %d     %d     %d     %d     %d", 
+        j1_fline = std::string(Form("%d	  %d	  %.2f      %.2f     %.2f     %.2f     %d     %d     %d     %d     %d",
                     nobj,4,multilepton_JetLowestMjj1_P4.Eta(),multilepton_JetLowestMjj1_phi,multilepton_JetLowestMjj1_P4.Pt(),0.0,1,0,0,0,0));
         nobj++;
 
         // j2
-        j2_fline = std::string(Form("%d	  %d	   %.2f     %.2f     %.2f     %.2f     %d     %d     %d     %d     %d", 
+        j2_fline = std::string(Form("%d	  %d	   %.2f     %.2f     %.2f     %.2f     %d     %d     %d     %d     %d",
                     nobj,4,multilepton_JetLowestMjj2_P4.Eta(),multilepton_JetLowestMjj2_phi,multilepton_JetLowestMjj2_P4.Pt(),0.0,1,0,0,0,0));
         nobj++;
     }
@@ -6686,7 +7096,7 @@ void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_RECO(int evt)
     nobj++;
 
 
-    // bj2 
+    // bj2
     std::string b2_fline = std::string(Form("%d	  %d	 %.2f	  %.2f     %.2f     %.2f     %d     %d     %d	  %d	 %d",
                 nobj,4,multilepton_Bjet2_P4.Eta(),multilepton_Bjet2_phi,multilepton_Bjet2_P4.Pt(),BJet2.M(),1,2,0,0,0));
     nobj++;
@@ -6697,17 +7107,17 @@ void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_RECO(int evt)
     nobj++;
 
 
-    //    
+    //
     fout_RECO << fline00	<< std::endl;
     fout_RECO << fline0	<< std::endl;
     fout_RECO << l1_fline  << std::endl;
     fout_RECO << l2_fline  << std::endl;
-    fout_RECO << l3_fline  << std::endl;	
+    fout_RECO << l3_fline  << std::endl;
     if (!(_processLHCO_RECO == 7 || _processLHCO_RECO == 8)) fout_RECO << j1_fline  << std::endl;// don't print jets for ttW hypothesis
     if (!(_processLHCO_RECO == 7 || _processLHCO_RECO == 8)) fout_RECO << j2_fline  << std::endl;// don't print jets for ttW hypothesis
     fout_RECO << b1_fline  << std::endl;
     fout_RECO << b2_fline  << std::endl;
-    fout_RECO << met_fline << std::endl;      
+    fout_RECO << met_fline << std::endl;
 
 }
 
@@ -6740,7 +7150,7 @@ infile1.close();
 Init(tree1);
 
 TH1F * PU_MC = new TH1F("PU_MC","PU_MC",100,0,99);
-//TH1F PU_MC("PU_MC","PU_MC",100,0,99); 
+//TH1F PU_MC("PU_MC","PU_MC",100,0,99);
 
 Long64_t nentries1 = fChain->GetEntries();
 int nentries_max1 = nentries1;
@@ -6751,7 +7161,7 @@ std::cout << "n[" << jentry << "] / " << nentries_max1 << std::endl;
 int PU_M = 0;
 PU_M = vEvent->at(0).pv_n();
 std::cout << "Number of PV in MC: " << PU_M << std::endl;
-PU_MC->Fill(PU_M,1); 
+PU_MC->Fill(PU_M,1);
 }
 
 std::cout << "Initializing PU from Data..." << std::endl;
@@ -6777,7 +7187,7 @@ infile2.close();
 Init(tree2);
 
 TH1F * PU_DATA = new TH1F("PU_DATA","PU_DATA",100,0,99);
-//TH1F PU_DATA("PU_DATA","PU_DATA",100,0,99); 
+//TH1F PU_DATA("PU_DATA","PU_DATA",100,0,99);
 
 Long64_t nentries2 = fChain->GetEntries();
 int nentries_max2 = nentries2;

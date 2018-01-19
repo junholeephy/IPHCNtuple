@@ -98,8 +98,15 @@ int main(int argc, char *argv[])
 
     JetCorrectionUncertainty *jesTotal;
 
-    if (isdata == false) jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_MC/Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
-    else		 jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_DATA/Fall15_25nsV2_DATA_UncertaintySources_AK4PFchs.txt", "Total")));
+
+	//FIXME
+    //if (isdata == false) jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_MC/Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
+    //else		 jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_DATA/Fall15_25nsV2_DATA_UncertaintySources_AK4PFchs.txt", "Total")));
+    
+    	//FIXME -- CHANGED PATH -- CORRECT ??
+	cout<<"Verify JECfiles choice !"<<endl;
+    if (isdata == false) jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/ntonon/tHq/CMSSW_8_0_25/src/IPHCFlatTree/FlatTreeProducer/data/jecFiles/Summer16_23Sep2016V3_MC/Summer16_23Sep2016V3_MC_UncertaintySources_AK4PFchs.txt", "Total")));
+    else		 jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/ntonon/tHq/CMSSW_8_0_25/src/IPHCFlatTree/FlatTreeProducer/data/jecFiles/Fall15_25nsV2_DATA/Fall15_25nsV2_DATA_UncertaintySources_AK4PFchs.txt", "Total")));
 
     for(Long64_t i=0;i<nentries;i++)
     {
@@ -148,7 +155,7 @@ int main(int argc, char *argv[])
         }
         if(mu_presel) n_mu++;
 
-        std::cout << "muons done" << std::endl;
+        //std::cout << "muons done" << std::endl;
 
         int n_el_evt = 0;
 
@@ -169,7 +176,7 @@ int main(int argc, char *argv[])
         }
         if(el_presel) n_el++;
 
-        std::cout << "electrons done" << std::endl;
+        //std::cout << "electrons done" << std::endl;
 
         // preselection
         //if ( (n_mu_evt + n_el_evt) < 2 ) continue; 
@@ -193,7 +200,7 @@ int main(int argc, char *argv[])
         }	
         if(tau_presel) n_tau++;
 
-        std::cout << "taus done" << std::endl;
+        //std::cout << "taus done" << std::endl;
 
         int n_jet_evt = 0;
 
@@ -211,12 +218,13 @@ int main(int argc, char *argv[])
 
 	//cout<<__LINE__<<endl;
         
-	    //jet.setJESUncertainty(jesTotal->getUncertainty(true));
+	    jet.setJESUncertainty(jesTotal->getUncertainty(true));
        
 	//cout<<__LINE__<<endl;
 	
-	
-	    jet.setJESUncertainty(0.);
+	    //jet.setJESUncertainty(0.);
+	    
+	    
             //std::cout << "Test ===================" << std::endl;
             //std::cout << "n_jet_evt: " << n_jet_evt << std::endl;
             //if(n_jet_evt==1) break;
@@ -229,7 +237,7 @@ int main(int argc, char *argv[])
         }
         if(jet_presel) n_jet++;
 
-        std::cout << "jet done" << std::endl;
+        //std::cout << "jet done" << std::endl;
 
         //trigger objects
         /*for(int j=0;j<ntP->triggerobject_n;j++)

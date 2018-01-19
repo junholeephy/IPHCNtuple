@@ -6,9 +6,9 @@ echo "Don't forget to update the lumi and the maximum number of events to run on
 
 isdata=0
 doSystCombine=0
-lumi=36500
+lumi=35900
 
-cp /tmp/x509up_u7650 /home-pbs/xcoubez/proxy/.
+cp /tmp/x509up_u8066 /home-pbs/ntonon/proxy
 
 jName=${1}
 if [[ ${jName} == "" ]]; then
@@ -17,12 +17,12 @@ if [[ ${jName} == "" ]]; then
 fi
 
 #que="cms_local"
-que="cms_local_mdm"
+que="cms"
 
 export HOME=$(pwd)
 
-dout="/home-pbs/xcoubez/Renovatio/Analysis/ttH/CMSSW_8_0_20/src/ttH/NtupleAnalyzer/test/"
-dout_f="/home-pbs/xcoubez/Renovatio/Analysis/ttH/CMSSW_8_0_20/src/ttH/NtupleAnalyzer/test/"
+dout="/home-pbs/ntonon/tHq/CMSSW_8_0_20/src/ttH/NtupleAnalyzer/test"
+dout_f="/opt/sbg/scratch1/cms/ntonon/Analyzer_ntuples_prod_walrus_patch2/"
 
 runName="toy_${jName}"
 logName="log_${jName}"
@@ -34,10 +34,10 @@ mkdir ${logName}
 
 nmax=-1
 
-fxsec="table_MC_Walrus-patch1_20170127.txt"
+fxsec="table.txt"
 
 #fdir=$(ls -d lists_MC_Walrus-patch1)
-fdir=$(ls -d lists_DATA_Walrus-patch1)
+fdir=$(ls -d lists_tHq)
 
 echo $fdir
 

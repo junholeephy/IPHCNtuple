@@ -44,6 +44,7 @@ class TTbarHiggsMultileptonAnalysis
         void TwoLeptonsSameSignSelection_TTbar(int evt);
 
         void ThreeLeptonSelection_TTH3l(int evt);
+	void ThreeLeptonSelection_THQ3l(int evt); //NEW
         void ThreeLeptonSelection_ApplicationFakes(int evt);
 
         void ThreeLeptonSelection_CR_WZ(int evt);
@@ -89,7 +90,8 @@ class TTbarHiggsMultileptonAnalysis
         bool is_2lss_LepMVA_SB;
         bool is_emu_TT_CR;
 
-        bool is_3l_TTH_SR;    // TTH 3l analysis
+        bool is_3l_THQ_SR;    // THQ 3l analysis //NEW
+	bool is_3l_TTH_SR;    // TTH 3l analysis
         bool is_3l_AppFakes_SR;
         bool is_3l_WZ_CR;     // WZ CR w/ 3l (selected) or more, no b-jets, Z peak
         bool is_3l_WZrel_CR;  // WZ CR w/ 3l (loose) or more, no medium b-jets, Z peak
