@@ -100,7 +100,8 @@ fdir=$(ls -d lists_priority*) //Modify dir. name, depending on the name of the d
 ...
 ```
 
-### Produce list of FlatTree files on which to run
+
+----  Produce list of FlatTree files on which to run
 
 (NB : merging of samples, e.g. different data runs, has to be done at this step, using wildcards *)
 
@@ -122,7 +123,7 @@ fpath="/dpm/in2p3.fr/home/cms/phedex/store/user/ntonon/FlatTree/output_dir/"
 ...
 ```
 
-Then execute the script to create lists of paths to FlatTree files, based on the content of your FlatTree production output directory (by default, will be listed in dir. lists/) : 
+Then execute the script to create lists of paths to FlatTree files, based on the content of your FlatTree production output directory (by default, will create the lists in directory "lists/") : 
 ```
 ./split_into_lists.zsh
 ```
@@ -160,7 +161,8 @@ cd /home-pbs/username/MyAnalysis/CMSSW_8_0_20/src/ttH/NtupleAnalyzer/test
 THQ_Hincl_13TeV-madgraph-pythia8_TuneCUETP8M1_RunIISummer16MiniAODv2_PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_v1_MINIAODSIM_0000       0.7927       3495652
 ...
 ```
-(NB : can get SWE infos from IPHCFlatTree twiki : [IPHCFlatTree twiki](https://twiki.cern.ch/twiki/bin/view/CMS/IPHCFlatTreeProduction)
+(NB : can get SWE infos from [IPHCFlatTree twiki](https://twiki.cern.ch/twiki/bin/view/CMS/IPHCFlatTreeProduction) )
+
 
 
 * **split_into_lists.zsh** - modify path of directory containing NtupleProducer output files, e.g. : 
