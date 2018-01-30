@@ -1,6 +1,25 @@
 #ifndef TTbarHiggsMultileptonAnalysis_H
 #define TTbarHiggsMultileptonAnalysis_H
 
+/* BASH COLORS */
+#define RST   "[0m"
+#define KRED  "[31m"
+#define KGRN  "[32m"
+#define KYEL  "[33m"
+#define KBLU  "[34m"
+#define KMAG  "[35m"
+#define KCYN  "[36m"
+#define KWHT  "[37m"
+#define FRED(x) KRED x RST
+#define FGRN(x) KGRN x RST
+#define FYEL(x) KYEL x RST
+#define FBLU(x) KBLU x RST
+#define FMAG(x) KMAG x RST
+#define FCYN(x) KCYN x RST
+#define FWHT(x) KWHT x RST
+#define BOLD(x) "[1m" x RST
+#define UNDL(x) "[4m" x RST
+
 #include <TString.h>
 #include <TH1F.h>
 #include <TH2F.h>
@@ -78,10 +97,16 @@ class TTbarHiggsMultileptonAnalysis
         std::vector<Jet>	  vSelectedNonBTagJets;
         std::vector<Jet>	  vSelectedBTagJets;
         std::vector<Jet>      vSelectedMediumBTagJets;
-        std::vector<Jet>	  vSelectedJets;
+
+        //CHANGED -- new categories
+        std::vector<Jet>	  vSelectedJets; //All jets with pT>25
+        std::vector<Jet>	  vLooseBTagJets; //Loose-CSV jets (+pT/eta cuts)
+        std::vector<Jet>      vForwardJets; //Non-loose CSV jets (+pT/eta cuts) <-> "Forward"
+
 
         int nLooseBJets;
         int nMediumBJets;
+        int nForwardJets;
 
         bool is_2lss_TTH_SR;
         bool is_2lss_AppFakes_SR;

@@ -98,13 +98,8 @@ int main(int argc, char *argv[])
 
     JetCorrectionUncertainty *jesTotal;
 
-
-	//FIXME
-    //if (isdata == false) jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_MC/Fall15_25nsV2_MC_UncertaintySources_AK4PFchs.txt", "Total")));
-    //else		 jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/lebihan/JESJEC/Fall15_25nsV2_DATA/Fall15_25nsV2_DATA_UncertaintySources_AK4PFchs.txt", "Total")));
     
-    	//FIXME -- CHANGED PATH -- CORRECT ??
-	cout<<"Verify JECfiles choice !"<<endl;
+    //FIXME -- UPDATE PATH
     if (isdata == false) jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/ntonon/tHq/CMSSW_8_0_25/src/IPHCFlatTree/FlatTreeProducer/data/jecFiles/Summer16_23Sep2016V3_MC/Summer16_23Sep2016V3_MC_UncertaintySources_AK4PFchs.txt", "Total")));
     else		 jesTotal = new JetCorrectionUncertainty(*(new JetCorrectorParameters("/home-pbs/ntonon/tHq/CMSSW_8_0_25/src/IPHCFlatTree/FlatTreeProducer/data/jecFiles/Fall15_25nsV2_DATA/Fall15_25nsV2_DATA_UncertaintySources_AK4PFchs.txt", "Total")));
 
@@ -117,7 +112,7 @@ int main(int argc, char *argv[])
 
         //	if( !(isHtoWW || isHtoZZ || isHtoTT) ) continue;
 
-         std::cout << "Event =========== " << std::endl;
+         if(i%1000 == 0) std::cout << "Event =========== " << std::endl;
 
         // event
         ev.init();
@@ -214,15 +209,8 @@ int main(int argc, char *argv[])
 
             jesTotal->setJetPt(ntP->jet_pt->at(idx));
             jesTotal->setJetEta(ntP->jet_eta->at(idx));
-
-
-	//cout<<__LINE__<<endl;
         
-	    jet.setJESUncertainty(jesTotal->getUncertainty(true));
-       
-	//cout<<__LINE__<<endl;
-	
-	    //jet.setJESUncertainty(0.);
+	    jet.setJESUncertainty(jesTotal->getUncertainty(true)); //Verify path to JES files (above)       
 	    
 	    
             //std::cout << "Test ===================" << std::endl;

@@ -21,5 +21,5 @@ dout_f=${dout_f}
 sample=${sample}
 
 
-echo "Executing .././NtupleProducer --file ${line2} --outfile ${dout_f}${fout} --isdata ${isdata} --noe ${noe} --xsec ${xsec} --nmax ${nmax}"
-${dout}/./NtupleProducer --file ${line2} --outfile ${dout_f}${fout} --isdata ${isdata} --noe ${noe} --xsec ${xsec} --nmax ${nmax} --tree FlatTree/tree
+echo "Executing .././NtupleProducer --file ${line2} --outfile ${dout_f}/${fout} --isdata ${isdata} --noe ${noe} --xsec ${xsec} --nmax ${nmax}"
+${dout}/./NtupleProducer --file ${line2} --outfile ${dout_f}/${fout} --isdata ${isdata} --noe ${noe} --xsec ${xsec} --nmax ${nmax} --tree FlatTree/tree

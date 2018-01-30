@@ -22,21 +22,21 @@ que="cms"
 export HOME=$(pwd)
 
 dout="/home-pbs/ntonon/tHq/CMSSW_8_0_20/src/ttH/NtupleAnalyzer/test"
-dout_f="/opt/sbg/scratch1/cms/ntonon/Analyzer_ntuples_prod_walrus_patch2/"
+dout_f="/opt/sbg/scratch1/cms/ntonon/Analyzer_ntuples_tHq"
 
 runName="toy_${jName}"
 logName="log_${jName}"
 
-rm -rf ${dout_f}/${runName}
-mkdir ${dout_f}/${runName}
+rm -rf ${dout_f}/${runName} #REMOVED /
+mkdir ${dout_f} #NEW
+mkdir ${dout_f}/${runName} #REMOVED /
 rm -rf ${logName}
 mkdir ${logName}
 
 nmax=-1
 
-fxsec="table.txt"
+fxsec="table_MC_tHqAnalysis.txt"
 
-#fdir=$(ls -d lists_MC_Walrus-patch1)
 fdir=$(ls -d lists_tHq)
 
 echo $fdir
@@ -53,7 +53,7 @@ do
   sample=$(echo $line | sed 's%.txt%%g')
   dataset=$(echo $sample | sed 's%_ID..*%%g')
   if [[ ! -d ${runName}/${dataset} ]]; then
-    mkdir ${dout_f}/${runName}/${dataset}
+    mkdir ${dout_f}/${runName}/${dataset} #REMOVED /
   fi
   linexsec=$(grep $dataset $fxsec)
   nowe=$(echo $linexsec | awk '{print $3}')

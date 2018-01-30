@@ -95,11 +95,11 @@ int main(int argc, char *argv[])
     //TTHanalysis->writeHistograms();
   
     //TTH MEM analysis
-    TTbarHiggsMultileptonAnalysis *TTHanalysis = new TTbarHiggsMultileptonAnalysis(fname,thetree,dataset,stream,outfile,isdata,doSystCombine,xsec,lumi,nowe,nmax);
-    // TTHanalysis->InitLHCO(1,1); // to print LHCO files
-    TTHanalysis->createHistograms();
-    TTHanalysis->Loop();
-    TTHanalysis->writeHistograms();
-    delete TTHanalysis;
+    TTbarHiggsMultileptonAnalysis* tHqAnalysis = new TTbarHiggsMultileptonAnalysis(fname,thetree,dataset,stream,outfile,isdata,doSystCombine,xsec,lumi,nowe,nmax);
+    // tHqAnalysis->InitLHCO(1,1); // to print LHCO files
+    tHqAnalysis->createHistograms();
+    tHqAnalysis->Loop();
+    tHqAnalysis->writeHistograms();
+    delete tHqAnalysis;
 
 }

@@ -100,8 +100,8 @@ bool Jet::sel()
 {
     // selection
     bool pass_pt      = (_pt        > 25.);
-    //bool pass_eta     = (fabs(_eta) < 2.4); //-- CHANGED
-    bool pass_eta     = (fabs(_eta) < 4.7);
+    //bool pass_eta     = (fabs(_eta) < 2.4);
+    bool pass_eta     = true;  //-- CHANGED
     bool pass_isLoose = (_isLoose        );
     bool pass_jetId   = 0;
 

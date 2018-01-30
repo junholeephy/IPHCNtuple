@@ -1,8 +1,7 @@
 #!/bin/env zsh
 
-#cp /tmp/x509up_u6155 /home-pbs/lebihan/someone/proxy/.
-#cp /tmp/x509up_u7650 /home-pbs/xcoubez/proxy/
-cp /tmp/x509up_u8066 /home-pbs/ntonon/proxy
+#--- UPDATE proxy
+cp /tmp/x509up_u8066 /home-pbs/ntonon/proxy/
 
 jName=${1}
 if [[ ${jName} == "" ]]; then
@@ -14,8 +13,9 @@ que="cms"
 
 export HOME=$(pwd)
 
+#--- UPDATE paths (add '/' at the end)
 dout="/home-pbs/ntonon/tHq/CMSSW_8_0_20/src/ttH/NtupleProducer/test"
-dout_f="/opt/sbg/scratch1/cms/ntonon/ntuples_prod_walrus_patch2/"
+dout_f="/opt/sbg/scratch1/cms/ntonon/ntuples_prod_tHq"
 
 echo "CMSSW_RELEASE_BASE" $CMSSW_RELEASE_BASE
 
@@ -24,12 +24,13 @@ logName="log${jName}"
 
 rm -rf ${logName}
 mkdir ${logName}
-rm -rf ${dout_f}/${runName}
-mkdir ${dout_f}/${runName}
+rm -rf ${dout_f}/${runName} #REMOVED /
+mkdir ${dout_f} #NEW
+mkdir ${dout_f}/${runName} #REMOVED /
 
 nmax=-1
 
-fxsec="table.txt"
+#fxsec="table.txt"
 
 fdir=$(ls -d lists_priority*)
 
@@ -47,18 +48,19 @@ do
   sample=$(echo $line | sed 's%.txt%%g')
   dataset=$(echo $sample | sed 's%_ID..*%%g')
   if [[ ! -d ${runName}/${dataset} ]]; then
-    mkdir ${runName}/${dataset}
-    mkdir ${dout_f}/${runName}/${dataset}
+    mkdir ${runName} #NEW #NEEDED ?
+    mkdir ${runName}/${dataset} #NEEDED?  
+    mkdir ${dout_f}/${runName}/${dataset}  #REMOVED /
   fi
-  linexsec=$(grep $dataset $fxsec)
-  noe=$(echo $linexsec | awk '{print $3}')
-  xsec=$(echo $linexsec | awk '{print $2}')
-  if [[ $noe == "" ]]; then
-    noe=1
-  fi
-  if [[ $xsec == "" ]]; then
-    xsec=1
-  fi
+  #linexsec=$(grep $dataset $fxsec)
+  #noe=$(echo $linexsec | awk '{print $3}')
+  #xsec=$(echo $linexsec | awk '{print $2}')
+  #if [[ $noe == "" ]]; then
+    #noe=1
+  #fi
+  #if [[ $xsec == "" ]]; then
+    #xsec=1
+  #fi
   fl=$(echo $sample | cut -c1-1)
   fl2=$(echo $sample | cut -c1-11)
   datamc=""
@@ -80,8 +82,12 @@ do
 # echo "${dataset}: $noe $xsec"
   echo "${fpath}${line}"
  
+ # qsub -N ${dir} -q ${que} -o ${logName}/${sample}.log -j oe single_batch_job.sh \
+#-v dout=${dout},line2=${fpath}${line},fout=${fout},noe=${noe},xsec=${xsec},isdata=${isdata},sample=${sample},nmax=${nmax},dout_f=${dout_f}
+
+
   qsub -N ${dir} -q ${que} -o ${logName}/${sample}.log -j oe single_batch_job.sh \
--v dout=${dout},line2=${fpath}${line},fout=${fout},noe=${noe},xsec=${xsec},isdata=${isdata},sample=${sample},nmax=${nmax},dout_f=${dout_f}
+-v dout=${dout},line2=${fpath}${line},fout=${fout},isdata=${isdata},sample=${sample},nmax=${nmax},dout_f=${dout_f}
 done
 
 echo "going to sleep 2700 s (45 mn)"

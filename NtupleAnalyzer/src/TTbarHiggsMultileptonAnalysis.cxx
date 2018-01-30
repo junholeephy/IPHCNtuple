@@ -1,3 +1,5 @@
+//ThreeLeptonSelection_THQ3l
+
 #include "../include/TTbarHiggsMultileptonAnalysis.h"
 #include "TSystem.h"
 #include "SignalExtractionMVA.cxx"
@@ -605,7 +607,8 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("nLooseB",      "PreSel", "", "", 6, -0.5, 5.5);
     theHistoManager->addHisto("nMediumB",     "PreSel", "", "", 6, -0.5, 5.5);
     theHistoManager->addHisto("JetPt",        "PreSel", "", "", 28, 20., 300.);
-    theHistoManager->addHisto("JetEta",       "PreSel", "", "", 12, -2.4, 2.4);
+	// theHistoManager->addHisto("JetEta",       "PreSel", "", "", 12, -2.4, 2.4);
+	theHistoManager->addHisto("JetEta",       "PreSel", "", "", 12, -5., 5.); //CHANGED
     theHistoManager->addHisto("CSVv2" ,       "PreSel", "", "", 102, -0.01, 1.01);
     theHistoManager->addHisto("METpx",        "PreSel", "", "",14,-140.,140.);
     theHistoManager->addHisto("METpy",        "PreSel", "", "",14,-140.,140.);
@@ -631,7 +634,8 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     theHistoManager->addHisto("nLooseB",      "TTH3l", "", "", 6, -0.5, 5.5);
     theHistoManager->addHisto("nMediumB",     "TTH3l", "", "", 6, -0.5, 5.5);
     theHistoManager->addHisto("JetPt",        "TTH3l", "", "", 28, 20., 300.);
-    theHistoManager->addHisto("JetEta",       "TTH3l", "", "", 12, -2.4, 2.4);
+	// theHistoManager->addHisto("JetEta",       "TTH3l", "", "", 12, -2.4, 2.4);
+	theHistoManager->addHisto("JetEta",       "TTH3l", "", "", 12, -5., 5.); //CHANGED
     theHistoManager->addHisto("METpx",        "TTH3l", "", "",14,-140.,140.);
     theHistoManager->addHisto("METpy",        "TTH3l", "", "",14,-140.,140.);
     theHistoManager->addHisto("MET"  ,        "TTH3l", "", "",10,0.,400.);
@@ -1104,7 +1108,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
     if ( _nmax != -1 && _nmax < nentries ) nentries_max = _nmax;
 
     std::cout << "Number of input events = " << nentries << std::endl;
-    std::cout << "Number of processed events = " << nentries_max << std::endl;
+    std::cout << "Number of processed events = " << nentries_max << std::endl << std::endl;
 
     Long64_t nbytes = 0, nb = 0;
 
@@ -1427,6 +1431,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
         nLooseBJets  = 0;
         nMediumBJets = 0;
+        nForwardJets = 0;
 
         for(unsigned int ijet=0; ijet < vJet->size() ; ijet++)
         {
@@ -1441,14 +1446,24 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 */
 
 //NEW -- added eta cut for bjets
-            if( vJet->at(ijet).CSVv2() > 0.5426 && vJet->at(ijet).eta() <= 2.4 ) nLooseBJets++;
-            if( vJet->at(ijet).CSVv2() > 0.8484 && vJet->at(ijet).eta() <= 2.4  ) nMediumBJets++;
-
-            if(vJet->at(ijet).CSVv2() >= 0.5426 && vJet->at(ijet).eta() <= 2.4 ) vSelectedBTagJets.push_back(vJet->at(ijet));
-            else                               vSelectedNonBTagJets.push_back(vJet->at(ijet));
-            if(vJet->at(ijet).CSVv2() >= 0.8484 && vJet->at(ijet).eta() <= 2.4 ) vSelectedMediumBTagJets.push_back(vJet->at(ijet));
+            if(vJet->at(ijet).CSVv2() >= 0.5426 && vJet->at(ijet).eta() <= 2.4)
+            {
+                vLooseBTagJets.push_back(vJet->at(ijet));
+                nLooseBJets++;
+                if(vJet->at(ijet).CSVv2() >= 0.8484) {nMediumBJets++;}
+            }
+			else if(vJet->at(ijet).eta() <= 2.4 && vJet->at(ijet).pt() >= 25)
+            {
+                nForwardJets++;
+                vForwardJets.push_back(vJet->at(ijet));
+            }
+			else if(vJet->at(ijet).eta() > 2.4 && vJet->at(ijet).pt() >= 40)
+            {
+                nForwardJets++;
+                vForwardJets.push_back(vJet->at(ijet));
+            }
 //---------
-
+			//All jets in vJets are "selected jets"
             vSelectedJets.push_back(vJet->at(ijet));
 
             theHistoManager->fillHisto("JetPt",     "noSel",    "noChannel",    "", vJet->at(ijet).pt(),    weight);
@@ -1550,9 +1565,9 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         //ThreeLeptonSelection_TTZ(jentry);
         //ThreeLeptonSelection_CR_Zl(jentry);
 
-        //if ( is_2lss_TTH_SR || is_3l_TTH_SR )                                     fillOutputTree();
+        //if ( is_2lss_TTH_SR || is_3l_TTH_SR )                                     tputTree();
         // if ( is_2lss_TTH_SR || is_3l_TTH_SR || is_3l_TTZ_CR || is_3l_WZrel_CR )   fillOutputTree();
-        if ( is_3l_THQ_SR )   fillOutputTree();
+        // if ( is_3l_THQ_SR )   fillOutputTree(); //-- CHANGED already done in sel func
 
         // #####################################################################################################
         // #                             .__                        .__                __   .__                #
@@ -2292,9 +2307,11 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
     }
 
+	ofstream file_out("cutflow.txt");
     for(int i=0; i<v_cutflow.size(); i++)
     {
-        cout<<"v_cutflow "<<i<<" = "<<v_cutflow[i]<<endl;
+		// cout<<"v_cutflow "<<i<<" = "<<v_cutflow[i]<<endl;
+		file_out<<"v_cutflow "<<i<<" = "<<v_cutflow[i]<<endl;
     }
 
 
@@ -3662,16 +3679,13 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_THQ3l(int evt)
     v_cutflow[4]++;
 
 
-    if(DEBUG) std::cout << "nJets Ok... ";
-
-    // bool nLooseBtag         = ( nLooseBJets                 >= 2 );
-    if(nJets == nLooseBJets) {return;} //Need at least 1 jet not passing CSV loose //CHANGED
+    bool nMediumBtag        = ( nMediumBJets                >= 1 );
+    if(!nMediumBtag)      return; //CHANGED
 
     v_cutflow[5]++;
 
-
-    bool nMediumBtag        = ( nMediumBJets                >= 1 );
-    if(!nMediumBtag)      return; //CHANGED
+    bool nForward        = ( nForwardJets                >= 1 );
+    if(!nForward)      return; //CHANGED
 
     v_cutflow[6]++;
 
@@ -3972,7 +3986,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_THQ3l(int evt)
 
     if( DEBUG ) std::cout << "Signal 3l TTV MVA ok" << std::endl;
 
-    fillOutputTree();
+    fillOutputTree(); cout<<BOLD(FYEL("TREE FILLED !"))<<endl;
 
     if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
 }
@@ -6329,8 +6343,8 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     return;
 }
 
-void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
-
+void TTbarHiggsMultileptonAnalysis::fillOutputTree()
+{
     bool is2lss=false, is3l=false, is4l=false;
 
     //std::cout << "Beginning input to MEM ==========" << std::endl;
@@ -6351,7 +6365,7 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree(){
     if (!is2lss && !is3l && !is4l) return;
 
     if (vSelectedJets.size()<2) return;
-    if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return;
+    // if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return; //FIXME -- CHANGED for tHq ?
 
     if (vSelectedLeptons.size()<2) return; // 2lss only at the moment
 
