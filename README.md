@@ -123,11 +123,14 @@ fpath="/dpm/in2p3.fr/home/cms/phedex/store/user/ntonon/FlatTree/output_dir/"
 ...
 ```
 
-Then execute the script to create lists of paths to FlatTree files, based on the content of your FlatTree production output directory (by default, will create the lists in directory "lists/") : 
+Then execute the script to create lists of paths to FlatTree files, based on the content of your FlatTree production output directory.
+By default, it will create the lists of root files in directory "lists/" : 
 ```
 ./split_into_lists.zsh
 ```
-NB : could also list the FlatTree files yourself, and change the directory in which to look for in run_batch.zsh accordingly (cf. above)
+Then you could e.g. copy the lists for samples you're interested in in a new dir. "lists_priority", and modify run_batch.zsh accordingly.
+
+((NB : could also list the FlatTree files yourself, and change the directory in which to look for in run_batch.zsh accordingly (cf. above) ))
 
 
 ### Run
@@ -177,7 +180,19 @@ then run the script to produce the lists :
 ./split_into_lists.zsh
 ```
 
-* **run_batch.zsh** - update lumi, proxy, username, directories : 
+
+* **single_batch_job.sh** - update : 
+
+```
+...
+export X509_USER_PROXY=/home-pbs/ntonon/proxy/x509up_u8066
+
+cd /home-pbs/ntonon/tHq/CMSSW_8_0_20/src/
+...
+```
+
+
+* **run_batch.zsh** - update lumi, proxy, username, directories, e.g. : 
 
 ```
 ...
@@ -186,7 +201,7 @@ lumi=35900
 cp /tmp/x509up_u8066 /home-pbs/ntonon/proxy
 ...
 dout="/home-pbs/ntonon/tHq/CMSSW_8_0_20/src/ttH/NtupleAnalyzer/test"
-dout_f="/opt/sbg/scratch1/cms/ntonon/Analyzer_ntuples_prod_walrus_patch2/"
+dout_f="/opt/sbg/scratch1/cms/ntonon/Analyzer_ntuples_prod_walrus_patch2"
 ...
 fdir=$(ls -d lists_NameOfYourList) //Name of the directory containing the list of files to process
 ...
