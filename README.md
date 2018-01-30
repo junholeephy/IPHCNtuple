@@ -227,3 +227,4 @@ fdir=$(ls -d lists_NameOfYourList) //Name of the directory containing the list o
 ```
 ./run_batch.zsh
 ```
+
