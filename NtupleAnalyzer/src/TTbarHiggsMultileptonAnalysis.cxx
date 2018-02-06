@@ -25,7 +25,7 @@
 
 using namespace std;
 
-//FIXME -- cutflow vector -- new
+//Ccutflow vector -- new
 vector<double> v_cutflow(15);
 
 TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis()
@@ -151,10 +151,10 @@ TTbarHiggsMultileptonAnalysis::TTbarHiggsMultileptonAnalysis(TString inputFileNa
     }
 
     TString outputfileNameRoot = _outputFileName+".root";
-    outputfile = new TFile(outputfileNameRoot.Data(), "recreate");
-
+    outputfile = new TFile(outputfileNameRoot.Data(), "RECREATE");
 }
 
+/*
 void TTbarHiggsMultileptonAnalysis::InitLHCO(int process_MC, int process_RECO)
 {
     if (!_isdata)
@@ -173,7 +173,7 @@ void TTbarHiggsMultileptonAnalysis::InitLHCO(int process_MC, int process_RECO)
     fline00 = "#   typ	  eta	 phi	   pt  jmass  ntrk  btag   had/em  dummy dummy";
     del = "    ";
     trig = "8";
-}
+}*/
 
 void TTbarHiggsMultileptonAnalysis::createHistograms()
 {
@@ -901,7 +901,7 @@ void TTbarHiggsMultileptonAnalysis::createHistograms()
     // Loading weight files and creating corrsponding histograms
 
     // b-tagging
-    std::string inputFileHF = "/opt/sbg/scratch1/cms/TTH/weight/csv_rwt_fit_hf_76x_2016_02_08.root";
+    std::string inputFileHF = "/opt/sbg/scratch1/cms/TTH/weight/csv_rwt_fit_hf_76x_2016_02_08.root"; //FIXME -- needs update ??
     std::string inputFileLF = "/opt/sbg/scratch1/cms/TTH/weight/csv_rwt_fit_lf_76x_2016_02_08.root";
     TFile* f_CSVwgt_HF = new TFile ((inputFileHF).c_str());
     TFile* f_CSVwgt_LF = new TFile ((inputFileLF).c_str());
@@ -1114,6 +1114,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 
     for (Long64_t jentry=0; jentry<nentries_max;jentry++)
     {
+        // cout<<endl<<jentry<< " / "<<nentries_max<<endl;
 
         Long64_t ientry = fChain->LoadTree(jentry);
         if (ientry < 0) break;
@@ -1250,6 +1251,9 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         vSelectedMediumBTagJets.clear();
         vSelectedJets.clear();
         vSelectedTaus.clear();
+
+        vLooseBTagJets.clear();
+        vLightJets.clear();
 
         weightfake = 0;
         weightflip = 0;
@@ -1445,25 +1449,32 @@ void TTbarHiggsMultileptonAnalysis::Loop()
             if(vJet->at(ijet).CSVv2() >= 0.8484  ) vSelectedMediumBTagJets.push_back(vJet->at(ijet));
 */
 
-//NEW -- added eta cut for bjets
-            if(vJet->at(ijet).CSVv2() >= 0.5426 && vJet->at(ijet).eta() <= 2.4)
+            if( vJet->at(ijet).pt() < 25) {continue;}
+
+            //--- B-tagged jets
+            if(vJet->at(ijet).CSVv2() > 0.5426 && vJet->at(ijet).eta() < 2.4)
             {
                 vLooseBTagJets.push_back(vJet->at(ijet));
                 nLooseBJets++;
-                if(vJet->at(ijet).CSVv2() >= 0.8484) {nMediumBJets++;}
+
+                if(vJet->at(ijet).CSVv2() > 0.8484) {nMediumBJets++;}
             }
-			else if(vJet->at(ijet).eta() <= 2.4 && vJet->at(ijet).pt() >= 25)
+            //--- Light jets
+            else if(vJet->at(ijet).CSVv2() < 0.5426)
             {
-                nForwardJets++;
-                vForwardJets.push_back(vJet->at(ijet));
-            }
-			else if(vJet->at(ijet).eta() > 2.4 && vJet->at(ijet).pt() >= 40)
-            {
-                nForwardJets++;
-                vForwardJets.push_back(vJet->at(ijet));
+                vLightJets.push_back(vJet->at(ijet));
+
+                if(vJet->at(ijet).eta() < 2.4)
+                {
+                    nForwardJets++;
+                }
+                else if(vJet->at(ijet).pt() > 40 && vJet->at(ijet).eta() > 2.4)
+                {
+                    nForwardJets++;
+                }
             }
 //---------
-			//All jets in vJets are "selected jets"
+			//All jets with pT>25 in vJets are "selected jets"
             vSelectedJets.push_back(vJet->at(ijet));
 
             theHistoManager->fillHisto("JetPt",     "noSel",    "noChannel",    "", vJet->at(ijet).pt(),    weight);
@@ -1857,7 +1868,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
         // #                                                                                                      #
         // ########################################################################################################
 
-        if ( !_isdata && _printLHCO_MC && ThreeLeptonSelection_TTH3l_MC()) PrintLHCOforMadweight_MC(jentry);
+        // if ( !_isdata && _printLHCO_MC && ThreeLeptonSelection_TTH3l_MC()) PrintLHCOforMadweight_MC(jentry);
 
         // Common Selection:
         if ( !(vLeptons.size() >= 2
@@ -2315,6 +2326,11 @@ void TTbarHiggsMultileptonAnalysis::Loop()
     }
 
 
+
+	//NEW
+	outputfile->cd();
+    tOutput->Write();
+    outputfile->Close();
 }
 
 // ##############################################################################
@@ -2326,7 +2342,7 @@ void TTbarHiggsMultileptonAnalysis::Loop()
 // #                    |___/                          |___/                    #
 // #                                                                            #
 // ##############################################################################
-
+/*
 void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTH2l(int evt)
 {
     theHistoManager->fillHisto2D("SelectedLeptonsVsJets",           "noSel",   "ttH_2lss",   "",    vSelectedLeptons.size(),   vSelectedJets.size(),      weight);
@@ -3307,6 +3323,8 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_ApplicationFlips
 
     fillOutputTree();
 }
+*/
+
 
 void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
 {
@@ -3604,7 +3622,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_TTH3l(int evt)
 
     fillOutputTree();
 
-    if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
+    // if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
 }
 
 
@@ -3939,41 +3957,164 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_THQ3l(int evt)
 
     // ======================================================================================================
     //variables from tHq2016
-    //NEW
-    double nJet25;
-    double MaxEtaJet25;
-    double totCharge;
-    double nJetEta1 ;
-    double detaFwdJetBJet;
-    double detaFwdJet2BJet;
-    double detaFwdJetClosestLep;
-    double dphiHighestPtSPPair;
-    double minDRll;
-    double Lep3Pt;
+    //NEW //FIXME
+    //NB : "forward jet" = most forward non-CSV loose jet
 
-    nJet25 = nJet25_Recl;
+    // double nJet25;
+    // double MaxEtaJet25;
+    // double totCharge;
+    // double nJetEta1 ;
+    // double detaFwdJetBJet;
+    // double detaFwdJet2BJet;
+    // double detaFwdJetClosestLep;
+    // double dphiHighestPtSPPair;
+    // double minDRll;
+    // double Lep3Pt;
 
+    int ijet_forward=-1, ijet_hardest_btag=-1, ijet_2nd_hardest_btag=-1;
     double tmp = -999;
-    for(int ijet=0; ijet<vSelectedNonBTagJets.size(); ijet++)
+
+	//--- Find "forward jet"
+    for(int ijet=0; ijet<vLightJets.size(); ijet++)
     {
-        if(fabs(vSelectedNonBTagJets.at(ijet).eta()) > tmp) {tmp = fabs(vSelectedNonBTagJets.at(ijet).eta());}
+        if(fabs(vLightJets.at(ijet).eta()) > tmp)
+        {
+            tmp = fabs(vLightJets.at(ijet).eta());
+            ijet_forward = ijet;
+        }
+    }
+
+	//--- Find "hardest" and "second hardest" tagged jets
+    double pt1=0, pt2=0;
+    for(int ijet=0; ijet<vLooseBTagJets.size(); ijet++)
+    {
+        if(fabs(vLooseBTagJets.at(ijet).pt()) > pt1)
+        {
+            pt1 = fabs(vLooseBTagJets.at(ijet).pt());
+            ijet_2nd_hardest_btag = ijet_hardest_btag;
+            ijet_hardest_btag = ijet;
+        }
+        else if(fabs(vLooseBTagJets.at(ijet).pt()) > pt2)
+        {
+            pt2 = fabs(vLooseBTagJets.at(ijet).pt());
+            ijet_2nd_hardest_btag = ijet;
+        }
+    }
+
+
+
+	//--- Var1 : nof jets with pT>25 and |eta|<2.4
+    nJet25 = 0;
+    for(int ijet=0; ijet<vSelectedJets.size(); ijet++)
+    {
+        if(vSelectedJets.at(ijet).pt() > 25 && fabs(vSelectedJets.at(ijet).eta() ) < 2.4) {nJet25++;}
+    }
+
+    //--- Var2: max eta of any 'non-CSV-loose' jet
+    tmp = -999;
+    for(int ijet=0; ijet<vLightJets.size(); ijet++)
+    {
+        if(fabs(vLightJets.at(ijet).eta()) > tmp) {tmp = fabs(vLightJets.at(ijet).eta());}
     }
     MaxEtaJet25 = tmp;
 
+	//--- Var3 : sum of leptons charges
     totCharge = vSelectedLeptons.at(0).charge() + vSelectedLeptons.at(1).charge() + vSelectedLeptons.at(2).charge();
 
-    // tmp = 0;
-    // for(int ijet=0; ijet<vSelectedNonBTagJets.size(); ijet++)
-    // {
-    //     if(fabs(vSelectedNonBTagJets.at(ijet).eta) > 1) tmp++;
-    // }
-    // nJetEta1 = tmp;
+	//--- Var4 : nof 'non-csv-loose' jets with eta>1.0
+    nJetEta1 = 0;
+    for(int ijet=0; ijet<vLightJets.size(); ijet++)
+    {
+        if( fabs(vLightJets.at(ijet).eta() ) > 1.0) {nJetEta1++;}
+    }
+    nJetEta1 = tmp;
+
+	//--- Var5 : dEta between forward light jet and hardest tagged jet
+    detaFwdJetBJet = fabs( vLightJets.at(ijet_forward).eta() - vLooseBTagJets.at(ijet_hardest_btag).eta() );
+
+	//--- Var6 : dEta between forward and 2nd hardest tagged jet
+    if(ijet_2nd_hardest_btag < 0) {detaFwdJet2BJet = -1;}
+    else {detaFwdJet2BJet = fabs( vLightJets.at(ijet_forward).eta() - vLooseBTagJets.at(ijet_2nd_hardest_btag).eta() );}
+
+	//--- Var7 : dEta between forward light jet and closet lepton (angular dist.) //FIXME -- only distance in eta ?
+    detaFwdJetClosestLep = 0; tmp = 999;
+	TLorentzVector jet_tmp;
+	jet_tmp.SetPtEtaPhiE(vLightJets.at(ijet_forward).pt(), vLightJets.at(ijet_forward).eta(), vLightJets.at(ijet_forward).phi(), vLightJets.at(ijet_forward).E());
+    for(int ilep=0; ilep<vSelectedLeptons.size(); ilep++)
+    {
+		TLorentzVector lep_tmp;
+		lep_tmp.SetPtEtaPhiE(vSelectedLeptons.at(ilep).pt(), vSelectedLeptons.at(ilep).eta(), vSelectedLeptons.at(ilep).phi(), vSelectedLeptons.at(ilep).E());
+
+        if(jet_tmp.DeltaR(lep_tmp) < tmp) {detaFwdJetClosestLep = fabs( jet_tmp.Eta() - lep_tmp.Eta() ); tmp = jet_tmp.DeltaR(lep_tmp);}
+    }
+
+    //--- Var8 : dPhi of highest pT SS lepton pair (?)
+    if(vSelectedLeptons.at(0).charge()!=totCharge) {dphiHighestPtSPPair = fabs(vSelectedLeptons.at(1).phi() - vSelectedLeptons.at(2).phi() );}
+    else if(vSelectedLeptons.at(1).charge()!=totCharge) {dphiHighestPtSPPair = fabs(vSelectedLeptons.at(0).phi() - vSelectedLeptons.at(2).phi() );}
+    else {dphiHighestPtSPPair = fabs(vSelectedLeptons.at(0).phi() - vSelectedLeptons.at(1).phi() );}
+
+    //--- Var9 : min. dR between any 2 leptons
+    minDRll = 999; tmp = 999;
+	TLorentzVector lep1, lep2, lep3;
+	lep1.SetPtEtaPhiE(vSelectedLeptons.at(0).pt(), vSelectedLeptons.at(0).eta(), vSelectedLeptons.at(0).phi(), vSelectedLeptons.at(0).E() );
+	lep2.SetPtEtaPhiE(vSelectedLeptons.at(1).pt(), vSelectedLeptons.at(1).eta(), vSelectedLeptons.at(1).phi(), vSelectedLeptons.at(1).E() );
+	lep3.SetPtEtaPhiE(vSelectedLeptons.at(2).pt(), vSelectedLeptons.at(2).eta(), vSelectedLeptons.at(2).phi(), vSelectedLeptons.at(2).E() );
+	if(lep1.DeltaR(lep2) < tmp) {minDRll = lep1.DeltaR(lep2); tmp = minDRll;}
+	if(lep1.DeltaR(lep3) < tmp) {minDRll = lep1.DeltaR(lep3); tmp = minDRll;}
+	if(lep2.DeltaR(lep3) < tmp) {minDRll = lep2.DeltaR(lep3); tmp = minDRll;}
 
 
-    tmp = 0;
-    // detaFwdJetBJet
+    //--- Var10 : pT of 3rd hardest lepton
+    Lep3Pt = vSelectedLeptons.at(2).pt();
 
 
+
+
+    //--------------------------
+    // PRINTOUT OF INFOS & INPUT VARS
+    //--------------------------
+
+    bool do_printout = false;
+
+    if(do_printout)
+    {
+        cout<<endl<<endl<<BOLD(FBLU("------------ EVENT -----------"))<<endl;
+
+        cout<<FYEL("--- Tagged Jets : ")<<endl;
+        for(int ijet=0; ijet<vLooseBTagJets.size(); ijet++)
+        {
+            cout<<ijet<<" pT = "<<vLooseBTagJets.at(ijet).pt()<<" / eta = "<<vLooseBTagJets.at(ijet).eta()<<" / phi = "<<vLooseBTagJets.at(ijet).phi()<<" / CSV = "<<vLooseBTagJets.at(ijet).CSVv2()<<endl;
+        }
+        cout<<"Hardest & 2nd hardest jets are "<<ijet_hardest_btag<<", "<<ijet_2nd_hardest_btag<<endl<<endl;
+
+        cout<<FYEL("--- Forward Jets : ")<<endl;
+        for(int ijet=0; ijet<vLightJets.size(); ijet++)
+        {
+            cout<<ijet<<" pT = "<<vLightJets.at(ijet).pt()<<" / eta = "<<vLightJets.at(ijet).eta()<<" / phi = "<<vLightJets.at(ijet).phi()<<" / CSV = "<<vLightJets.at(ijet).CSVv2()<<endl;
+        }
+        cout<<"Forwardest jet is "<<ijet_forward<<endl<<endl;
+
+        cout<<FYEL("--- Selected Leptons : ")<<endl;
+        for(int ilep=0; ilep<vSelectedLeptons.size(); ilep++)
+        {
+            cout<<ilep<<" pT = "<<vSelectedLeptons.at(ilep).pt()<<" / eta = "<<vSelectedLeptons.at(ilep).eta()<<" / phi = "<<vSelectedLeptons.at(ilep).phi()<<" : Charge = "<<vSelectedLeptons.at(ilep).charge()<<endl;
+        }
+
+        cout<<FYEL("--- Input variables : ")<<endl;
+
+        cout<<"nJet25 = "<<nJet25<<endl;
+        cout<<"MaxEtaJet25 = "<<MaxEtaJet25<<endl;
+        cout<<"totCharge = "<<totCharge<<endl;
+        cout<<"nJetEta1 = "<<nJetEta1 <<endl;
+        cout<<"detaFwdJetBJet = "<<detaFwdJetBJet<<endl;
+        cout<<"detaFwdJet2BJet = "<<detaFwdJet2BJet<<endl;
+        cout<<"detaFwdJetClosestLep = "<<detaFwdJetClosestLep<<endl;
+        cout<<"dphiHighestPtSPPair = "<<dphiHighestPtSPPair<<endl;
+        cout<<"minDRll = "<<minDRll<<endl;
+        cout<<"Lep3Pt = "<<Lep3Pt<<endl;
+
+        cout<<"------------------"<<endl<<endl;
+    }
 
 
     signal_3l_TTV_MVA   = mva_3l_ttV->EvaluateMVA("BDTG method");
@@ -3986,9 +4127,10 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_THQ3l(int evt)
 
     if( DEBUG ) std::cout << "Signal 3l TTV MVA ok" << std::endl;
 
-    fillOutputTree(); cout<<BOLD(FYEL("TREE FILLED !"))<<endl;
+    fillOutputTree();
+    // cout<<BOLD(FYEL("TREE FILLED !"))<<endl;
 
-    if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
+    // if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
 }
 
 
@@ -4316,7 +4458,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_ApplicationFakes(int ev
 
     fillOutputTree();
 
-    if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
+    // if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
 }
 
 // # ######################################################################
@@ -4329,6 +4471,7 @@ void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_ApplicationFakes(int ev
 // #                                                                      #
 // ########################################################################
 
+/*
 void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_LepMVA_sideband(int evt) // TO BE UPDATED
 {
 
@@ -4714,6 +4857,15 @@ void TTbarHiggsMultileptonAnalysis::TwoLeptonsSameSignSelection_TTbar(int evt) /
 
     if (_printLHCO_RECO) PrintLHCOforMadweight_RECO(evt);
 }
+*/
+
+
+
+
+
+
+
+
 
 void TTbarHiggsMultileptonAnalysis::ThreeLeptonSelection_CR_WZ(int evt)
 {
@@ -6340,6 +6492,18 @@ void TTbarHiggsMultileptonAnalysis::initializeOutputTree()
     tOutput->Branch("multilepton_mHT",&multilepton_mHT,"multilepton_mHT/F");
     tOutput->Branch("multilepton_Ptot","TLorentzVector",&multilepton_Ptot);
 
+    //-- Input variables from tHq2016 analysis
+    tOutput->Branch("nJet25",&nJet25,"nJet25/D");
+    tOutput->Branch("MaxEtaJet25",&MaxEtaJet25,"MaxEtaJet25/D");
+    tOutput->Branch("totCharge",&totCharge,"totCharge/D");
+    tOutput->Branch("nJetEta1",&nJetEta1,"nJetEta1/D");
+    tOutput->Branch("detaFwdJetBJet",&detaFwdJetBJet,"detaFwdJetBJet/D");
+    tOutput->Branch("detaFwdJet2BJet",&detaFwdJet2BJet,"detaFwdJet2BJet/D");
+    tOutput->Branch("detaFwdJetClosestLep",&detaFwdJetClosestLep,"detaFwdJetClosestLep/D");
+    tOutput->Branch("dphiHighestPtSPPair",&dphiHighestPtSPPair,"dphiHighestPtSPPair/D");
+    tOutput->Branch("minDRll",&minDRll,"minDRll/D");
+    tOutput->Branch("Lep3Pt",&Lep3Pt,"Lep3Pt/D");
+
     return;
 }
 
@@ -6364,8 +6528,8 @@ void TTbarHiggsMultileptonAnalysis::fillOutputTree()
     else if ( is_2lss_TTH_SR && vSelectedLeptons.size()==2 && vSelectedLeptons.at(0).charge()==vSelectedLeptons.at(1).charge()) is2lss = true;
     if (!is2lss && !is3l && !is4l) return;
 
-    if (vSelectedJets.size()<2) return;
-    // if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return; //FIXME -- CHANGED for tHq ?
+    if (vSelectedJets.size()<2) return; //-- CHANGED for tHq
+    // if (!(vSelectedBTagJets.size()>=2 || (vSelectedMediumBTagJets.size()==1))) return;
 
     if (vSelectedLeptons.size()<2) return; // 2lss only at the moment
 
@@ -6879,22 +7043,11 @@ void TTbarHiggsMultileptonAnalysis::FillJetInfoOutputTree(int* tree_Id, int Id, 
     return;
 }
 
+/*
 void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_MC(int evt)
 {
 
     //std::cout <<" _MC 1"<< std::endl;
-
-    /*if( proc<-1 || proc > 6 )f
-      {
-      std::cout << "proc can only take following values: -1,1,2,3,4,5,6" << std::endl;
-      std::cout << "3l final state specific" << std::endl;
-      std::cout << "1,2,3,4: specific to the ttH final state, cf patches provided to madweight" << std::endl;
-      std::cout << "5: specific to the ttZ with l+l-l+ final state" << std::endl;
-      std::cout << "6: specific to the ttZ with l+l-l- final state" << std::endl;
-      std::cout << "-1: no selection on the final state applied" << std::endl;
-
-      return;
-      }*/
 
     fline0 = "0      " + std::string(Form("%d",evt)) + "     " + trig;
 
@@ -7134,6 +7287,8 @@ void TTbarHiggsMultileptonAnalysis::PrintLHCOforMadweight_RECO(int evt)
     fout_RECO << met_fline << std::endl;
 
 }
+*/
+
 
 /*void TTbarHiggsMultileptonAnalysis::ProducePUweight()
   {
@@ -7229,6 +7384,8 @@ float TTbarHiggsMultileptonAnalysis::PUweight()
     float weight = 1;
     return weight;
 }*/
+
+
 
 void TTbarHiggsMultileptonAnalysis::selectBjets(std::string BjetSel, int* ibsel1, int* ibsel2, bool doSelectOnlyBjets){
 

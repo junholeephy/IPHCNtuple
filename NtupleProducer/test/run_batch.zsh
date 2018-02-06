@@ -13,7 +13,7 @@ que="cms"
 
 export HOME=$(pwd)
 
-#--- UPDATE paths (add '/' at the end)
+#--- UPDATE paths (DO NOT add '/' at the end)
 dout="/home-pbs/ntonon/tHq/CMSSW_8_0_20/src/ttH/NtupleProducer/test"
 dout_f="/opt/sbg/scratch1/cms/ntonon/ntuples_prod_tHq"
 
@@ -24,15 +24,15 @@ logName="log${jName}"
 
 rm -rf ${logName}
 mkdir ${logName}
-rm -rf ${dout_f}/${runName} #REMOVED /
+#rm -rf ${dout_f}/${runName} #REMOVED -- don't remove dir. automatically
 mkdir ${dout_f} #NEW
-mkdir ${dout_f}/${runName} #REMOVED /
+mkdir ${dout_f}/${runName}
 
 nmax=-1
 
 #fxsec="table.txt"
 
-fdir=$(ls -d lists_priority*)
+fdir=$(ls -d lists_tHq*)
 
 echo $fdir
 
@@ -48,9 +48,9 @@ do
   sample=$(echo $line | sed 's%.txt%%g')
   dataset=$(echo $sample | sed 's%_ID..*%%g')
   if [[ ! -d ${runName}/${dataset} ]]; then
-    mkdir ${runName} #NEW #NEEDED ?
-    mkdir ${runName}/${dataset} #NEEDED?  
-    mkdir ${dout_f}/${runName}/${dataset}  #REMOVED /
+    mkdir ${runName} #Needed only to store run name (cf. below) ?
+    mkdir ${runName}/${dataset}  
+    mkdir ${dout_f}/${runName}/${dataset}
   fi
   #linexsec=$(grep $dataset $fxsec)
   #noe=$(echo $linexsec | awk '{print $3}')
@@ -74,7 +74,7 @@ do
     nmax=${nmax}
   fi
   
-  isdata=0
+  isdata=1 # FIXME # FIXME
    
   fout=$(echo ${runName}/${dataset}/${line}_${jidx} | sed 's%.txt%%g')
   lout=$(echo ${line}_${jidx} | sed 's%.txt%%g')

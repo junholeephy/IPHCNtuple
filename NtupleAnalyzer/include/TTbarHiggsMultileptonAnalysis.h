@@ -45,25 +45,23 @@ class TTbarHiggsMultileptonAnalysis
 
     public:
 
-        TTbarHiggsMultileptonAnalysis();
-        TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString sampleName, TString treeName,
-                TString outputFileName, bool isdata, bool doSystCombine, float xsec, float lumi, int nowe, int nmax);
-
-        ~TTbarHiggsMultileptonAnalysis();
+        TTbarHiggsMultileptonAnalysis(); //Default constructor
+        TTbarHiggsMultileptonAnalysis(TString inputFileName, TChain *tree, TString sampleName, TString treeName, TString outputFileName, bool isdata, bool doSystCombine, float xsec, float lumi, int nowe, int nmax); //Constructor
+        ~TTbarHiggsMultileptonAnalysis(); //Destructor
 
         void createHistograms();
         void writeHistograms();
 
-        void TwoLeptonsSameSignSelection_TTH2l(int evt);
-        void TwoLeptonsSameSignSelection_ApplicationFakes(int evt);
-        void TwoLeptonsSameSignSelection_ApplicationFlips(int evt);
+        // void TwoLeptonsSameSignSelection_TTH2l(int evt);
+        // void TwoLeptonsSameSignSelection_ApplicationFakes(int evt);
+        // void TwoLeptonsSameSignSelection_ApplicationFlips(int evt);
 
-        void TwoLeptonsSameSignSelection_LepMVA_sideband(int evt);
-        void TwoLeptonsSameSignSelection_JetMultiplicity_sideband(int evt);
-        void TwoLeptonsSameSignSelection_TTbar(int evt);
+        // void TwoLeptonsSameSignSelection_LepMVA_sideband(int evt);
+        // void TwoLeptonsSameSignSelection_JetMultiplicity_sideband(int evt);
+        // void TwoLeptonsSameSignSelection_TTbar(int evt);
 
         void ThreeLeptonSelection_TTH3l(int evt);
-	void ThreeLeptonSelection_THQ3l(int evt); //NEW
+        void ThreeLeptonSelection_THQ3l(int evt); //NEW
         void ThreeLeptonSelection_ApplicationFakes(int evt);
 
         void ThreeLeptonSelection_CR_WZ(int evt);
@@ -101,7 +99,7 @@ class TTbarHiggsMultileptonAnalysis
         //CHANGED -- new categories
         std::vector<Jet>	  vSelectedJets; //All jets with pT>25
         std::vector<Jet>	  vLooseBTagJets; //Loose-CSV jets (+pT/eta cuts)
-        std::vector<Jet>      vForwardJets; //Non-loose CSV jets (+pT/eta cuts) <-> "Forward"
+        std::vector<Jet>      vLightJets; //Non-loose CSV jets (+pT/eta cuts)
 
 
         int nLooseBJets;
@@ -116,7 +114,7 @@ class TTbarHiggsMultileptonAnalysis
         bool is_emu_TT_CR;
 
         bool is_3l_THQ_SR;    // THQ 3l analysis //NEW
-	bool is_3l_TTH_SR;    // TTH 3l analysis
+		bool is_3l_TTH_SR;    // TTH 3l analysis
         bool is_3l_AppFakes_SR;
         bool is_3l_WZ_CR;     // WZ CR w/ 3l (selected) or more, no b-jets, Z peak
         bool is_3l_WZrel_CR;  // WZ CR w/ 3l (loose) or more, no medium b-jets, Z peak
@@ -162,9 +160,9 @@ class TTbarHiggsMultileptonAnalysis
         void FillJetInfoOutputTree(int*, int, TLorentzVector*, TLorentzVector, float*, float, float*, float*, float, float*, float*, float, float, float);
 
         // needed to print info in LHCO text format (madweight)
-        void InitLHCO(int process_MC, int process_RECO);
-        void PrintLHCOforMadweight_MC(int evt);
-        void PrintLHCOforMadweight_RECO(int evt);
+        // void InitLHCO(int process_MC, int process_RECO);
+        // void PrintLHCOforMadweight_MC(int evt);
+        // void PrintLHCOforMadweight_RECO(int evt);
 
         float Phi_0_2Pi(float phi);
         float GetDeltaR(float eta1,float phi1,float eta2,float phi2);
@@ -238,6 +236,19 @@ class TTbarHiggsMultileptonAnalysis
         Double_t multilepton_mETcov01;
         Double_t multilepton_mETcov10;
         Double_t multilepton_mETcov11;
+
+        //NEW -- input variables for tHq2016 analysis
+        Double_t nJet25;
+        Double_t MaxEtaJet25;
+        Double_t totCharge;
+        Double_t nJetEta1 ;
+        Double_t detaFwdJetBJet;
+        Double_t detaFwdJet2BJet;
+        Double_t detaFwdJetClosestLep;
+        Double_t dphiHighestPtSPPair;
+        Double_t minDRll;
+        Double_t Lep3Pt;
+
 
     private:
 

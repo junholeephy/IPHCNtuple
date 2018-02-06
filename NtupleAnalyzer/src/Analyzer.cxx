@@ -98,8 +98,10 @@ int main(int argc, char *argv[])
     TTbarHiggsMultileptonAnalysis* tHqAnalysis = new TTbarHiggsMultileptonAnalysis(fname,thetree,dataset,stream,outfile,isdata,doSystCombine,xsec,lumi,nowe,nmax);
     // tHqAnalysis->InitLHCO(1,1); // to print LHCO files
     tHqAnalysis->createHistograms();
+    
     tHqAnalysis->Loop();
-    tHqAnalysis->writeHistograms();
+    
+    //tHqAnalysis->writeHistograms();
     delete tHqAnalysis;
 
 }
