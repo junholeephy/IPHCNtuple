@@ -45,36 +45,54 @@ void TestExRootAnalysis()
   // Create chain of root trees
   TChain chain("Delphes");
 
+	chain.Add("/store/home/junho/delphes_0101.root");
+//        chain.Add("delphes_0102.root");
+//        chain.Add("delphes_0103.root");
+//        chain.Add("delphes_0104.root");
+//        chain.Add("delphes_0105.root");
+//        chain.Add("delphes_0106.root");
+//        chain.Add("delphes_0107.root");
+//        chain.Add("delphes_0108.root");
+//        chain.Add("delphes_0111.root");
+//        chain.Add("delphes_0112.root");
+//        chain.Add("delphes_0113.root");
+//        chain.Add("delphes_0114.root");
+//        chain.Add("delphes_0115.root");
+//        chain.Add("delphes_0116.root");
+//        chain.Add("delphes_0117.root");
+//        chain.Add("delphes_0118.root");
+//        chain.Add("delphes_0119.root");
+
   //First 100k
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_0.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_1.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_2.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_3.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_4.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_5.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_6.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_7.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_0.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_1.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_2.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_3.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_4.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_5.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_6.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v1/tag_1_delphes_events_7.root");
 
   //Next 375k
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_0.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_1.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_3.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_4.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_5.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_6.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_7.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_8.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_10.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_11.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_12.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_15.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_16.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_18.root");
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_19.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_0.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_1.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_3.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_4.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_5.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_6.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_7.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_8.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_10.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_11.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_12.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_15.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_16.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_18.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_1_delphes_events_19.root");
   //Next 400k
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_2_delphes_events.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v2/tag_2_delphes_events.root");
   //Next 400k
-  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v3/tag_3_delphes_events.root");
+//  chain.Add("root://eoscms//eos/cms/store/user/chanon/TTH/Delphes/TTZ_v3/tag_3_delphes_events.root");
 
 
   // Create object of class ExRootTreeReader
@@ -123,7 +141,7 @@ void TestExRootAnalysis()
   unsigned int nSelectedEventsTTZ = 0;
   unsigned int nSelectedEvent = 0; 
 
-  TFile* fOutput = new TFile("output.root","RECREATE");
+  TFile* fOutput = new TFile("output_01.root","RECREATE");
   MultiLeptonTree tree;
   tree.initializeOutputTree();
 
