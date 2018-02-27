@@ -50,10 +50,20 @@ void WZ_TestExRootAnalysis()
 
 	double Ptot = 0;
 	double Ptot_Px=0, Ptot_Py=0, Ptot_Pz=0, Ptot_Eta=0, Ptot_E=0, Ptot_M=0;
+    TLorentzVector Ptot_P4(0,0,0,0);
 
-	TFile *foutput = new TFile("output.root","RECREATE");
+	unsigned int nSelectedEventsWZwithGen = 0;
+	unsigned int nSelectedEventsWZ = 0;
+	unsigned int nSelectedEvent = 0;
+
+	TFile *fOutput = new TFile("output.root","RECREATE");
 	MultiLeptonTree tree;
 	tree.initializeOutputTree();
+
+	bool doWZselection = true;
+	bool doTFselection = false;
+	bool storeGenLevel = true;
+
 	
 	for(Int_ entry = 0; entry<numberOfEntries; ++entry)
 	{
@@ -81,6 +91,7 @@ void WZ_TestExRootAnalysis()
 				//Picking Neutrinos, and gathering its mother W boson and its by product a lepton
 				if(abs(genparticle->PID)==12 || abs(genparticle->PID)==14 || abs(genparticle->PID)==16)
 				{
+					vSelectedNeutrinos.push_back(genparticle);
 					Ptot_Px += genparticle->Px;
 					Ptot_Py += genparticle->Py;
 					Ptot_Pz += genparticle->Pz;
@@ -209,7 +220,7 @@ void WZ_TestExRootAnalysis()
 				{
 					TLorentzVector P2;
 					P2.SetPtEtaPhiM(vSelectedLetons.at(j)->PT, vSelectedLeptons.at(j)->Eta, vSelectedLeptons.at(j)->Phi, 0);
-					if(fabs((p1+p2).M())<12 &&(vSelectedLeptons.at(i)->Charge) == -(vSelectedLeptons.at(j)->Charge) && (vSelectedLeptons.at(i)->Id) == -(vSelectedLeptons.at(j)->Id) && (fabs(p1+p2).M() - 91.188) < 10 )
+					if(fabs((p1+p2).M())<12 &&(vSelectedLeptons.at(i)->Charge) == -(vSelectedLeptons.at(j)->Charge) && (vSelectedLeptons.at(i)->Id) == -(vSelectedLeptons.at(j)->Id) && (fabs(p1+p2).M() - 91.188) < 15 )
 					{
 						is_Z = true;
 					}
@@ -218,12 +229,68 @@ void WZ_TestExRootAnalysis()
 		}
 
 
+		if(doWZselection)
+		{
+			if(vSelectedLeptions.size()<3) continue;
+			if(!is_Z) continue;
 
+			nSelectedEventsWZ++;
 
+			if(storeGenLevel)
+			{
+				if(vSelectedW.size()!=1) continue;
+				if(vSelectedNeutrinosFromW.size()!=1) continue;
 
-
-		
+				if(vSelectedNeutrinosFromW.size()>0)
+				{
+					TLorentzVector Pneutrino;
+					Pneutrino.SetPtEtaPhiM(vSelectedNeutrinosFromW.at(0)->PT, vSelectedNeutrinosFromW.at(0)->Eta, vSelectedNeutrinosFromW.at(0)->Phi, 0);
+					tree.multilepton_mET_Matched = Pneutrino;
+			
+					if(vSelectedW.size()>=1)
+					{
+						TLorentzVector PW1;
+						PW1.SetPtEtaPhiM(vSelectedW.at(0)->PT, vSelectedW.at(0)->Eta, vSelectedW.at(0)->Phi, vSelectedW.at(0)->Mass);
+						tree.multilepton_W1_P4_Matched = PW1;
+					}
+					tree_multilepton_GenLepton1_P4.SetPtEtaPhiM(vSelectedGenLeptons.at(0)->PT, vSelectedGenLeptons.at(0)->Eta, vSelectedGenLeptons.at(0)->Phi, 0);
+					tree_multilepton_GenLepton2_P4.SetPtEtaPhiM(vSelectedGenLeptons.at(1)->PT, vSelectedGenLeptons.at(1)->Eta, vSelectedGenLeptons.at(1)->Phi, 0);
+					tree_multilepton_GenLepton3_P4.SetPtEtaPhiM(vSelectedGenLeptons.at(2)->PT, vSelectedGenLeptons.at(2)->Eta, vSelectedGenLeptons.at(2)->Phi, 0);
+				}
 				
+				nSelectedEventsWZwithGen++;
+			}
+
+			tree.multilepton_Lepton1_Id = -999;
+    		tree.multilepton_Lepton2_Id = -999;
+   		 	tree.multilepton_Lepton3_Id = -999;
+			if(vSelectedLeptons.size()>=3)
+			{
+				tree.multilepton_Lepton1_P4.SetPtEtaPhiM(vSelectedLeptons.at(0)->PT, vSelectedLeptons.at(0)->Eta, vSelectedLeptons.at(0)->Phi,0);
+				tree.multilepton_Lepton1_Id = vSelectedLeptons.at(0)->Id;
+				tree.multilepton_Lepton2_P4.SetPtEtaPhiM(vSelectedLeptons.at(1)->PT, vSelectedLeptons.at(1)->Eta, vSelectedLeptons.at(1)->Phi,0);
+				tree.multilepton_Lepton2_Id = vSelectedLeptons.at(1)->Id;
+				tree.multilepton_Lepton3_P4.SetPtEtaPhiM(vSelectedLeptons.at(2)->PT, vSelectedLeptons.at(2)->Eta, vSelectedLeptons.at(2)->Phi,0);
+				tree.multilepton_Lepton3_Id = vSelectedLeptons.at(2)->Id;
+			}
+
+			tree.multilepton_mET.SetPtEtaPhiM(mET->MET, 0, mET->Phi, mET->MET);
+			tree.multilepton_mHT = msumET->HT;
+			tree.tOutput->Fill();
+		
+		}	
+		nSelectedEvent++;
+	
+	}
+
+	cout << "---RESULTS---"<<endl;
+	cout << "nSelectedEvent="<<nSelectedEvent<<endl;
+	cout << "nSelectedEventsWZ="<<nSelectedEventsWZ<<endl;
+	cout << "nSelectedEventsWZwithGen="<<nSelectedEventsWZwithGen<<endl;
+		
+	tree.tOutput->Write();
+	fOutput->Close();
+}			
 
 
 
